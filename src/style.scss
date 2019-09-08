@@ -7,13 +7,21 @@ body {
   overflow-x: hidden;
 }
 
+a {
+  color: rgba(115, 141, 29, 1);
+}
+
+a:hover {
+  color: rgba(108, 22, 89, 1);
+}
+
 .bg-transparent {
   background: transparent;
 }
 .bg-transparent .nav-link {
   color: white;
 }
-nav.navbar.navbar-expand-md {
+nav.navbar.navbar-expand-xl {
   transition: background-color 500ms ease-in;
   .bg-white {
     background-color: white !important;

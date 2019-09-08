@@ -1,16 +1,28 @@
 import React, { Component } from 'react';
+import Logo from '../../logo/Photo-logo.svg';
+import LogoHorizontalNoBorder from '../../logo/Photo-logo-horizontal-no-border.svg';
 import { Link } from 'react-router-dom';
 
 export default class Navbar extends Component {
   state = {
-    scrollTop: 0
+    scrollTop: 0,
+    windowWidth: null
   };
   componentWillMount() {
     window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('resize', this.handleWidth);
+    this.handleWidth();
   }
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
   }
+
+  handleWidth = () => {
+    let width = document.documentElement.clientWidth;
+    this.setState({
+      windowWidth: width
+    });
+  };
 
   handleScroll = () => {
     var scrollTop =
@@ -28,7 +40,7 @@ export default class Navbar extends Component {
         style={{
           zIndex: 100
         }}
-        className={`navbar navbar-expand-md fixed-top
+        className={`navbar navbar-expand-xl fixed-top
          ${
            window.location.pathname === '/' && scrollTop > 0
              ? 'bg-white border-bottom border-secondary'
@@ -45,10 +57,28 @@ export default class Navbar extends Component {
              : ''
          }`}
       >
-        <Link className='navbar-brand' to='/'>
-          BRAND NAME
+        <Link
+          className='navbar-brand'
+          to='/'
+          style={{
+            height: '60px',
+            marginBottom: '1rem',
+            margin: this.state.windowWidth < 1024 ? 'auto' : 'initial'
+          }}
+        >
+          <img
+            src={LogoHorizontalNoBorder}
+            style={{
+              width: this.state.windowWidth < 1024 ? '80vw' : 'initial'
+            }}
+            alt=''
+          />
         </Link>
         <button
+          style={{
+            margin: 'auto',
+            marginTop: '1rem'
+          }}
           className='navbar-toggler'
           type='button'
           data-toggle='collapse'

@@ -7,6 +7,14 @@ body {
   overflow-x: hidden;
 }
 
+a {
+  color: #738d1d;
+}
+
+a:hover {
+  color: #6c1659;
+}
+
 .bg-transparent {
   background: transparent;
 }
@@ -15,12 +23,12 @@ body {
   color: white;
 }
 
-nav.navbar.navbar-expand-md {
+nav.navbar.navbar-expand-xl {
   -webkit-transition: background-color 500ms ease-in;
   transition: background-color 500ms ease-in;
 }
 
-nav.navbar.navbar-expand-md .bg-white {
+nav.navbar.navbar-expand-xl .bg-white {
   background-color: white !important;
 }
 
