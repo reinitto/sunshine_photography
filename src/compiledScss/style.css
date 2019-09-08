@@ -102,6 +102,10 @@ nav.navbar.navbar-expand-md .bg-white {
   padding-top: 50px;
 }
 
+.css-1rbq2qy {
+  z-index: 1000 !important;
+}
+
 .navbar .nav-link {
   font-size: 22px;
 }

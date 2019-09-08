@@ -22,10 +22,22 @@ function ImageGallery({ photos, galleryName }) {
         {galleryName.toUpperCase() || 'BABY'}
       </h2>
       <Gallery photos={photos} onClick={openLightbox} />
-      <ModalGateway>
+      <ModalGateway
+        style={{
+          zIndex: '1100'
+        }}
+      >
         {viewerIsOpen ? (
-          <Modal onClose={closeLightbox}>
+          <Modal
+            onClose={closeLightbox}
+            style={{
+              zIndex: '1100'
+            }}
+          >
             <Carousel
+              style={{
+                zIndex: '1100'
+              }}
               currentIndex={currentImage}
               views={photos.map((x, i) => ({
                 ...x,
