@@ -23,18 +23,18 @@ export default function Footer() {
           <hr className='w-100 clearfix d-md-none' />
 
           <div className='col-md-2 col-lg-2 col-xl-2 mx-auto mt-3'>
-            <h6 className='text-uppercase mb-4 font-weight-bold'>Products</h6>
+            <h6 className='text-uppercase mb-4 font-weight-bold'>Gallery</h6>
             <p>
-              <Link to={'/portfolio'}>Landscape Photography</Link>
+              <Link to={'/gallery#baby'}>Baby photos</Link>
             </p>
             <p>
-              <Link to={'/portfolio'}>Aerial photography</Link>
+              <Link to={'/gallery#family'}>Family photos</Link>
             </p>
             <p>
-              <Link to={'/portfolio'}>Food Photography</Link>
+              <Link to={'/gallery#portrait'}>Portrait photos</Link>
             </p>
             <p>
-              <Link to={'/portfolio'}>Nature Photography</Link>
+              <Link to={'/gallery#event'}>Event photos</Link>
             </p>
           </div>
 
@@ -55,11 +55,6 @@ export default function Footer() {
             <p>
               <Link to={'/about'} className='nav-link'>
                 About
-              </Link>
-            </p>
-            <p>
-              <Link to={'/portfolio'} className='nav-link'>
-                Portfolio
               </Link>
             </p>
             <p>
@@ -94,7 +89,7 @@ export default function Footer() {
           <div className='col-md-7 col-lg-8'>
             <p className='text-center text-md-left'>
               © 2019 Copyright:
-              <Link href='!#'>
+              <Link to='!#'>
                 <strong> thisWebsite.com</strong>
               </Link>
             </p>

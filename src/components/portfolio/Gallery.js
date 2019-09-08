@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import ImageGallery from './ImageGallery';
 
 const portfolioImages = {
-  nature: [
+  baby: [
     {
       src:
         'http://images.unsplash.com/photo-1513326238704-b2cd281a3d53?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
@@ -68,7 +68,7 @@ const portfolioImages = {
       height: 3
     }
   ],
-  landscape: [
+  family: [
     {
       src:
         'https://images.unsplash.com/photo-1506354666786-959d6d497f1a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
@@ -118,7 +118,7 @@ const portfolioImages = {
       height: 3
     }
   ],
-  aerial: [
+  portrait: [
     {
       src:
         'https://images.unsplash.com/photo-1518144591331-17a5dd71c477?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
@@ -168,7 +168,7 @@ const portfolioImages = {
       height: 3
     }
   ],
-  food: [
+  event: [
     {
       src:
         'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
@@ -214,23 +214,11 @@ const portfolioImages = {
   ]
 };
 
-export default class Portfolio extends Component {
-  state = {
-    category: 'nature'
-  };
-
-  changeCategory = e => {
-    e.preventDefault();
-    this.setState({
-      category: e.target.value
-    });
-  };
-
+export default class Gallery extends Component {
   render() {
-    const { category } = this.state;
+    console.log('this.props.collection', this.props.collection);
     return (
-      <div>
-        <h2>Portfolio</h2>
+      <Fragment>
         <p>
           For higher resolution images <Link to='/contact'>contact me</Link> or
           Visit{' '}
@@ -242,22 +230,83 @@ export default class Portfolio extends Component {
             shutterstock link goes here
           </a>
         </p>
-        <div>
-          <button value='landscape' onClick={this.changeCategory}>
-            Landscape
-          </button>
-          <button value='nature' onClick={this.changeCategory}>
-            Nature
-          </button>
-          <button value='aerial' onClick={this.changeCategory}>
-            Aerial
-          </button>
-          <button value='food' onClick={this.changeCategory}>
-            Food
-          </button>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            // gridGap: '10px',
+            justifyItems: 'center',
+            margin: '3rem'
+          }}
+        >
+          <Link
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRight: '2px solid grey',
+              borderBottom: '2px solid grey',
+              padding: '2rem'
+            }}
+            to='/gallery#baby'
+          >
+            Baby
+          </Link>
+          <Link
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderLeft: '2px solid grey',
+              borderBottom: '2px solid grey',
+              padding: '2rem'
+            }}
+            to='/gallery#family'
+          >
+            Family
+          </Link>
+          <Link
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRight: '2px solid grey',
+              borderTop: '2px solid grey',
+              padding: '2rem'
+            }}
+            to='/gallery#portrait'
+          >
+            Portrait
+          </Link>
+          <Link
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderLeft: '2px solid grey',
+              borderTop: '2px solid grey',
+              padding: '2rem'
+            }}
+            to='/gallery#event'
+          >
+            Event
+          </Link>
         </div>
-        <ImageGallery photos={portfolioImages[category]} />
-      </div>
+        <ImageGallery
+          galleryName={this.props.collection || 'baby'}
+          photos={
+            portfolioImages[this.props.collection] || portfolioImages['baby']
+          }
+        />
+      </Fragment>
     );
   }
 }

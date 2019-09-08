@@ -1,27 +1,23 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Home from './components/Home';
-import About from './components/About';
-import Pricing from './components/Pricing';
-import Contact from './components/contact/Contact';
-import Portfolio from './components/portfolio/Portfolio';
+import Home from './Pages/Home';
+import About from './Pages/About';
+import Pricing from './Pages/Pricing';
+import Contact from './Pages/Contact';
+import Gallery from './Pages/Gallery';
 import Footer from './components/layout/Footer';
-import Navbar from './components/layout/Navbar';
-
+import './compiledScss/style.css';
 class App extends Component {
   render() {
     return (
       <Router>
-        <Navbar />
-        <div className='container'>
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route path='/contact' component={Contact} />
-            <Route path='/about' component={About} />
-            <Route path='/portfolio' component={Portfolio} />
-            <Route path='/Pricing' component={Pricing} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route path='/contact' component={Contact} />
+          <Route path='/about' component={About} />
+          <Route path='/gallery' component={Gallery} />
+          <Route path='/Pricing' component={Pricing} />
+        </Switch>
         <Footer />
       </Router>
     );

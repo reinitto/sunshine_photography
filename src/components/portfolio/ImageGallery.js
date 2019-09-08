@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import Gallery from 'react-photo-gallery';
 import Carousel, { Modal, ModalGateway } from 'react-images';
 
-function ImageGallery({ photos }) {
+function ImageGallery({ photos, galleryName }) {
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
@@ -18,6 +18,9 @@ function ImageGallery({ photos }) {
 
   return (
     <div>
+      <h2 style={{ textAlign: 'center' }}>
+        {galleryName.toUpperCase() || 'BABY'}
+      </h2>
       <Gallery photos={photos} onClick={openLightbox} />
       <ModalGateway>
         {viewerIsOpen ? (

@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 export default function ContactForm() {
   return (
     <Fragment>
-      <h3>Contact Me</h3>
+      <h2>Contact Me</h2>
       <form>
         <div className='form-group'>
           <label htmlFor='exampleName'>Name</label>
@@ -16,6 +16,32 @@ export default function ContactForm() {
           />
           <small id='nameHelp' className='form-text text-muted'>
             What should I call you?
+          </small>
+        </div>
+        <div className='form-group'>
+          <label htmlFor='exampleInputTelephone'>Phone number</label>
+          <input
+            type='tel'
+            className='form-control'
+            id='exampleInputTelephone'
+            aria-describedby='phoneHelp'
+            placeholder='Enter phone number'
+          />
+          <small id='phoneHelp' className='form-text text-muted'>
+            We'll never share your phone number with anyone
+          </small>
+        </div>
+        <div className='form-group'>
+          <label htmlFor='exampleInputAddress'>Address</label>
+          <input
+            type='text'
+            className='form-control'
+            id='exampleInputAddress'
+            aria-describedby='addressHelp'
+            placeholder='Enter your address'
+          />
+          <small id='addressHelp' className='form-text text-muted'>
+            We'll never share your address with anyone
           </small>
         </div>
         <div className='form-group'>
@@ -41,16 +67,7 @@ export default function ContactForm() {
             cols='70'
           />
         </div>
-        <div className='form-check'>
-          <input
-            type='checkbox'
-            className='form-check-input'
-            id='exampleCheck1'
-          />
-          <label className='form-check-label' htmlFor='exampleCheck1'>
-            Check me out
-          </label>
-        </div>
+
         <button type='submit' className='btn btn-primary'>
           Submit
         </button>

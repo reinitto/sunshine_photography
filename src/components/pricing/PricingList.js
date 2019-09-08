@@ -3,30 +3,33 @@ import PricingItem from './PricingItem';
 
 let pricingItems = [
   {
-    name: 'Session',
-    price: '$100'
+    name: 'Baby',
+    price: '1500 NOK'
   },
   {
-    name: 'Editing',
-    price: '$50'
+    name: 'Family',
+    price: '2000 NOK'
   },
   {
-    name: 'Coloring',
-    price: '$100'
+    name: 'Portrait',
+    price: '1500 NOK'
   },
   {
     name: 'Event',
-    price: '$100'
+    price: '1500 NOK'
   }
 ];
 
-export default function PricingList({ items = pricingItems }) {
+export default function PricingList({
+  items = pricingItems,
+  title = 'Session'
+}) {
   let content = items.map((item, i) => <PricingItem {...item} key={i} />);
   return (
-    <table class='table'>
+    <table className='table'>
       <thead>
         <tr>
-          <th scope='col'>Product</th>
+          <th scope='col'>{title}</th>
           <th scope='col'>Price</th>
         </tr>
       </thead>
