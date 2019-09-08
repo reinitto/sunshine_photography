@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Logo from '../../logo/Photo-logo.svg';
-import LogoHorizontalNoBorder from '../../logo/Photo-logo-horizontal-no-border.svg';
+import LogoSlanted from '../../logo/Photo-logo-horizontal-no-border-slanted.svg';
+// import LogoHorizontalNoBorder from '../../logo/Photo-logo-horizontal-no-border.svg';
 import { Link } from 'react-router-dom';
 
 export default class Navbar extends Component {
@@ -67,7 +67,7 @@ export default class Navbar extends Component {
           }}
         >
           <img
-            src={LogoHorizontalNoBorder}
+            src={LogoSlanted}
             style={{
               width: this.state.windowWidth < 1024 ? '80vw' : 'initial'
             }}
