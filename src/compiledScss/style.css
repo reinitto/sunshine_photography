@@ -97,6 +97,10 @@ nav.navbar.navbar-expand-xl .bg-white {
   transition: width 2s, height 2s, background-color 2s, transform 2s, -webkit-transform 2s;
 }
 
+.link-to-gallery {
+  border: 1.9rem solid rgba(115, 141, 29, 0.5);
+}
+
 .table td,
 .table th {
   text-align: center;

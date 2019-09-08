@@ -7,7 +7,14 @@ export default function IntroCarousel({ photos }) {
         <div
           key={i}
           className='carousel-item fitted-image active'
-          style={{ backgroundImage: `url(${photo.src})` }}
+          style={{
+            backgroundImage: `url(${photo.src})`,
+            /* Create the parallax scrolling effect */
+            backgroundAttachment: 'fixed',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover'
+          }}
         ></div>
       );
     } else {
@@ -15,7 +22,14 @@ export default function IntroCarousel({ photos }) {
         <div
           key={i}
           className='carousel-item fitted-image'
-          style={{ backgroundImage: `url(${photo.src})` }}
+          style={{
+            backgroundImage: `url(${photo.src})`,
+            /* Create the parallax scrolling effect */
+            backgroundAttachment: 'fixed',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover'
+          }}
         ></div>
       );
     }

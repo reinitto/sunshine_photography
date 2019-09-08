@@ -186,7 +186,11 @@ export default class Home extends Component {
         <div
           style={{
             backgroundImage: `url('http://images.unsplash.com/photo-1526402978125-f1d6df91cbac?ixlib=rb-1.2.1&auto=format&fit=crop&w=2500&q=60')`,
-            backgroundRepeat: 'no-repeat'
+            /* Create the parallax scrolling effect */
+            backgroundAttachment: 'fixed',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover'
           }}
         >
           <div
