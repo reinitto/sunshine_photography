@@ -70,7 +70,7 @@ const ContactInfo = ({ contactInfo, social }) => {
 
 export default function About({ image, paragraphs, contactInfo, social }) {
   return (
-    <Fragment>
+    <div className='about-section'>
       <h1>About Me</h1>
       <div className='row'>
         <div className='col-8'>
@@ -84,6 +84,6 @@ export default function About({ image, paragraphs, contactInfo, social }) {
       </div>
       <ContactInfo contactInfo={contactInfo} social={social} />
       <ContactForm />
-    </Fragment>
+    </div>
   );
 }

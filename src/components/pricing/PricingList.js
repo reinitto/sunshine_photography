@@ -26,7 +26,7 @@ export default function PricingList({
 }) {
   let content = items.map((item, i) => <PricingItem {...item} key={i} />);
   return (
-    <table className='table'>
+    <table className='table pricingList'>
       <thead>
         <tr>
           <th scope='col'>{title}</th>
