@@ -15,8 +15,13 @@ body {
   color: white;
 }
 
+nav.navbar.navbar-expand-md {
+  -webkit-transition: background-color 500ms ease-in;
+  transition: background-color 500ms ease-in;
+}
+
 nav.navbar.navbar-expand-md .bg-white {
-  background: white !important;
+  background-color: white !important;
 }
 
 .table thead th {

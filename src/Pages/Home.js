@@ -93,6 +93,8 @@ export default class Home extends Component {
         <Navbar />
         <IntroCarousel />
         <div className='container'>
+          <h2 style={{ textAlign: 'center' }}>Gallery</h2>
+
           <div
             className={`links-to-gallery`}
             style={{
@@ -177,6 +179,7 @@ export default class Home extends Component {
               ></div>
             </Link>
           </div>
+          <h2 style={{ textAlign: 'center' }}>Pricing</h2>
           <Pricing />
           <Pricing title='Digital Photos' items={digitalPhotos} />
         </div>

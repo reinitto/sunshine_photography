@@ -14,8 +14,9 @@ body {
   color: white;
 }
 nav.navbar.navbar-expand-md {
+  transition: background-color 500ms ease-in;
   .bg-white {
-    background: white !important;
+    background-color: white !important;
   }
 }
 .table thead th {
