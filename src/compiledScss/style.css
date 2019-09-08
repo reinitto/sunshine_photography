@@ -111,10 +111,10 @@ nav.navbar.navbar-expand-md .bg-white {
 }
 
 .come-in {
-  -webkit-transform: translateY(150px);
-          transform: translateY(150px);
-  -webkit-animation: come-in 0.8s ease forwards;
-          animation: come-in 0.8s ease forwards;
+  -webkit-transform: scale(0.5) translateY(30px);
+          transform: scale(0.5) translateY(30px);
+  -webkit-animation: come-in 0.5s ease forwards;
+          animation: come-in 0.5s ease forwards;
 }
 
 .come-in:nth-child(odd) {
@@ -125,14 +125,14 @@ nav.navbar.navbar-expand-md .bg-white {
 
 @-webkit-keyframes come-in {
   to {
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
+    -webkit-transform: scale(1) translateY(0);
+            transform: scale(1) translateY(0);
   }
 }
 
 @keyframes come-in {
   to {
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
+    -webkit-transform: scale(1) translateY(0);
+            transform: scale(1) translateY(0);
   }
 }

@@ -83,7 +83,6 @@ export default function About({ image, paragraphs, contactInfo, social }) {
         </div>
       </div>
       <ContactInfo contactInfo={contactInfo} social={social} />
-      <ContactForm />
     </div>
   );
 }

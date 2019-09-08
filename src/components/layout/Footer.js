@@ -7,7 +7,12 @@ import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 
 export default function Footer() {
   return (
-    <footer className='page-footer font-small mdb-color pt-4'>
+    <footer
+      className='page-footer font-small mdb-color pt-4'
+      style={{
+        background: 'darkgrey'
+      }}
+    >
       <div className='container text-center text-md-left'>
         <div className='row text-center text-md-left mt-3 pb-3'>
           <div className='col-md-3 col-lg-3 col-xl-3 mx-auto mt-3'>

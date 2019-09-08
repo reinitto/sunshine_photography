@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import About from '../components/AboutSection';
+import AboutSection from '../components/AboutSection';
+import ContactForm from '../components/contact/ContactForm';
 import Pricing from '../components/pricing/PricingList';
 import IntroCarousel from '../components/IntroCarousel';
 import Navbar from '../components/layout/Navbar';
@@ -71,19 +72,19 @@ export default class Home extends Component {
         }
       });
       //About Section
-      let aboutSection = document.querySelectorAll('.about-section-home');
-      aboutSection.forEach(link => {
-        if (this.isAnyPartOfElementInViewport(link)) {
-          if ([...link.classList].includes('come-in')) {
-            console.log('class alraedy exists');
-          } else {
-            link.classList.add('come-in');
-          }
-        } else {
-          console.log('not in view');
-          link.classList.remove('come-in');
-        }
-      });
+      // let aboutSection = document.querySelectorAll('.about-section-home');
+      // aboutSection.forEach(link => {
+      //   if (this.isAnyPartOfElementInViewport(link)) {
+      //     if ([...link.classList].includes('come-in')) {
+      //       console.log('class alraedy exists');
+      //     } else {
+      //       link.classList.add('come-in');
+      //     }
+      //   } else {
+      //     console.log('not in view');
+      //     link.classList.remove('come-in');
+      //   }
+      // });
     });
   }
   render() {
@@ -178,9 +179,24 @@ export default class Home extends Component {
           </div>
           <Pricing />
           <Pricing title='Digital Photos' items={digitalPhotos} />
-          <div className='about-section-home'>
-            <About />
+        </div>
+        <div
+          style={{
+            backgroundImage: `url('http://images.unsplash.com/photo-1526402978125-f1d6df91cbac?ixlib=rb-1.2.1&auto=format&fit=crop&w=2500&q=60')`,
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          <div
+            className='container'
+            style={{
+              color: 'white'
+            }}
+          >
+            <AboutSection />
           </div>
+        </div>
+        <div className='container'>
+          <ContactForm />
         </div>
       </div>
     );
