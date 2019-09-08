@@ -10,7 +10,7 @@ export default function Footer() {
     <footer
       className='page-footer font-small mdb-color pt-4'
       style={{
-        background: 'darkgrey'
+        background: 'rgba(169,169,169,0.3)'
       }}
     >
       <div className='container text-center text-md-left'>

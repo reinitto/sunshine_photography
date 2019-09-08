@@ -77,34 +77,60 @@ export default class Navbar extends Component {
         <button
           style={{
             margin: 'auto',
-            marginTop: '1rem'
+            marginTop: '2rem'
           }}
           className='navbar-toggler'
           type='button'
           data-toggle='collapse'
           data-target='#collapsibleNavbar'
         >
-          <span className='navbar-toggler-icon'></span>
+          <span
+            className='navbar-toggler-icon'
+            style={{
+              marginTop: this.state.windowWidth < 439 ? '2rem' : 'initial'
+            }}
+          ></span>
         </button>
         <div className='collapse navbar-collapse' id='collapsibleNavbar'>
           <ul className='navbar-nav ml-auto'>
             <li>
-              <Link to={'/'} className='nav-link'>
+              <Link
+                to={'/'}
+                className='nav-link'
+                style={{
+                  textAlign: this.state.windowWidth < 439 ? 'center' : 'left'
+                }}
+              >
                 Home
               </Link>
             </li>
             <li>
-              <Link to={'/contact'} className='nav-link'>
+              <Link
+                to={'/contact'}
+                className='nav-link'
+                style={{
+                  textAlign: this.state.windowWidth < 439 ? 'center' : 'left'
+                }}
+              >
                 Contact
               </Link>
             </li>
             <li>
-              <Link to={'/about'} className='nav-link'>
+              <Link
+                to={'/about'}
+                className='nav-link'
+                style={{
+                  textAlign: this.state.windowWidth < 439 ? 'center' : 'left'
+                }}
+              >
                 About
               </Link>
             </li>
             <li
               className='nav-item dropdown'
+              style={{
+                textAlign: this.state.windowWidth < 439 ? 'center' : 'left'
+              }}
               onMouseOver={() => console.log('Over')}
               onMouseEnter={() => {
                 document.querySelector('.dropdown-menu').classList.add('show');
@@ -152,7 +178,13 @@ export default class Navbar extends Component {
             </li>
 
             <li>
-              <Link to={'/pricing'} className='nav-link'>
+              <Link
+                to={'/pricing'}
+                className='nav-link'
+                style={{
+                  textAlign: this.state.windowWidth < 439 ? 'center' : 'left'
+                }}
+              >
                 Pricing
               </Link>
             </li>
