@@ -35,8 +35,7 @@ const LazyImg = ({ imageSrc }) => {
   );
 };
 
-const SingleImage = img => {
-  console.log("single img", img);
+const SingleImage = ({ img }) => {
   return (
     <div>
       <LazyImg imageSrc={img.src} />
