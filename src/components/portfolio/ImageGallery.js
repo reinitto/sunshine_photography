@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import Gallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
+import ImageGalleryWithoutLighbox from "./ImageGalleryWithoutLighbox";
 
 function ImageGallery({ photos, galleryName }) {
   const [currentImage, setCurrentImage] = useState(0);
@@ -19,7 +20,8 @@ function ImageGallery({ photos, galleryName }) {
   return (
     <div>
       <h2 className="text-center">{galleryName.toUpperCase() || "BABY"}</h2>
-      <Gallery photos={photos} onClick={openLightbox} />
+      <ImageGalleryWithoutLighbox images={photos} />
+      {/* <Gallery photos={photos} onClick={openLightbox} />
       <ModalGateway
         style={{
           zIndex: "1100"
@@ -46,7 +48,7 @@ function ImageGallery({ photos, galleryName }) {
             />
           </Modal>
         ) : null}
-      </ModalGateway>
+      </ModalGateway> */}
     </div>
   );
 }

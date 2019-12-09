@@ -1,3 +1,6 @@
+$base-color: rgba(108, 22, 89, 1);
+$secondary-color: rgba(115, 141, 29, 1);
+
 html {
   height: 100%;
 }
@@ -8,11 +11,11 @@ body {
 }
 
 a {
-  color: rgba(115, 141, 29, 1);
+  color: $secondary-color;
 }
 
 a:hover {
-  color: rgba(108, 22, 89, 1);
+  color: $base-color;
 }
 
 .bg-transparent {
@@ -21,7 +24,14 @@ a:hover {
 .bg-transparent .nav-link {
   color: white;
 }
-nav.navbar.navbar-expand-xl {
+
+.bg-transparent .dropdown-menu .dropdown-item {
+  color: white;
+}
+.dropdown-menu .dropdown-item {
+  color: $secondary-color;
+}
+nav.navbar.navbar-expand-md {
   transition: background-color 500ms ease-in;
   .bg-white {
     background-color: white !important;

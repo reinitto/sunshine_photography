@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import LogoSlanted from "../../logo/Photo-logo-horizontal-no-border-slanted.svg";
+import CameraOnly from "../../logo/camera-logo.svg";
 // import LogoHorizontalNoBorder from '../../logo/Photo-logo-horizontal-no-border.svg';
 import { Link } from "react-router-dom";
 
@@ -40,7 +41,7 @@ export default class Navbar extends Component {
     return (
       <nav
         style={{ zIndex: "100 " }}
-        className={`navbar navbar-expand-lg fixed-top
+        className={`navbar navbar-expand-md fixed-top
          ${
            window.location.pathname === "/" && scrollTop > 0
              ? "bg-white border-bottom border-secondary"
@@ -63,16 +64,20 @@ export default class Navbar extends Component {
           style={{
             height: "60px",
             marginBottom: "1rem",
-            margin: this.state.windowWidth < 992 ? "auto" : "initial"
+            margin: this.state.windowWidth < 776 ? "auto" : "initial"
           }}
         >
+          {" "}
+          Jelena
           <img
-            src={LogoSlanted}
+            src={CameraOnly}
             style={{
-              width: this.state.windowWidth < 992 ? "80vw" : "25vw"
+              maxHeight: "100%",
+              maxWidth: "100%"
             }}
             alt=""
-          />
+          />{" "}
+          Rozensteina
         </Link>
         <button
           style={{
@@ -151,6 +156,9 @@ export default class Navbar extends Component {
               </Link>
               <div
                 className="dropdown-menu mt-0 border-top-0 pt-0"
+                style={{
+                  backgroundColor: "transparent"
+                }}
                 aria-labelledby="navbarDropdownMenuLink"
                 onMouseLeave={() => {
                   document

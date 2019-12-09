@@ -5,7 +5,7 @@ export default function GalleryPage() {
   return (
     <Fragment>
       <Navbar />
-      <div className="container">
+      <div style={{ width: "90%", margin: "auto" }}>
         <h2 className="text-center">Gallery</h2>
         <Gallery collection={window.location.hash.slice(1) || "baby"} />
       </div>
