@@ -31,3 +31,13 @@ Run
 ```sh
 $ npm run build
 ```
+
+### Deployment
+
+1. Create Produvtion build
+2. Push it to firebase
+
+```sh
+$ npm run build
+$ firebase deploy
+```

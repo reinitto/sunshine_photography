@@ -13,6 +13,11 @@
 .firebaserc
 firebase.json
 
+
+.firebase
+.firebaserc
+.vscode
+
 /src/firebase.js
 
 # misc
