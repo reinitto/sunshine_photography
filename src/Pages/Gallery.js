@@ -1,14 +1,13 @@
-import React, { Fragment } from 'react';
-import Gallery from '../components/portfolio/Gallery';
-import Navbar from '../components/layout/Navbar';
+import React, { Fragment } from "react";
+import Gallery from "../components/portfolio/Gallery";
+import Navbar from "../components/layout/Navbar";
 export default function GalleryPage() {
-  console.log(' window.location.hash', window.location.hash);
   return (
     <Fragment>
       <Navbar />
-      <div className='container'>
+      <div className="container">
         <h2>Gallery</h2>
-        <Gallery collection={window.location.hash.slice(1) || 'baby'} />
+        <Gallery collection={window.location.hash.slice(1) || "baby"} />
       </div>
     </Fragment>
   );

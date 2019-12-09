@@ -1,7 +1,7 @@
-import React from 'react';
-import { faHome, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
-import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from "react";
+import { faHome, faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 About.defaultProps = {
   paragraphs: [
@@ -10,15 +10,15 @@ About.defaultProps = {
     `Phasellus porta molestie dui id tincidunt. Proin luctus odio ac neque feugiat laoreet. Donec eu velit dolor. Morbi porta non velit quis sagittis. Pellentesque elementum eget tellus quis fermentum. Morbi nunc libero, suscipit id dolor quis, porta consequat diam. Phasellus purus est, varius quis libero at, commodo lobortis massa. Suspendisse eget dictum nunc, commodo mollis dui.`
   ],
   image:
-    'https://cdn.pixabay.com/photo/2014/03/25/16/54/user-297566_960_720.png',
+    "https://cdn.pixabay.com/photo/2014/03/25/16/54/user-297566_960_720.png",
   contactInfo: {
-    email: 'info@gmail.com',
-    phone: '+ 01 234 567 88',
-    area: 'Telemark/ Norway'
+    email: "info@gmail.com",
+    phone: "+ 01 234 567 88",
+    area: "Telemark/ Norway"
   },
   social: {
-    facebook: 'http://www.facebook.com',
-    instagram: 'http://www.instagram.com'
+    facebook: "http://www.facebook.com",
+    instagram: "http://www.instagram.com"
   }
 };
 
@@ -32,34 +32,34 @@ const icons = {
 
 const ContactInfo = ({ contactInfo, social }) => {
   return (
-    <div className='col-md-4 col-lg-3 col-xl-3 mt-3'>
+    <div className="col-md-4 col-lg-3 col-xl-3 mt-3">
       {contactInfo &&
         Object.keys(contactInfo).length > 0 &&
         Object.keys(contactInfo).map((item, i) => (
           <p key={i}>
-            <FontAwesomeIcon icon={icons[item]} className='mr-3' />
+            <FontAwesomeIcon icon={icons[item]} className="mr-3" />
             {contactInfo[item]}
           </p>
         ))}
       <ul>
         {social &&
           Object.keys(social).map((item, i) => (
-            <li className='list-inline-item' key={i}>
+            <li className="list-inline-item" key={i}>
               <a
-                target='_blank'
-                rel='noopener noreferrer'
+                target="_blank"
+                rel="noopener noreferrer"
                 href={item}
-                className='btn-floating btn-sm rgba-white-slight mx-1'
+                className="btn-floating btn-sm rgba-white-slight mx-1"
               >
-                <FontAwesomeIcon icon={icons[item]} className='mr-3' />
+                <FontAwesomeIcon icon={icons[item]} className="mr-3" />
               </a>
             </li>
           ))}
       </ul>
       <a
-        target='_blank'
-        href='http://www.shutterstock.com'
-        rel='noopener noreferrer'
+        target="_blank"
+        href="http://www.shutterstock.com"
+        rel="noopener noreferrer"
       >
         Shutterstock
       </a>
@@ -69,19 +69,37 @@ const ContactInfo = ({ contactInfo, social }) => {
 
 export default function About({ image, paragraphs, contactInfo, social }) {
   return (
-    <div className='about-section'>
-      <h1>About Me</h1>
-      <div className='row'>
-        <div className='col-8'>
-          {paragraphs.map((par, i) => (
-            <p key={i}>{par}</p>
-          ))}
-        </div>
-        <div className='col-4'>
-          <img className='img-fluid' src={image} alt='portrait' />
+    <div
+      style={{
+        backgroundImage: `url('http://images.unsplash.com/photo-1526402978125-f1d6df91cbac?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60')`,
+        /* Create the parallax scrolling effect */
+        backgroundAttachment: "fixed",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover"
+      }}
+    >
+      <div
+        className="container"
+        style={{
+          color: "white"
+        }}
+      >
+        <div className="about-section">
+          <h1>About Me</h1>
+          <div className="row">
+            <div className="col-8">
+              {paragraphs.map((par, i) => (
+                <p key={i}>{par}</p>
+              ))}
+            </div>
+            <div className="col-4">
+              <img className="img-fluid" src={image} alt="portrait" />
+            </div>
+          </div>
+          <ContactInfo contactInfo={contactInfo} social={social} />
         </div>
       </div>
-      <ContactInfo contactInfo={contactInfo} social={social} />
     </div>
   );
 }

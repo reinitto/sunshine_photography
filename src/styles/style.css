@@ -39,8 +39,9 @@ nav.navbar.navbar-expand-xl .bg-white {
 }
 
 .link-to-baby-gallery::after {
-  content: 'baby';
+  content: "baby";
   opacity: 0;
+  margin: auto;
 }
 
 .link-to-baby-gallery:hover::after {
@@ -52,8 +53,9 @@ nav.navbar.navbar-expand-xl .bg-white {
 }
 
 .link-to-family-gallery::after {
-  content: 'family';
+  content: "family";
   opacity: 0;
+  margin: auto;
 }
 
 .link-to-family-gallery:hover::after {
@@ -65,8 +67,9 @@ nav.navbar.navbar-expand-xl .bg-white {
 }
 
 .link-to-portrait-gallery::after {
-  content: 'portrait';
+  content: "portrait";
   opacity: 0;
+  margin: auto;
 }
 
 .link-to-portrait-gallery:hover::after {
@@ -78,8 +81,9 @@ nav.navbar.navbar-expand-xl .bg-white {
 }
 
 .link-to-event-gallery::after {
-  content: 'event';
+  content: "event";
   opacity: 0;
+  margin: auto;
 }
 
 .link-to-event-gallery:hover::after {

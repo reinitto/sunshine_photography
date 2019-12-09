@@ -34,8 +34,9 @@ nav.navbar.navbar-expand-xl {
 }
 
 .link-to-baby-gallery::after {
-  content: 'baby';
+  content: "baby";
   opacity: 0;
+  margin: auto;
 }
 .link-to-baby-gallery:hover::after {
   opacity: 1;
@@ -44,8 +45,9 @@ nav.navbar.navbar-expand-xl {
   opacity: 0.5;
 }
 .link-to-family-gallery::after {
-  content: 'family';
+  content: "family";
   opacity: 0;
+  margin: auto;
 }
 .link-to-family-gallery:hover::after {
   opacity: 1;
@@ -54,8 +56,9 @@ nav.navbar.navbar-expand-xl {
   opacity: 0.5;
 }
 .link-to-portrait-gallery::after {
-  content: 'portrait';
+  content: "portrait";
   opacity: 0;
+  margin: auto;
 }
 .link-to-portrait-gallery:hover::after {
   opacity: 1;
@@ -64,8 +67,9 @@ nav.navbar.navbar-expand-xl {
   opacity: 0.5;
 }
 .link-to-event-gallery::after {
-  content: 'event';
+  content: "event";
   opacity: 0;
+  margin: auto;
 }
 .link-to-event-gallery:hover::after {
   opacity: 1;
