@@ -37,8 +37,20 @@ const LazyImg = ({ imageSrc }) => {
 
 const SingleImage = ({ img }) => {
   return img ? (
-    <div>
-      {<LazyImg imageSrc={img.src} />}
+    <div
+      style={{
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        marginBottom: "5px"
+      }}
+    >
+      <img
+        className="fitted-image"
+        src={img.src}
+        alt="carousel"
+        loading="lazy"
+      />
+      {/* {<LazyImg imageSrc={img.src} />} */}
       {img.text ? <p>{img.text}</p> : null}
     </div>
   ) : null;
