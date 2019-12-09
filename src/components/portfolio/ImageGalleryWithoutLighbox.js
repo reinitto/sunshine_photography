@@ -45,7 +45,12 @@ const SingleImage = ({ img }) => {
       }}
     >
       <img
-        className="fitted-image"
+        style={{
+          width: "100%",
+          objectFit: "cover",
+          backgroundSize: "cover",
+          backgroundPosition: "center"
+        }}
         src={img.src}
         alt="carousel"
         loading="lazy"
