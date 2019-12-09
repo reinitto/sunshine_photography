@@ -17,8 +17,8 @@ About.defaultProps = {
     area: "Telemark/ Norway"
   },
   social: {
-    facebook: "http://www.facebook.com",
-    instagram: "http://www.instagram.com"
+    facebook: "https://www.facebook.com",
+    instagram: "https://www.instagram.com"
   }
 };
 
@@ -58,7 +58,7 @@ const ContactInfo = ({ contactInfo, social }) => {
       </ul>
       <a
         target="_blank"
-        href="http://www.shutterstock.com"
+        href="https://www.shutterstock.com"
         rel="noopener noreferrer"
       >
         Shutterstock
@@ -71,7 +71,7 @@ export default function About({ image, paragraphs, contactInfo, social }) {
   return (
     <div
       style={{
-        backgroundImage: `url('http://images.unsplash.com/photo-1526402978125-f1d6df91cbac?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=60'),url('http://images.unsplash.com/photo-1526402978125-f1d6df91cbac?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60')`,
+        backgroundImage: `url('https://images.unsplash.com/photo-1526402978125-f1d6df91cbac?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=60'),url('https://images.unsplash.com/photo-1526402978125-f1d6df91cbac?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60')`,
         /* Create the parallax scrolling effect */
         backgroundAttachment: "fixed",
         backgroundPosition: "center",

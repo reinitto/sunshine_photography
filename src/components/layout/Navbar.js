@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import LogoSlanted from "../../logo/Photo-logo-horizontal-no-border-slanted.svg";
 import CameraOnly from "../../logo/camera-logo.svg";
-// import LogoHorizontalNoBorder from '../../logo/Photo-logo-horizontal-no-border.svg';
 import { Link } from "react-router-dom";
 
 export default class Navbar extends Component {
