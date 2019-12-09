@@ -36,12 +36,12 @@ const LazyImg = ({ imageSrc }) => {
 };
 
 const SingleImage = ({ img }) => {
-  return (
+  return img ? (
     <div>
-      <LazyImg imageSrc={img.src} />
+      {<LazyImg imageSrc={img.src} />}
       {img.text ? <p>{img.text}</p> : null}
     </div>
-  );
+  ) : null;
 };
 
 const Doubles = ({ images }) => {
@@ -90,28 +90,32 @@ const Triples = ({ images }) => {
 export default function ImageGalleryWithoutLighbox(props) {
   const images = props.images;
   let gallery = [];
-  for (let i = 0; i < images.length; ) {
-    //  RANDOMLY CHOOSE 1 - 3 IMAGES
-    let choice = Math.floor(Math.random() * 3);
-    switch (choice) {
-      case 0:
-        //  ADD SINGLE IMG
-        gallery.push(<SingleImage src={images[i]} />);
-        i++;
-        break;
-      case 1:
-        // ADD 2 IMAGES
-        gallery.push(<Doubles images={[images[i], images[i + 1]]} />);
-        i += 2;
-        break;
-      case 2:
-        // ADD 3 images
-        gallery.push(
-          <Triples images={[images[i], images[i + 1], images[i + 2]]} />
-        );
-        i += 3;
-        break;
+  if (images) {
+    for (let i = 0; i < images.length; ) {
+      //  RANDOMLY CHOOSE 1 - 3 IMAGES
+      let choice = Math.floor(Math.random() * 3);
+      switch (choice) {
+        case 0:
+          //  ADD SINGLE IMG
+          gallery.push(<SingleImage img={images[i]} />);
+          i++;
+          break;
+        case 1:
+          // ADD 2 IMAGES
+          gallery.push(<Doubles images={[images[i], images[i + 1]]} />);
+          i += 2;
+          break;
+        case 2:
+          // ADD 3 images
+          gallery.push(
+            <Triples images={[images[i], images[i + 1], images[i + 2]]} />
+          );
+          i += 3;
+          break;
+      }
     }
+    return <div>{gallery}</div>;
+  } else {
+    return <div>Loading...</div>;
   }
-  return <div>{gallery}</div>;
 }
