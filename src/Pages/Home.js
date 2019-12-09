@@ -1,13 +1,8 @@
 import React, { Component, lazy, Suspense } from "react";
-// const AboutSection = lazy(()=> import())
-// const AboutSection = lazy(()=> import())
-// const AboutSection = lazy(()=> import())
-// import AboutSection from "../components/AboutSection";
 import ContactForm from "../components/contact/ContactForm";
 import Pricing from "../components/pricing/PricingList";
-import IntroCarousel from "../components/IntroCarousel";
 import Navbar from "../components/layout/Navbar";
-// import LinksToGallery from "../components/LinksToGallery";
+const IntroCarousel = lazy(() => import("../components/IntroCarousel"));
 const LinksToGallery = lazy(() => import("../components/LinksToGallery"));
 const AboutSection = lazy(() => import("../components/AboutSection"));
 let digitalPhotos = [
@@ -77,15 +72,17 @@ export default class Home extends Component {
     return (
       <div id="home">
         <Navbar />
-        <IntroCarousel />
+        <Suspense fallback={"Just a second..."}>
+          <IntroCarousel />
+        </Suspense>
         <Suspense fallback={"loading..."}>
           <LinksToGallery />
           <AboutSection />
         </Suspense>
-        <h2 className="text-center">Pricing</h2>
-        <Pricing />
-        <Pricing title="Digital Photos" items={digitalPhotos} />
         <div className="container">
+          <h2 className="text-center">Pricing</h2>
+          <Pricing />
+          <Pricing title="Digital Photos" items={digitalPhotos} />
           <ContactForm />
         </div>
       </div>

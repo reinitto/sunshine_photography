@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from 'react';
-import Gallery from 'react-photo-gallery';
-import Carousel, { Modal, ModalGateway } from 'react-images';
+import React, { useState, useCallback } from "react";
+import Gallery from "react-photo-gallery";
+import Carousel, { Modal, ModalGateway } from "react-images";
 
 function ImageGallery({ photos, galleryName }) {
   const [currentImage, setCurrentImage] = useState(0);
@@ -18,25 +18,23 @@ function ImageGallery({ photos, galleryName }) {
 
   return (
     <div>
-      <h2 style={{ textAlign: 'center' }}>
-        {galleryName.toUpperCase() || 'BABY'}
-      </h2>
+      <h2 className="text-center">{galleryName.toUpperCase() || "BABY"}</h2>
       <Gallery photos={photos} onClick={openLightbox} />
       <ModalGateway
         style={{
-          zIndex: '1100'
+          zIndex: "1100"
         }}
       >
         {viewerIsOpen ? (
           <Modal
             onClose={closeLightbox}
             style={{
-              zIndex: '1100'
+              zIndex: "1100"
             }}
           >
             <Carousel
               style={{
-                zIndex: '1100'
+                zIndex: "1100"
               }}
               currentIndex={currentImage}
               views={photos.map((x, i) => ({

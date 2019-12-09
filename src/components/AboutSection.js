@@ -71,7 +71,7 @@ export default function About({ image, paragraphs, contactInfo, social }) {
   return (
     <div
       style={{
-        backgroundImage: `url('http://images.unsplash.com/photo-1526402978125-f1d6df91cbac?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60')`,
+        backgroundImage: `url('http://images.unsplash.com/photo-1526402978125-f1d6df91cbac?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=60'),url('http://images.unsplash.com/photo-1526402978125-f1d6df91cbac?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60')`,
         /* Create the parallax scrolling effect */
         backgroundAttachment: "fixed",
         backgroundPosition: "center",

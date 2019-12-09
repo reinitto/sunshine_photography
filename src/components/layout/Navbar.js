@@ -39,6 +39,7 @@ export default class Navbar extends Component {
     let { scrollTop } = this.state;
     return (
       <nav
+        style={{ zIndex: "100 " }}
         className={`navbar navbar-expand-lg fixed-top
          ${
            window.location.pathname === "/" && scrollTop > 0

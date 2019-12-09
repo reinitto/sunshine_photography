@@ -46,18 +46,6 @@ export default function IntroCarousel({ photos }) {
               return sources;
             });
       return (
-        // <div
-        //   key={i}
-        //   className="carousel-item fitted-image"
-        //   style={{
-        //     backgroundImage: srcs,
-        //     /* Create the parallax scrolling effect */
-        //     backgroundAttachment: "fixed",
-        //     backgroundPosition: "center",
-        //     backgroundRepeat: "no-repeat",
-        //     backgroundSize: "cover"
-        //   }}
-        // ></div>
         <div
           key={i}
           className="carousel-item "
@@ -74,10 +62,6 @@ export default function IntroCarousel({ photos }) {
             )}
           </LazyImage>
         </div>
-
-        // <div key={i} className="carousel-item ">
-        //   <img className="fitted-image" src={srcs[0]} alt="Second " />
-        // </div>
       );
     }
   });

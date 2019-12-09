@@ -6,7 +6,7 @@ export default function GalleryPage() {
     <Fragment>
       <Navbar />
       <div className="container">
-        <h2>Gallery</h2>
+        <h2 className="text-center">Gallery</h2>
         <Gallery collection={window.location.hash.slice(1) || "baby"} />
       </div>
     </Fragment>
