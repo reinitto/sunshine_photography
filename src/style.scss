@@ -1,6 +1,8 @@
 $base-color: rgba(108, 22, 89, 1);
+$base-light-color: rgba(108, 22, 89, 0.85);
 $secondary-color: rgba(115, 141, 29, 1);
-
+$secondary-light-color: rgba(115, 141, 29, 0.5);
+$link-text-color: white;
 html {
   height: 100%;
 }
@@ -17,16 +19,34 @@ a {
 a:hover {
   color: $base-color;
 }
-
+.about-social {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  li {
+    list-style-type: none;
+  }
+  li > a {
+    display: flex;
+    flex-direction: column;
+    color: $link-text-color;
+    div {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}
 .bg-transparent {
   background: transparent;
 }
 .bg-transparent .nav-link {
-  color: white;
+  color: $link-text-color;
 }
 
 .bg-transparent .dropdown-menu .dropdown-item {
-  color: white;
+  color: $link-text-color;
+  background: transparent;
+  font-size: 20px;
 }
 .dropdown-menu .dropdown-item {
   color: $secondary-color;
@@ -38,8 +58,6 @@ nav.navbar.navbar-expand-md {
   }
 }
 .table thead th {
-  vertical-align: bottom;
-  border-bottom: 2px solid #dee2e6;
   width: 1rem;
 }
 
@@ -83,8 +101,17 @@ nav.navbar.navbar-expand-md {
   transition: width 2s, height 2s, background-color 2s, transform 2s;
   a {
     padding: 1.9rem;
-    background-color: rgba(115, 141, 29, 0.5);
+    background-color: $secondary-light-color;
     transition: opacity 0.2s ease-in;
+    div {
+      background-repeat: no-repeat;
+      height: 300px;
+      font-size: 2.5rem;
+      display: flex;
+      color: $link-text-color;
+      background-size: cover;
+      text-decoration: none;
+    }
   }
   a:hover {
     opacity: 0.5;
@@ -102,6 +129,13 @@ nav.navbar.navbar-expand-md {
   object-fit: cover;
   background-size: cover;
   background-position: center;
+}
+
+.carousel-item {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .container {
@@ -127,7 +161,7 @@ p {
 }
 
 h2 {
-  color: rgba(108, 22, 89, 0.85);
+  color: $base-light-color;
   margin: 1rem auto;
 }
 
@@ -137,6 +171,10 @@ h2 {
 }
 .come-in:nth-child(odd) {
   animation-duration: 0.4s; /* So they look staggered */
+}
+
+#contactForm {
+  padding: 1rem;
 }
 
 @keyframes come-in {

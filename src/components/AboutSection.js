@@ -1,5 +1,10 @@
 import React from "react";
-import { faHome, faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHome,
+  faEnvelope,
+  faPhone,
+  faCamera
+} from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -18,7 +23,8 @@ About.defaultProps = {
   },
   social: {
     facebook: "https://www.facebook.com",
-    instagram: "https://www.instagram.com"
+    instagram: "https://www.instagram.com",
+    shutterstock: "https://www.shutterstock.com"
   }
 };
 
@@ -27,42 +33,41 @@ const icons = {
   phone: faPhone,
   area: faHome,
   facebook: faFacebook,
-  instagram: faInstagram
+  instagram: faInstagram,
+  shutterstock: faCamera
 };
 
 const ContactInfo = ({ contactInfo, social }) => {
   return (
-    <div className="col-md-4 col-lg-3 col-xl-3 mt-3">
-      {contactInfo &&
-        Object.keys(contactInfo).length > 0 &&
-        Object.keys(contactInfo).map((item, i) => (
-          <p key={i}>
-            <FontAwesomeIcon icon={icons[item]} className="mr-3" />
-            {contactInfo[item]}
-          </p>
-        ))}
-      <ul>
+    <div className="row">
+      <div className="col-md-4 col-lg-3 col-xl-3">
+        {contactInfo &&
+          Object.keys(contactInfo).length > 0 &&
+          Object.keys(contactInfo).map((item, i) => (
+            <p key={i}>
+              <FontAwesomeIcon icon={icons[item]} className="mr-3" />
+              {contactInfo[item]}
+            </p>
+          ))}
+      </div>
+      <ul className="col-md-8 about-social">
         {social &&
           Object.keys(social).map((item, i) => (
-            <li className="list-inline-item" key={i}>
+            <li key={i}>
               <a
                 target="_blank"
                 rel="noopener noreferrer"
                 href={item}
-                className="btn-floating btn-sm rgba-white-slight mx-1"
+                className="btn-floating mx-auto"
               >
-                <FontAwesomeIcon icon={icons[item]} className="mr-3" />
+                <div>
+                  <FontAwesomeIcon icon={icons[item]} size={"2x"} />
+                </div>
+                <p>{Object.keys(social)[i]}</p>
               </a>
             </li>
           ))}
       </ul>
-      <a
-        target="_blank"
-        href="https://www.shutterstock.com"
-        rel="noopener noreferrer"
-      >
-        Shutterstock
-      </a>
     </div>
   );
 };

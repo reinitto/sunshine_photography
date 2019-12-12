@@ -15,6 +15,40 @@ a:hover {
   color: #6c1659;
 }
 
+.about-social {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.about-social li {
+  list-style-type: none;
+}
+
+.about-social li > a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  color: white;
+}
+
+.about-social li > a div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
 .bg-transparent {
   background: transparent;
 }
@@ -25,6 +59,8 @@ a:hover {
 
 .bg-transparent .dropdown-menu .dropdown-item {
   color: white;
+  background: transparent;
+  font-size: 20px;
 }
 
 .dropdown-menu .dropdown-item {
@@ -41,8 +77,6 @@ nav.navbar.navbar-expand-md .bg-white {
 }
 
 .table thead th {
-  vertical-align: bottom;
-  border-bottom: 2px solid #dee2e6;
   width: 1rem;
 }
 
@@ -100,6 +134,18 @@ nav.navbar.navbar-expand-md .bg-white {
   transition: opacity 0.2s ease-in;
 }
 
+.links-to-gallery a div {
+  background-repeat: no-repeat;
+  height: 300px;
+  font-size: 2.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: white;
+  background-size: cover;
+  text-decoration: none;
+}
+
 .links-to-gallery a:hover {
   opacity: 0.5;
 }
@@ -116,6 +162,13 @@ nav.navbar.navbar-expand-md .bg-white {
      object-fit: cover;
   background-size: cover;
   background-position: center;
+}
+
+.carousel-item {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .container {
@@ -156,6 +209,10 @@ h2 {
   -webkit-animation-duration: 0.4s;
           animation-duration: 0.4s;
   /* So they look staggered */
+}
+
+#contactForm {
+  padding: 1rem;
 }
 
 @-webkit-keyframes come-in {

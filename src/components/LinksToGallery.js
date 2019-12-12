@@ -1,6 +1,13 @@
 import React, { useState, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 
+let linkImages = [
+  "https://images.unsplash.com/photo-1546015720-b8b30df5aa27?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=60",
+  "https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=60",
+  "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=60",
+  "https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=60"
+];
+
 function useWindowWidth() {
   const [windowWidth, setWindowWidth] = useState(0);
   useLayoutEffect(() => {
@@ -34,15 +41,7 @@ export default function LinksToGallery() {
           <div
             className="link-to-baby-gallery "
             style={{
-              backgroundImage: `
-                url(
-                  'https://images.unsplash.com/photo-1546015720-b8b30df5aa27?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80')`,
-              backgroundRepeat: "no-repeat",
-              height: `300px`,
-              fontSize: "2.5rem",
-              display: "flex",
-              color: "white",
-              backgroundSize: "cover"
+              backgroundImage: `url(${linkImages[0]})`
             }}
           ></div>
         </Link>
@@ -50,14 +49,7 @@ export default function LinksToGallery() {
           <div
             className="link-to-family-gallery"
             style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80')`,
-              backgroundRepeat: "no-repeat",
-              height: `300px`,
-              fontSize: "2.5rem",
-              textDecoration: "none",
-              display: "flex",
-              color: "white",
-              backgroundSize: "cover"
+              backgroundImage: `url(${linkImages[1]})`
             }}
           ></div>
         </Link>
@@ -65,14 +57,7 @@ export default function LinksToGallery() {
           <div
             className="link-to-portrait-gallery"
             style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80')`,
-              backgroundRepeat: "no-repeat",
-              height: `300px`,
-              fontSize: "2.5rem",
-              textDecoration: "none",
-              display: "flex",
-              color: "white",
-              backgroundSize: "cover"
+              backgroundImage: `url(${linkImages[2]})`
             }}
           ></div>
         </Link>
@@ -80,14 +65,7 @@ export default function LinksToGallery() {
           <div
             className="link-to-event-gallery"
             style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80')`,
-              backgroundRepeat: "no-repeat",
-              height: `300px`,
-              fontSize: "2.5rem",
-              textDecoration: "none",
-              display: "flex",
-              color: "white",
-              backgroundSize: "cover"
+              backgroundImage: `url(${linkImages[3]})`
             }}
           ></div>
         </Link>

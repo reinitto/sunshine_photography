@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import LazyImage from "react-lazy-progressive-image";
 
 // CREATE 4 TYPES OF IMAGE CONTAINERS
@@ -10,9 +10,8 @@ const LazyImg = ({ imageSrc }) => {
   //  create small image and large versions
   let widthSizes = [2500, 1500];
   let sources = [];
-  for (let width of widthSizes) {
-    sources.push(`${imageSrc}&w=${width}&q=60`);
-  }
+  widthSizes.forEach(size => sources.push(`${imageSrc}&w=${size}&q=60`));
+
   return (
     <div
       style={{
@@ -128,6 +127,8 @@ export default function ImageGalleryWithoutLighbox(props) {
             <Triples images={[images[i], images[i + 1], images[i + 2]]} />
           );
           i += 3;
+          break;
+        default:
           break;
       }
     }

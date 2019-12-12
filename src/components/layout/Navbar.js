@@ -153,10 +153,11 @@ export default class Navbar extends Component {
                 Gallery
               </Link>
               <div
-                className="dropdown-menu mt-0 border-top-0 pt-0"
-                style={{
-                  backgroundColor: "transparent"
-                }}
+                className={`dropdown-menu mt-0 border-top-0 pt-0 ${
+                  window.location.pathname === "/" && scrollTop === 0
+                    ? "bg-transparent"
+                    : "bg-white"
+                } `}
                 aria-labelledby="navbarDropdownMenuLink"
                 onMouseLeave={() => {
                   document

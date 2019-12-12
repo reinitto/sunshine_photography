@@ -5,18 +5,18 @@ export default function IntroCarousel({ photos }) {
   let carouselItems = photos.map((photo, i) => {
     // ADD ACTIVE CLASS TO FIRST IMAGE
     //  http://images.unsplash.com/photo-1513326238704-b2cd281a3d53?ixlib=rb-1.2.1&auto=format&fit=crop"
-    //  add &w=1500&q=60
+    //  add &w=2000&q=60
 
     if (i === 0) {
       let srcs =
         typeof photo.src === "string"
           ? `url(${photo.src})`
           : photo.src.map(src => {
-              let widthSizes = [2000, 200];
+              let widthSizes = [2000, 400];
               let sources = [];
-              for (let width of widthSizes) {
+              widthSizes.forEach(width => {
                 sources.push(`url(${src}&w=${width}&q=60)`);
-              }
+              });
               return sources;
             });
       return (
@@ -24,12 +24,8 @@ export default function IntroCarousel({ photos }) {
           key={i}
           className="carousel-item fitted-image active"
           style={{
-            backgroundImage: srcs,
+            backgroundImage: srcs
             /* Create the parallax scrolling effect */
-            backgroundAttachment: "fixed",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover"
           }}
         ></div>
       );
@@ -38,24 +34,15 @@ export default function IntroCarousel({ photos }) {
         typeof photo.src === "string"
           ? `url(${photo.src})`
           : photo.src.map(src => {
-              let widthSizes = [2000, 200];
+              let widthSizes = [2000, 400];
               let sources = [];
-              for (let width of widthSizes) {
-                sources.push(`${src}&w=${width}&q=60`);
-              }
+              widthSizes.forEach(w => {
+                sources.push(`${src}&w=${w}&q=60`);
+              });
               return sources;
             });
       return (
-        <div
-          key={i}
-          className="carousel-item "
-          style={{
-            backgroundAttachment: "fixed",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover"
-          }}
-        >
+        <div key={i} className="carousel-item ">
           <LazyImage placeholder={srcs[0][1]} src={srcs[0][0]}>
             {(src, loading, isVisible) => (
               <img className="fitted-image" src={src} alt="carousel" />
