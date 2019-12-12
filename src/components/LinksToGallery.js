@@ -25,7 +25,7 @@ export default function LinksToGallery() {
   const width = useWindowWidth();
 
   return (
-    <div className="container">
+    <div className="container pb-3">
       <h2 className="text-center">Gallery</h2>
 
       <div

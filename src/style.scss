@@ -130,6 +130,9 @@ nav.navbar.navbar-expand-md {
 .table th {
   text-align: center;
 }
+.journal-nav {
+  grid-template-columns: repeat(3, 1fr);
+}
 
 .fitted-image {
   width: 100%;
@@ -191,5 +194,17 @@ h2 {
   }
   to {
     transform: scale(1) translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .journal-nav {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .journal-nav {
+    grid-template-columns: repeat(1, 1fr);
   }
 }

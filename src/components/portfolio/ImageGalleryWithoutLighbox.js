@@ -37,6 +37,7 @@ const LazyImg = ({ imageSrc }) => {
 const SingleImage = ({ img }) => {
   return img ? (
     <div
+      key={img.src}
       style={{
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -63,6 +64,7 @@ const SingleImage = ({ img }) => {
 const Doubles = ({ images }) => {
   return (
     <div
+      key={images[0]}
       style={{
         display: "flex",
         justifyContent: "space-between",
@@ -70,9 +72,9 @@ const Doubles = ({ images }) => {
       }}
       className="side-by-side"
     >
-      {images.map(img => {
+      {images.map((img, i) => {
         return img ? (
-          <div style={{ width: "49%" }}>
+          <div key={i} style={{ width: "49%" }}>
             <LazyImg imageSrc={img.src} />
             {img.text ? <p>{img.text}</p> : null}
           </div>
@@ -84,6 +86,7 @@ const Doubles = ({ images }) => {
 const Triples = ({ images }) => {
   return (
     <div
+      key={images[0]}
       style={{
         display: "flex",
         justifyContent: "space-between",
@@ -91,9 +94,9 @@ const Triples = ({ images }) => {
       }}
       className="side-by-side"
     >
-      {images.map(img => {
+      {images.map((img, i) => {
         return img ? (
-          <div style={{ width: "32%" }}>
+          <div key={i} style={{ width: "32%" }}>
             <LazyImg imageSrc={img.src} />
             {img.text ? <p>{img.text}</p> : null}
           </div>
@@ -113,18 +116,21 @@ export default function ImageGalleryWithoutLighbox(props) {
       switch (choice) {
         case 0:
           //  ADD SINGLE IMG
-          gallery.push(<SingleImage img={images[i]} />);
+          gallery.push(<SingleImage key={i} img={images[i]} />);
           i++;
           break;
         case 1:
           // ADD 2 IMAGES
-          gallery.push(<Doubles images={[images[i], images[i + 1]]} />);
+          gallery.push(<Doubles key={i} images={[images[i], images[i + 1]]} />);
           i += 2;
           break;
         case 2:
           // ADD 3 images
           gallery.push(
-            <Triples images={[images[i], images[i + 1], images[i + 2]]} />
+            <Triples
+              key={i}
+              images={[images[i], images[i + 1], images[i + 2]]}
+            />
           );
           i += 3;
           break;

@@ -20,7 +20,7 @@ function ImageGallery({ photos, galleryName }) {
 
   return (
     <div>
-      <h2 className="text-center">{galleryName.toUpperCase() || "BABY"}</h2>
+      <h2 className="text-center">{galleryName.toUpperCase() || ""}</h2>
       <ImageGalleryWithoutLighbox images={photos} />
       {/* <Gallery photos={photos} onClick={openLightbox} />
       <ModalGateway

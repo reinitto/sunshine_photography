@@ -36,11 +36,7 @@ export default class Navbar extends Component {
   };
   render() {
     let { scrollTop } = this.state;
-    console.log(
-      "window.location.pathname.length",
-      window.location.pathname.length
-    );
-    console.log("scrollTop", scrollTop);
+
     return (
       <nav
         style={{ zIndex: "100 " }}
@@ -72,7 +68,7 @@ export default class Navbar extends Component {
           }}
         >
           {" "}
-          Jelena
+          Sunshine
           <img
             src={CameraOnly}
             style={{
@@ -81,7 +77,7 @@ export default class Navbar extends Component {
             }}
             alt=""
           />{" "}
-          Rozensteina
+          Photography
         </Link>
         <button
           style={{
@@ -132,6 +128,17 @@ export default class Navbar extends Component {
                 }}
               >
                 About
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={"/journal"}
+                className="nav-link"
+                style={{
+                  textAlign: this.state.windowWidth < 439 ? "center" : "left"
+                }}
+              >
+                Journal
               </Link>
             </li>
             <li

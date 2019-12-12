@@ -11,8 +11,8 @@ export default function GalleryPage() {
         }}
       ></div>
       <div style={{ width: "90%", margin: "auto" }}>
-        <h2 className="text-center">Gallery</h2>
-        <Gallery collection={window.location.hash.slice(1) || "baby"} />
+        <h2 className="text-center">Portfolio</h2>
+        <Gallery collection={window.location.hash.slice(1)} />
       </div>
     </Fragment>
   );

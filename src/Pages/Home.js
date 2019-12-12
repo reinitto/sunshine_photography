@@ -4,6 +4,7 @@ import Pricing from "../components/pricing/PricingList";
 import Navbar from "../components/layout/Navbar";
 const IntroCarousel = lazy(() => import("../components/IntroCarousel"));
 const LinksToGallery = lazy(() => import("../components/LinksToGallery"));
+const LinksToJournal = lazy(() => import("../components/LinksToJournal"));
 const AboutSection = lazy(() => import("../components/AboutSection"));
 let digitalPhotos = [
   {
@@ -83,6 +84,12 @@ export default class Home extends Component {
           <h2 className="text-center">Pricing</h2>
           <Pricing />
           <Pricing title="Digital Photos" items={digitalPhotos} />
+        </div>
+        <Suspense fallback={"Still loading..."}>
+          <h2 className="text-center">Latest Travel Adventures</h2>
+          <LinksToJournal />
+        </Suspense>
+        <div className="container">
           <ContactForm />
         </div>
       </div>

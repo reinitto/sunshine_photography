@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
+import Journal from "./Pages/Journal";
 import Pricing from "./Pages/Pricing";
 import Contact from "./Pages/Contact";
 import Gallery from "./Pages/Gallery";
@@ -18,6 +19,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route path="/contact" component={Contact} />
             <Route path="/about" component={About} />
+            <Route path="/journal" component={Journal} />
             <Route path="/gallery" component={Gallery} />
             <Route path="/Pricing" component={Pricing} />
           </Switch>
