@@ -1,23 +1,23 @@
-import React, { Fragment } from 'react';
-import Navbar from '../components/layout/Navbar';
-import PricingList from '../components/pricing/PricingList';
+import React, { Fragment } from "react";
+import Navbar from "../components/layout/Navbar";
+import PricingList from "../components/pricing/PricingList";
 
 let digitalPhotos = [
   {
-    name: '5',
-    price: '1500 NOK'
+    name: "5",
+    price: "1500 NOK"
   },
   {
-    name: '10',
-    price: '2500 NOK'
+    name: "10",
+    price: "2500 NOK"
   },
   {
-    name: '20',
-    price: '4000 NOK'
+    name: "20",
+    price: "4000 NOK"
   },
   {
-    name: '30',
-    price: '5000 NOK'
+    name: "30",
+    price: "5000 NOK"
   }
 ];
 
@@ -25,14 +25,19 @@ export default function Pricing() {
   return (
     <Fragment>
       <Navbar />
-      <div className='container'>
+      <div
+        style={{
+          height: "70px"
+        }}
+      ></div>
+      <div className="container">
         <h2>Photo sessions</h2>
         <p>
           Session length is about 2h. Depending on your choice. Baby sessions
           are shorter - up to 45min. You know how babies are...
         </p>
         <PricingList />
-        <h3>Baby</h3>{' '}
+        <h3>Baby</h3>{" "}
         <p>
           I have good experience with photography of children of all ages. 1
           year old is a wonderful time of play and fun. It keeps bringing a few
@@ -82,12 +87,12 @@ export default function Pricing() {
           photo comes in color, black/white, high resolution for print, low
           resolution for instagram and other websites.
         </p>
-        <PricingList title='Digital Photos' items={digitalPhotos} />
+        <PricingList title="Digital Photos" items={digitalPhotos} />
         <p>
           <i>Each additional photo 200Nok</i>
         </p>
         <p>
-          It is recommended that you also back up your digital photos yourself{' '}
+          It is recommended that you also back up your digital photos yourself{" "}
         </p>
         <ul>
           <li>Photography is payable on the day of photography.</li>

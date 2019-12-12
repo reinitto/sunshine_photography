@@ -57,8 +57,8 @@ const ContactInfo = ({ contactInfo, social }) => {
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href={item}
-                className="btn-floating mx-auto"
+                href={social[item]}
+                className=" mx-auto"
               >
                 <div>
                   <FontAwesomeIcon icon={icons[item]} size={"2x"} />

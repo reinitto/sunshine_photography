@@ -25,11 +25,19 @@ a:hover {
   align-items: center;
   li {
     list-style-type: none;
+    border-radius: 25%;
+    background-color: $link-text-color;
   }
   li > a {
     display: flex;
     flex-direction: column;
-    color: $link-text-color;
+    color: $secondary-color;
+    padding: 1rem;
+    transition: background-color 0.2s ease-in;
+    &:hover {
+      color: $base-color;
+      background-color: $secondary-light-color;
+    }
     div {
       display: flex;
       justify-content: space-around;

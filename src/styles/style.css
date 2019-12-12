@@ -28,6 +28,8 @@ a:hover {
 
 .about-social li {
   list-style-type: none;
+  border-radius: 25%;
+  background-color: white;
 }
 
 .about-social li > a {
@@ -38,7 +40,15 @@ a:hover {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  color: white;
+  color: #738d1d;
+  padding: 1rem;
+  -webkit-transition: background-color 0.2s ease-in;
+  transition: background-color 0.2s ease-in;
+}
+
+.about-social li > a:hover {
+  color: #6c1659;
+  background-color: rgba(115, 141, 29, 0.5);
 }
 
 .about-social li > a div {

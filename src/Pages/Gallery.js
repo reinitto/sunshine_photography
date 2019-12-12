@@ -5,6 +5,11 @@ export default function GalleryPage() {
   return (
     <Fragment>
       <Navbar />
+      <div
+        style={{
+          height: "70px"
+        }}
+      ></div>
       <div style={{ width: "90%", margin: "auto" }}>
         <h2 className="text-center">Gallery</h2>
         <Gallery collection={window.location.hash.slice(1) || "baby"} />

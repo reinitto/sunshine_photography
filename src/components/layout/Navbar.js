@@ -36,25 +36,31 @@ export default class Navbar extends Component {
   };
   render() {
     let { scrollTop } = this.state;
+    console.log(
+      "window.location.pathname.length",
+      window.location.pathname.length
+    );
+    console.log("scrollTop", scrollTop);
     return (
       <nav
         style={{ zIndex: "100 " }}
         className={`navbar navbar-expand-md fixed-top
          ${
-           window.location.pathname === "/" && scrollTop > 0
+           window.location.pathname.length === 1 && scrollTop > 0
              ? "bg-white border-bottom border-secondary"
              : ""
          }
          ${
-           window.location.pathname !== "/" && scrollTop > 0
-             ? "bg-white border-bottom border-secondary"
-             : ""
-         }
-         ${
-           window.location.pathname === "/" && scrollTop === 0
+           window.location.pathname.length === 1 && scrollTop === 0
              ? "bg-transparent"
              : ""
-         }`}
+         }
+         ${
+           window.location.pathname.length > 1
+             ? "bg-white border-bottom border-secondary"
+             : ""
+         }
+    `}
       >
         <Link
           className="navbar-brand"

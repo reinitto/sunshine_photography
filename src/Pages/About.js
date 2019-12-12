@@ -6,6 +6,11 @@ export default function About() {
   return (
     <Fragment>
       <Navbar />
+      <div
+        style={{
+          height: "70px"
+        }}
+      ></div>
       <AboutSection />
       <div className="container">
         <ContactForm />
