@@ -30,9 +30,9 @@ export default function LinksToGallery() {
           gridGap: "10px"
         }}
       >
-        <Link to="/gallery#baby">
+        <Link to="/gallery#baby" className="link-to-gallery">
           <div
-            className="link-to-baby-gallery link-to-gallery"
+            className="link-to-baby-gallery "
             style={{
               backgroundImage: `
                 url(
@@ -46,9 +46,9 @@ export default function LinksToGallery() {
             }}
           ></div>
         </Link>
-        <Link to="/gallery#family">
+        <Link to="/gallery#family" className="link-to-gallery">
           <div
-            className="link-to-family-gallery link-to-gallery"
+            className="link-to-family-gallery"
             style={{
               backgroundImage: `url('https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80')`,
               backgroundRepeat: "no-repeat",
@@ -61,9 +61,9 @@ export default function LinksToGallery() {
             }}
           ></div>
         </Link>
-        <Link to="/gallery#portrait">
+        <Link to="/gallery#portrait" className="link-to-gallery">
           <div
-            className="link-to-portrait-gallery link-to-gallery"
+            className="link-to-portrait-gallery"
             style={{
               backgroundImage: `url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80')`,
               backgroundRepeat: "no-repeat",
@@ -76,9 +76,9 @@ export default function LinksToGallery() {
             }}
           ></div>
         </Link>
-        <Link to="/gallery#event">
+        <Link to="/gallery#event" className="link-to-gallery">
           <div
-            className="link-to-event-gallery link-to-gallery"
+            className="link-to-event-gallery"
             style={{
               backgroundImage: `url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80')`,
               backgroundRepeat: "no-repeat",

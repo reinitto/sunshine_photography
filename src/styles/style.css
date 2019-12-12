@@ -56,10 +56,6 @@ nav.navbar.navbar-expand-md .bg-white {
   opacity: 1;
 }
 
-.link-to-baby-gallery:hover {
-  opacity: 0.5;
-}
-
 .link-to-family-gallery::after {
   content: "family";
   opacity: 0;
@@ -68,10 +64,6 @@ nav.navbar.navbar-expand-md .bg-white {
 
 .link-to-family-gallery:hover::after {
   opacity: 1;
-}
-
-.link-to-family-gallery:hover {
-  opacity: 0.5;
 }
 
 .link-to-portrait-gallery::after {
@@ -84,10 +76,6 @@ nav.navbar.navbar-expand-md .bg-white {
   opacity: 1;
 }
 
-.link-to-portrait-gallery:hover {
-  opacity: 0.5;
-}
-
 .link-to-event-gallery::after {
   content: "event";
   opacity: 0;
@@ -98,10 +86,6 @@ nav.navbar.navbar-expand-md .bg-white {
   opacity: 1;
 }
 
-.link-to-event-gallery:hover {
-  opacity: 0.5;
-}
-
 .links-to-gallery {
   -webkit-transition: width 2s, height 2s, background-color 2s, -webkit-transform 2s;
   transition: width 2s, height 2s, background-color 2s, -webkit-transform 2s;
@@ -109,8 +93,15 @@ nav.navbar.navbar-expand-md .bg-white {
   transition: width 2s, height 2s, background-color 2s, transform 2s, -webkit-transform 2s;
 }
 
-.link-to-gallery {
-  border: 1.9rem solid rgba(115, 141, 29, 0.5);
+.links-to-gallery a {
+  padding: 1.9rem;
+  background-color: rgba(115, 141, 29, 0.5);
+  -webkit-transition: opacity 0.2s ease-in;
+  transition: opacity 0.2s ease-in;
+}
+
+.links-to-gallery a:hover {
+  opacity: 0.5;
 }
 
 .table td,
@@ -162,12 +153,16 @@ h2 {
 }
 
 .come-in:nth-child(odd) {
-  -webkit-animation-duration: 0.6s;
-          animation-duration: 0.6s;
+  -webkit-animation-duration: 0.4s;
+          animation-duration: 0.4s;
   /* So they look staggered */
 }
 
 @-webkit-keyframes come-in {
+  from {
+    -webkit-transform: scale(0.75) translateY(0);
+            transform: scale(0.75) translateY(0);
+  }
   to {
     -webkit-transform: scale(1) translateY(0);
             transform: scale(1) translateY(0);
@@ -175,6 +170,10 @@ h2 {
 }
 
 @keyframes come-in {
+  from {
+    -webkit-transform: scale(0.75) translateY(0);
+            transform: scale(0.75) translateY(0);
+  }
   to {
     -webkit-transform: scale(1) translateY(0);
             transform: scale(1) translateY(0);
