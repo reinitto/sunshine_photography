@@ -217,31 +217,39 @@ const portfolioImages = {
 export function GalleryNav({ collections, isJournal }) {
   const journalLinks = Object.keys(collections).map((collection, i) => {
     return (
-      <div
-        key={i}
+      <Link
         style={{
-          backgroundImage: `${"url(" +
-            collections[collection][0].src +
-            "&w=450&q=60" +
-            ")"}`,
           width: "100%",
-          height: "450px"
+          height: "450px",
+          padding: "1rem"
         }}
+        to={`/journal#${collection}`}
       >
-        <Link
+        <div
+          key={i}
           style={{
+            backgroundImage: `${"url(" +
+              collections[collection][0].src +
+              "&w=450&q=60" +
+              ")"}`,
+            objectFit: `cover`,
+            backgroundSize: `cover`,
+            backgroundPosition: `center`,
             width: "100%",
             height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "1rem"
+            display: `flex`,
+            justifyContent: `center`,
+            alignItems: `center`
           }}
-          to={`/journal#${collection}`}
         >
-          {`${collection}`}
-        </Link>
-      </div>
+          <p
+            style={{
+              background: "white",
+              padding: "1rem 3rem"
+            }}
+          >{`${collection}`}</p>
+        </div>
+      </Link>
     );
   });
   const portfolioLinks = Object.keys(collections).map((collection, i) => {

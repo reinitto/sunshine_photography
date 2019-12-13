@@ -6,13 +6,15 @@ export default function IntroCarousel({ photos }) {
     // ADD ACTIVE CLASS TO FIRST IMAGE
     //  http://images.unsplash.com/photo-1513326238704-b2cd281a3d53?ixlib=rb-1.2.1&auto=format&fit=crop"
     //  add &w=2000&q=60
-
+    // background-image: image-set( "foo.png" 1x,
+    // "foo-2x.png" 2x,
+    // "foo-print.png" 600dpi );
     if (i === 0) {
       let srcs =
         typeof photo.src === "string"
           ? `url(${photo.src})`
           : photo.src.map(src => {
-              let widthSizes = [2000, 400];
+              let widthSizes = [1500, 500];
               let sources = [];
               widthSizes.forEach(width => {
                 sources.push(`url(${src}&w=${width}&q=60)`);
@@ -25,7 +27,6 @@ export default function IntroCarousel({ photos }) {
           className="carousel-item fitted-image active"
           style={{
             backgroundImage: srcs
-            /* Create the parallax scrolling effect */
           }}
         ></div>
       );
@@ -34,26 +35,36 @@ export default function IntroCarousel({ photos }) {
         typeof photo.src === "string"
           ? `url(${photo.src})`
           : photo.src.map(src => {
-              let widthSizes = [2000, 400];
+              let widthSizes = [1500, 500];
               let sources = [];
               widthSizes.forEach(w => {
                 sources.push(`${src}&w=${w}&q=60`);
+                // sources.push(`url(${src}&w=${w}&q=60)`);
               });
               return sources;
             });
       return (
-        <div key={i} className="carousel-item ">
-          <LazyImage placeholder={srcs[0][1]} src={srcs[0][0]}>
-            {(src, loading, isVisible) => (
-              <img className="fitted-image" src={src} alt="carousel" />
-            )}
-          </LazyImage>
-        </div>
+        <LazyImage placeholder={`${srcs[0][1]}`} src={srcs[0][0]}>
+          {(src, loading, isVisible) => {
+            return (
+              <img
+                key={i}
+                className="carousel-item fitted-image"
+                src={src}
+                alt="carousel"
+              ></img>
+            );
+          }}
+        </LazyImage>
       );
     }
   });
   return (
     <div className="carousel slide" data-ride="carousel" data-interval="3500">
+      <div className="carousel-text">
+        {/*  Text set in CSS */}
+        {/* <h2>Carousel Title</h2> */}
+      </div>
       <div className="carousel-inner">{carouselItems}</div>
     </div>
   );

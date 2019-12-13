@@ -91,8 +91,8 @@ nav.navbar.navbar-expand-md .bg-white {
 }
 
 .link-to-baby-gallery::after {
-  content: "baby";
-  opacity: 0;
+  content: "Baby";
+  opacity: 1;
   margin: auto;
 }
 
@@ -101,8 +101,8 @@ nav.navbar.navbar-expand-md .bg-white {
 }
 
 .link-to-family-gallery::after {
-  content: "family";
-  opacity: 0;
+  content: "Family";
+  opacity: 1;
   margin: auto;
 }
 
@@ -111,8 +111,8 @@ nav.navbar.navbar-expand-md .bg-white {
 }
 
 .link-to-portrait-gallery::after {
-  content: "portrait";
-  opacity: 0;
+  content: "Portrait";
+  opacity: 1;
   margin: auto;
 }
 
@@ -121,8 +121,8 @@ nav.navbar.navbar-expand-md .bg-white {
 }
 
 .link-to-event-gallery::after {
-  content: "event";
-  opacity: 0;
+  content: "Event";
+  opacity: 1;
   margin: auto;
 }
 
@@ -181,9 +181,23 @@ nav.navbar.navbar-expand-md .bg-white {
 
 .carousel-item {
   background-attachment: fixed;
-  background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+}
+
+.carousel-text {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  color: #6c1659;
+  z-index: 1;
+  font-size: 10vh;
+}
+
+.carousel-text::before {
+  content: "Sunshine \A Photography";
+  background: white;
+  white-space: pre;
+  opacity: 0.5;
 }
 
 .container {
