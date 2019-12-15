@@ -43,7 +43,7 @@ export default class Navbar extends Component {
         className={`navbar navbar-expand-md fixed-top
          ${
            window.location.pathname.length === 1 && scrollTop > 0
-             ? "bg-white border-bottom border-secondary"
+             ? "bg-base border-bottom border-secondary"
              : ""
          }
          ${
@@ -53,7 +53,7 @@ export default class Navbar extends Component {
          }
          ${
            window.location.pathname.length > 1
-             ? "bg-white border-bottom border-secondary"
+             ? "bg-base border-bottom border-secondary"
              : ""
          }
     `}
@@ -142,7 +142,7 @@ export default class Navbar extends Component {
                 className={`dropdown-menu mt-0 border-top-0 pt-0 ${
                   window.location.pathname === "/" && scrollTop === 0
                     ? "bg-transparent"
-                    : "bg-white"
+                    : "bg-base"
                 } `}
                 aria-labelledby="navbarDropdownMenuLink"
                 onMouseLeave={() => {

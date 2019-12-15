@@ -1,8 +1,15 @@
-$base-color: rgba(108, 22, 89, 1);
-$base-light-color: rgba(108, 22, 89, 0.85);
-$secondary-color: rgba(115, 141, 29, 1);
-$secondary-light-color: rgba(115, 141, 29, 0.5);
+$base-color: #3d4856;
+$base-light-color: #93adcf;
+$backgroundColor: #b4bfcf;
+// $backgroundColor: #b4bfcf;
+$secondary-color: #9f818a;
+$secondary-light-color: #d6b6c0;
 $link-text-color: white;
+// $base-color: rgba(108, 22, 89, 1);
+// $base-light-color: rgba(108, 22, 89, 0.85);
+// $secondary-color: rgba(115, 141, 29, 1);
+// $secondary-light-color: rgba(115, 141, 29, 0.5);
+// $link-text-color: white;
 html {
   height: 100%;
 }
@@ -10,18 +17,19 @@ html {
 body {
   min-height: 100%;
   overflow-x: hidden;
+  background: $backgroundColor;
 }
 
 a {
-  color: $secondary-color;
-}
-
-a:hover {
   color: $base-color;
 }
 
-.contact-info-item {
+a:hover {
   color: $secondary-color;
+}
+
+.contact-info-item {
+  color: $base-color;
 }
 
 .about-social {
@@ -53,7 +61,11 @@ a:hover {
   background: transparent;
 }
 .bg-transparent .nav-link {
-  color: $link-text-color;
+  color: white;
+}
+
+.bg-base {
+  background: $backgroundColor;
 }
 
 .bg-transparent .dropdown-menu .dropdown-item {
@@ -87,7 +99,7 @@ nav.navbar.navbar-expand-md {
 }
 
 .btn-base {
-  color: #fff;
+  color: $link-text-color;
   background-color: $secondary-color;
   border-color: $secondary-color;
 }
@@ -141,7 +153,7 @@ nav.navbar.navbar-expand-md {
   transition: width 2s, height 2s, background-color 2s, transform 2s;
   a {
     padding: 1.9rem;
-    background-color: $secondary-light-color;
+    background-color: $secondary-color;
     transition: opacity 0.2s ease-in;
     div {
       background-repeat: no-repeat;
@@ -168,7 +180,7 @@ nav.navbar.navbar-expand-md {
 
 .fitted-image {
   width: 100%;
-  height: 100vh;
+  height: 65vh;
   object-fit: cover;
   background-size: cover;
   background-position: center;
@@ -182,7 +194,7 @@ nav.navbar.navbar-expand-md {
 
 .carousel-text {
   position: absolute;
-  top: 50%;
+  top: 20vh;
   left: 1rem;
   color: $base-color;
   z-index: 1;
@@ -190,14 +202,14 @@ nav.navbar.navbar-expand-md {
 }
 .carousel-text::before {
   content: "Sunshine \A Photography";
-  background: white;
+  background: $link-text-color;
   white-space: pre;
   opacity: 0.5;
 }
 
-.container {
-  padding-top: 50px;
-}
+// .container {
+//   padding-top: 50px;
+// }
 
 .navbar .nav-link {
   font-size: 21px;
@@ -214,7 +226,7 @@ p {
 }
 
 h2 {
-  color: $base-light-color;
+  color: $base-color;
   margin: 1rem auto;
 }
 
@@ -246,7 +258,7 @@ h2 {
 }
 @media (max-width: 1024px) {
   .carousel-text {
-    font-size: 10vw;
+    font-size: 8vw;
   }
 }
 

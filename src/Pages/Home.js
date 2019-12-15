@@ -2,7 +2,8 @@ import React, { Component, lazy, Suspense } from "react";
 import ContactForm from "../components/contact/ContactForm";
 import Pricing from "../components/pricing/PricingList";
 import Navbar from "../components/layout/Navbar";
-const IntroCarousel = lazy(() => import("../components/IntroCarousel"));
+const IntroImage = lazy(() => import("../components/IntroImage"));
+// const IntroCarousel = lazy(() => import("../components/IntroCarousel"));
 const LinksToGallery = lazy(() => import("../components/LinksToGallery"));
 const LinksToJournal = lazy(() => import("../components/LinksToJournal"));
 const AboutSection = lazy(() => import("../components/AboutSection"));
@@ -73,8 +74,8 @@ export default class Home extends Component {
     return (
       <div id="home">
         <Navbar />
-        <Suspense fallback={"Just a second..."}>
-          <IntroCarousel />
+        <Suspense fallback={"."}>
+          <IntroImage />
         </Suspense>
         <Suspense fallback={"loading..."}>
           <LinksToGallery />

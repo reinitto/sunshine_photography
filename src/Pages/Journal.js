@@ -1,6 +1,7 @@
-import React, { Fragment } from "react";
-import Gallery from "../components/portfolio/Gallery";
+import React, { Fragment, Suspense, lazy } from "react";
+// import Gallery from "../components/portfolio/Gallery";
 import Navbar from "../components/layout/Navbar";
+const Gallery = lazy(() => import("../components/portfolio/Gallery"));
 
 const journalGalleries = {
   Norway: [
@@ -131,11 +132,13 @@ export default function Journal() {
       ></div>
       <div style={{ width: "90%", margin: "auto" }}>
         <h2 className="text-center">Travel Photos</h2>
-        <Gallery
-          isJournal={true}
-          collection={window.location.hash.slice(1)}
-          galleries={journalGalleries}
-        />
+        <Suspense fallback={`...loading`}>
+          <Gallery
+            isJournal={true}
+            collection={window.location.hash.slice(1)}
+            galleries={journalGalleries}
+          />
+        </Suspense>
       </div>
     </Fragment>
   );

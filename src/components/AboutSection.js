@@ -11,8 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 About.defaultProps = {
   paragraphs: [
     `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet euismod libero a vulputate. Sed eu lorem id ante pulvinar elementum sit amet vel risus. Donec malesuada eu enim sit amet consequat. Curabitur aliquam sollicitudin magna sit amet venenatis. Suspendisse id gravida urna. Aenean non libero vitae tortor suscipit tincidunt ut eu elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi iaculis viverra velit vitae aliquet. Integer quis sapien vulputate, pulvinar sem at, ullamcorper neque.`,
-    `Nulla hendrerit libero id diam aliquet, dapibus tempus nibh accumsan. Vivamus vulputate metus ut felis cursus fringilla. Duis condimentum ac sem vel euismod. Phasellus quis semper nisl. Nullam in malesuada ante. Fusce lobortis nunc et nibh vulputate vestibulum. Nunc laoreet arcu vitae mi hendrerit, et varius enim euismod. Mauris nibh felis, ultrices at malesuada vitae, hendrerit eget odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce libero felis, ullamcorper non dolor ultrices, consectetur egestas nisl. Cras id mollis massa. Praesent faucibus purus ac efficitur feugiat. Duis eu euismod diam, sed efficitur magna. Etiam ultricies arcu vel nulla posuere pulvinar.`,
-    `Phasellus porta molestie dui id tincidunt. Proin luctus odio ac neque feugiat laoreet. Donec eu velit dolor. Morbi porta non velit quis sagittis. Pellentesque elementum eget tellus quis fermentum. Morbi nunc libero, suscipit id dolor quis, porta consequat diam. Phasellus purus est, varius quis libero at, commodo lobortis massa. Suspendisse eget dictum nunc, commodo mollis dui.`
+    `Nulla hendrerit libero id diam aliquet, dapibus tempus nibh accumsan. Vivamus vulputate metus ut felis cursus fringilla. Duis condimentum ac sem vel euismod. Phasellus quis semper nisl. Nullam in malesuada ante. Fusce lobortis nunc et nibh vulputate vestibulum. Nunc laoreet arcu vitae mi hendrerit, et varius enim euismod. Mauris nibh felis, ultrices at malesuada vitae, hendrerit eget odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce libero felis, ullamcorper non dolor ultrices, consectetur egestas nisl. Cras id mollis massa. Praesent faucibus purus ac efficitur feugiat. Duis eu euismod diam, sed efficitur magna. Etiam ultricies arcu vel nulla posuere pulvinar.`
   ],
   image:
     "https://cdn.pixabay.com/photo/2014/03/25/16/54/user-297566_960_720.png",
@@ -76,7 +75,7 @@ export default function About({ image, paragraphs, contactInfo, social }) {
   return (
     <div
       style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1526402978125-f1d6df91cbac?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=60'),url('https://images.unsplash.com/photo-1526402978125-f1d6df91cbac?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60')`,
+        backgroundImage: `url("https://firebasestorage.googleapis.com/v0/b/momblog-15d1c.appspot.com/o/background_images%2FIMG_8997%201500.jpg?alt=media&token=5a01d548-ef23-417c-a359-301d38dfdd97")`,
         /* Create the parallax scrolling effect */
         backgroundAttachment: "fixed",
         backgroundPosition: "center",

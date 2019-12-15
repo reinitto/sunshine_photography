@@ -8,17 +8,16 @@ import LazyImage from "react-lazy-progressive-image";
 
 const LazyImg = ({ imageSrc }) => {
   //  create small image and large versions
-  let widthSizes = [2500, 1500];
+  let widthSizes = [1500, 500];
   let sources = [];
   widthSizes.forEach(size => sources.push(`${imageSrc}&w=${size}&q=60`));
-
   return (
     <div
-      style={{
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        marginBottom: "5px"
-      }}
+    // style={{
+    //   backgroundRepeat: "no-repeat",
+    //   backgroundSize: "cover",
+    //   marginBottom: "5px"
+    // }}
     >
       <LazyImage placeholder={sources[1]} src={sources[0]}>
         {(src, loading, isVisible) => (
@@ -27,6 +26,10 @@ const LazyImg = ({ imageSrc }) => {
             src={src}
             alt="carousel"
             loading="lazy"
+            // style={{
+            //   transition: `all 0.25s ease`,
+            //   opacity: loading ? 0.2 : 1
+            // }}
           />
         )}
       </LazyImage>
@@ -52,7 +55,7 @@ const SingleImage = ({ img }) => {
           backgroundPosition: "center"
         }}
         src={img.src}
-        alt="carousel"
+        alt="single"
         loading="lazy"
       />
       {/* {<LazyImg imageSrc={img.src} />} */}
@@ -92,7 +95,6 @@ const Triples = ({ images }) => {
         justifyContent: "space-between",
         marginBottom: "5px"
       }}
-      className="side-by-side"
     >
       {images.map((img, i) => {
         return img ? (
@@ -110,29 +112,50 @@ export default function ImageGalleryWithoutLighbox(props) {
   const images = props.images;
   let gallery = [];
   if (images) {
-    for (let i = 0; i < images.length; ) {
-      //  RANDOMLY CHOOSE 1 - 3 IMAGES
-      let choice = Math.floor(Math.random() * 3);
+    // CHOOSE IMAGES IN ORGER 1,2,1,3
+    let imgPerRow = [1, 2, 1, 3];
+    let currentImgIndex = 0;
+    for (let i = 0; i < images.length; i++) {
+      //  if only 1 image left in array, use it as full size
+      let choice = imgPerRow[i % imgPerRow.length];
+      if (images.length - currentImgIndex === 1) {
+        choice = 1;
+      }
+      if (images.length - currentImgIndex === 2) {
+        choice = 2;
+      }
+      if (images.length - currentImgIndex === 3) {
+        choice = 3;
+      }
       switch (choice) {
-        case 0:
-          //  ADD SINGLE IMG
-          gallery.push(<SingleImage key={i} img={images[i]} />);
-          i++;
-          break;
         case 1:
-          // ADD 2 IMAGES
-          gallery.push(<Doubles key={i} images={[images[i], images[i + 1]]} />);
-          i += 2;
+          //  ADD SINGLE IMG
+          gallery.push(<SingleImage key={i} img={images[currentImgIndex]} />);
+          currentImgIndex++;
           break;
         case 2:
+          // ADD 2 IMAGES
+          gallery.push(
+            <Doubles
+              key={i}
+              images={[images[currentImgIndex], images[currentImgIndex + 1]]}
+            />
+          );
+          currentImgIndex += 2;
+          break;
+        case 3:
           // ADD 3 images
           gallery.push(
             <Triples
               key={i}
-              images={[images[i], images[i + 1], images[i + 2]]}
+              images={[
+                images[currentImgIndex],
+                images[currentImgIndex + 1],
+                images[currentImgIndex + 2]
+              ]}
             />
           );
-          i += 3;
+          currentImgIndex += 3;
           break;
         default:
           break;

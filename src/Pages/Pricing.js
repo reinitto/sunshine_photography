@@ -80,7 +80,7 @@ export default function Pricing() {
           bare skin, it is advisable not to use tight clothing that makes marks
           on the skin.
         </p>
-        <h2>Digital Photos</h2>
+        <h2 className="text-center">Digital Photos</h2>
         <p className="text-justify">
           Each photo is professionally edited. You will receive each photo in
           high quality so that You can print it and frame it if you wish. Each
