@@ -82,10 +82,6 @@ nav.navbar.navbar-expand-md {
   transition: background-color 500ms ease-in;
 }
 
-nav.navbar.navbar-expand-md .bg-white {
-  background-color: white !important;
-}
-
 .table thead th {
   width: 1rem;
 }
@@ -204,12 +200,8 @@ nav.navbar.navbar-expand-md .bg-white {
   padding-top: 50px;
 }
 
-.css-1rbq2qy {
-  z-index: 1000 !important;
-}
-
 .navbar .nav-link {
-  font-size: 22px;
+  font-size: 21px;
 }
 
 .navbar-toggler-icon {

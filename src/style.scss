@@ -61,10 +61,8 @@ a:hover {
 }
 nav.navbar.navbar-expand-md {
   transition: background-color 500ms ease-in;
-  .bg-white {
-    background-color: white !important;
-  }
 }
+
 .table thead th {
   width: 1rem;
 }
@@ -165,10 +163,6 @@ nav.navbar.navbar-expand-md {
 
 .container {
   padding-top: 50px;
-}
-
-.css-1rbq2qy {
-  z-index: 1000 !important;
 }
 
 .navbar .nav-link {
