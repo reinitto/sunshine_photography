@@ -83,7 +83,8 @@ const portfolioImages = {
     },
     {
       src:
-        "https://firebasestorage.googleapis.com/v0/b/momblog-15d1c.appspot.com/o/baby%2FIMG_5041.JPG?alt=media&token=a6df41a8-1798-48f0-960d-bb96823ac230p",
+        "https://firebasestorage.googleapis.com/v0/b/momblog-15d1c.appspot.com/o/baby%2FIMG_5041.JPG?alt=media&token=a6df41a8-1798-48f0-960d-bb96823ac230",
+
       categories: ["landscape", "nature", "food", "aerial"],
       width: 4,
       height: 3
