@@ -80,9 +80,9 @@ export default class Navbar extends Component {
           Photography
         </Link>
         <button
-          style={{
-            margin: "auto"
-          }}
+          // style={{
+          //   margin: "auto"
+          // }}
           className="navbar-toggler"
           type="button"
           data-toggle="collapse"
@@ -91,61 +91,34 @@ export default class Navbar extends Component {
           <span
             className="navbar-toggler-icon"
             style={{
-              marginTop: this.state.windowWidth < 439 ? "2rem" : "initial"
+              marginTop: this.state.windowWidth < 439 ? "0rem" : "initial"
             }}
           ></span>
         </button>
         <div className="collapse navbar-collapse" id="collapsibleNavbar">
           <ul className="navbar-nav ml-auto">
             <li>
-              <Link
-                to={"/"}
-                className="nav-link"
-                style={{
-                  textAlign: this.state.windowWidth < 439 ? "center" : "left"
-                }}
-              >
+              <Link to={"/"} className="nav-link">
                 Home
               </Link>
             </li>
             <li>
-              <Link
-                to={"/contact"}
-                className="nav-link"
-                style={{
-                  textAlign: this.state.windowWidth < 439 ? "center" : "left"
-                }}
-              >
+              <Link to={"/contact"} className="nav-link">
                 Contact
               </Link>
             </li>
             <li>
-              <Link
-                to={"/about"}
-                className="nav-link"
-                style={{
-                  textAlign: this.state.windowWidth < 439 ? "center" : "left"
-                }}
-              >
+              <Link to={"/about"} className="nav-link">
                 About
               </Link>
             </li>
             <li>
-              <Link
-                to={"/journal"}
-                className="nav-link"
-                style={{
-                  textAlign: this.state.windowWidth < 439 ? "center" : "left"
-                }}
-              >
+              <Link to={"/journal"} className="nav-link">
                 Journal
               </Link>
             </li>
             <li
               className="nav-item dropdown"
-              style={{
-                textAlign: this.state.windowWidth < 439 ? "center" : "left"
-              }}
               onMouseEnter={() => {
                 document.querySelector(".dropdown-menu").classList.add("show");
               }}

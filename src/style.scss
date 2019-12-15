@@ -19,6 +19,11 @@ a {
 a:hover {
   color: $base-color;
 }
+
+.contact-info-item {
+  color: $secondary-color;
+}
+
 .about-social {
   display: flex;
   justify-content: space-around;
@@ -59,8 +64,37 @@ a:hover {
 .dropdown-menu .dropdown-item {
   color: $secondary-color;
 }
+
+// .dropdown .dropdown-toggle {
+//   align-items: center;
+// }
+
 nav.navbar.navbar-expand-md {
   transition: background-color 500ms ease-in;
+}
+
+.w-90 {
+  width: 90%;
+}
+
+.navbar-collapse {
+  li a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.btn-base {
+  color: #fff;
+  background-color: $secondary-color;
+  border-color: $secondary-color;
+}
+
+.btn-base:hover {
+  background-color: $base-color;
+  border-color: $base-color;
 }
 
 .table thead th {
@@ -210,9 +244,22 @@ h2 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+@media (max-width: 1024px) {
+  .carousel-text {
+    font-size: 10vw;
+  }
+}
 
 @media (max-width: 500px) {
   .journal-nav {
     grid-template-columns: repeat(1, 1fr);
+  }
+  .carousel-text {
+    font-size: 12vw;
+  }
+}
+@media (max-width: 337px) {
+  .navbar .navbar-toggler {
+    margin: auto;
   }
 }

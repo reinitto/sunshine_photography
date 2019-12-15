@@ -30,15 +30,15 @@ export default function Pricing() {
           height: "70px"
         }}
       ></div>
-      <div className="container">
-        <h2>Photo sessions</h2>
+      <div className="container ">
+        <h2 className="text-center">Photo sessions</h2>
         <p>
           Session length is about 2h. Depending on your choice. Baby sessions
           are shorter - up to 45min. You know how babies are...
         </p>
         <PricingList />
         <h3>Baby</h3>{" "}
-        <p>
+        <p className="text-justify">
           I have good experience with photography of children of all ages. 1
           year old is a wonderful time of play and fun. It keeps bringing a few
           shifts, as the child is usually provided after that. If you are
@@ -53,14 +53,14 @@ export default function Pricing() {
           greatest opportunity to bring out the best smiles.
         </p>
         <h3>Family</h3>
-        <p>
+        <p className="text-justify">
           Taking pictures of siblings is an important memory to have. Dress in
           the same shades of color, avoid capitalized clothing and the pressure
           it takes away from you. Recommend to book the photo shoot at a time
           when the kids are obvious.
         </p>
          <h3>Portrait</h3>
-        <p>
+        <p className="text-justify">
           Confirmation time is a time when you have finally grown up. It is
           about for posterity to document an important time in life.
           Confirmation pictures can be taken in many ways. It doesn't have to be
@@ -70,7 +70,7 @@ export default function Pricing() {
           desired
         </p>
          <h3>Event</h3>
-        <p>
+        <p className="text-justify">
           A special offer for you who are pregnant. Photograph yourself as
           pregnant alone or with your boyfriend - it's a time you will never
           have again. If you order pregnancy photography now you will get “My
@@ -81,17 +81,17 @@ export default function Pricing() {
           on the skin.
         </p>
         <h2>Digital Photos</h2>
-        <p>
+        <p className="text-justify">
           Each photo is professionally edited. You will receive each photo in
           high quality so that You can print it and frame it if you wish. Each
           photo comes in color, black/white, high resolution for print, low
           resolution for instagram and other websites.
         </p>
         <PricingList title="Digital Photos" items={digitalPhotos} />
-        <p>
+        <p className="text-left">
           <i>Each additional photo 200Nok</i>
         </p>
-        <p>
+        <p className="text-left">
           It is recommended that you also back up your digital photos yourself{" "}
         </p>
         <ul>

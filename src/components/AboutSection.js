@@ -44,7 +44,7 @@ const ContactInfo = ({ contactInfo, social }) => {
         {contactInfo &&
           Object.keys(contactInfo).length > 0 &&
           Object.keys(contactInfo).map((item, i) => (
-            <p key={i}>
+            <p key={i} className="contact-info-item">
               <FontAwesomeIcon icon={icons[item]} className="mr-3" />
               {contactInfo[item]}
             </p>
@@ -84,18 +84,15 @@ export default function About({ image, paragraphs, contactInfo, social }) {
         backgroundSize: "cover"
       }}
     >
-      <div
-        className="container"
-        style={{
-          color: "white"
-        }}
-      >
-        <div className="about-section">
+      <div className="container">
+        <div className="about-section text-white">
           <h1>About Me</h1>
           <div className="row">
             <div className="col-8">
               {paragraphs.map((par, i) => (
-                <p key={i}>{par}</p>
+                <p key={i} className="text-justify">
+                  {par}
+                </p>
               ))}
             </div>
             <div className="col-4">

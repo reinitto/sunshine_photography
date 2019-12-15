@@ -23,9 +23,9 @@ function useWindowWidth() {
 
 export default function LinksToGallery() {
   const width = useWindowWidth();
-
+  // className={`${width < 768 ?"container pb-3"}`}
   return (
-    <div className="container pb-3">
+    <div className={width < 768 ? "pb-3 mx-auto w-90" : "container pb-3"}>
       <h2 className="text-center">Gallery</h2>
 
       <div

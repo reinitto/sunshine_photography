@@ -121,7 +121,7 @@ export default function ContactForm() {
 
         <button
           type="submit"
-          className="btn btn-primary"
+          className="btn btn-primary btn-base"
           style={{ display: "block", margin: "auto" }}
         >
           Submit
