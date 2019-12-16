@@ -25,7 +25,7 @@ export default function LinksToGallery() {
   const width = useWindowWidth();
   return (
     <div className={width < 768 ? "pb-3 mx-auto w-90" : "container pb-3"}>
-      <h2 className="text-center">Gallery</h2>
+      <h2 className="text-center">Portfolio</h2>
       <CloudinaryContext cloudName="sunshinephoto">
         <div
           className={`links-to-gallery`}

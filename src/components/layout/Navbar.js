@@ -39,7 +39,6 @@ export default class Navbar extends Component {
 
     return (
       <nav
-        style={{ zIndex: "100 " }}
         className={`navbar navbar-expand-md fixed-top
          ${
            window.location.pathname.length === 1 && scrollTop > 0
@@ -52,8 +51,13 @@ export default class Navbar extends Component {
              : ""
          }
          ${
-           window.location.pathname.length > 1
+           window.location.pathname.length > 1 && scrollTop > 0
              ? "bg-base border-bottom border-secondary"
+             : ""
+         }
+         ${
+           window.location.pathname.length > 1 && scrollTop === 0
+             ? "bg-transparent"
              : ""
          }
     `}
@@ -77,7 +81,7 @@ export default class Navbar extends Component {
             }}
             alt=""
           />{" "}
-          Photography
+          Pictures
         </Link>
         <button
           // style={{

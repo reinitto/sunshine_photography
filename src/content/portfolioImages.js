@@ -204,6 +204,11 @@ const portfolioImages = {
   ],
   event: [
     {
+      src: "images/portfolio/event/IMG_4055_gw3hup.jpg",
+      width: 4,
+      height: 3
+    },
+    {
       src: "images/portfolio/event/IMG_4147_rr4xjy.jpg",
       width: 4,
       height: 3
@@ -243,11 +248,7 @@ const portfolioImages = {
       width: 4,
       height: 3
     },
-    {
-      src: "images/portfolio/event/IMG_4099_tvuqum.jpg",
-      width: 4,
-      height: 3
-    },
+
     {
       src: "images/portfolio/event/IMG_4109_ojdu5v.jpg",
       width: 4,
@@ -278,11 +279,7 @@ const portfolioImages = {
       width: 4,
       height: 3
     },
-    {
-      src: "images/portfolio/event/IMG_4055_gw3hup.jpg",
-      width: 4,
-      height: 3
-    },
+
     {
       src: "images/portfolio/event/IMG_4053_ukyoiy.jpg",
       width: 4,

@@ -209,16 +209,19 @@ nav.navbar.navbar-expand-md {
 .carousel-text {
   position: absolute;
   top: 20vh;
-  left: 1rem;
+  left: 5%;
   color: $base-color;
   z-index: 1;
   font-size: 10vh;
-}
-.carousel-text::before {
-  content: "Sunshine \A Photography";
-  background: $link-text-color;
-  white-space: pre;
-  opacity: 0.5;
+  display: flex;
+  flex-direction: column;
+  p {
+    text-align: start;
+    span {
+      background-color: $link-text-color;
+      opacity: 0.5;
+    }
+  }
 }
 
 // .container {
@@ -273,6 +276,7 @@ h2 {
 @media (max-width: 1024px) {
   .carousel-text {
     font-size: 8vw;
+    left: 5%;
   }
 }
 
@@ -282,6 +286,7 @@ h2 {
   }
   .carousel-text {
     font-size: 12vw;
+    left: 1rem;
   }
 }
 @media (max-width: 337px) {

@@ -78,7 +78,8 @@ export default function About({
   paragraphs,
   contactInfo,
   social,
-  backgroundImage
+  backgroundImage,
+  title = true
 }) {
   return (
     <div
@@ -93,7 +94,7 @@ export default function About({
     >
       <div className="container">
         <div className="about-section text-white">
-          <h1>About Me</h1>
+          {title ? <h1>About Me</h1> : null}
           <div className="row">
             <div className="col-8">
               {paragraphs.map((par, i) => (

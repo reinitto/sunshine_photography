@@ -44,6 +44,7 @@ export function GalleryNav({ collections, isJournal }) {
   const portfolioLinks = Object.keys(collections).map((collection, i) => {
     return (
       <Link
+        className="text-capitalize"
         key={i}
         style={{
           width: "100%",
@@ -80,7 +81,8 @@ export function GalleryNav({ collections, isJournal }) {
         display: "grid",
         gridTemplateColumns: "repeat(2, 1fr)",
         justifyItems: "center",
-        margin: "3rem"
+        width: "50%",
+        margin: "auto"
       }}
     >
       {portfolioLinks}

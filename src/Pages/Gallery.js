@@ -1,6 +1,7 @@
-import React, { Fragment } from "react";
+import React, { Fragment, Suspense } from "react";
 import Gallery from "../components/portfolio/Gallery";
 import Navbar from "../components/layout/Navbar";
+import IntroImage from "../components/IntroImage";
 
 // Get a reference to the storage service, which is used to create references in your storage bucket
 // var storage = firebase.storage();
@@ -36,17 +37,23 @@ import Navbar from "../components/layout/Navbar";
 // spaceRef now points to "images/space.jpg"
 // imagesRef still points to "images"
 
+const portfoliogalleryBg =
+  "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/images/backgrounds/IMG_8951_1500_oxpgkq.jpg";
+
 export default function GalleryPage() {
   return (
     <Fragment>
       <Navbar />
-      <div
-        style={{
-          height: "70px"
-        }}
-      ></div>
+
+      <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
+        <IntroImage
+          imageSrc={portfoliogalleryBg}
+          text={["Portfolio Gallery"]}
+          height="35vh"
+        />
+      </Suspense>
       <div style={{ width: "90%", margin: "auto" }}>
-        <h2 className="text-center">Portfolio</h2>
+        {/* <h2 className="text-center">Portfolio</h2> */}
         <Gallery collection={window.location.hash.slice(1)} />
       </div>
     </Fragment>

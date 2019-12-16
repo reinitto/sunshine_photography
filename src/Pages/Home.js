@@ -2,34 +2,15 @@ import React, { Component, lazy, Suspense } from "react";
 import ContactForm from "../components/contact/ContactForm";
 import Pricing from "../components/pricing/PricingList";
 import Navbar from "../components/layout/Navbar";
+import { digitalPhotos } from "../content/pricing";
 const IntroImage = lazy(() => import("../components/IntroImage"));
 const LinksToGallery = lazy(() => import("../components/LinksToGallery"));
 const LinksToJournal = lazy(() => import("../components/LinksToJournal"));
 const AboutSection = lazy(() => import("../components/AboutSection"));
 
-let digitalPhotos = [
-  {
-    name: "5",
-    price: "1500 NOK"
-  },
-  {
-    name: "10",
-    price: "2500 NOK"
-  },
-  {
-    name: "20",
-    price: "4000 NOK"
-  },
-  {
-    name: "30",
-    price: "5000 NOK"
-  }
-];
-
 export default class Home extends Component {
   isAnyPartOfElementInViewport(el) {
     const rect = el.getBoundingClientRect();
-    // DOMRect { x: 8, y: 8, width: 100, height: 100, top: 8, right: 108, bottom: 108, left: 8 }
     const windowHeight =
       window.innerHeight || document.documentElement.clientHeight;
     const windowWidth =
@@ -74,10 +55,10 @@ export default class Home extends Component {
     return (
       <div id="home">
         <Navbar />
-        <Suspense fallback={"."}>
-          <IntroImage />
+        <Suspense fallback={<div style={{ height: "50vh" }}></div>}>
+          <IntroImage text={["Sunshine", "pictures"]} />
         </Suspense>
-        <Suspense fallback={"loading..."}>
+        <Suspense fallback={<div style={{ height: "50vh" }}></div>}>
           <LinksToGallery />
           <AboutSection />
         </Suspense>

@@ -1,4 +1,4 @@
-## Sunshine Photography
+## Sunshine Pictures
 
 This project uses React and firebase.
 

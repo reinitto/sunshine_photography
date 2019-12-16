@@ -1,28 +1,28 @@
 import React from "react";
 
-// let firebaseStorageImgs = [
-//   "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/images/backgrounds/IMG_8944_xj7nmv.jpg",
-//   "https://firebasestorage.googleapis.com/v0/b/momblog-15d1c.appspot.com/o/background_images%2FIMG_8997%201500.jpg?alt=media&token=5a01d548-ef23-417c-a359-301d38dfdd97",
-//   "https://firebasestorage.googleapis.com/v0/b/momblog-15d1c.appspot.com/o/background_images%2FIMG_8944.jpg?alt=media&token=2a5fc608-efa9-4664-ae03-2aa548346697"
-// ];
-
 let cloudinaryBgs = [
   "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/images/backgrounds/IMG_8944_xj7nmv.jpg"
 ];
 
-export default function IntroImage({ imageSrc }) {
+export default function IntroImage({ imageSrc, text, height = "65vh" }) {
   return (
     <div
       className="fitted-image"
       style={{
         backgroundAttachment: `fixed`,
         backgroundRepeat: `no-repeat`,
-        backgroundImage: `url(${imageSrc})`
+        backgroundImage: `url(${imageSrc})`,
+        height
       }}
     >
-      <div className="carousel-text">
-        {/*  Text set in CSS */}
-        {/* <h2>Carousel Title</h2> */}
+      <div className="carousel-text ">
+        {text.map((word, i) => (
+          <p>
+            <span className="text-capitalize" key={i}>
+              {word}
+            </span>
+          </p>
+        ))}
       </div>
     </div>
   );
