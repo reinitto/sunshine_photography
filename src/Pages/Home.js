@@ -3,10 +3,10 @@ import ContactForm from "../components/contact/ContactForm";
 import Pricing from "../components/pricing/PricingList";
 import Navbar from "../components/layout/Navbar";
 const IntroImage = lazy(() => import("../components/IntroImage"));
-// const IntroCarousel = lazy(() => import("../components/IntroCarousel"));
 const LinksToGallery = lazy(() => import("../components/LinksToGallery"));
 const LinksToJournal = lazy(() => import("../components/LinksToJournal"));
 const AboutSection = lazy(() => import("../components/AboutSection"));
+
 let digitalPhotos = [
   {
     name: "5",

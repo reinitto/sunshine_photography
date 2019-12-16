@@ -126,44 +126,17 @@ nav.navbar.navbar-expand-md {
   width: 1rem;
 }
 
-.link-to-baby-gallery::after {
-  content: "Baby";
-  opacity: 1;
-  margin: auto;
-}
-
-.link-to-baby-gallery:hover::after {
-  opacity: 1;
-}
-
-.link-to-family-gallery::after {
-  content: "Family";
-  opacity: 1;
-  margin: auto;
-}
-
-.link-to-family-gallery:hover::after {
-  opacity: 1;
-}
-
-.link-to-portrait-gallery::after {
-  content: "Portrait";
-  opacity: 1;
-  margin: auto;
-}
-
-.link-to-portrait-gallery:hover::after {
-  opacity: 1;
-}
-
-.link-to-event-gallery::after {
-  content: "Event";
-  opacity: 1;
-  margin: auto;
-}
-
-.link-to-event-gallery:hover::after {
-  opacity: 1;
+.link-overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  color: white;
+  font-size: 2rem;
+  font-weight: 600;
+  background: #9f818a;
+  padding: 0.5rem;
 }
 
 .links-to-gallery {
@@ -181,6 +154,7 @@ nav.navbar.navbar-expand-md {
 }
 
 .links-to-gallery a div {
+  position: relative;
   background-repeat: no-repeat;
   height: 300px;
   font-size: 2.5rem;

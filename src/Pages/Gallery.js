@@ -1,5 +1,3 @@
-import * as firebase from "firebase/app";
-import "firebase/storage";
 import React, { Fragment } from "react";
 import Gallery from "../components/portfolio/Gallery";
 import Navbar from "../components/layout/Navbar";

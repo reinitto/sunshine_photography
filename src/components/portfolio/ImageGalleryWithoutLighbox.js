@@ -1,5 +1,5 @@
 import React from "react";
-import LazyImage from "react-lazy-progressive-image";
+import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 
 // CREATE 4 TYPES OF IMAGE CONTAINERS
 //  FULL SIZE IMAGE
@@ -8,32 +8,19 @@ import LazyImage from "react-lazy-progressive-image";
 
 const LazyImg = ({ imageSrc }) => {
   //  create small image and large versions
-  let widthSizes = [1500, 500];
-  let sources = [];
-  widthSizes.forEach(size => sources.push(`${imageSrc}&w=${size}&q=60`));
+  // let widthSizes = [1500, 500];
+  // let sources = [];
+  // widthSizes.forEach(size => sources.push(`${imageSrc}&w=${size}&q=60`));
   return (
-    <div
-    // style={{
-    //   backgroundRepeat: "no-repeat",
-    //   backgroundSize: "cover",
-    //   marginBottom: "5px"
-    // }}
-    >
-      <LazyImage placeholder={sources[1]} src={sources[0]}>
-        {(src, loading, isVisible) => (
-          <img
-            className="fitted-image"
-            src={src}
-            alt="carousel"
-            loading="lazy"
-            // style={{
-            //   transition: `all 0.25s ease`,
-            //   opacity: loading ? 0.2 : 1
-            // }}
-          />
-        )}
-      </LazyImage>
-    </div>
+    // <div>
+    //   <LazyImage placeholder={sources[1]} src={sources[0]}>
+    //     {(src, loading, isVisible) => (
+    <Image publicId={imageSrc} className="fitted-image">
+      <Transformation quality="auto" fetchFormat="auto" />
+    </Image>
+    //     )}
+    //   </LazyImage>
+    // </div>
   );
 };
 
@@ -47,7 +34,18 @@ const SingleImage = ({ img }) => {
         marginBottom: "5px"
       }}
     >
-      <img
+      <Image
+        publicId={img.src}
+        style={{
+          width: "100%",
+          objectFit: "cover",
+          backgroundSize: "cover",
+          backgroundPosition: "center"
+        }}
+      >
+        <Transformation quality="auto" fetchFormat="auto" />
+      </Image>
+      {/* <img
         style={{
           width: "100%",
           objectFit: "cover",
@@ -57,8 +55,7 @@ const SingleImage = ({ img }) => {
         src={img.src}
         alt="single"
         loading="lazy"
-      />
-      {/* {<LazyImg imageSrc={img.src} />} */}
+      /> */}
       {img.text ? <p>{img.text}</p> : null}
     </div>
   ) : null;
@@ -124,9 +121,7 @@ export default function ImageGalleryWithoutLighbox(props) {
       if (images.length - currentImgIndex === 2) {
         choice = 2;
       }
-      if (images.length - currentImgIndex === 3) {
-        choice = 3;
-      }
+
       switch (choice) {
         case 1:
           //  ADD SINGLE IMG
@@ -161,7 +156,13 @@ export default function ImageGalleryWithoutLighbox(props) {
           break;
       }
     }
-    return <div>{gallery}</div>;
+    return (
+      <div>
+        <CloudinaryContext cloudName="sunshinephoto">
+          {gallery}
+        </CloudinaryContext>
+      </div>
+    );
   } else {
     return <div>Loading...</div>;
   }

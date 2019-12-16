@@ -24,7 +24,9 @@ About.defaultProps = {
     facebook: "https://www.facebook.com",
     instagram: "https://www.instagram.com",
     shutterstock: "https://www.shutterstock.com"
-  }
+  },
+  backgroundImage:
+    "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/images/backgrounds/IMG_8997_1500_ymk08l.jpg"
 };
 
 const icons = {
@@ -71,11 +73,17 @@ const ContactInfo = ({ contactInfo, social }) => {
   );
 };
 
-export default function About({ image, paragraphs, contactInfo, social }) {
+export default function About({
+  image,
+  paragraphs,
+  contactInfo,
+  social,
+  backgroundImage
+}) {
   return (
     <div
       style={{
-        backgroundImage: `url("https://firebasestorage.googleapis.com/v0/b/momblog-15d1c.appspot.com/o/background_images%2FIMG_8997%201500.jpg?alt=media&token=5a01d548-ef23-417c-a359-301d38dfdd97")`,
+        backgroundImage: `url(${backgroundImage})`,
         /* Create the parallax scrolling effect */
         backgroundAttachment: "fixed",
         backgroundPosition: "center",

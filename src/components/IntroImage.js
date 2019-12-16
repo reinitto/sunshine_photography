@@ -1,9 +1,13 @@
 import React from "react";
 
-let firebaseStorageImgs = [
-  "https://firebasestorage.googleapis.com/v0/b/momblog-15d1c.appspot.com/o/background_images%2FIMG_8951%201500.jpg?alt=media&token=a50f46b2-93e5-416e-aa28-de3aea7fce8b",
-  "https://firebasestorage.googleapis.com/v0/b/momblog-15d1c.appspot.com/o/background_images%2FIMG_8997%201500.jpg?alt=media&token=5a01d548-ef23-417c-a359-301d38dfdd97",
-  "https://firebasestorage.googleapis.com/v0/b/momblog-15d1c.appspot.com/o/background_images%2FIMG_8944.jpg?alt=media&token=2a5fc608-efa9-4664-ae03-2aa548346697"
+// let firebaseStorageImgs = [
+//   "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/images/backgrounds/IMG_8944_xj7nmv.jpg",
+//   "https://firebasestorage.googleapis.com/v0/b/momblog-15d1c.appspot.com/o/background_images%2FIMG_8997%201500.jpg?alt=media&token=5a01d548-ef23-417c-a359-301d38dfdd97",
+//   "https://firebasestorage.googleapis.com/v0/b/momblog-15d1c.appspot.com/o/background_images%2FIMG_8944.jpg?alt=media&token=2a5fc608-efa9-4664-ae03-2aa548346697"
+// ];
+
+let cloudinaryBgs = [
+  "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/images/backgrounds/IMG_8944_xj7nmv.jpg"
 ];
 
 export default function IntroImage({ imageSrc }) {
@@ -24,5 +28,5 @@ export default function IntroImage({ imageSrc }) {
   );
 }
 IntroImage.defaultProps = {
-  imageSrc: firebaseStorageImgs[0]
+  imageSrc: cloudinaryBgs[0]
 };

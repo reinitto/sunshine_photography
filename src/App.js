@@ -8,6 +8,7 @@ import Contact from "./Pages/Contact";
 import Gallery from "./Pages/Gallery";
 import Footer from "./components/layout/Footer";
 import ScrollToTop from "./ScrollToTop";
+
 import "./styles/style.css";
 
 class App extends Component {
@@ -24,6 +25,7 @@ class App extends Component {
             <Route path="/Pricing" component={Pricing} />
           </Switch>
         </ScrollToTop>
+
         <Footer />
       </Router>
     );
