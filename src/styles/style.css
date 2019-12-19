@@ -156,7 +156,6 @@ nav.navbar.navbar-expand-md {
 .links-to-gallery a div {
   position: relative;
   background-repeat: no-repeat;
-  height: 300px;
   font-size: 2.5rem;
   display: -webkit-box;
   display: -ms-flexbox;

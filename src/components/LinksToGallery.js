@@ -42,8 +42,15 @@ export default function LinksToGallery() {
                 to={`/gallery#${thumb[0]}`}
                 className="link-to-gallery"
                 key={i}
+                style={{
+                  padding: width > 768 ? "1.9rem" : "1rem"
+                }}
               >
-                <div>
+                <div
+                  style={{
+                    height: width > 1024 ? `300px` : width / 3
+                  }}
+                >
                   <Image
                     publicId={thumb[1].src}
                     style={{
@@ -52,7 +59,14 @@ export default function LinksToGallery() {
                   >
                     <Transformation quality="auto" fetchFormat="auto" />
                   </Image>
-                  <p className="link-overlay-text text-uppercase">{thumb[0]}</p>
+                  <p
+                    className="link-overlay-text text-uppercase"
+                    style={{
+                      fontSize: width > 768 ? `2rem` : "1.22rem"
+                    }}
+                  >
+                    {thumb[0]}
+                  </p>
                 </div>
               </Link>
             );
