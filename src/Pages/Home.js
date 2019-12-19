@@ -3,6 +3,7 @@ import ContactForm from "../components/contact/ContactForm";
 import Pricing from "../components/pricing/PricingList";
 import Navbar from "../components/layout/Navbar";
 import { digitalPhotos } from "../content/pricing";
+import { mainBg } from "../content/backgroundImages";
 const IntroImage = lazy(() => import("../components/IntroImage"));
 const LinksToGallery = lazy(() => import("../components/LinksToGallery"));
 const LinksToJournal = lazy(() => import("../components/LinksToJournal"));
@@ -56,7 +57,11 @@ export default class Home extends Component {
       <div id="home">
         <Navbar />
         <Suspense fallback={<div style={{ height: "50vh" }}></div>}>
-          <IntroImage text={["Sunshine", "pictures"]} />
+          <IntroImage
+            imageSrc={mainBg}
+            text={["Sunshine", "pictures"]}
+            height="90vh"
+          />
         </Suspense>
         <Suspense fallback={<div style={{ height: "50vh" }}></div>}>
           <LinksToGallery />
