@@ -32,7 +32,7 @@ export default function LinksToGallery() {
           style={{
             display: "grid",
             gridTemplateColumns:
-              width > 425 ? "repeat(2, 1fr)" : "repeat(1, 1fr)",
+              width > 450 ? "repeat(2, 1fr)" : "repeat(1, 1fr)",
             gridGap: "10px"
           }}
         >
