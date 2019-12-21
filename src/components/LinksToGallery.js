@@ -31,8 +31,7 @@ export default function LinksToGallery() {
           className={`links-to-gallery`}
           style={{
             display: "grid",
-            gridTemplateColumns:
-              width > 450 ? "repeat(2, 1fr)" : "repeat(1, 1fr)",
+            gridTemplateColumns: "repeat(2, 1fr)",
             gridGap: "10px"
           }}
         >
@@ -40,15 +39,14 @@ export default function LinksToGallery() {
             return (
               <Link
                 to={`/gallery#${thumb[0]}`}
-                className="link-to-gallery"
                 key={i}
                 style={{
-                  padding: width > 768 ? "1.9rem" : "1rem"
+                  padding: width > 768 ? "1.9rem" : "0.75rem"
                 }}
               >
                 <div
                   style={{
-                    height: width > 1024 ? `300px` : width / 3
+                    height: width > 1024 ? `300px` : width / 4
                   }}
                 >
                   <Image
@@ -62,7 +60,7 @@ export default function LinksToGallery() {
                   <p
                     className="link-overlay-text text-uppercase"
                     style={{
-                      fontSize: width > 768 ? `2rem` : "1.22rem"
+                      fontSize: width > 768 ? `2rem` : "1rem"
                     }}
                   >
                     {thumb[0]}

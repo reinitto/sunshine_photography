@@ -77,10 +77,6 @@ a:hover {
   color: $secondary-color;
 }
 
-// .dropdown .dropdown-toggle {
-//   align-items: center;
-// }
-
 nav.navbar.navbar-expand-md {
   transition: background-color 500ms ease-in;
 }
@@ -112,42 +108,6 @@ nav.navbar.navbar-expand-md {
 .table thead th {
   width: 1rem;
 }
-
-// .link-to-baby-gallery::after {
-//   content: "Baby";
-//   opacity: 1;
-//   margin: auto;
-// }
-// .link-to-baby-gallery:hover::after {
-//   opacity: 1;
-// }
-
-// .link-to-family-gallery::after {
-//   content: "Family";
-//   opacity: 1;
-//   margin: auto;
-// }
-// .link-to-family-gallery:hover::after {
-//   opacity: 1;
-// }
-
-// .link-to-portrait-gallery::after {
-//   content: "Portrait";
-//   opacity: 1;
-//   margin: auto;
-// }
-// .link-to-portrait-gallery:hover::after {
-//   opacity: 1;
-// }
-
-// .link-to-event-gallery::after {
-//   content: "Event";
-//   opacity: 1;
-//   margin: auto;
-// }
-// .link-to-event-gallery:hover::after {
-//   opacity: 1;
-// }
 
 .link-overlay-text {
   position: absolute;

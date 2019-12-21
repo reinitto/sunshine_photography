@@ -27,17 +27,19 @@ export default class Home extends Component {
   componentDidMount() {
     window.addEventListener("scroll", () => {
       //Links to gallery
-      let linksToGallery = document.querySelectorAll(".link-to-gallery");
-      linksToGallery.forEach(link => {
-        if (this.isAnyPartOfElementInViewport(link)) {
-          if ([...link.classList].includes("come-in")) {
+      let linksToGallery = document.querySelector(".links-to-gallery");
+      if (linksToGallery) {
+        [...linksToGallery.children].forEach(link => {
+          if (this.isAnyPartOfElementInViewport(link)) {
+            if ([...link.classList].includes("come-in")) {
+            } else {
+              link.classList.add("come-in");
+            }
           } else {
-            link.classList.add("come-in");
+            link.classList.remove("come-in");
           }
-        } else {
-          link.classList.remove("come-in");
-        }
-      });
+        });
+      }
       //Pricing
       let pricingList = document.querySelectorAll(".pricingList");
       pricingList.forEach(link => {

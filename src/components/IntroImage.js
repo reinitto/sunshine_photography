@@ -17,7 +17,7 @@ export default function IntroImage({ imageSrc, text, height = "65vh" }) {
     >
       <div className="carousel-text ">
         {text.map((word, i) => (
-          <p>
+          <p key={word}>
             <span className="text-capitalize" key={i}>
               {word}
             </span>
