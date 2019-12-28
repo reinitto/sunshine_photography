@@ -1,6 +1,5 @@
 import React, { Fragment, Suspense } from "react";
 import Gallery from "../components/portfolio/Gallery";
-import Navbar from "../components/layout/Navbar";
 import IntroImage from "../components/IntroImage";
 
 // Get a reference to the storage service, which is used to create references in your storage bucket
@@ -43,7 +42,7 @@ const portfoliogalleryBg =
 export default function GalleryPage() {
   return (
     <Fragment>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
         <IntroImage

@@ -1,17 +1,39 @@
 import React, { Component } from "react";
+// import firebase from "firebase/app";
+// import "firebase/auth";
+
+// import firebase from "../../Firebase";
 import CameraOnly from "../../logo/camera-logo.svg";
 import { Link } from "react-router-dom";
 
 export default class Navbar extends Component {
   state = {
     scrollTop: 0,
-    windowWidth: null
+    windowWidth: null,
+    loggedIn: this.props.isSignedIn
   };
 
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("resize", this.handleWidth);
     this.handleWidth();
+    // Initialize the FirebaseUI Widget using Firebase.
+    // var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+    // ui.start("#firebaseui-auth-container", {
+    //   signInOptions: [
+    //     {
+    //       provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    //       scopes: ["https://www.googleapis.com/auth/contacts.readonly"],
+    //       customParameters: {
+    //         // Forces account selection even when one account
+    //         // is available.
+    //         prompt: "select_account"
+    //       }
+    //     }
+    //   ]
+    //   // Other config options...
+    // });
   }
   componentWillUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -36,7 +58,7 @@ export default class Navbar extends Component {
   };
   render() {
     let { scrollTop } = this.state;
-
+    let { isSignedIn, firebase, setUser } = this.props;
     return (
       <nav
         className={`navbar navbar-expand-md fixed-top
@@ -101,6 +123,14 @@ export default class Navbar extends Component {
         </button>
         <div className="collapse navbar-collapse" id="collapsibleNavbar">
           <ul className="navbar-nav ml-auto">
+            {isSignedIn ? (
+              <li>
+                <Link to={"/dashboard"} className="nav-link">
+                  Dashboard
+                </Link>
+              </li>
+            ) : null}
+
             <li>
               <Link to={"/"} className="nav-link">
                 Home
@@ -181,6 +211,64 @@ export default class Navbar extends Component {
                 Pricing
               </Link>
             </li>
+            {isSignedIn ? (
+              <li>
+                <button
+                  className="nav-link"
+                  style={{
+                    textAlign: this.state.windowWidth < 439 ? "center" : "left",
+                    background: "transparent"
+                  }}
+                  onClick={() => {
+                    firebase
+                      .app()
+                      .auth()
+                      .signOut();
+                    setUser(null);
+                  }}
+                >
+                  Logout
+                </button>
+              </li>
+            ) : (
+              <li>
+                <button
+                  className="nav-link"
+                  style={{
+                    textAlign: this.state.windowWidth < 439 ? "center" : "left",
+                    background: "transparent"
+                  }}
+                  onClick={() => {
+                    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+                    firebase
+                      .auth()
+                      .signInWithPopup(googleAuthProvider)
+                      .then(function(result) {
+                        // This gives you a Google Access Token. You can use it to access the Google API.
+                        // var token = result.credential.accessToken;
+                        // The signed-in user info.
+
+                        var user = result.user;
+                        const { displayName, email } = user;
+                        setUser({ displayName, email });
+                        // ...
+                      })
+                      .catch(function(error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        // The email of the user's account used.
+                        var email = error.email;
+                        // The firebase.auth.AuthCredential type that was used.
+                        var credential = error.credential;
+                        // ...
+                      });
+                  }}
+                >
+                  Log In
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </nav>

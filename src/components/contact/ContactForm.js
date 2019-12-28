@@ -1,53 +1,43 @@
 import React from "react";
 import * as firebase from "firebase/app";
-import "firebase/database";
-const firebaseConfig = {
-  apiKey: "AIzaSyDU7pnAHmVuuf2nKxa5HpBBI4GaCobCQRw",
-  authDomain: "momblog-15d1c.firebaseapp.com",
-  databaseURL: "https://momblog-15d1c.firebaseio.com",
-  projectId: "momblog-15d1c",
-  storageBucket: "momblog-15d1c.appspot.com",
-  messagingSenderId: "754776938435",
-  appId: "1:754776938435:web:43cadca033fb5094ec0f76"
-};
-
-firebase.initializeApp(firebaseConfig);
+// import firebase from "../../Firebase";
+// firebase.initializeApp(firebaseConfig);
 //  Reference messages collection
-var messagesRef = firebase.database().ref("messages");
 
-const saveMessage = props => {
-  const { name, email, phone, address, message } = props;
-
-  let newMessageRef = messagesRef.push();
-  newMessageRef.set({
-    name,
-    email,
-    phone,
-    address,
-    message
-  });
-};
-
-const submitMessage = e => {
-  e.preventDefault();
-  let name = document.getElementById("name").value;
-  let email = document.getElementById("email").value;
-  let phone = document.getElementById("phone").value;
-  let address = document.getElementById("address").value;
-  let message = document.getElementById("message").value;
-  let contactForm = document.getElementById("contactForm");
-
-  saveMessage({ name, email, phone, address, message });
-  //  Reset form
-  contactForm.reset();
-
-  let alert = document.getElementById("alert");
-  alert.style.display = "block";
-  setTimeout(() => {
-    alert.style.display = "none";
-  }, 3000);
-};
 export default function ContactForm({ backgroundImage = "", title = true }) {
+  const saveMessage = props => {
+    var messagesRef = firebase.database().ref("messages");
+    const { name, email, phone, address, message } = props;
+
+    let newMessageRef = messagesRef.push();
+    newMessageRef.set({
+      name,
+      email,
+      phone,
+      address,
+      message
+    });
+  };
+
+  const submitMessage = e => {
+    e.preventDefault();
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+    let address = document.getElementById("address").value;
+    let message = document.getElementById("message").value;
+    let contactForm = document.getElementById("contactForm");
+
+    saveMessage({ name, email, phone, address, message });
+    //  Reset form
+    contactForm.reset();
+
+    let alert = document.getElementById("alert");
+    alert.style.display = "block";
+    setTimeout(() => {
+      alert.style.display = "none";
+    }, 3000);
+  };
   return (
     <div
       className="fitted-image"

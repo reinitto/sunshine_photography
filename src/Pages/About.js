@@ -1,13 +1,12 @@
 import React, { Fragment, Suspense } from "react";
 import AboutSection from "../components/AboutSection";
 import ContactForm from "../components/contact/ContactForm";
-import Navbar from "../components/layout/Navbar";
 import IntroImage from "../components/IntroImage";
 
-export default function About() {
+export default function About({ firebase }) {
   return (
     <Fragment>
-      <Navbar />
+      {/* <Navbar /> */}
       {/* <div
         style={{
           height: "70px"
@@ -22,7 +21,7 @@ export default function About() {
       </Suspense>
       <AboutSection title={false} />
       <div className="container">
-        <ContactForm />
+        <ContactForm firebase={firebase} />
       </div>
     </Fragment>
   );

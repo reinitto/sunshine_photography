@@ -1,6 +1,6 @@
 import React, { Fragment, Suspense, lazy } from "react";
 // import Gallery from "../components/portfolio/Gallery";
-import Navbar from "../components/layout/Navbar";
+// import Navbar from "../components/layout/Navbar";
 import IntroImage from "../components/IntroImage";
 const Gallery = lazy(() => import("../components/portfolio/Gallery"));
 
@@ -128,7 +128,7 @@ const journalIntroBg =
 export default function Journal() {
   return (
     <Fragment>
-      <Navbar />
+      {/* <Navbar /> */}
       <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
         <IntroImage
           imageSrc={journalIntroBg}

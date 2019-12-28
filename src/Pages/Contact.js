@@ -1,6 +1,5 @@
 import React, { Fragment, Suspense } from "react";
 import ContactForm from "../components/contact/ContactForm";
-import Navbar from "../components/layout/Navbar";
 import IntroImage from "../components/IntroImage";
 
 const contactPageBg =
@@ -9,7 +8,7 @@ const contactPageBg =
 export default function Contact() {
   return (
     <Fragment>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
         <IntroImage

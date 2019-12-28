@@ -1,7 +1,6 @@
 import React, { Component, lazy, Suspense } from "react";
 import ContactForm from "../components/contact/ContactForm";
 import Pricing from "../components/pricing/PricingList";
-import Navbar from "../components/layout/Navbar";
 import { digitalPhotos } from "../content/pricing";
 import { mainBg } from "../content/backgroundImages";
 const IntroImage = lazy(() => import("../components/IntroImage"));
@@ -57,7 +56,7 @@ export default class Home extends Component {
   render() {
     return (
       <div id="home">
-        <Navbar />
+        {/* <Navbar /> */}
         <Suspense fallback={<div style={{ height: "50vh" }}></div>}>
           <IntroImage
             imageSrc={mainBg}

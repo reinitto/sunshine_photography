@@ -1,5 +1,4 @@
 import React, { Fragment, Suspense } from "react";
-import Navbar from "../components/layout/Navbar";
 import PricingList from "../components/pricing/PricingList";
 import IntroImage from "../components/IntroImage";
 import { digitalPhotos } from "../content/pricing";
@@ -9,7 +8,7 @@ const pricingBg =
 export default function Pricing() {
   return (
     <Fragment>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
         <IntroImage imageSrc={pricingBg} text={["Pricing"]} height="35vh" />
