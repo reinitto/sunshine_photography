@@ -248,9 +248,44 @@ export default class Navbar extends Component {
                         // var token = result.credential.accessToken;
                         // The signed-in user info.
 
+                        // TODO : CREATE USER AFTER AUTHENTICATION IF IT DOESN'T EXIST
+
+                        // Add a new document in collection "cities"
                         var user = result.user;
-                        const { displayName, email } = user;
-                        setUser({ displayName, email });
+                        const { displayName, email, uid } = user;
+                        const db = firebase.firestore();
+                        var UserRef = db.collection("users");
+                        UserRef.doc(email)
+                          .get()
+                          .then(function(doc) {
+                            if (doc.exists) {
+                              // console.log("Document data:", doc.data());
+                            } else {
+                              // doc.data() will be undefined in this case
+                              console.log("No such document! Creating User");
+                              UserRef.doc(email)
+                                .set({
+                                  name: displayName,
+                                  email,
+                                  uid
+                                })
+                                .then(function() {
+                                  console.log("Document successfully created!");
+                                })
+                                .catch(function(error) {
+                                  console.error(
+                                    "Error writing document: ",
+                                    error
+                                  );
+                                });
+                            }
+                          })
+                          .catch(function(error) {
+                            console.log("Error getting document:", error);
+                          });
+
+                        // console.log("uid", uid);
+                        setUser({ displayName, email, uid });
                         // ...
                       })
                       .catch(function(error) {

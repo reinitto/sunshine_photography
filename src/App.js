@@ -48,24 +48,28 @@ class App extends Component {
   }
 
   setUser(user) {
-    const db = firebase.firestore();
-
-    // const userRef = db.collection(“users”).add({
-    //   fullname: this.state.fullname,
-    //   email: this.state.email
-    // });
-    console.log('db.collection("users")', db.collection("users"));
-    db.collection("users")
-      .get()
-      // .document(`${user.email}`)
-      .then(querySnapshot => {
-        console.log("querySnapshot", querySnapshot);
-        querySnapshot.forEach(doc => {
-          console.log(`${doc.id} => ${doc.data()}`);
-        });
-      })
-      .catch(err => console.log("error:", err));
     this.setState({ user });
+  }
+
+  getUser() {
+    const db = firebase.firestore();
+    var UserRef = db.collection("users");
+    // .where('uid', '=', firebase.auth().currentUser.uid)
+    // TODO : SET APPROPRIATE SECURITY RULES IN FIRESTORE
+    // TODO : CREATE USER AFTERE AUTHENTICATION IF IT DOESN'T EXIST
+    UserRef.doc(this.state.user.email)
+      .get()
+      .then(function(doc) {
+        if (doc.exists) {
+          console.log("Document data:", doc.data());
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      })
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
   }
   render() {
     return (
@@ -90,6 +94,7 @@ class App extends Component {
                 firebase={firebase}
                 isSignedIn={this.state.user}
                 user={this.state.user}
+                displayUserData={this.getUser.bind(this)}
               />
               <Route component={Home} />
             </Switch>

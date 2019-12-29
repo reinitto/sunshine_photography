@@ -13,23 +13,17 @@ export default class Dashboard extends Component {
     limit: 2
   };
   render() {
-    const { user, firebase } = this.props;
+    const { user, displayUserData } = this.props;
     const { displayName, email, uid } = user;
     console.log("user", user);
     console.log("email", email);
-    // firebase
-    //   .firestore()
-    //   .collection("users")
-    //   .document(`${email}`)
-    //   .then(querySnapshot => {
-    //     querySnapshot.forEach(doc => {
-    //       console.log(`${doc.id} => ${doc.data()}`);
-    //     });
-    //   });
+
+    if (user) {
+      displayUserData();
+    }
 
     return (
       <Fragment>
-        {/* <FirebaseDatabaseProvider firebase={firebase} {...firebaseConfig}> */}
         <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
           <IntroImage
             imageSrc={dashboardPageBg}
@@ -40,33 +34,8 @@ export default class Dashboard extends Component {
         <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
           <div>
             <h1>{`Hello ${displayName}!`}</h1>
-            {/* <FirebaseDatabaseNode
-                path={`users/${email}`}
-                limitToFirst={this.state.limit}
-                // orderByKey
-                orderByValue={"created_on"}
-              >
-                {d => {
-                  return (
-                    <React.Fragment>
-                      <pre>Path {d.path}</pre>
-                      <pre style={{ height: 300, overflow: "auto" }}>
-                        Value {d.value}
-                      </pre>
-                      <button
-                        onClick={() => {
-                          this.setState(state => ({ limit: state.limit + 2 }));
-                        }}
-                      >
-                        Load more
-                      </button>
-                    </React.Fragment>
-                  );
-                }}
-              </FirebaseDatabaseNode> */}
           </div>
         </Suspense>
-        {/* </FirebaseDatabaseProvider> */}
       </Fragment>
     );
   }
