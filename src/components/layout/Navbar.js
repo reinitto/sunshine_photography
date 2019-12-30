@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Login from "../auth/Login";
 // import firebase from "firebase/app";
 // import "firebase/auth";
 
@@ -10,7 +11,8 @@ export default class Navbar extends Component {
   state = {
     scrollTop: 0,
     windowWidth: null,
-    loggedIn: this.props.isSignedIn
+    loggedIn: this.props.isSignedIn,
+    loginDisplay: "none"
   };
 
   componentDidMount() {
@@ -19,7 +21,6 @@ export default class Navbar extends Component {
     this.handleWidth();
     // Initialize the FirebaseUI Widget using Firebase.
     // var ui = new firebaseui.auth.AuthUI(firebase.auth());
-
     // ui.start("#firebaseui-auth-container", {
     //   signInOptions: [
     //     {
@@ -56,6 +57,11 @@ export default class Navbar extends Component {
       scrollTop
     });
   };
+  showLogin() {
+    this.setState({
+      loginDisplay: this.state.loginDisplay == "none" ? "block" : "none"
+    });
+  }
   render() {
     let { scrollTop } = this.state;
     let { isSignedIn, firebase, setUser } = this.props;
@@ -240,64 +246,127 @@ export default class Navbar extends Component {
                   }}
                   onClick={() => {
                     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-                    firebase
-                      .auth()
-                      .signInWithPopup(googleAuthProvider)
-                      .then(function(result) {
-                        // This gives you a Google Access Token. You can use it to access the Google API.
-                        // var token = result.credential.accessToken;
-                        // The signed-in user info.
+                    this.showLogin();
+                    // document.querySelector(".login-popup").style.display ==
+                    // "none"
+                    //   ? (document.querySelector(".login-popup").style.display =
+                    //       "block")
+                    //   : (document.querySelector(".login-popup").style.display =
+                    //       "none");
 
-                        // TODO : CREATE USER AFTER AUTHENTICATION IF IT DOESN'T EXIST
+                    // firebase
+                    //   .auth()
+                    //   .signInWithPopup(googleAuthProvider)
+                    //   .then(function(result) {
+                    //     // This gives you a Google Access Token. You can use it to access the Google API.
+                    //     // var token = result.credential.accessToken;
+                    //     // The signed-in user info.
 
-                        // Add a new document in collection "cities"
-                        var user = result.user;
-                        const { displayName, email, uid } = user;
-                        const db = firebase.firestore();
-                        var UserRef = db.collection("users");
-                        UserRef.doc(email)
-                          .get()
-                          .then(function(doc) {
-                            if (doc.exists) {
-                              // console.log("Document data:", doc.data());
-                            } else {
-                              // doc.data() will be undefined in this case
-                              console.log("No such document! Creating User");
-                              UserRef.doc(email)
-                                .set({
-                                  name: displayName,
-                                  email,
-                                  uid
-                                })
-                                .then(function() {
-                                  console.log("Document successfully created!");
-                                })
-                                .catch(function(error) {
-                                  console.error(
-                                    "Error writing document: ",
-                                    error
-                                  );
-                                });
-                            }
-                          })
-                          .catch(function(error) {
-                            console.log("Error getting document:", error);
-                          });
+                    //     // TODO : CREATE USER AFTER AUTHENTICATION IF IT DOESN'T EXIST
 
-                        // console.log("uid", uid);
-                        setUser({ displayName, email, uid });
-                        // ...
-                      })
-                      .catch(function(error) {
-                        // Handle Errors here.
-                        var errorCode = error.code;
-                        var errorMessage = error.message;
-                        // The email of the user's account used.
-                        var email = error.email;
-                        // The firebase.auth.AuthCredential type that was used.
-                        var credential = error.credential;
-                        // ...
-                      });
+                    //     // Add a new document in collection "cities"
+                    //     var user = result.user;
+                    //     const { displayName, email, uid } = user;
+                    //     const db = firebase.firestore();
+                    //     var UserRef = db.collection("users");
+                    //     UserRef.doc(email)
+                    //       .get()
+                    //       .then(function(doc) {
+                    //         if (doc.exists) {
+                    //           // console.log("Document data:", doc.data());
+                    //         } else {
+                    //           // doc.data() will be undefined in this case
+                    //           console.log("No such document! Creating User");
+                    //           UserRef.doc(email)
+                    //             .set({
+                    //               name: displayName,
+                    //               email,
+                    //               uid
+                    //             })
+                    //             .then(function() {
+                    //               console.log("Document successfully created!");
+                    //             })
+                    //             .catch(function(error) {
+                    //               console.error(
+                    //                 "Error writing document: ",
+                    //                 error
+                    //               );
+                    //             });
+                    //         }
+                    //       })
+                    //       .catch(function(error) {
+                    //         console.log("Error getting document:", error);
+                    //       });
+
+                    //     // console.log("uid", uid);
+                    //     setUser({ displayName, email, uid });
+                    //     // ...
+                    //   })
+                    //   .catch(function(error) {
+                    //     // Handle Errors here.
+                    //     var errorCode = error.code;
+                    //     var errorMessage = error.message;
+                    //     // The email of the user's account used.
+                    //     var email = error.email;
+                    //     // The firebase.auth.AuthCredential type that was used.
+                    //     var credential = error.credential;
+                    //     // ...
+                    //   });
+
+                    //
+                    // FIREBAE AUTH UI VERSION
+                    //
+
+                    // var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+                    // ui.start("#firebaseui-auth-container", {
+                    //   callbacks: {
+                    //     signInSuccessWithAuthResult: function(
+                    //       authResult,
+                    //       redirectUrl
+                    //     ) {
+                    //       // User successfully signed in.
+                    //       // Return type determines whether we continue the redirect automatically
+                    //       // or whether we leave that to developer to handle.
+                    //       console.log("authResult", authResult);
+                    //       const user = authResult.user;
+                    //       const { displayName, email, uid } = user;
+                    //       console.log(displayName, email, uid);
+                    //       // redirectUrl = `${window.location.origin}/dashboard`;
+                    //       setUser({ displayName, email, uid });
+                    //       return false;
+                    //     }
+                    //   },
+                    //   // signInSuccessUrl: `${window.location.origin}/dashboard`,
+                    //   // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+                    //   signInFlow: "popup",
+                    //   // signInSuccessUrl: '<url-to-redirect-to-on-success>',
+                    //   signInOptions: [
+                    //     // List of OAuth providers supported.
+                    //     firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                    //     firebase.auth.GoogleAuthProvider.PROVIDER_ID
+                    //   ]
+                    //   // Other config options...
+                    // });
+
+                    // TODO: ADD SIGN UP PAGE WITH OPTIONS OF EMAIL OR GOOGLE
+                    // TODO : ADD SIGN IN POP UP WITH OPTIONS OF EMAIL OR GOOGLE
+                    //
+                    //
+                    //  EMAIL AND PASSWORD SIGN UP
+                    //
+                    //
+                    // firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+                    //   // Handle Errors here.
+                    //   var errorCode = error.code;
+                    //   var errorMessage = error.message;
+                    //   // ...
+                    // });
+
+                    //
+                    // EMAIL AND PASSWORD LOGIN
+                    //
+                    //
                   }}
                 >
                   Log In
@@ -306,6 +375,10 @@ export default class Navbar extends Component {
             )}
           </ul>
         </div>
+        <Login
+          showLogin={this.showLogin.bind(this)}
+          display={this.state.loginDisplay}
+        />
       </nav>
     );
   }

@@ -100,6 +100,7 @@ class App extends Component {
             </Switch>
           </Fragment>
         </ScrollToTop>
+        <div id="firebaseui-auth-container"></div>
         <Footer />
       </Router>
     );
