@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Login from "../auth/Login";
+import Signup from "../auth/Signup";
 // import firebase from "firebase/app";
 // import "firebase/auth";
 
@@ -12,7 +13,8 @@ export default class Navbar extends Component {
     scrollTop: 0,
     windowWidth: null,
     loggedIn: this.props.isSignedIn,
-    loginDisplay: "none"
+    loginDisplay: "none",
+    signupDisplay: "none"
   };
 
   componentDidMount() {
@@ -57,9 +59,14 @@ export default class Navbar extends Component {
       scrollTop
     });
   };
-  showLogin() {
+  toggleLogin() {
     this.setState({
       loginDisplay: this.state.loginDisplay == "none" ? "block" : "none"
+    });
+  }
+  showSignup() {
+    this.setState({
+      signupDisplay: this.state.signupDisplay == "none" ? "block" : "none"
     });
   }
   render() {
@@ -246,7 +253,7 @@ export default class Navbar extends Component {
                   }}
                   onClick={() => {
                     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-                    this.showLogin();
+                    this.toggleLogin();
                     // document.querySelector(".login-popup").style.display ==
                     // "none"
                     //   ? (document.querySelector(".login-popup").style.display =
@@ -262,9 +269,7 @@ export default class Navbar extends Component {
                     //     // var token = result.credential.accessToken;
                     //     // The signed-in user info.
 
-                    //     // TODO : CREATE USER AFTER AUTHENTICATION IF IT DOESN'T EXIST
-
-                    //     // Add a new document in collection "cities"
+                    //     // Add a new document in collection "users"
                     //     var user = result.user;
                     //     const { displayName, email, uid } = user;
                     //     const db = firebase.firestore();
@@ -373,12 +378,31 @@ export default class Navbar extends Component {
                 </button>
               </li>
             )}
+            {/* <li>
+              <button
+                className="nav-link"
+                style={{
+                  textAlign: this.state.windowWidth < 439 ? "center" : "left",
+                  background: "transparent"
+                }}
+                onClick={() => {
+                  this.showSignup();
+                }}
+                >
+                Signup
+              </button>
+                </li> */}
           </ul>
         </div>
         <Login
-          showLogin={this.showLogin.bind(this)}
+          toggleLogin={this.toggleLogin.bind(this)}
           display={this.state.loginDisplay}
+          setUser={setUser.bind(this)}
         />
+        {/* <Signup
+          showSignup={this.showSignup.bind(this)}
+          display={this.state.signupDisplay}
+        /> */}
       </nav>
     );
   }

@@ -51,26 +51,6 @@ class App extends Component {
     this.setState({ user });
   }
 
-  getUser() {
-    const db = firebase.firestore();
-    var UserRef = db.collection("users");
-    // .where('uid', '=', firebase.auth().currentUser.uid)
-    // TODO : SET APPROPRIATE SECURITY RULES IN FIRESTORE
-    // TODO : CREATE USER AFTERE AUTHENTICATION IF IT DOESN'T EXIST
-    UserRef.doc(this.state.user.email)
-      .get()
-      .then(function(doc) {
-        if (doc.exists) {
-          console.log("Document data:", doc.data());
-        } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-        }
-      })
-      .catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-  }
   render() {
     return (
       <Router>
@@ -94,7 +74,7 @@ class App extends Component {
                 firebase={firebase}
                 isSignedIn={this.state.user}
                 user={this.state.user}
-                displayUserData={this.getUser.bind(this)}
+                // displayUserData={this.getUser.bind(this)}
               />
               <Route component={Home} />
             </Switch>

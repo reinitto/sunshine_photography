@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import firebase from "firebase/app";
 
-export default function Login({ display, showLogin }) {
+export default function Login({ display, toggleLogin, setUser }) {
   return (
     <div className="login-popup" style={{ display: display }}>
       <div className="popup\_inner">
@@ -33,11 +33,17 @@ export default function Login({ display, showLogin }) {
             firebase
               .auth()
               .signInWithEmailAndPassword(email, password)
+              .then(res => {
+                let user = res.user;
+                let { email, uid } = user;
+                console.log(email, uid);
+                toggleLogin();
+                setUser({ email, uid });
+              })
               .catch(function(error) {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                // ...
               });
           }}
         >
@@ -45,8 +51,7 @@ export default function Login({ display, showLogin }) {
         </button>
         <button
           onClick={() => {
-            console.log("display", display);
-            showLogin();
+            toggleLogin();
           }}
         >
           Cancel
