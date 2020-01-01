@@ -39,12 +39,18 @@ const firebaseConfig = {
 };
 
 class App extends Component {
-  state = {
-    user: null
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: null
+    };
+  }
 
   componentDidMount() {
     firebase.initializeApp(firebaseConfig);
+    firebase.auth().onAuthStateChanged(user => {
+      this.setState({ user: user });
+    });
     // this.setUser(firebase.auth().currentUser);
     // Confirm the link is a sign-in with email link.
     if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
@@ -66,7 +72,6 @@ class App extends Component {
         .then(result => {
           // Clear email from storage.
           window.localStorage.removeItem("emailForSignIn");
-          console.log("singinwithemaillink result", result);
           const { user } = result;
           this.setUser(user);
           // You can access the new user via result.user
