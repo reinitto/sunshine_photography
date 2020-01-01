@@ -15,6 +15,7 @@ import Journal from "./Pages/Journal";
 import Pricing from "./Pages/Pricing";
 import Contact from "./Pages/Contact";
 import Gallery from "./Pages/Gallery";
+import Login from "./Pages/Login";
 import * as firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
@@ -45,6 +46,41 @@ class App extends Component {
   componentDidMount() {
     firebase.initializeApp(firebaseConfig);
     // this.setUser(firebase.auth().currentUser);
+    // Confirm the link is a sign-in with email link.
+    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+      // Additional state parameters can also be passed via URL.
+      // This can be used to continue the user's intended action before triggering
+      // the sign-in operation.
+      // Get the email if available. This should be available if the user completes
+      // the flow on the same device where they started it.
+      var email = window.localStorage.getItem("emailForSignIn");
+      if (!email) {
+        // User opened the link on a different device. To prevent session fixation
+        // attacks, ask the user to provide the associated email again. For example:
+        email = window.prompt("Please provide your email for confirmation");
+      }
+      // The client SDK will parse the code from the link for you.
+      firebase
+        .auth()
+        .signInWithEmailLink(email, window.location.href)
+        .then(result => {
+          // Clear email from storage.
+          window.localStorage.removeItem("emailForSignIn");
+          console.log("singinwithemaillink result", result);
+          const { user } = result;
+          this.setUser(user);
+          // You can access the new user via result.user
+          // Additional user info profile not available via:
+          // result.additionalUserInfo.profile == null
+          // You can check if the user is new or existing:
+          // result.additionalUserInfo.isNewUser
+        })
+        .catch(function(error) {
+          console.log("login erorr", error);
+          // Some error occurred, you can inspect the code: error.code
+          // Common errors could be invalid email and invalid or expired OTPs.
+        });
+    }
   }
 
   setUser(user) {
@@ -68,6 +104,7 @@ class App extends Component {
               <Route path="/journal" component={Journal} />
               <Route path="/gallery" component={Gallery} />
               <Route path="/Pricing" component={Pricing} />
+              <Route path="/Login" component={Login} />
               <PrivateRoute
                 path="/dashboard"
                 component={Dashboard}
