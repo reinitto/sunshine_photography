@@ -74,7 +74,6 @@ class App extends Component {
                 firebase={firebase}
                 isSignedIn={this.state.user}
                 user={this.state.user}
-                // displayUserData={this.getUser.bind(this)}
               />
               <Route component={Home} />
             </Switch>

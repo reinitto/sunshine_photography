@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Login from "../auth/Login";
-import Signup from "../auth/Signup";
+// import Signup from "../auth/Signup";
 // import firebase from "firebase/app";
 // import "firebase/auth";
 
@@ -61,12 +61,12 @@ export default class Navbar extends Component {
   };
   toggleLogin() {
     this.setState({
-      loginDisplay: this.state.loginDisplay == "none" ? "block" : "none"
+      loginDisplay: this.state.loginDisplay === "none" ? "block" : "none"
     });
   }
   showSignup() {
     this.setState({
-      signupDisplay: this.state.signupDisplay == "none" ? "block" : "none"
+      signupDisplay: this.state.signupDisplay === "none" ? "block" : "none"
     });
   }
   render() {
@@ -252,7 +252,7 @@ export default class Navbar extends Component {
                     background: "transparent"
                   }}
                   onClick={() => {
-                    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+                    // const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
                     this.toggleLogin();
                     // document.querySelector(".login-popup").style.display ==
                     // "none"

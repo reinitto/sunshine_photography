@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import firebase from "firebase/app";
 
 export default function Login({ display, toggleLogin, setUser }) {
@@ -41,9 +41,10 @@ export default function Login({ display, toggleLogin, setUser }) {
                 setUser({ email, uid });
               })
               .catch(function(error) {
+                console.log(error);
                 // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
+                // var errorCode = error.code;
+                // var errorMessage = error.message;
               });
           }}
         >
