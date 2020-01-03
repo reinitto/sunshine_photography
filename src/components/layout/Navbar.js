@@ -232,12 +232,12 @@ export default class Navbar extends Component {
                 <Link className="dropdown-item" to="/gallery#family">
                   Family
                 </Link>
-                <Link className="dropdown-item" to="/gallery#portrait">
+                {/* <Link className="dropdown-item" to="/gallery#portrait">
                   Portrait
                 </Link>
                 <Link className="dropdown-item" to="/gallery#event">
                   Event
-                </Link>
+                </Link> */}
               </div>
             </li>
 

@@ -35,12 +35,12 @@ export default function Footer() {
             <p>
               <Link to={"/gallery#family"}>Family photos</Link>
             </p>
-            <p>
+            {/* <p>
               <Link to={"/gallery#portrait"}>Portrait photos</Link>
             </p>
             <p>
               <Link to={"/gallery#event"}>Event photos</Link>
-            </p>
+            </p> */}
           </div>
 
           <hr className="w-100 clearfix d-md-none" />
