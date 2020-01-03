@@ -113,8 +113,8 @@ export default class Gallery extends Component {
         ) : (
           <Fragment>
             <p>
-              For higher resolution images <Link to="/contact">contact me</Link>{" "}
-              or Visit{" "}
+              For higher resolution images <Link to="/contact">contact me</Link>
+              or Visit
               <a
                 target="_blank"
                 href="http://www.shutterstock.com"

@@ -1,26 +1,11 @@
 import React from "react";
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 
-// CREATE 4 TYPES OF IMAGE CONTAINERS
-//  FULL SIZE IMAGE
-//  2 IMAGES SIDE BY SIDE
-//  3 IMAGES SIDE BY SIDE
-
 const LazyImg = ({ imageSrc }) => {
-  //  create small image and large versions
-  // let widthSizes = [1500, 500];
-  // let sources = [];
-  // widthSizes.forEach(size => sources.push(`${imageSrc}&w=${size}&q=60`));
   return (
-    // <div>
-    //   <LazyImage placeholder={sources[1]} src={sources[0]}>
-    //     {(src, loading, isVisible) => (
     <Image publicId={imageSrc} className="fitted-image">
       <Transformation quality="auto" fetchFormat="auto" />
     </Image>
-    //     )}
-    //   </LazyImage>
-    // </div>
   );
 };
 
@@ -45,17 +30,7 @@ const SingleImage = ({ img }) => {
       >
         <Transformation quality="auto" fetchFormat="auto" />
       </Image>
-      {/* <img
-        style={{
-          width: "100%",
-          objectFit: "cover",
-          backgroundSize: "cover",
-          backgroundPosition: "center"
-        }}
-        src={img.src}
-        alt="single"
-        loading="lazy"
-      /> */}
+
       {img.text ? <p>{img.text}</p> : null}
     </div>
   ) : null;

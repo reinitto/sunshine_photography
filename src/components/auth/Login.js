@@ -1,62 +1,65 @@
-import React from "react";
-import firebase from "firebase/app";
+import React, { useState } from "react";
 
-export default function Login({ display, toggleLogin, setUser }) {
+export default function Login({ display, toggleLogin, requestLogin }) {
+  let [message, setMessage] = useState();
   return (
     <div className="login-popup" style={{ display: display }}>
-      <div className="popup\_inner">
-        <h1>Login</h1>
+      <div className="popup_inner">
+        <h1>Request Login Link</h1>
         <div>
-          <ul>
-            <li>
-              <input
-                type="email"
-                name="email"
-                id="login-email"
-                placeholder="Email"
-              />
-            </li>
-            <li>
-              <input
-                type="password"
-                name="password"
-                id="login-password"
-                placeholder="Password"
-              />
-            </li>
-          </ul>
+          <form id="login-request-form">
+            <input
+              type="email"
+              name="email"
+              id="passwordless-email"
+              placeholder="Email"
+              required
+            />
+          </form>
+          <div
+            style={{
+              backgroundColor: message && message.color ? message.color : null
+            }}
+          >
+            <p>{message ? message.message : null}</p>
+          </div>
         </div>
-        <button
-          onClick={() => {
-            let email = document.querySelector("#login-email").value;
-            let password = document.querySelector("#login-password").value;
-            firebase
-              .auth()
-              .signInWithEmailAndPassword(email, password)
-              .then(res => {
-                let user = res.user;
-                let { email, uid } = user;
-                console.log(email, uid);
-                toggleLogin();
-                setUser({ email, uid });
-              })
-              .catch(function(error) {
-                console.log(error);
-                // Handle Errors here.
-                // var errorCode = error.code;
-                // var errorMessage = error.message;
-              });
-          }}
-        >
-          Login
-        </button>
-        <button
-          onClick={() => {
-            toggleLogin();
-          }}
-        >
-          Cancel
-        </button>
+        <div>
+          <button
+            className="login-button"
+            onClick={e => {
+              const email = document.querySelector("#passwordless-email").value;
+              requestLogin(e, email)
+                .then(() => {
+                  // Clear Form
+                  document.querySelector("#login-request-form").reset();
+                  setMessage({
+                    message: "Check Your Email for Login Link!",
+                    color: "green"
+                  });
+                  setInterval(() => {
+                    setMessage(null);
+                  }, 5000);
+                })
+                .catch(err => {
+                  setMessage({ message: err.message, color: "red" });
+                  setInterval(() => {
+                    setMessage(null);
+                  }, 5000);
+                });
+            }}
+          >
+            Request Login Link
+          </button>
+          <button
+            className="login-button"
+            onClick={() => {
+              toggleLogin();
+            }}
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );

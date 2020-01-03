@@ -21,6 +21,8 @@ firebase.json
 .vscode
 
 firebase.js
+# Cloud functions
+/functions
 
 /src/firebaseInit.js
 /src/firebase-creds.js

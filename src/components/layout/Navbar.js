@@ -1,12 +1,8 @@
 import React, { Component } from "react";
 import Login from "../auth/Login";
-// import Signup from "../auth/Signup";
-// import firebase from "firebase/app";
-// import "firebase/auth";
-
-// import firebase from "../../Firebase";
 import CameraOnly from "../../logo/camera-logo.svg";
 import { Link } from "react-router-dom";
+import firebase from "firebase/app";
 
 export default class Navbar extends Component {
   state = {
@@ -14,29 +10,14 @@ export default class Navbar extends Component {
     windowWidth: null,
     loggedIn: this.props.isSignedIn,
     loginDisplay: "none",
-    signupDisplay: "none"
+    signupDisplay: "none",
+    dropdownDisplay: false
   };
 
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("resize", this.handleWidth);
     this.handleWidth();
-    // Initialize the FirebaseUI Widget using Firebase.
-    // var ui = new firebaseui.auth.AuthUI(firebase.auth());
-    // ui.start("#firebaseui-auth-container", {
-    //   signInOptions: [
-    //     {
-    //       provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    //       scopes: ["https://www.googleapis.com/auth/contacts.readonly"],
-    //       customParameters: {
-    //         // Forces account selection even when one account
-    //         // is available.
-    //         prompt: "select_account"
-    //       }
-    //     }
-    //   ]
-    //   // Other config options...
-    // });
   }
   componentWillUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -61,14 +42,43 @@ export default class Navbar extends Component {
   };
   toggleLogin() {
     this.setState({
-      loginDisplay: this.state.loginDisplay === "none" ? "block" : "none"
+      loginDisplay: this.state.loginDisplay === "none" ? "flex" : "none"
     });
   }
-  showSignup() {
+  toggleDropdownDisplay() {
     this.setState({
-      signupDisplay: this.state.signupDisplay === "none" ? "block" : "none"
+      dropdownDisplay: !this.state.dropdownDisplay
     });
   }
+  requestLogin = (e, email) => {
+    e.preventDefault();
+    var actionCodeSettings = {
+      // URL you want to redirect back to. The domain (www.example.com) for this
+      // URL must be whitelisted in the Firebase Console.
+      //   url: "https://momblog-15d1c.firebaseapp.com",
+      url: window.location.href,
+      // This must be true.
+      handleCodeInApp: true
+    };
+    return new Promise((resolve, reject) => {
+      firebase
+        .auth()
+        .sendSignInLinkToEmail(email, actionCodeSettings)
+        .then(function() {
+          // The link was successfully sent. Inform the user.
+          // Save the email locally so you don't need to ask the user for it again
+          // if they open the link on the same device.
+          window.localStorage.setItem("emailForSignIn", email);
+          resolve(true);
+        })
+        .catch(function(error) {
+          // Some error occurred, you can inspect the code: error.code
+          // console.log("login error", error);
+          reject(error);
+        });
+    });
+  };
+
   render() {
     let { scrollTop } = this.state;
     let { isSignedIn, firebase, setUser } = this.props;
@@ -119,9 +129,6 @@ export default class Navbar extends Component {
           Pictures
         </Link>
         <button
-          // style={{
-          //   margin: "auto"
-          // }}
           className="navbar-toggler"
           type="button"
           data-toggle="collapse"
@@ -166,14 +173,35 @@ export default class Navbar extends Component {
             </li>
             <li
               className="nav-item dropdown"
-              onMouseEnter={() => {
-                document.querySelector(".dropdown-menu").classList.add("show");
+              onClick={() => {
+                this.toggleDropdownDisplay();
+                // console.log(
+                //   'document.querySelector(".dropdown-menu").classList',
+                //   document.querySelector(".dropdown-menu").classList
+                // );
+                // TOGGLE class
+                // if (
+                //   ![
+                //     ...document.querySelector(".dropdown-menu").classList
+                //   ].includes("show")
+                // ) {
+                //   document
+                //     .querySelector(".dropdown-menu")
+                //     .classList.add("show");
+                // } else {
+                //   document
+                //     .querySelector(".dropdown-menu")
+                //     .classList.remove("show");
+                // }
               }}
-              onMouseLeave={() => {
-                document
-                  .querySelector(".dropdown-menu")
-                  .classList.remove("show");
-              }}
+              // onMouseEnter={() => {
+              //   document.querySelector(".dropdown-menu").classList.add("show");
+              // }}
+              // onMouseLeave={() => {
+              //   document
+              //     .querySelector(".dropdown-menu")
+              //     .classList.remove("show");
+              // }}
             >
               <Link
                 className="nav-link dropdown-toggle"
@@ -190,13 +218,13 @@ export default class Navbar extends Component {
                   window.location.pathname === "/" && scrollTop === 0
                     ? "bg-transparent"
                     : "bg-base"
-                } `}
+                } ${this.state.dropdownDisplay ? "show" : null} `}
                 aria-labelledby="navbarDropdownMenuLink"
-                onMouseLeave={() => {
-                  document
-                    .querySelector(".dropdown-menu")
-                    .classList.remove("show");
-                }}
+                // onMouseLeave={() => {
+                //   document
+                //     .querySelector(".dropdown-menu")
+                //     .classList.remove("show");
+                // }}
               >
                 <Link className="dropdown-item" to="/gallery#baby">
                   Baby
@@ -247,162 +275,23 @@ export default class Navbar extends Component {
               <li>
                 <button
                   className="nav-link"
+                  onClick={() => this.toggleLogin()}
                   style={{
                     textAlign: this.state.windowWidth < 439 ? "center" : "left",
                     background: "transparent"
                   }}
-                  onClick={() => {
-                    // const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-                    this.toggleLogin();
-                    // document.querySelector(".login-popup").style.display ==
-                    // "none"
-                    //   ? (document.querySelector(".login-popup").style.display =
-                    //       "block")
-                    //   : (document.querySelector(".login-popup").style.display =
-                    //       "none");
-
-                    // firebase
-                    //   .auth()
-                    //   .signInWithPopup(googleAuthProvider)
-                    //   .then(function(result) {
-                    //     // This gives you a Google Access Token. You can use it to access the Google API.
-                    //     // var token = result.credential.accessToken;
-                    //     // The signed-in user info.
-
-                    //     // Add a new document in collection "users"
-                    //     var user = result.user;
-                    //     const { displayName, email, uid } = user;
-                    //     const db = firebase.firestore();
-                    //     var UserRef = db.collection("users");
-                    //     UserRef.doc(email)
-                    //       .get()
-                    //       .then(function(doc) {
-                    //         if (doc.exists) {
-                    //           // console.log("Document data:", doc.data());
-                    //         } else {
-                    //           // doc.data() will be undefined in this case
-                    //           console.log("No such document! Creating User");
-                    //           UserRef.doc(email)
-                    //             .set({
-                    //               name: displayName,
-                    //               email,
-                    //               uid
-                    //             })
-                    //             .then(function() {
-                    //               console.log("Document successfully created!");
-                    //             })
-                    //             .catch(function(error) {
-                    //               console.error(
-                    //                 "Error writing document: ",
-                    //                 error
-                    //               );
-                    //             });
-                    //         }
-                    //       })
-                    //       .catch(function(error) {
-                    //         console.log("Error getting document:", error);
-                    //       });
-
-                    //     // console.log("uid", uid);
-                    //     setUser({ displayName, email, uid });
-                    //     // ...
-                    //   })
-                    //   .catch(function(error) {
-                    //     // Handle Errors here.
-                    //     var errorCode = error.code;
-                    //     var errorMessage = error.message;
-                    //     // The email of the user's account used.
-                    //     var email = error.email;
-                    //     // The firebase.auth.AuthCredential type that was used.
-                    //     var credential = error.credential;
-                    //     // ...
-                    //   });
-
-                    //
-                    // FIREBAE AUTH UI VERSION
-                    //
-
-                    // var ui = new firebaseui.auth.AuthUI(firebase.auth());
-
-                    // ui.start("#firebaseui-auth-container", {
-                    //   callbacks: {
-                    //     signInSuccessWithAuthResult: function(
-                    //       authResult,
-                    //       redirectUrl
-                    //     ) {
-                    //       // User successfully signed in.
-                    //       // Return type determines whether we continue the redirect automatically
-                    //       // or whether we leave that to developer to handle.
-                    //       console.log("authResult", authResult);
-                    //       const user = authResult.user;
-                    //       const { displayName, email, uid } = user;
-                    //       console.log(displayName, email, uid);
-                    //       // redirectUrl = `${window.location.origin}/dashboard`;
-                    //       setUser({ displayName, email, uid });
-                    //       return false;
-                    //     }
-                    //   },
-                    //   // signInSuccessUrl: `${window.location.origin}/dashboard`,
-                    //   // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-                    //   signInFlow: "popup",
-                    //   // signInSuccessUrl: '<url-to-redirect-to-on-success>',
-                    //   signInOptions: [
-                    //     // List of OAuth providers supported.
-                    //     firebase.auth.EmailAuthProvider.PROVIDER_ID,
-                    //     firebase.auth.GoogleAuthProvider.PROVIDER_ID
-                    //   ]
-                    //   // Other config options...
-                    // });
-
-                    // TODO: ADD SIGN UP PAGE WITH OPTIONS OF EMAIL OR GOOGLE
-                    // TODO : ADD SIGN IN POP UP WITH OPTIONS OF EMAIL OR GOOGLE
-                    //
-                    //
-                    //  EMAIL AND PASSWORD SIGN UP
-                    //
-                    //
-                    // firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-                    //   // Handle Errors here.
-                    //   var errorCode = error.code;
-                    //   var errorMessage = error.message;
-                    //   // ...
-                    // });
-
-                    //
-                    // EMAIL AND PASSWORD LOGIN
-                    //
-                    //
-                  }}
                 >
-                  Log In
+                  Login
                 </button>
               </li>
             )}
-            {/* <li>
-              <button
-                className="nav-link"
-                style={{
-                  textAlign: this.state.windowWidth < 439 ? "center" : "left",
-                  background: "transparent"
-                }}
-                onClick={() => {
-                  this.showSignup();
-                }}
-                >
-                Signup
-              </button>
-                </li> */}
           </ul>
         </div>
         <Login
           toggleLogin={this.toggleLogin.bind(this)}
           display={this.state.loginDisplay}
-          setUser={setUser.bind(this)}
+          requestLogin={this.requestLogin}
         />
-        {/* <Signup
-          showSignup={this.showSignup.bind(this)}
-          display={this.state.signupDisplay}
-        /> */}
       </nav>
     );
   }
