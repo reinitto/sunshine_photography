@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
-import portfolioImages from "../content/portfolioImages";
+import portfolioImages from "../content/portfolio.json";
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 
 let portfolioThumbs = [...Object.keys(portfolioImages)].map(key => [
