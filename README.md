@@ -24,6 +24,12 @@ App will start on **http://localhost:3000/**
 $ npm start
 ```
 
+To Start Firebase Functions Localy
+
+```sh
+$ firebase emulators:start --only functions
+```
+
 ### Building
 
 Run

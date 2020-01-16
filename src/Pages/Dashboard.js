@@ -1,27 +1,30 @@
 import React, { Fragment, Suspense, Component } from "react";
 import firebase from "firebase/app";
 // import ImgGallery from "../components/portfolio/ImageGalleryWithoutLighbox";
-import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
+import { CloudinaryContext } from "cloudinary-react";
 import Img from "react-cloudinary-lazy-image";
 import IntroImage from "../components/IntroImage";
 
-const LazyCloudinaryImg = ({ publicId }) => (
-  <Img
-    cloudName={"sunshinephoto"}
-    imageName={publicId}
-    fluid={{
-      maxWidth: 300
-    }}
-    style={{
-      position: "relative",
-      overflow: "hidden",
-      width: "initial",
-      height: "initial"
-    }}
-    urlParams={"c_scale"}
-    // urlParams={"g_face,c_lfill"}
-  />
-);
+const LazyCloudinaryImg = ({ publicId }) => {
+  // console.log("LazyCloudinaryImg publicId", publicId);
+  return (
+    <Img
+      cloudName={"sunshinephoto"}
+      imageName={publicId}
+      fluid={{
+        maxWidth: 300
+      }}
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        width: "initial",
+        height: "initial"
+      }}
+      urlParams={"c_scale"}
+      // urlParams={"g_face,c_lfill"}
+    />
+  );
+};
 const dashboardPageBg =
   "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/images/backgrounds/IMG_8951_1500_oxpgkq.jpg";
 export default class Dashboard extends Component {
@@ -108,7 +111,7 @@ export default class Dashboard extends Component {
   }
 
   toggleImageSelect = url => {
-    console.log("url", url);
+    // console.log("url", url);
     if (
       this.state.selected_pictures &&
       this.state.selected_pictures.includes(url)
@@ -164,6 +167,7 @@ export default class Dashboard extends Component {
                     margin: "auto"
                   }}
                   onClick={() => {
+                    // TODO : fix selected pics
                     console.log("slectged:", this.state.selected_pictures);
                     return this.updateUserInfo(user);
                   }}
@@ -179,13 +183,13 @@ export default class Dashboard extends Component {
   }
 }
 
-const LazyImg = ({ imageSrc }) => {
-  return (
-    <Image publicId={imageSrc} className="contain-image" width="300">
-      <Transformation quality="auto" fetchFormat="auto" />
-    </Image>
-  );
-};
+// const LazyImg = ({ imageSrc }) => {
+//   return (
+//     <Image publicId={imageSrc} className="contain-image" width="300">
+//       <Transformation quality="auto" fetchFormat="auto" />
+//     </Image>
+//   );
+// };
 
 const ImageSelectGallery = ({
   pictures,
@@ -202,15 +206,15 @@ const ImageSelectGallery = ({
           style={{
             margin: "5px",
             border: `2px solid ${
-              selected_pictures.includes(pic.src) ? "green" : "transparent"
+              selected_pictures.includes(pic.src.src) ? "green" : "transparent"
             }`
           }}
           onClick={() => {
-            return toggleSelect(pic.src);
+            return toggleSelect(pic.src.src);
           }}
         >
-          <LazyCloudinaryImg publicId={pic.src} />
-          {selected_pictures.includes(pic.src) ? (
+          <LazyCloudinaryImg publicId={pic.src.src} />
+          {selected_pictures.includes(pic.src.src) ? (
             <div
               style={{
                 backgroundColor: "green",
