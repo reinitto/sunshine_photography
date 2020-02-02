@@ -1,3 +1,10 @@
+@import url("https://fonts.googleapis.com/css?family=Old+Standard+TT&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Cabin&display=swap");
+@font-face {
+  font-family: "Sallita";
+  src: local("Sallita"), url(../fonts/sallita/Sallita.ttf) format("opentype");
+}
+
 html {
   height: 100%;
 }
@@ -10,6 +17,20 @@ body {
 
 a {
   color: #3d4856;
+  font-family: "Cabin", serif;
+}
+
+p {
+  font-family: "Old Standard TT", serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Cabin", serif;
 }
 
 a:hover {
@@ -137,6 +158,7 @@ nav.navbar.navbar-expand-md {
   font-weight: 600;
   background: #9f818a;
   padding: 0.5rem;
+  font-family: "Cabin", serif;
 }
 
 .links-to-gallery {
@@ -252,6 +274,7 @@ nav.navbar.navbar-expand-md {
 .carousel-text p span {
   background-color: white;
   opacity: 0.5;
+  font-family: "Sallita";
 }
 
 .navbar .nav-link {
