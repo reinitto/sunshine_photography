@@ -48,7 +48,7 @@ export default function GalleryPage() {
         <IntroImage
           imageSrc={portfoliogalleryBg}
           text={["Portfolio Gallery"]}
-          height="35vh"
+          // height="35vh"
         />
       </Suspense>
       <div style={{ width: "90%", margin: "auto" }}>

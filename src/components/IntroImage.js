@@ -4,7 +4,12 @@ let cloudinaryBgs = [
   "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/images/backgrounds/IMG_8944_xj7nmv.jpg"
 ];
 
-export default function IntroImage({ imageSrc, text, height = "65vh" }) {
+export default function IntroImage({
+  imageSrc,
+  text,
+  height = "400px",
+  wrap = false
+}) {
   return (
     <div
       className="fitted-image"
@@ -15,14 +20,20 @@ export default function IntroImage({ imageSrc, text, height = "65vh" }) {
         height
       }}
     >
-      <div className="carousel-text ">
-        {text.map((word, i) => (
-          <p key={word}>
-            <span className="text-capitalize" key={i}>
-              {word}
-            </span>
+      <div className="carousel-text">
+        {wrap ? (
+          text.map((word, i) => (
+            <p key={word}>
+              <span className="text-capitalize" key={i}>
+                {word}
+              </span>
+            </p>
+          ))
+        ) : (
+          <p className="text-capitalize" key={text}>
+            {text.join(" ")}
           </p>
-        ))}
+        )}
       </div>
     </div>
   );

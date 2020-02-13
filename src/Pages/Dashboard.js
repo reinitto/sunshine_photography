@@ -2,9 +2,9 @@ import React, { Fragment, Suspense, Component } from "react";
 import firebase from "firebase/app";
 // import ImgGallery from "../components/portfolio/ImageGalleryWithoutLighbox";
 import { CloudinaryContext } from "cloudinary-react";
-import Img from "react-cloudinary-lazy-image";
+// import Img from "react-cloudinary-lazy-image";
 import IntroImage from "../components/IntroImage";
-
+const Img = React.lazy(() => import("react-cloudinary-lazy-image"));
 const LazyCloudinaryImg = ({ publicId }) => {
   // console.log("LazyCloudinaryImg publicId", publicId);
   return (
@@ -141,26 +141,21 @@ export default class Dashboard extends Component {
     return (
       <Fragment>
         <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
-          <IntroImage
-            imageSrc={dashboardPageBg}
-            text={["Your Dashboard"]}
-            height="35vh"
-          />
+          <IntroImage imageSrc={dashboardPageBg} text={["Your Dashboard"]} />
         </Suspense>
         <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
           <div>
             <h1>{`Hello ${displayName || email}!`}</h1>
           </div>
         </Suspense>
-        <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
-          {this.state.pictures ? (
-            <Fragment>
-              <ImageSelectGallery
-                pictures={this.state.pictures}
-                selected_pictures={this.state.selected_pictures}
-                toggleSelect={this.toggleImageSelect.bind(this)}
-              />
-              <div>
+        {this.state.pictures ? (
+          <Fragment>
+            <ImageSelectGallery
+              pictures={this.state.pictures}
+              // selected_pictures={this.state.selected_pictures}
+              // toggleSelect={this.toggleImageSelect.bind(this)}
+            />
+            {/* <div>
                 <button
                   style={{
                     display: "block",
@@ -174,10 +169,9 @@ export default class Dashboard extends Component {
                 >
                   Develop Selected Pictures!
                 </button>
-              </div>
-            </Fragment>
-          ) : null}
-        </Suspense>
+              </div> */}
+          </Fragment>
+        ) : null}
       </Fragment>
     );
   }
@@ -205,16 +199,17 @@ const ImageSelectGallery = ({
         <div
           style={{
             margin: "5px",
-            border: `2px solid ${
-              selected_pictures.includes(pic.src.src) ? "green" : "transparent"
-            }`
+            border: "2px solid transparent"
+            // border: `2px solid ${
+            //   selected_pictures.includes(pic.src.src) ? "green" : "transparent"
+            // }`
           }}
-          onClick={() => {
-            return toggleSelect(pic.src.src);
-          }}
+          // onClick={() => {
+          //   return toggleSelect(pic.src.src);
+          // }}
         >
           <LazyCloudinaryImg publicId={pic.src.src} />
-          {selected_pictures.includes(pic.src.src) ? (
+          {/* {selected_pictures.includes(pic.src.src) ? (
             <div
               style={{
                 backgroundColor: "green",
@@ -225,7 +220,7 @@ const ImageSelectGallery = ({
             </div>
           ) : (
             <div style={{ textAlign: "center" }}>Click to select</div>
-          )}
+          )} */}
         </div>
       </Suspense>
     );

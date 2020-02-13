@@ -14,7 +14,7 @@ export default function Contact() {
         <IntroImage
           imageSrc={contactPageBg}
           text={["Contact Me"]}
-          height="35vh"
+          // height="35vh"
         />
       </Suspense>
       <ContactForm

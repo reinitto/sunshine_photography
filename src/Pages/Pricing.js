@@ -11,7 +11,7 @@ export default function Pricing() {
       {/* <Navbar /> */}
 
       <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
-        <IntroImage imageSrc={pricingBg} text={["Pricing"]} height="35vh" />
+        <IntroImage imageSrc={pricingBg} text={["Pricing"]} />
       </Suspense>
       <div className="container ">
         <h2 className="text-center">Photo sessions</h2>

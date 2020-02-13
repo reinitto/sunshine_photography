@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Login from "../auth/Login";
-import CameraOnly from "../../logo/camera-logo.svg";
+// import CameraOnly from "../../logo/camera-logo.svg";
 import { Link } from "react-router-dom";
 import firebase from "firebase/app";
 
@@ -107,7 +107,7 @@ export default class Navbar extends Component {
          }
     `}
       >
-        <Link
+        {/* <Link
           className="navbar-brand"
           to="/"
           style={{
@@ -127,7 +127,7 @@ export default class Navbar extends Component {
             alt=""
           />{" "}
           Pictures
-        </Link>
+        </Link> */}
         <button
           className="navbar-toggler"
           type="button"

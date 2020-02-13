@@ -253,7 +253,7 @@ nav.navbar.navbar-expand-md {
 
 .carousel-text {
   position: absolute;
-  top: 20vh;
+  top: 100px;
   left: 0;
   color: #3d4856;
   z-index: 1;
@@ -272,13 +272,13 @@ nav.navbar.navbar-expand-md {
 }
 
 .carousel-text p {
+  font-family: "Sallita";
   text-align: start;
 }
 
 .carousel-text p span {
   background-color: white;
   opacity: 0.5;
-  font-family: "Sallita";
 }
 
 .navbar .nav-link {

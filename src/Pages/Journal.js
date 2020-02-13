@@ -12,11 +12,11 @@ export default function Journal() {
   return (
     <Fragment>
       {/* <Navbar /> */}
-      <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
+      <Suspense fallback={<div style={{ height: "400px" }}></div>}>
         <IntroImage
           imageSrc={journalIntroBg}
           text={["Travel Photos"]}
-          height="35vh"
+          // height="35vh"
         />
       </Suspense>
       <div style={{ width: "90%", margin: "auto" }}>

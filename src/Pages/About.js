@@ -16,7 +16,7 @@ export default function About({ firebase }) {
         <IntroImage
           imageSrc="https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/images/backgrounds/IMG_8997_1500_ymk08l.jpg"
           text={["About Me"]}
-          height="35vh"
+          // height="35vh"
         />
       </Suspense>
       <AboutSection title={false} />
