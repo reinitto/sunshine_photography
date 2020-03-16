@@ -1,12 +1,9 @@
 import React, { Fragment, Suspense, Component } from "react";
 import firebase from "firebase/app";
-// import ImgGallery from "../components/portfolio/ImageGalleryWithoutLighbox";
 import { CloudinaryContext } from "cloudinary-react";
-// import Img from "react-cloudinary-lazy-image";
 import IntroImage from "../components/IntroImage";
 const Img = React.lazy(() => import("react-cloudinary-lazy-image"));
 const LazyCloudinaryImg = ({ publicId }) => {
-  // console.log("LazyCloudinaryImg publicId", publicId);
   return (
     <Img
       cloudName={"sunshinephoto"}

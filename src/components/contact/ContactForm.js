@@ -50,7 +50,7 @@ export default function ContactForm({ backgroundImage = "", title = true }) {
     >
       <div className="container">
         {title ? <h2 className="text-center">Contact Me</h2> : null}
-        <form onSubmit={submitMessage} id="contactForm">
+        <form onSubmit={submitMessage} id="contactForm" name="contactForm">
           <div className="form-group">
             <label htmlFor="name">Name</label>
             <input

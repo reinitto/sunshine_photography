@@ -3,6 +3,16 @@ import Login from "../auth/Login";
 // import CameraOnly from "../../logo/camera-logo.svg";
 import { Link } from "react-router-dom";
 import firebase from "firebase/app";
+import journals from "../../content/journals.json";
+
+const servicesNames = [
+  "family",
+  "children",
+  "couples",
+  "friends",
+  "lifestyle",
+  "company"
+];
 
 export default class Navbar extends Component {
   state = {
@@ -150,111 +160,112 @@ export default class Navbar extends Component {
                 </Link>
               </li>
             ) : null}
+            {window.location.pathname === "/" ? null : (
+              <li>
+                <Link to={"/"} className="nav-link">
+                  Home
+                </Link>
+              </li>
+            )}
 
-            <li>
-              <Link to={"/"} className="nav-link">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link to={"/contact"} className="nav-link">
-                Contact
-              </Link>
-            </li>
-            <li>
-              <Link to={"/about"} className="nav-link">
-                About
-              </Link>
-            </li>
-            <li>
-              <Link to={"/journal"} className="nav-link">
-                Journal
-              </Link>
-            </li>
-            <li
-              className="nav-item dropdown"
-              onClick={() => {
-                this.toggleDropdownDisplay();
-                // console.log(
-                //   'document.querySelector(".dropdown-menu").classList',
-                //   document.querySelector(".dropdown-menu").classList
-                // );
-                // TOGGLE class
-                // if (
-                //   ![
-                //     ...document.querySelector(".dropdown-menu").classList
-                //   ].includes("show")
-                // ) {
-                //   document
-                //     .querySelector(".dropdown-menu")
-                //     .classList.add("show");
-                // } else {
-                //   document
-                //     .querySelector(".dropdown-menu")
-                //     .classList.remove("show");
-                // }
-              }}
-              // onMouseEnter={() => {
-              //   document.querySelector(".dropdown-menu").classList.add("show");
-              // }}
-              // onMouseLeave={() => {
-              //   document
-              //     .querySelector(".dropdown-menu")
-              //     .classList.remove("show");
-              // }}
-            >
+            <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"
-                to="#"
-                id="navbarDropdownMenuLink"
+                to={"#"}
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                Gallery
+                Services
               </Link>
               <div
                 className={`dropdown-menu mt-0 border-top-0 pt-0 ${
                   window.location.pathname === "/" && scrollTop === 0
                     ? "bg-transparent"
                     : "bg-base"
-                } ${this.state.dropdownDisplay ? "show" : null} `}
-                aria-labelledby="navbarDropdownMenuLink"
-                // onMouseLeave={() => {
-                //   document
-                //     .querySelector(".dropdown-menu")
-                //     .classList.remove("show");
-                // }}
+                } `}
               >
-                <Link className="dropdown-item" to="/gallery#baby">
-                  Baby
-                </Link>
-                <Link className="dropdown-item" to="/gallery#family">
-                  Family
-                </Link>
-                {/* <Link className="dropdown-item" to="/gallery#portrait">
-                  Portrait
-                </Link>
-                <Link className="dropdown-item" to="/gallery#event">
-                  Event
-                </Link> */}
+                {servicesNames.map((name, i) => {
+                  return (
+                    <Link
+                      className="dropdown-item"
+                      to={`/gallery#${name}`}
+                      key={i}
+                    >
+                      {name[0].toLocaleUpperCase() + name.slice(1)}
+                    </Link>
+                  );
+                })}
               </div>
             </li>
-
-            <li>
+            <li className="nav-item dropdown">
               <Link
-                to={"/pricing"}
-                className="nav-link"
-                style={{
-                  textAlign: this.state.windowWidth < 439 ? "center" : "left"
-                }}
+                className="nav-link dropdown-toggle"
+                to={"#"}
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
               >
-                Pricing
+                Info
               </Link>
+              <div
+                className={`dropdown-menu mt-0 border-top-0 pt-0 ${
+                  window.location.pathname === "/" && scrollTop === 0
+                    ? "bg-transparent"
+                    : "bg-base"
+                } `}
+              >
+                <Link className="dropdown-item" to="#">
+                  About Me
+                </Link>
+                <Link className="dropdown-item" to="#">
+                  What they are saying
+                </Link>
+                <Link className="dropdown-item" to="#">
+                  Photo Book
+                </Link>
+              </div>
+            </li>
+            <li>
+              <a as={Link} href="/#contactForm" className="nav-link">
+                Contact
+              </a>
+            </li>
+            <li className="nav-item dropdown">
+              <Link
+                to={"#"}
+                className="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Blog
+              </Link>
+              <div
+                className={`dropdown-menu mt-0 border-top-0 pt-0 ${
+                  window.location.pathname === "/" && scrollTop === 0
+                    ? "bg-transparent"
+                    : "bg-base"
+                } `}
+              >
+                {Object.keys(journals).map((title, i) => {
+                  return (
+                    <Link
+                      className="dropdown-item"
+                      to={`/journal#${title}`}
+                      key={i}
+                    >
+                      {title[0].toUpperCase() +
+                        title.slice(1).replace("_", " ")}
+                    </Link>
+                  );
+                })}
+              </div>
             </li>
             {isSignedIn ? (
               <li>
-                <button
+                <Link
+                  to={"#"}
                   className="nav-link"
                   style={{
                     textAlign: this.state.windowWidth < 439 ? "center" : "left",
@@ -269,11 +280,12 @@ export default class Navbar extends Component {
                   }}
                 >
                   Logout
-                </button>
+                </Link>
               </li>
             ) : (
               <li>
-                <button
+                <Link
+                  to={"#"}
                   className="nav-link"
                   onClick={() => this.toggleLogin()}
                   style={{
@@ -282,7 +294,7 @@ export default class Navbar extends Component {
                   }}
                 >
                   Login
-                </button>
+                </Link>
               </li>
             )}
           </ul>
