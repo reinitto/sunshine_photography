@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import ImageGallery from "./ImageGallery";
 import portfolioImages from "../../content/portfolio.json";
-import { GalleryNav } from "./GalleryNav";
+// import { GalleryNav } from "./GalleryNav";
 
 export default class Gallery extends Component {
   render() {
@@ -15,7 +15,7 @@ export default class Gallery extends Component {
           <Fragment>
             {window.location.hash.slice(1) ? (
               <Fragment>
-                <GalleryNav collections={galleries} isJournal />
+                {/* <GalleryNav collections={galleries} isJournal /> */}
                 <ImageGallery
                   galleryName={
                     collection.replace("_", " ") || Object.keys(galleries)[0]
@@ -26,9 +26,9 @@ export default class Gallery extends Component {
                   }
                 />
               </Fragment>
-            ) : (
-              <GalleryNav collections={galleries} isJournal />
-            )}
+            ) : null
+            // <GalleryNav collections={galleries} isJournal />
+            }
           </Fragment>
         ) : (
           <Fragment>
@@ -43,7 +43,7 @@ export default class Gallery extends Component {
                 Shutterstock
               </a>
             </p>
-            <GalleryNav collections={galleries} />
+            {/* <GalleryNav collections={galleries} /> */}
             <ImageGallery
               galleryName={collection || Object.keys(galleries)[0]}
               photos={

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Login from "../auth/Login";
-// import CameraOnly from "../../logo/camera-logo.svg";
 import { Link } from "react-router-dom";
 import firebase from "firebase/app";
 import journals from "../../content/journals.json";
@@ -20,7 +19,6 @@ export default class Navbar extends Component {
     windowWidth: null,
     loggedIn: this.props.isSignedIn,
     loginDisplay: "none",
-    signupDisplay: "none",
     dropdownDisplay: false
   };
 
@@ -55,11 +53,7 @@ export default class Navbar extends Component {
       loginDisplay: this.state.loginDisplay === "none" ? "flex" : "none"
     });
   }
-  toggleDropdownDisplay() {
-    this.setState({
-      dropdownDisplay: !this.state.dropdownDisplay
-    });
-  }
+
   requestLogin = (e, email) => {
     e.preventDefault();
     var actionCodeSettings = {
@@ -117,27 +111,6 @@ export default class Navbar extends Component {
          }
     `}
       >
-        {/* <Link
-          className="navbar-brand"
-          to="/"
-          style={{
-            height: "60px",
-            marginBottom: "1rem",
-            margin: this.state.windowWidth < 776 ? "auto" : "initial"
-          }}
-        >
-          {" "}
-          Sunshine
-          <img
-            src={CameraOnly}
-            style={{
-              maxHeight: "100%",
-              maxWidth: "100%"
-            }}
-            alt=""
-          />{" "}
-          Pictures
-        </Link> */}
         <button
           className="navbar-toggler"
           type="button"
@@ -182,7 +155,7 @@ export default class Navbar extends Component {
                 className={`dropdown-menu mt-0 border-top-0 pt-0 ${
                   window.location.pathname === "/" && scrollTop === 0
                     ? "bg-transparent"
-                    : "bg-base"
+                    : "bg-base-color"
                 } `}
               >
                 {servicesNames.map((name, i) => {
@@ -201,7 +174,6 @@ export default class Navbar extends Component {
             <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"
-                to={"#"}
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
@@ -212,12 +184,12 @@ export default class Navbar extends Component {
                 className={`dropdown-menu mt-0 border-top-0 pt-0 ${
                   window.location.pathname === "/" && scrollTop === 0
                     ? "bg-transparent"
-                    : "bg-base"
+                    : "bg-base-color"
                 } `}
               >
-                <Link className="dropdown-item" to="#">
+                <a as={Link} className="dropdown-item" href="/#aboutMe">
                   About Me
-                </Link>
+                </a>
                 <Link className="dropdown-item" to="#">
                   What they are saying
                 </Link>
@@ -245,7 +217,7 @@ export default class Navbar extends Component {
                 className={`dropdown-menu mt-0 border-top-0 pt-0 ${
                   window.location.pathname === "/" && scrollTop === 0
                     ? "bg-transparent"
-                    : "bg-base"
+                    : "bg-base-color"
                 } `}
               >
                 {Object.keys(journals).map((title, i) => {

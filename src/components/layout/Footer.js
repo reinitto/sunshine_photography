@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faHome, faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
 
-import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
+// import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 export default function Footer() {
   return (
@@ -28,13 +28,13 @@ export default function Footer() {
           <hr className="w-100 clearfix d-md-none" />
 
           <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-            <h6 className="text-uppercase mb-4 font-weight-bold">Portfoliio</h6>
+            {/* <h6 className="text-uppercase mb-4 font-weight-bold">Portfoliio</h6>
             <p>
               <Link to={"/gallery#baby"}>Baby photos</Link>
             </p>
             <p>
               <Link to={"/gallery#family"}>Family photos</Link>
-            </p>
+            </p> */}
             {/* <p>
               <Link to={"/gallery#portrait"}>Portrait photos</Link>
             </p>
@@ -46,7 +46,7 @@ export default function Footer() {
           <hr className="w-100 clearfix d-md-none" />
 
           <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-            <h6 className="text-uppercase mb-4 font-weight-bold">Menu</h6>
+            {/* <h6 className="text-uppercase mb-4 font-weight-bold">Menu</h6>
             <p>
               <Link to={"/"} className="nav-link">
                 Home
@@ -71,12 +71,12 @@ export default function Footer() {
               <Link to={"/Pricing"} className="nav-link">
                 Pricing
               </Link>
-            </p>
+            </p> */}
           </div>
 
           <hr className="w-100 clearfix d-md-none" />
 
-          <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+          {/* <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
             <h6 className="text-uppercase mb-4 font-weight-bold">Contact</h6>
             <p>
               <FontAwesomeIcon icon={faEnvelope} className="mr-3" />
@@ -89,9 +89,9 @@ export default function Footer() {
             <p>
               <FontAwesomeIcon icon={faHome} className="mr-3" /> Telemark,
               Norway
-            </p>
-            {/* <div className="col-md-5 col-lg-4 ml-lg-0"> */}
-            <div className="text-center">
+            </p> */}
+          {/* <div className="col-md-5 col-lg-4 ml-lg-0"> */}
+          {/* <div className="text-center">
               <ul className="list-unstyled list-inline">
                 <li className="list-inline-item">
                   <a
@@ -119,9 +119,9 @@ export default function Footer() {
                   </a>
                 </li>
               </ul>
-            </div>
-            {/* </div> */}
-          </div>
+            </div> */}
+          {/* </div> */}
+          {/* </div> */}
         </div>
 
         <hr />

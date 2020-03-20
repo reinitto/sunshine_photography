@@ -3,10 +3,11 @@ import ContactForm from "../components/contact/ContactForm";
 import Pricing from "../components/pricing/PricingList";
 import { digitalPhotos } from "../content/pricing";
 import { mainBg } from "../content/backgroundImages";
+import { aboutImages } from "../content/aboutImages";
+import LinksToGallery from "../components/LinksToGallery";
+import LinksToJournal from "../components/LinksToJournal";
+import AboutSection from "../components/AboutSection";
 const IntroImage = lazy(() => import("../components/IntroImage"));
-const LinksToGallery = lazy(() => import("../components/LinksToGallery"));
-const LinksToJournal = lazy(() => import("../components/LinksToJournal"));
-const AboutSection = lazy(() => import("../components/AboutSection"));
 
 export default class Home extends Component {
   isAnyPartOfElementInViewport(el) {
@@ -56,18 +57,17 @@ export default class Home extends Component {
   render() {
     return (
       <div id="home">
-        {/* <Navbar /> */}
         <Suspense fallback={<div style={{ height: "50vh" }}></div>}>
           <IntroImage
             imageSrc={mainBg}
-            text={["Sunshine", "pictures"]}
+            title={"Sunshine pictures"}
+            subtitle="Photography"
+            text3={["lifestyle", "nature", "travel"]}
             height="90vh"
           />
         </Suspense>
-        <Suspense fallback={<div style={{ height: "50vh" }}></div>}>
-          <LinksToGallery />
-          <AboutSection />
-        </Suspense>
+        <LinksToGallery />
+        <AboutSection images={aboutImages} />
         <div className="container">
           <h2 className="text-center">Pricing</h2>
           <Pricing />

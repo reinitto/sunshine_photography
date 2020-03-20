@@ -1,14 +1,14 @@
 import React from "react";
 
 let cloudinaryBgs = [
-  "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/images/backgrounds/IMG_8944_xj7nmv.jpg"
+  "https://res.cloudinary.com/sunshinephoto/image/upload/v1584501902/images/backgrounds/Sunshine_pictures_fron_page_darken_mlvg7i.jpg"
 ];
-
 export default function IntroImage({
   imageSrc,
-  text,
-  height = "400px",
-  wrap = false
+  title,
+  subtitle,
+  text3,
+  height = "400px"
 }) {
   return (
     <div
@@ -21,19 +21,17 @@ export default function IntroImage({
       }}
     >
       <div className="carousel-text">
-        {wrap ? (
-          text.map((word, i) => (
-            <p key={word}>
-              <span className="text-capitalize" key={i}>
-                {word}
-              </span>
-            </p>
-          ))
-        ) : (
-          <p className="text-capitalize" key={text}>
-            {text.join(" ")}
-          </p>
-        )}
+        <p>{title}</p>
+        {subtitle ? (
+          <span className="carousel-text-subtitle">{subtitle}</span>
+        ) : null}
+      </div>
+      <div className="carousel-text3">
+        {text3
+          ? text3.map((text, i) => {
+              return <span key={i}>{text}</span>;
+            })
+          : null}
       </div>
     </div>
   );
