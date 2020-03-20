@@ -2,7 +2,7 @@ import React, { Component, lazy, Suspense } from "react";
 import ContactForm from "../components/contact/ContactForm";
 import Pricing from "../components/pricing/PricingList";
 import { digitalPhotos } from "../content/pricing";
-import { mainBg } from "../content/backgroundImages";
+import { mainBg, contactFormBg } from "../content/backgroundImages";
 import { aboutImages } from "../content/aboutImages";
 import LinksToGallery from "../components/LinksToGallery";
 import LinksToJournal from "../components/LinksToJournal";
@@ -26,20 +26,6 @@ export default class Home extends Component {
 
   componentDidMount() {
     window.addEventListener("scroll", () => {
-      //Links to gallery
-      let linksToGallery = document.querySelector(".links-to-gallery");
-      if (linksToGallery) {
-        [...linksToGallery.children].forEach(link => {
-          if (this.isAnyPartOfElementInViewport(link)) {
-            if ([...link.classList].includes("come-in")) {
-            } else {
-              link.classList.add("come-in");
-            }
-          } else {
-            link.classList.remove("come-in");
-          }
-        });
-      }
       //Pricing
       let pricingList = document.querySelectorAll(".pricingList");
       pricingList.forEach(link => {
@@ -63,7 +49,7 @@ export default class Home extends Component {
             title={"Sunshine pictures"}
             subtitle="Photography"
             text3={["lifestyle", "nature", "travel"]}
-            height="90vh"
+            height="100vh"
           />
         </Suspense>
         <LinksToGallery />
@@ -77,9 +63,7 @@ export default class Home extends Component {
           <h2 className="text-center">Latest Travel Adventures</h2>
           <LinksToJournal />
         </Suspense>
-        <div className="container">
-          <ContactForm />
-        </div>
+        <ContactForm backgroundImage={contactFormBg} />
       </div>
     );
   }

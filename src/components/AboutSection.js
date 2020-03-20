@@ -1,4 +1,5 @@
 import React from "react";
+import { aboutImages } from "../content/aboutImages";
 // import {
 //   faHome,
 //   faEnvelope,
@@ -14,11 +15,7 @@ About.defaultProps = {
     `My way into the job as a lifestyle photographer was probably a bit random, since I'm not a professional photographer. After many hours of online photography and editing courses at several photoschools, my interest in photography has not diminished! Photography has always been a hobby and a passion of mine, but it wasn't until I tried doing travel and lifestyle photography that I realized I was really on the right track.`,
     `My name is Jelena and I was born in Latvia , now I'm living in South Norway with my partner. We have an outstanding view over the fjord right from the house and mountains are not so far away. Meeting our children and grandchildren in addition to this makes my life complete!`
   ],
-  images: [
-    "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/v1584488813/images/about/about_me-3_s3vhza.jpg",
-    "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/v1584489061/images/about/about_me-4_vzdy9m.jpg",
-    "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/v1584488811/images/about/about_me-7_jz4wmy.jpg"
-  ],
+  images: aboutImages,
   contactInfo: {
     email: "info@gmail.com",
     phone: "+ 01 234 567 88",
@@ -28,9 +25,7 @@ About.defaultProps = {
     facebook: "https://www.facebook.com",
     instagram: "https://www.instagram.com",
     shutterstock: "https://www.shutterstock.com"
-  },
-  backgroundImage:
-    "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/images/backgrounds/IMG_8997_1500_ymk08l.jpg"
+  }
 };
 
 // const icons = {

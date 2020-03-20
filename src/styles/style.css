@@ -265,6 +265,9 @@ nav.navbar.navbar-expand-md {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .links-to-gallery-layout .single-link {
@@ -272,6 +275,11 @@ nav.navbar.navbar-expand-md {
   display: -ms-flexbox;
   display: flex;
   height: 50%;
+}
+
+.links-to-gallery-layout .single-link a {
+  width: 100%;
+  height: 100%;
 }
 
 .table td,
@@ -312,6 +320,11 @@ nav.navbar.navbar-expand-md {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.intro-image {
+  background-attachment: "fixed";
+  background-repeat: "no-repeat";
 }
 
 .fitted-image {
@@ -435,6 +448,10 @@ h3 {
 
 #contactForm {
   padding: 1rem;
+}
+
+#contactForm ::-webkit-input-placeholder {
+  text-align: center;
 }
 
 .login-popup {
@@ -579,6 +596,10 @@ h3 {
   .links-to-gallery-layout .single-link {
     width: 50%;
     margin: auto;
+  }
+  .links-to-gallery-layout .single-link a {
+    width: 100%;
+    height: 100%;
   }
 }
 

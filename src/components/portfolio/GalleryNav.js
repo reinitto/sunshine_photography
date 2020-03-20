@@ -7,7 +7,7 @@ export function GalleryNav({ collections, isJournal }) {
         <div
           className="journal-link-image"
           style={{
-            backgroundImage: `${"url(https://res.cloudinary.com/sunshinephoto/image/upload/" +
+            backgroundImage: `${"url(https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_400/" +
               collections[collection][0].src +
               ")"}`
           }}

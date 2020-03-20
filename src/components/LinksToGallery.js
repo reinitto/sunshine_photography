@@ -17,6 +17,7 @@ function useWindowWidth() {
 }
 
 let portfolioThumbs = [...Object.keys(portfolioImages)].map((key, i) => {
+  console.log("portfolioImages[key][0].src", portfolioImages[key][0].src);
   return (
     <Link to={`/gallery#${key}`} key={i}>
       <div
@@ -28,7 +29,9 @@ let portfolioThumbs = [...Object.keys(portfolioImages)].map((key, i) => {
       >
         <Image
           publicId={portfolioImages[key][0].src}
-          className="p-3"
+          width="300"
+          crop="scale"
+          className="p-3 fitted-image"
           style={{
             width: "100%",
             height: "100%"
@@ -42,24 +45,30 @@ let portfolioThumbs = [...Object.keys(portfolioImages)].map((key, i) => {
   );
 });
 
+let SingleLink = ({ link }) => {
+  if (link) {
+    return <div className="single-link">{link}</div>;
+  } else {
+    return null;
+  }
+};
+
 let LinkLayout = ({ links, reverse = false }) => {
-  return reverse ? (
-    <div className="links-to-gallery-layout">
-      <div className="single-link">{links[0] ? links[0] : null}</div>
-      <div className="two-links">
-        {links[1] ? links[1] : null}
-        {links[2] ? links[2] : null}
+  if (reverse) {
+    return (
+      <div className="links-to-gallery-layout">
+        <SingleLink link={links[0]} />
+        <div className="two-links">{[links[1], links[2]]}</div>
       </div>
-    </div>
-  ) : (
-    <div className="links-to-gallery-layout">
-      <div className="two-links">
-        {links[0] ? links[0] : null}
-        {links[1] ? links[1] : null}
+    );
+  } else {
+    return (
+      <div className="links-to-gallery-layout">
+        <div className="two-links">{[links[0], links[1]]}</div>
+        <SingleLink link={links[2]} />
       </div>
-      <div className="single-link">{links[2] ? links[2] : null}</div>
-    </div>
-  );
+    );
+  }
 };
 
 export default function LinksToGallery() {
@@ -71,7 +80,7 @@ export default function LinksToGallery() {
         backgroundColor: "#faf7f6"
       }}
     >
-      <h2 className="text-center">Capture Your Life Journey</h2>
+      <h2 className="text-center">Capture Your Life's Journey</h2>
       <CloudinaryContext cloudName="sunshinephoto">
         <div className="d-flex links-to-gallery">
           <LinkLayout links={portfolioThumbs.slice(0, 3)} />

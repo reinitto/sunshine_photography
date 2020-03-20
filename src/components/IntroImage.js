@@ -1,21 +1,17 @@
 import React from "react";
+import { mainBg } from "../content/backgroundImages";
 
-let cloudinaryBgs = [
-  "https://res.cloudinary.com/sunshinephoto/image/upload/v1584501902/images/backgrounds/Sunshine_pictures_fron_page_darken_mlvg7i.jpg"
-];
 export default function IntroImage({
   imageSrc,
   title,
   subtitle,
   text3,
-  height = "400px"
+  height = "35vh"
 }) {
   return (
     <div
-      className="fitted-image"
+      className="fitted-image intro-image"
       style={{
-        backgroundAttachment: `fixed`,
-        backgroundRepeat: `no-repeat`,
         backgroundImage: `url(${imageSrc})`,
         height
       }}
@@ -37,5 +33,5 @@ export default function IntroImage({
   );
 }
 IntroImage.defaultProps = {
-  imageSrc: cloudinaryBgs[0]
+  imageSrc: mainBg
 };
