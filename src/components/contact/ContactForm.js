@@ -7,14 +7,12 @@ import * as firebase from "firebase/app";
 export default function ContactForm({ backgroundImage = "", title = true }) {
   const saveMessage = props => {
     var messagesRef = firebase.database().ref("messages");
-    const { name, email, phone, address, message } = props;
+    const { name, email, message } = props;
 
     let newMessageRef = messagesRef.push();
     newMessageRef.set({
       name,
       email,
-      phone,
-      address,
       message
     });
   };
@@ -23,12 +21,12 @@ export default function ContactForm({ backgroundImage = "", title = true }) {
     e.preventDefault();
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
-    let phone = document.getElementById("phone").value;
-    let address = document.getElementById("address").value;
+    // let phone = document.getElementById("phone").value;
+    // let address = document.getElementById("address").value;
     let message = document.getElementById("message").value;
     let contactForm = document.getElementById("contactForm");
 
-    saveMessage({ name, email, phone, address, message });
+    saveMessage({ name, email, message });
     //  Reset form
     contactForm.reset();
 

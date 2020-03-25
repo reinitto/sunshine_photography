@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Login from "../auth/Login";
 import { Link } from "react-router-dom";
-import firebase from "firebase/app";
+import * as firebase from "firebase/app";
 import journals from "../../content/journals.json";
 
 const servicesNames = [
@@ -85,7 +85,7 @@ export default class Navbar extends Component {
 
   render() {
     let { scrollTop } = this.state;
-    let { isSignedIn, firebase, setUser } = this.props;
+    let { isSignedIn, firebase, setUser, isAdmin } = this.props;
     return (
       <nav
         className={`navbar navbar-expand-md fixed-top
@@ -126,6 +126,13 @@ export default class Navbar extends Component {
         </button>
         <div className="collapse navbar-collapse" id="collapsibleNavbar">
           <ul className="navbar-nav ml-auto">
+            {isAdmin ? (
+              <li>
+                <Link to={"/admin"} className="nav-link">
+                  Admin
+                </Link>
+              </li>
+            ) : null}
             {isSignedIn ? (
               <li>
                 <Link to={"/dashboard"} className="nav-link">
@@ -140,7 +147,6 @@ export default class Navbar extends Component {
                 </Link>
               </li>
             )}
-
             <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"

@@ -13,6 +13,7 @@ import Admin from "./Pages/Admin";
 import Dashboard from "./Pages/Dashboard";
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
+import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./components/ProtectedRoute";
 import "./styles/style.css";
 require("../node_modules/firebase/firebase-auth");
@@ -31,7 +32,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null
+      user: null,
+      admin: false
     };
   }
 
@@ -39,6 +41,25 @@ class App extends Component {
     firebase.initializeApp(firebaseConfig);
     firebase.auth().onAuthStateChanged(user => {
       this.setState({ user: user });
+      firebase
+        .auth()
+        .currentUser.getIdTokenResult()
+        .then(idTokenResult => {
+          // Confirm the user is an Admin.
+          if (!!idTokenResult.claims.admin) {
+            this.setAdmin(true);
+            // Show admin UI.
+            // showAdminUI();
+          } else {
+            this.setAdmin(false);
+
+            // Show regular user UI.
+            // showRegularUI();
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     });
     // Confirm the link is a sign-in with email link.
     if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
@@ -64,6 +85,9 @@ class App extends Component {
     }
   }
 
+  setAdmin(admin) {
+    this.setState({ admin });
+  }
   setUser(user) {
     this.setState({ user });
   }
@@ -74,6 +98,7 @@ class App extends Component {
         <ScrollToTop>
           <Fragment>
             <Navbar
+              isAdmin={this.state.admin}
               isSignedIn={this.state.user}
               firebase={firebase}
               setUser={this.setUser.bind(this)}
@@ -85,7 +110,14 @@ class App extends Component {
               <Route path="/journal" component={Journal} />
               <Route path="/gallery" component={Gallery} />
               <Route path="/Pricing" component={Pricing} />
-              <Route path="/Admin" component={Admin} />
+              {/* <Route path="/Admin" component={Admin} /> */}
+              <AdminRoute
+                path="/admin"
+                component={Admin}
+                firebase={firebase}
+                isAdmin={this.state.admin}
+                user={this.state.user}
+              />
               <PrivateRoute
                 path="/dashboard"
                 component={Dashboard}

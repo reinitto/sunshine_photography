@@ -17,7 +17,6 @@ function useWindowWidth() {
 }
 
 let portfolioThumbs = [...Object.keys(portfolioImages)].map((key, i) => {
-  console.log("portfolioImages[key][0].src", portfolioImages[key][0].src);
   return (
     <Link to={`/gallery#${key}`} key={i}>
       <div

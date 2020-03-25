@@ -2,7 +2,9 @@
 
 getCloudinaryImages.js
 uploadUserPics.js
+addAdmin.js
 firebaseServiceAccount.json
+firebase-debug.log
 # dependencies
 /node_modules
 /.pnp
