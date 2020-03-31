@@ -27,6 +27,7 @@ const firebaseConfig = {
   messagingSenderId: "754776938435",
   appId: "1:754776938435:web:43cadca033fb5094ec0f76"
 };
+firebase.initializeApp(firebaseConfig);
 
 class App extends Component {
   constructor(props) {
@@ -38,24 +39,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    firebase.initializeApp(firebaseConfig);
     firebase.auth().onAuthStateChanged(user => {
       this.setState({ user: user });
       firebase
         .auth()
         .currentUser.getIdTokenResult()
         .then(idTokenResult => {
-          // Confirm the user is an Admin.
-          if (!!idTokenResult.claims.admin) {
-            this.setAdmin(true);
-            // Show admin UI.
-            // showAdminUI();
-          } else {
-            this.setAdmin(false);
-
-            // Show regular user UI.
-            // showRegularUI();
-          }
+          this.setAdmin(!!idTokenResult.claims.admin);
         })
         .catch(error => {
           console.log(error);
@@ -85,6 +75,22 @@ class App extends Component {
     }
   }
 
+  getJournals() {
+    firebase
+      .database()
+      .ref("/journals/")
+      .once("value")
+      .then(snapshot => {
+        let journalSnap = snapshot.val();
+        if (journalSnap) {
+          // SET JOURNALS
+          this.setState({
+            journals: journalSnap
+          });
+        }
+      });
+  }
+
   setAdmin(admin) {
     this.setState({ admin });
   }
@@ -102,21 +108,26 @@ class App extends Component {
               isSignedIn={this.state.user}
               firebase={firebase}
               setUser={this.setUser.bind(this)}
+              getJournals={this.getJournals.bind(this)}
+              journals={this.state.journals}
             />
             <Switch>
               <Route exact path="/" component={Home} />
-              {/* <Route path="/contact" component={Contact} /> */}
-              {/* <Route path="/about" component={About} /> */}
-              <Route path="/journal" component={Journal} />
+              <Route
+                path="/journal/:name"
+                render={props => (
+                  <Journal {...props} journals={this.state.journals} />
+                )}
+              />
               <Route path="/gallery" component={Gallery} />
               <Route path="/Pricing" component={Pricing} />
-              {/* <Route path="/Admin" component={Admin} /> */}
               <AdminRoute
                 path="/admin"
                 component={Admin}
                 firebase={firebase}
                 isAdmin={this.state.admin}
                 user={this.state.user}
+                journals={this.state.journals}
               />
               <PrivateRoute
                 path="/dashboard"

@@ -1,239 +1,65 @@
-import React, { Fragment, Component, Suspense, createRef } from "react";
+import React, { Fragment, Component } from "react";
 import { uuid } from "uuidv4";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import IntroImage from "../components/IntroImage";
-import firebase from "firebase/app";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import FileDrop from "react-file-drop";
-
-const inputStyles = {
-  border: "1px solid black",
-  color: "black",
-  margin: "auto",
-  width: "100%"
-};
-
-let JournalImageView = ({ journalImages, setImageText, loadFile }) => {
-  let journalImageArray = [];
-  for (let i = 0; i < journalImages.length; i++) {
-    let journalImage = journalImages[i];
-    if (journalImage.variation === 1) {
-      let image = journalImage.image0;
-      journalImageArray.push(
-        <Draggable
-          key={journalImage.draggableId}
-          draggableId={journalImage.draggableId}
-          index={i}
-        >
-          {provided => (
-            <div
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-              ref={provided.innerRef}
-            >
-              <OneJournalImageWithText
-                setImageText={setImageText}
-                id={image.id}
-                imageRef={image.imageRef}
-                loadFile={loadFile}
-              />
-            </div>
-          )}
-        </Draggable>
-      );
-    }
-    if (journalImage.variation === 2) {
-      let image1 = journalImage.image0;
-      let image2 = journalImage.image1;
-
-      journalImageArray.push(
-        <Draggable
-          key={journalImage.draggableId}
-          draggableId={journalImage.draggableId}
-          index={i}
-        >
-          {provided => (
-            <div
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-              ref={provided.innerRef}
-            >
-              <TwoJournalImagesWithText
-                setImageText={setImageText}
-                imageRefs={[image1.imageRef, image2.imageRef]}
-                loadFile={loadFile}
-                ids={[image1.id, image2.id]}
-              />
-            </div>
-          )}
-        </Draggable>
-      );
-    }
-    if (journalImage.variation === 3) {
-      let image1 = journalImage.image0;
-      let image2 = journalImage.image1;
-      let image3 = journalImage.image2;
-
-      journalImageArray.push(
-        <Draggable
-          key={journalImage.draggableId}
-          draggableId={journalImage.draggableId}
-          index={i}
-        >
-          {provided => (
-            <div
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-              ref={provided.innerRef}
-            >
-              <ThreeJournalImagesWithText
-                setImageText={setImageText}
-                imageRefs={[image1.imageRef, image2.imageRef, image3.imageRef]}
-                loadFile={loadFile}
-                ids={[image1.id, image2.id, image3.id]}
-              />
-            </div>
-          )}
-        </Draggable>
-      );
-    }
-  }
-  return <div>{journalImageArray}</div>;
-};
-
-let TitleAndTitleImage = ({ title, setTitle, loadTitle }) => {
-  let titleImageRef = createRef(null);
-  let handleDrop = (files, event) => {
-    loadTitle(files[0], titleImageRef);
-  };
-  return (
-    <>
-      <div style={inputStyles} className="fitted-image" ref={titleImageRef}>
-        <FileDrop onDrop={handleDrop}>
-          Drop title image here!
-          <textarea
-            className="title-input"
-            name="journalTitle"
-            placeholder="Enter title"
-            onChange={e => {
-              setTitle(e.target.value);
-            }}
-          />
-        </FileDrop>
-      </div>
-    </>
-  );
-};
-
-let OneJournalImageWithText = ({ setImageText, imageRef, loadFile, id }) => {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", flexGrow: "1" }}>
-      <textarea
-        className="journal-image-text"
-        rows="3"
-        name="journalImageText"
-        placeholder="Enter text"
-        onChange={e => {
-          setImageText(id, e.target.value);
-        }}
-      />
-      <ImageWithThumbnail id={id} imageRef={imageRef} loadFile={loadFile} />
-    </div>
-  );
-};
-let TwoJournalImagesWithText = ({ setImageText, imageRefs, loadFile, ids }) => {
-  return (
-    <div style={{ display: "flex" }}>
-      <OneJournalImageWithText
-        id={ids[0]}
-        imageRef={imageRefs[0]}
-        loadFile={loadFile}
-        setImageText={setImageText}
-      />
-      <OneJournalImageWithText
-        id={ids[1]}
-        imageRef={imageRefs[1]}
-        loadFile={loadFile}
-        setImageText={setImageText}
-      />
-    </div>
-  );
-};
-let ThreeJournalImagesWithText = ({
-  setImageText,
-  imageRefs,
-  loadFile,
-  ids
-}) => {
-  return (
-    <div style={{ display: "flex" }}>
-      <OneJournalImageWithText
-        id={ids[0]}
-        imageRef={imageRefs[0]}
-        loadFile={loadFile}
-        setImageText={setImageText}
-      />
-      <OneJournalImageWithText
-        id={ids[1]}
-        imageRef={imageRefs[1]}
-        loadFile={loadFile}
-        setImageText={setImageText}
-      />
-      <OneJournalImageWithText
-        id={ids[2]}
-        imageRef={imageRefs[2]}
-        loadFile={loadFile}
-        setImageText={setImageText}
-      />
-    </div>
-  );
-};
-
-function ImageWithThumbnail({ imageRef, loadFile, id }) {
-  let handleDrop = (files, event) => {
-    loadFile(files[0], imageRef, id);
-  };
-  return (
-    <div style={inputStyles} className="fitted-image" ref={imageRef}>
-      <FileDrop onDrop={handleDrop}>Drop an image here!</FileDrop>
-    </div>
-  );
-}
-
-const getCircularReplacer = () => {
-  const seen = new WeakSet();
-  return (key, value) => {
-    if (typeof value === "object" && value !== null) {
-      if (seen.has(value)) {
-        return;
-      }
-      seen.add(value);
-    }
-    return value;
-  };
-};
-
+import { JournalImageView } from "../components/admin/journalAdminImageView/JournalImageView";
+import { TitleAndTitleImage } from "../components/admin/journalAdminImageView/TitleAndTitleImage";
+import { Overlay } from "../components/admin/Overlay";
+import { setTextBlockText } from "../components/admin/setTextBlockText";
+import { createJournalToEdit } from "../components/admin/createJournalToEdit";
+import { updateImageSrc } from "../components/admin/updateImageSrc";
+import { updateImages } from "../components/admin/updateImages";
+let realUrl =
+  "http://localhost:5001/momblog-15d1c/us-central1/uploadToCloudinary-uploadToCloudinary";
+// "https://us-central1-momblog-15d1c.cloudfunctions.net/uploadToCloudinary-uploadToCloudinary";
 export default class Admin extends Component {
   state = {
     journalsMenu: false,
     journals: [],
     newJournal: {
-      title: null,
-      titleImage: null,
+      shortTitle: "",
+      title: "",
+      titleImage: "",
       journalImages: []
     }
   };
 
-  setImageText = (id, text) => {
-    // get correct image
-    let newImage = {
-      ...this.state.newJournal.journalImages.filter(
-        journalImage => journalImage.id === id
-      )[0],
-      text
-    };
-    let newJournalImages = this.state.newJournal.journalImages.map(image => {
-      return image.id === id ? newImage : image;
+  setShortTitle(text) {
+    let newJournal = { ...this.state.newJournal };
+    newJournal.shortTitle = text;
+    this.setState({
+      newJournal
     });
+  }
+
+  updateTextBlockText(id, text, title = false) {
+    let newJournalImages = setTextBlockText(
+      this.state.newJournal.journalImages,
+      id,
+      text,
+      title
+    );
+    let newJournal = {
+      ...this.state.newJournal,
+      journalImages: newJournalImages
+    };
+    this.setState({ newJournal });
+  }
+
+  setImageText = (id, text) => {
+    // only variation==1 image can have text
+    let newImageSet = {};
+    let index = 0;
+    this.state.newJournal.journalImages.forEach((imageSet, i) => {
+      if (imageSet.variation === 1 && imageSet.image0.id === id) {
+        newImageSet = { ...imageSet };
+        index = i;
+      }
+    });
+
+    newImageSet.image0.text = text;
+    let newJournalImages = [...this.state.newJournal.journalImages];
+    newJournalImages.splice(index, 1, newImageSet);
     this.setState({
       newJournal: {
         ...this.state.newJournal,
@@ -254,6 +80,18 @@ export default class Admin extends Component {
     let reader = new FileReader();
     reader.onload = () => {
       var output = imageRef.current;
+
+      let isUrl = output.style.backgroundImage.match(/\/(images\/.*)/);
+      if (isUrl) {
+        // ADD OLD TO DELETE
+        let title_id_to_delete = isUrl[1].split(".")[0];
+        this.setState({
+          newJournal: {
+            ...this.state.newJournal,
+            title_id_to_delete
+          }
+        });
+      }
       output.style.backgroundImage = `url(${reader.result})`;
       // set src in state
       this.setState({
@@ -269,41 +107,24 @@ export default class Admin extends Component {
     let reader = new FileReader();
     reader.onload = () => {
       var output = imageRef.current;
-      // output.src = reader.result;
+      let isUrl = output.style.backgroundImage.match(/\/(images\/.*)"\)$/);
+      let image_id_to_delete = null;
+      if (isUrl) {
+        // ADD OLD TO DELETE
+        image_id_to_delete = isUrl[1].split(".")[0];
+      }
       output.style.backgroundImage = `url(${reader.result})`;
-      let journalImages = [...this.state.newJournal.journalImages];
-      let image = journalImages.filter(im => {
-        if (im.variation === 1 && im.image0.id === id) {
-          return im;
-        }
-        if (im.variation === 2) {
-          if (im.image0.id === id) {
-            return im;
-          }
-          if (im.image1.id === id) {
-            return im;
-          }
-        }
-        if (im.variation === 3) {
-          if (im.image0.id === id) {
-            return im;
-          }
-          if (im.image1.id === id) {
-            return im;
-          }
-          if (im.image2.id === id) {
-            return im;
-          }
-        }
-      })[0];
-      console.log("image", image);
-      image.src = reader.result;
-      // set src in state
-      // find image by id
+      let newJournalImages = updateImageSrc(
+        this.state.newJournal.journalImages,
+        image_id_to_delete,
+        id,
+        reader.result
+      );
+
       this.setState({
         newJournal: {
           ...this.state.newJournal,
-          journalImages
+          journalImages: newJournalImages
         }
       });
     };
@@ -312,7 +133,7 @@ export default class Admin extends Component {
 
   onDragEnd = result => {
     const { destination, source, draggableId } = result;
-    console.log("onDragEnd", result);
+    // console.log("onDragEnd", result);
     if (!destination) {
       return;
     }
@@ -325,35 +146,47 @@ export default class Admin extends Component {
     }
 
     let newJournalImages = Array.from(this.state.newJournal.journalImages);
-    let movedImage = newJournalImages.filter(
-      image => image.draggableId === draggableId
-    )[0];
+    let movedImage = [
+      ...newJournalImages.filter(image => image.draggableId === draggableId)
+    ][0];
     newJournalImages.splice(source.index, 1);
     newJournalImages.splice(destination.index, 0, movedImage);
+
     this.setState({
       newJournal: {
         ...this.state.newJournal,
-        journalImages: newJournalImages
+        journalImages: newJournalImages.map((set, i) => {
+          return { ...set, order: i };
+        })
       }
     });
     return;
   };
 
-  toggleJournalView() {
-    this.setState({ journalsMenu: !this.state.journalsMenu });
-    if (this.state.journalsMenu) {
-      this.getAllJournals();
-    }
+  addNewTextBlock() {
+    let newTextBloc = { title: "", text: "" };
+    let order = this.state.newJournal.journalImages.length;
+    newTextBloc.variation = "text";
+    newTextBloc.order = order;
+    newTextBloc.id = uuid();
+    let newJournal = {
+      ...this.state.newJournal,
+      journalImages: [...this.state.newJournal.journalImages, newTextBloc]
+    };
+    this.setState({
+      newJournal
+    });
   }
-
   addNewJournalImage(variation = 1) {
     let newJournalImages = {};
+    let order = this.state.newJournal.journalImages.length;
     newJournalImages.variation = variation;
+    newJournalImages.order = order;
+
     newJournalImages.draggableId = uuid();
     for (let i = 0; i < variation; i++) {
-      let imageRef = createRef(null);
       let id = uuid();
-      newJournalImages[`image${i}`] = { text: "", src: "", imageRef, id };
+      newJournalImages[`image${i}`] = { text: "", src: "", id };
     }
     let newJournal = {
       ...this.state.newJournal,
@@ -363,62 +196,252 @@ export default class Admin extends Component {
       newJournal
     });
   }
-  // addNewJournalImage(variation = 1) {
-  //   let newJournalImages = [];
-  //   for (let i = 0; i < variation; i++) {
-  //     let imageRef = createRef(null);
-  //     let id = uuid();
-  //     newJournalImages.push({ text: "", src: "", imageRef, id, variation });
-  //   }
-  //   let newJournal = {
-  //     ...this.state.newJournal,
-  //     journalImages: [
-  //       ...this.state.newJournal.journalImages,
-  //       ...newJournalImages
-  //     ]
-  //   };
-  //   this.setState({
-  //     newJournal
-  //   });
-  // }
 
-  getAllJournals() {
-    console.log("getting journals");
-    var journals = firebase.database().ref("adminContent/journals");
-    journals.once("value").then(function(snapshot) {
-      console.log("journal snapshot", snapshot);
+  deleteImageSet = draggableId => {
+    // find correct imageSet
+    let deleteInfo = {};
+    let setToDelete = this.state.newJournal.journalImages.filter(
+      set => (set.draggableId || set.id) === draggableId
+    )[0];
+    // id or img urls
+    if (setToDelete.isTextBlock) {
+      deleteInfo.id = setToDelete.id;
+    } else {
+      deleteInfo.imgUrls = [];
+      if (setToDelete.image0) {
+        deleteInfo.imgUrls.push(setToDelete.image0.src);
+      }
+      if (setToDelete.image1) {
+        deleteInfo.imgUrls.push(setToDelete.image1.src);
+      }
+      if (setToDelete.image2) {
+        deleteInfo.imgUrls.push(setToDelete.image2.src);
+      }
+    }
+    let newSetsToDelete = this.state.setsToDelete
+      ? [...this.state.setsToDelete, deleteInfo]
+      : [deleteInfo];
+    let newjournalImages = [
+      ...this.state.newJournal.journalImages.filter(
+        set => (set.draggableId || set.id) !== draggableId
+      )
+    ].map((set, i) => {
+      return { ...set, order: i };
+    });
+    let newJournal = {
+      ...this.state.newJournal,
+      journalImages: newjournalImages
+    };
+    this.setState({
+      ...this.state,
+      newJournal,
+      setsToDelete: newSetsToDelete
+    });
+  };
+  toggleJournalView() {
+    this.setState({ journalsMenu: !this.state.journalsMenu });
+  }
+
+  setJournalToEdit(journalId) {
+    let journalToEdit = createJournalToEdit(this.props.journals, journalId);
+    this.setState({
+      newJournal: journalToEdit
     });
   }
 
+  increaseImagesUploaded = () => {
+    this.setState({
+      imagesUploaded: this.state.imagesUploaded + 1
+    });
+  };
+
+  SubmitEdit = async e => {
+    e.preventDefault();
+    let idToken = await this.props.user.getIdToken();
+    let imagesToUpload = 0;
+    this.state.newJournal.journalImages.forEach(set => {
+      if ([1, 2, 3].indexOf(set.variation) > -1) {
+        imagesToUpload += set.variation;
+      }
+    });
+
+    this.setState({
+      updating: true,
+      uploadingTitle: true,
+      imagesToUpload,
+      imagesUploaded: 0
+    });
+
+    const {
+      title_id_to_delete,
+      shortTitle,
+      title,
+      editKey,
+      edit,
+      titleImage,
+      journalImages
+    } = this.state.newJournal;
+    const titleRequestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${idToken}`
+      },
+      body: JSON.stringify({
+        isTitle: true,
+        title,
+        titleImage,
+        shortTitle,
+        editKey,
+        edit,
+        title_id_to_delete
+      })
+    };
+    try {
+      await fetch(realUrl, titleRequestOptions);
+      this.setState({
+        uploadingTitle: false
+      });
+      let journalId = editKey;
+      await updateImages(
+        journalImages,
+        journalId,
+        idToken,
+        realUrl,
+        shortTitle,
+        edit,
+        this.increaseImagesUploaded.bind(this)
+      );
+
+      // DELETE SETS MARKED FOR DELETION
+      if (this.state.setsToDelete && this.state.setsToDelete.length > 0) {
+        this.setState({
+          deletingSets: true
+        });
+        let imageDeletionRequestOptions = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${idToken}`
+          }
+        };
+        imageDeletionRequestOptions.body = JSON.stringify({
+          setsToDelete: this.state.setsToDelete,
+          editKey,
+          edit
+        });
+        fetch(realUrl, imageDeletionRequestOptions).then(() => {
+          this.setState({
+            deletingSets: false
+          });
+        });
+      }
+    } catch (error) {
+      console.log("error submitEdit", error);
+    }
+  };
+
+  closeOverlay = () => {
+    this.setState({
+      uploading: false,
+      updating: false
+    });
+  };
+
+  DeleteJournal = async e => {
+    e.preventDefault();
+    let idToken = await this.props.user.getIdToken();
+    const deleteRequestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${idToken}`
+      },
+      body: JSON.stringify({
+        delete: { id: this.state.newJournal.editKey }
+      })
+    };
+    await fetch(realUrl, deleteRequestOptions);
+  };
+
   Submit = async e => {
     e.preventDefault();
-    let functions = firebase.functions();
-    var uploadToCloudinary = functions.httpsCallable("uploadToCloudinary");
+    let imagesToUpload = 0;
+    this.state.newJournal.journalImages.forEach(set => {
+      if ([1, 2, 3].indexOf(set.variation) > -1) {
+        imagesToUpload += set.variation;
+      }
+    });
+    const {
+      shortTitle,
+      title,
+      titleImage,
+      journalImages
+    } = this.state.newJournal;
+    // Include the ID token in an Authorization: Bearer ID_TOKEN header in the request to the function.
+    this.setState({
+      uploading: true,
+      uploadingTitle: true,
+      imagesToUpload,
+      imagesUploaded: 0
+    });
+    let idToken = await this.props.user.getIdToken();
+    const titleRequestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${idToken}`
+      },
+      body: JSON.stringify({
+        isTitle: true,
+        title,
+        titleImage,
+        shortTitle
+      })
+    };
     try {
-      uploadToCloudinary(
-        JSON.stringify(this.state.newJournal, getCircularReplacer())
-      )
-        .then(res => {
-          return res.json();
-        })
-        .then(res => console.log(res))
-        .catch(err => {
-          console.log(err);
-        });
-    } catch (err) {
-      console.log("error");
-      console.log(err);
+      // UPLOAD TITLE
+      let titleResponse = await fetch(realUrl, titleRequestOptions);
+      let titleData = await titleResponse.json();
+      let journalId = titleData.journalId;
+      this.setState({
+        uploadingTitle: false
+      });
+      let edit = false;
+      await updateImages(
+        journalImages,
+        journalId,
+        idToken,
+        realUrl,
+        shortTitle,
+        edit,
+        this.increaseImagesUploaded.bind(this)
+      );
+    } catch (error) {
+      console.log("error", error);
     }
   };
   render() {
-    console.log("state", this.state);
-
+    // console.log("state", this.state);
+    let {
+      uploadingTitle,
+      imagesUploaded,
+      imagesToUpload,
+      deletingSets,
+      setsToDelete,
+      uploading,
+      updating
+    } = this.state;
+    let {
+      title,
+      shortTitle,
+      titleImage,
+      journalImages,
+      edit
+    } = this.state.newJournal;
     return (
       <Fragment>
-        <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
-          <IntroImage text={["Admin"]} height="35vh" />
-        </Suspense>
-
+        <IntroImage text={["Admin"]} height="35vh" />
         <div>
           <ul style={{ display: "flex" }}>
             <li
@@ -443,60 +466,147 @@ export default class Admin extends Component {
           <div
             style={{
               display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
               width: "80%",
               margin: "auto"
             }}
           >
-            <div>{this.state.journals}</div>
-            <DragDropContext onDragEnd={this.onDragEnd}>
-              <Droppable droppableId={Date.now().toString()}>
-                {provided => (
-                  <div {...provided.droppableProps} ref={provided.innerRef}>
-                    {provided.placeholder}
-                    <TitleAndTitleImage
-                      title={
-                        this.state.newJournal.title
-                          ? this.state.newJournal.title
-                          : "Enter title"
-                      }
-                      setTitle={this.setTitle.bind(this)}
-                      loadTitle={this.loadTitle.bind(this)}
-                    />
-                    <JournalImageView
-                      journalImages={this.state.newJournal.journalImages}
-                      setImageText={this.setImageText.bind(this)}
-                      loadFile={this.loadFile.bind(this)}
-                    />
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
-            <button
-              onClick={() => {
-                this.addNewJournalImage(1);
+            <div className="d-flex flex-column w-25 mx-auto">
+              <h3>Current Blogs</h3>
+              {this.props.journals
+                ? Object.keys(this.props.journals).map((journalId, i) => {
+                    let { title, titleUrl: titleSrc } = this.props.journals[
+                      journalId
+                    ].title;
+                    return (
+                      <div
+                        style={{
+                          cursor: "pointer"
+                        }}
+                        key={i}
+                        onClick={() => {
+                          // SET EXISTING JOURNAL TO EDIT
+                          this.setJournalToEdit(journalId);
+                        }}
+                      >
+                        <div
+                          className="fitted-image"
+                          style={{
+                            backgroundImage: `url(${titleSrc})`,
+                            width: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            color: "white",
+                            margin: "1rem"
+                          }}
+                        >
+                          <h4 className="text-center">{title}</h4>
+                        </div>
+                      </div>
+                    );
+                  })
+                : null}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                width: "70%"
               }}
             >
-              Add Single Image
-            </button>
-            <button
-              onClick={() => {
-                this.addNewJournalImage(2);
-              }}
-            >
-              Add 2 Images
-            </button>
-            <button
-              onClick={() => {
-                this.addNewJournalImage(3);
-              }}
-            >
-              Add 3 Images
-            </button>
+              <Overlay
+                uploading={uploading}
+                updating={updating}
+                closeOverlay={this.closeOverlay}
+                info={{
+                  uploadingTitle,
+                  imagesUploaded,
+                  imagesToUpload,
+                  deletingSets,
+                  setsToDelete
+                }}
+              />
+              <div>{this.state.journals}</div>
+              <DragDropContext onDragEnd={this.onDragEnd}>
+                <Droppable droppableId={Date.now().toString()}>
+                  {provided => (
+                    <div {...provided.droppableProps} ref={provided.innerRef}>
+                      {provided.placeholder}
+                      <div>
+                        <input
+                          type="text"
+                          name="shortTitle"
+                          placeholder="Enter short title for navigation"
+                          value={shortTitle}
+                          onChange={e => this.setShortTitle(e.target.value)}
+                          style={{
+                            width: "100%"
+                          }}
+                        />
+                      </div>
+                      <TitleAndTitleImage
+                        titleText={title}
+                        setTitle={this.setTitle.bind(this)}
+                        loadTitle={this.loadTitle.bind(this)}
+                        titleSrc={titleImage}
+                      />
+                      <JournalImageView
+                        journalImages={journalImages}
+                        setImageText={this.setImageText.bind(this)}
+                        deleteImageSet={this.deleteImageSet.bind(this)}
+                        loadFile={this.loadFile.bind(this)}
+                        setTextBlockText={this.updateTextBlockText.bind(this)}
+                        edit={edit}
+                      />
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+              <button
+                onClick={() => {
+                  this.addNewJournalImage(1);
+                }}
+              >
+                Add Single Image
+              </button>
+              <button
+                onClick={() => {
+                  this.addNewJournalImage(2);
+                }}
+              >
+                Add 2 Images
+              </button>
+              <button
+                onClick={() => {
+                  this.addNewJournalImage(3);
+                }}
+              >
+                Add 3 Images
+              </button>
+              <button
+                onClick={() => {
+                  this.addNewTextBlock();
+                }}
+              >
+                Add Text Block
+              </button>
+              <hr />
+              <div className="d-flex flex-column mx-auto w-25">
+                <button onClick={e => this.Submit(e)}>Submit New</button>
+                <button onClick={e => this.SubmitEdit(e)}>Confirm Edit</button>
+                <button
+                  className="btn btn-danger"
+                  onClick={e => {
+                    this.DeleteJournal(e);
+                  }}
+                >
+                  Delete Journal
+                </button>
+              </div>
+            </div>
           </div>
         ) : null}
-        <button onClick={e => this.Submit(e)}>Submit</button>
       </Fragment>
     );
   }

@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import ImageGallery from "./ImageGallery";
+import ImageGalleryWithoutLighbox from "./ImageGalleryWithoutLighbox";
+
 import portfolioImages from "../../content/portfolio.json";
 // import { GalleryNav } from "./GalleryNav";
 
@@ -13,22 +15,10 @@ export default class Gallery extends Component {
       <Fragment>
         {isJournal ? (
           <Fragment>
-            {window.location.hash.slice(1) ? (
-              <Fragment>
-                {/* <GalleryNav collections={galleries} isJournal /> */}
-                <ImageGallery
-                  galleryName={
-                    collection.replace("_", " ") || Object.keys(galleries)[0]
-                  }
-                  photos={
-                    galleries[collection].slice(1) ||
-                    galleries[Object.keys(galleries)[0]].slice(1)
-                  }
-                />
-              </Fragment>
-            ) : null
-            // <GalleryNav collections={galleries} isJournal />
-            }
+            <ImageGalleryWithoutLighbox
+              isJournal={true}
+              journalImages={galleries}
+            />
           </Fragment>
         ) : (
           <Fragment>

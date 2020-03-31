@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Login from "../auth/Login";
 import { Link } from "react-router-dom";
 import * as firebase from "firebase/app";
-import journals from "../../content/journals.json";
 
 const servicesNames = [
   "family",
@@ -19,13 +18,15 @@ export default class Navbar extends Component {
     windowWidth: null,
     loggedIn: this.props.isSignedIn,
     loginDisplay: "none",
-    dropdownDisplay: false
+    dropdownDisplay: false,
+    journals: []
   };
 
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("resize", this.handleWidth);
     this.handleWidth();
+    this.props.getJournals();
   }
   componentWillUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -76,8 +77,6 @@ export default class Navbar extends Component {
           resolve(true);
         })
         .catch(function(error) {
-          // Some error occurred, you can inspect the code: error.code
-          // console.log("login error", error);
           reject(error);
         });
     });
@@ -140,13 +139,13 @@ export default class Navbar extends Component {
                 </Link>
               </li>
             ) : null}
-            {window.location.pathname === "/" ? null : (
-              <li>
-                <Link to={"/"} className="nav-link">
-                  Home
-                </Link>
-              </li>
-            )}
+
+            <li>
+              <Link to={"/"} className="nav-link">
+                Home
+              </Link>
+            </li>
+
             <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"
@@ -171,7 +170,7 @@ export default class Navbar extends Component {
                       to={`/gallery#${name}`}
                       key={i}
                     >
-                      {name[0].toLocaleUpperCase() + name.slice(1)}
+                      {name[0].toUpperCase() + name.slice(1)}
                     </Link>
                   );
                 })}
@@ -179,6 +178,7 @@ export default class Navbar extends Component {
             </li>
             <li className="nav-item dropdown">
               <Link
+                to={"#"}
                 className="nav-link dropdown-toggle"
                 data-toggle="dropdown"
                 aria-haspopup="true"
@@ -226,18 +226,20 @@ export default class Navbar extends Component {
                     : "bg-base-color"
                 } `}
               >
-                {Object.keys(journals).map((title, i) => {
-                  return (
-                    <Link
-                      className="dropdown-item"
-                      to={`/journal#${title}`}
-                      key={i}
-                    >
-                      {title[0].toUpperCase() +
-                        title.slice(1).replace("_", " ")}
-                    </Link>
-                  );
-                })}
+                {this.props.journals
+                  ? Object.keys(this.props.journals).map((journalId, i) => {
+                      let { shortTitle } = this.props.journals[journalId].title;
+                      return (
+                        <Link
+                          className="dropdown-item"
+                          to={`/journal/${journalId}`}
+                          key={i}
+                        >
+                          {shortTitle[0].toUpperCase() + shortTitle.slice(1)}
+                        </Link>
+                      );
+                    })
+                  : null}
               </div>
             </li>
             {isSignedIn ? (

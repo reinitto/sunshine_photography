@@ -256,6 +256,11 @@ nav.navbar.navbar-expand-md {
   align-items: center;
 }
 
+.journal-text-block {
+  display: flex;
+  flex-direction: column;
+}
+
 .intro-image {
   background-attachment: "fixed";
   background-repeat: "no-repeat";
@@ -281,6 +286,10 @@ nav.navbar.navbar-expand-md {
 .carousel-item {
   background-attachment: fixed;
   background-repeat: no-repeat;
+}
+
+.delete-set {
+  width: 100%;
 }
 
 .carousel-text {
@@ -359,7 +368,7 @@ h3 {
 
 #contactForm {
   padding: 1rem;
-  ::-webkit-input-placeholder {
+  ::placeholder {
     text-align: center;
   }
 }
@@ -638,7 +647,10 @@ h3 {
   border: none;
   background: transparent;
   width: 100%;
-  resize: none;
+  // resize: none;
+}
+.journal-image-text::placeholder {
+  text-align: center;
 }
 .title-input {
   border: none;
@@ -716,6 +728,6 @@ h3 {
   box-shadow: 0 0 13px 3px #ff6e40;
 }
 
-[data-rbd-droppable-context-id="0"] {
+[data-rbd-droppable-context-id] {
   width: 100%;
 }

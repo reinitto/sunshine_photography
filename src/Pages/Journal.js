@@ -1,31 +1,32 @@
-import React, { Fragment, Suspense, lazy } from "react";
-// import Gallery from "../components/portfolio/Gallery";
-// import Navbar from "../components/layout/Navbar";
+import React, { Fragment, Suspense, useEffect, useState } from "react";
+// import * as firebase from "firebase/app";
+import { journalIntroBg } from "../content/backgroundImages";
+import ImageGalleryWithoutLighbox from "../components/portfolio/ImageGalleryWithoutLighbox";
 import IntroImage from "../components/IntroImage";
-import JournalGalleries from "../content/journals.json";
-const Gallery = lazy(() => import("../components/portfolio/Gallery"));
 
-const journalIntroBg =
-  "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/images/backgrounds/IMG_8951_1500_oxpgkq.jpg";
-
-export default function Journal() {
+export default function Journal({ journals }) {
+  let [journal, setJournal] = useState(null);
+  let journalId = window.location.pathname.replace(`/journal/`, "");
+  useEffect(() => {
+    if (journals) {
+      setJournal(journals[journalId]);
+    }
+  }, [journalId]);
   return (
     <Fragment>
-      {/* <Navbar /> */}
       <Suspense fallback={<div style={{ height: "400px" }}></div>}>
         <IntroImage
-          imageSrc={journalIntroBg}
-          text={["Travel Photos"]}
-          // height="35vh"
+          imageSrc={journal ? journal.title.titleUrl : journalIntroBg}
+          title={journal ? [journal.title.title] : null}
+          height="55vh"
+          inJournal={true}
         />
       </Suspense>
-      <div style={{ width: "90%", margin: "auto" }}>
-        {/* <h2 className="text-center">Travel Photos</h2> */}
+      <div className="container">
         <Suspense fallback={`...loading`}>
-          <Gallery
+          <ImageGalleryWithoutLighbox
             isJournal={true}
-            collection={window.location.hash.slice(1)}
-            galleries={JournalGalleries}
+            journalImages={journal ? journal.images : null}
           />
         </Suspense>
       </div>

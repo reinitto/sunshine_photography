@@ -8,12 +8,13 @@ export default function ContactForm({ backgroundImage = "", title = true }) {
   const saveMessage = props => {
     var messagesRef = firebase.database().ref("messages");
     const { name, email, message } = props;
-
+    const timestamp = Date.now();
     let newMessageRef = messagesRef.push();
     newMessageRef.set({
       name,
       email,
-      message
+      message,
+      timestamp
     });
   };
 

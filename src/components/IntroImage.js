@@ -6,7 +6,8 @@ export default function IntroImage({
   title,
   subtitle,
   text3,
-  height = "35vh"
+  height = "35vh",
+  inJournal
 }) {
   return (
     <div
@@ -16,7 +17,12 @@ export default function IntroImage({
         height
       }}
     >
-      <div className="carousel-text">
+      <div
+        className="carousel-text"
+        style={{
+          fontSize: inJournal ? "4rem" : "8rem"
+        }}
+      >
         <p>{title}</p>
         {subtitle ? (
           <span className="carousel-text-subtitle">{subtitle}</span>
