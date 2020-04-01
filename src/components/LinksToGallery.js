@@ -1,20 +1,8 @@
-import React, { useState, useLayoutEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import portfolioImages from "../content/portfolio.json";
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
-
-function useWindowWidth() {
-  const [windowWidth, setWindowWidth] = useState(0);
-  useLayoutEffect(() => {
-    function updateSize() {
-      setWindowWidth(window.innerWidth);
-    }
-    window.addEventListener("resize", updateSize);
-    updateSize();
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
-  return windowWidth;
-}
+import { useWindowWidth } from "./useWindowWidth";
 
 let portfolioThumbs = [...Object.keys(portfolioImages)].map((key, i) => {
   return (

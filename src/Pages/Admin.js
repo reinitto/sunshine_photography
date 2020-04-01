@@ -10,7 +10,8 @@ import { createJournalToEdit } from "../components/admin/createJournalToEdit";
 import { updateImageSrc } from "../components/admin/updateImageSrc";
 import { updateImages } from "../components/admin/updateImages";
 let realUrl =
-  "http://localhost:5001/momblog-15d1c/us-central1/uploadToCloudinary-uploadToCloudinary";
+  "https://us-central1-momblog-15d1c.cloudfunctions.net/uploadToCloudinary-uploadToCloudinary";
+// "http://localhost:5001/momblog-15d1c/us-central1/uploadToCloudinary-uploadToCloudinary";
 // "https://us-central1-momblog-15d1c.cloudfunctions.net/uploadToCloudinary-uploadToCloudinary";
 export default class Admin extends Component {
   state = {

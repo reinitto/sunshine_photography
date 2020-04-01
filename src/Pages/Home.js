@@ -3,10 +3,8 @@ import ContactForm from "../components/contact/ContactForm";
 import Pricing from "../components/pricing/PricingList";
 import { digitalPhotos } from "../content/pricing";
 import { mainBg, contactFormBg } from "../content/backgroundImages";
-import { aboutImages } from "../content/aboutImages";
 import LinksToGallery from "../components/LinksToGallery";
 import LinksToJournal from "../components/LinksToJournal";
-import AboutSection from "../components/AboutSection";
 const IntroImage = lazy(() => import("../components/IntroImage"));
 
 export default class Home extends Component {
@@ -53,7 +51,7 @@ export default class Home extends Component {
           />
         </Suspense>
         <LinksToGallery />
-        <AboutSection images={aboutImages} />
+        {/* <AboutSection images={aboutImages} /> */}
         <div className="container">
           <h2 className="text-center">Pricing</h2>
           <Pricing />

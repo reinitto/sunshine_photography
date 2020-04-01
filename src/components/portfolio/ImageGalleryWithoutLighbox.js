@@ -29,18 +29,6 @@ const SingleImage = ({ img }) => {
       }}
     >
       <LazyImg imageSrc={img.src} />
-      {/* <Image
-        publicId={img.src}
-        style={{
-          width: "100%",
-          objectFit: "cover",
-          backgroundSize: "cover",
-          backgroundPosition: "center"
-        }}
-        secure="true"
-      >
-        <Transformation quality="auto" fetchFormat="auto" />
-      </Image> */}
       {img.text ? (
         <p
           style={{

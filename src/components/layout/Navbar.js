@@ -193,9 +193,9 @@ export default class Navbar extends Component {
                     : "bg-base-color"
                 } `}
               >
-                <a as={Link} className="dropdown-item" href="/#aboutMe">
+                <Link className="dropdown-item" to="/About">
                   About Me
-                </a>
+                </Link>
                 <Link className="dropdown-item" to="#">
                   What they are saying
                 </Link>

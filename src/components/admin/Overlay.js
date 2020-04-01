@@ -76,16 +76,7 @@ export function Overlay({ uploading, updating, info, closeOverlay }) {
           <>
             <h3>Finished</h3>
             <h4>You can close the window now</h4>
-            <button
-              onClick={closeOverlay}
-              //   onClick={() => {
-              //     this.setState({
-              //       uploading: false
-              //     });
-              //   }}
-            >
-              Close
-            </button>
+            <button onClick={closeOverlay}>Close</button>
           </>
         ) : (
           <h4>Dont close this window</h4>

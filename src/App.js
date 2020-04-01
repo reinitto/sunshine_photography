@@ -10,6 +10,7 @@ import Journal from "./Pages/Journal";
 import Pricing from "./Pages/Pricing";
 import Gallery from "./Pages/Gallery";
 import Admin from "./Pages/Admin";
+import About from "./Pages/About";
 import Dashboard from "./Pages/Dashboard";
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
@@ -121,6 +122,7 @@ class App extends Component {
               />
               <Route path="/gallery" component={Gallery} />
               <Route path="/Pricing" component={Pricing} />
+              <Route path="/About" component={About} />
               <AdminRoute
                 path="/admin"
                 component={Admin}
@@ -140,7 +142,7 @@ class App extends Component {
             </Switch>
           </Fragment>
         </ScrollToTop>
-        <Footer />
+        <Footer journals={this.state.journals} />
       </Router>
     );
   }

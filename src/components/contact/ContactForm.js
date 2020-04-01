@@ -1,10 +1,7 @@
 import React from "react";
 import * as firebase from "firebase/app";
-// import firebase from "../../Firebase";
-// firebase.initializeApp(firebaseConfig);
-//  Reference messages collection
-
-export default function ContactForm({ backgroundImage = "", title = true }) {
+import { contactFormBg } from "../../content/backgroundImages";
+export default function ContactForm() {
   const saveMessage = props => {
     var messagesRef = firebase.database().ref("messages");
     const { name, email, message } = props;
@@ -22,8 +19,6 @@ export default function ContactForm({ backgroundImage = "", title = true }) {
     e.preventDefault();
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
-    // let phone = document.getElementById("phone").value;
-    // let address = document.getElementById("address").value;
     let message = document.getElementById("message").value;
     let contactForm = document.getElementById("contactForm");
 
@@ -40,22 +35,20 @@ export default function ContactForm({ backgroundImage = "", title = true }) {
   return (
     <div className="d-flex flex-column">
       <h2 className="text-center text-capitalize container">
-        I'm looking forward to hearing from you!
+        I'd Like To Hear From You!
       </h2>
-
       <div
         className="fitted-image"
         style={{
           backgroundAttachment: `fixed`,
           backgroundRepeat: `no-repeat`,
-          backgroundImage: `url(${backgroundImage})`,
+          backgroundImage: `url(${contactFormBg})`,
           height: `100%`
         }}
       >
         <div className="container">
           <form onSubmit={submitMessage} id="contactForm" name="contactForm">
             <div className="form-group">
-              {/* <label htmlFor="name">Name</label> */}
               <input
                 type="text"
                 className="form-control"
@@ -64,63 +57,27 @@ export default function ContactForm({ backgroundImage = "", title = true }) {
                 placeholder="Your name"
                 required
               />
-              {/* <small id="nameHelp" className="form-text text-muted">
-              What should I call you?
-            </small> */}
             </div>
-            {/* <div className="form-group">
-            <label htmlFor="phone">Phone number</label>
-            <input
-              type="tel"
-              className="form-control"
-              id="phone"
-              aria-describedby="phoneHelp"
-              placeholder="Enter phone number"
-              required
-            />
-            <small id="phoneHelp" className="form-text text-muted">
-              We'll never share your phone number with anyone
-            </small>
-          </div> */}
-            {/* <div className="form-group">
-            <label htmlFor="address">Address</label>
-            <input
-              type="text"
-              className="form-control"
-              id="address"
-              aria-describedby="addressHelp"
-              placeholder="Enter your address"
-            />
-            <small id="addressHelp" className="form-text text-muted">
-              We'll never share your address with anyone
-            </small>
-          </div> */}
             <div className="form-group">
-              {/* <label htmlFor="email">Your e-mail</label> */}
               <input
                 type="email"
                 className="form-control"
                 id="email"
                 aria-describedby="emailHelp"
-                placeholder="Your e-mail"
+                placeholder="Your Email"
                 required
               />
-              {/* <small id="emailHelp" className="form-text text-muted">
-              We'll never share your email with anyone else.
-            </small> */}
             </div>
             <div className="form-group">
-              {/* <label htmlFor="message">Message: </label> */}
-              <textarea
+              <input
                 className="form-control"
                 id="message"
-                placeholder="Tell me a bit about what you're planning"
+                placeholder="Your Event"
                 rows="10"
                 cols="70"
                 required
               />
             </div>
-
             <button
               type="submit"
               className="btn btn-primary btn-base"

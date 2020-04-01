@@ -11,7 +11,7 @@ export default function Journal({ journals }) {
     if (journals) {
       setJournal(journals[journalId]);
     }
-  }, [journalId]);
+  }, [journalId, journals]);
   return (
     <Fragment>
       <Suspense fallback={<div style={{ height: "400px" }}></div>}>
