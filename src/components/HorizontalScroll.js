@@ -54,7 +54,6 @@ export const ArrowLeft = Arrow({ text: "<", className: "arrow-prev" });
 export const ArrowRight = Arrow({ text: ">", className: "arrow-next" });
 
 export const HorizontalScroll = ({ list }) => {
-  console.log("list", list);
   let windowWidth = useWindowWidth();
   let sideLength = Math.floor(windowWidth / 3);
   let menu = [];

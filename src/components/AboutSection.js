@@ -21,7 +21,6 @@ About.defaultProps = {
 
 export default function About({ images, paragraphs }) {
   return (
-    // <ContactInfo contactInfo={contactInfo} social={social} />
     <div
       style={{
         lineHeight: "2.2rem"

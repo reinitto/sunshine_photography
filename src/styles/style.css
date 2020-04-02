@@ -34,7 +34,12 @@ p {
   font-family: "Garamond";
 }
 
-h1,
+h1 {
+  font-family: "Frutilla-Script";
+  color: white;
+  font-size: 8vw;
+}
+
 h2,
 h3,
 h4,
@@ -50,6 +55,50 @@ a:hover {
 
 .contact-info-item {
   color: #3d4856;
+}
+
+.hero {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 80%;
+  margin: auto;
+}
+
+.hero .hero-keywords {
+  color: white;
+  border: 1px solid white;
+  padding: 0.5rem 2rem;
+}
+
+.hero .hero-keyword {
+  color: black;
+  font-size: 1.5vw;
+  padding: 0.2rem 1rem;
+  letter-spacing: 0.3rem;
+}
+
+.hero-social-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 1rem;
+}
+
+.hero-social-container .hero-social {
+  margin: 0.5rem;
 }
 
 .about-social {
@@ -437,7 +486,6 @@ nav.navbar.navbar-expand-md {
   left: 0;
   color: #3d4856;
   z-index: 1;
-  font-size: 8rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -457,6 +505,7 @@ nav.navbar.navbar-expand-md {
 }
 
 .carousel-text p {
+  font-size: 8rem;
   font-family: "Frutilla-Script";
   text-align: center;
   color: white;
@@ -472,7 +521,7 @@ nav.navbar.navbar-expand-md {
 }
 
 .carousel-text3 {
-  font-size: 16px;
+  font-size: 1rem;
   font-family: "Sui_generis";
   display: -webkit-box;
   display: -ms-flexbox;
@@ -492,7 +541,7 @@ nav.navbar.navbar-expand-md {
 }
 
 .navbar .nav-link {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .navbar-toggler-icon {
@@ -675,9 +724,6 @@ h3 {
 }
 
 @media (max-width: 1024px) {
-  .carousel-text {
-    font-size: 6rem;
-  }
   .carousel-text3 {
     font-size: 12px;
   }
@@ -769,24 +815,13 @@ h3 {
   .about-text-2 {
     background-color: white;
     margin: 2rem;
-    font-size: 21px;
+    font-size: 1.3rem;
   }
 }
 
 @media (max-width: 425px) {
-  .carousel-text {
-    font-size: 6rem;
-  }
   .about-text-2 {
-    background-color: white;
     margin: 1rem;
-    font-size: 21px;
-  }
-}
-
-@media (max-width: 375px) {
-  .carousel-text {
-    font-size: 6rem;
   }
 }
 

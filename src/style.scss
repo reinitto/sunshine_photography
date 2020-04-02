@@ -23,6 +23,8 @@ $bgDark: #dfe1e3;
 $secondary-color: #9f818a;
 $secondary-light-color: #d6b6c0;
 $link-text-color: white;
+// $min-viewport-width:300px;
+// $max-viewport-width:1920px;
 html {
   height: 100%;
   scroll-behavior: smooth;
@@ -32,6 +34,8 @@ body {
   min-height: 100%;
   overflow-x: hidden;
   background: $bgBase;
+  // font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));
+  // line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
 }
 
 a {
@@ -44,7 +48,12 @@ p {
   font-family: "Garamond";
 }
 
-h1,
+h1 {
+  font-family: "Frutilla-Script";
+  color: white;
+  font-size: 8vw;
+}
+
 h2,
 h3,
 h4,
@@ -60,6 +69,39 @@ a:hover {
 
 .contact-info-item {
   color: $base-color;
+}
+
+.hero {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+
+  .hero-keywords {
+    color: white;
+    border: 1px solid white;
+    padding: 0.5rem 2rem;
+  }
+  .hero-keyword {
+    color: black;
+    font-size: 1.5vw;
+    padding: 0.2rem 1rem;
+    letter-spacing: 0.3rem;
+  }
+}
+.hero-social-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 1rem;
+  .hero-social {
+    margin: 0.5rem;
+  }
 }
 
 .about-social {
@@ -358,7 +400,6 @@ nav.navbar.navbar-expand-md {
   left: 0;
   color: $base-color;
   z-index: 1;
-  font-size: 8rem;
   display: flex;
   flex-direction: column;
   right: 0;
@@ -367,6 +408,7 @@ nav.navbar.navbar-expand-md {
   justify-content: center;
   align-items: center;
   p {
+    font-size: 8rem;
     font-family: "Frutilla-Script";
     text-align: center;
     color: $link-text-color;
@@ -382,7 +424,7 @@ nav.navbar.navbar-expand-md {
 }
 
 .carousel-text3 {
-  font-size: 16px;
+  font-size: 1rem;
   font-family: "Sui_generis";
   display: flex;
   flex-direction: row;
@@ -395,7 +437,7 @@ nav.navbar.navbar-expand-md {
 }
 
 .navbar .nav-link {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .navbar-toggler-icon {
@@ -542,9 +584,9 @@ h3 {
   }
 }
 @media (max-width: 1024px) {
-  .carousel-text {
-    font-size: 6rem;
-  }
+  // .carousel-text {
+  //   font-size: 6rem;
+  // }
   .carousel-text3 {
     font-size: 12px;
   }
@@ -629,24 +671,18 @@ h3 {
   .about-text-2 {
     background-color: white;
     margin: 2rem;
-    font-size: 21px;
+    font-size: 1.3rem;
   }
 }
 @media (max-width: 425px) {
-  .carousel-text {
-    font-size: 6rem;
-  }
+  // .carousel-text {
+  //   font-size: 6rem;
+  // }
   .about-text-2 {
-    background-color: white;
     margin: 1rem;
-    font-size: 21px;
   }
 }
-@media (max-width: 375px) {
-  .carousel-text {
-    font-size: 6rem;
-  }
-}
+
 @media (max-width: 337px) {
   .navbar .navbar-toggler {
     margin: auto;
