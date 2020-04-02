@@ -113,7 +113,13 @@ class App extends Component {
               journals={this.state.journals}
             />
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route
+                exact
+                path="/"
+                render={props => (
+                  <Home {...props} journals={this.state.journals} />
+                )}
+              />
               <Route
                 path="/journal/:name"
                 render={props => (
@@ -138,7 +144,11 @@ class App extends Component {
                 isSignedIn={this.state.user}
                 user={this.state.user}
               />
-              <Route component={Home} />
+              <Route
+                render={props => (
+                  <Home {...props} journals={this.state.journals} />
+                )}
+              />
             </Switch>
           </Fragment>
         </ScrollToTop>

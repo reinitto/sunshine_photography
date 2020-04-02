@@ -58,7 +58,8 @@ const ContactFormBack = () => {
           height: "300px",
           zIndex: "-2",
           margin: "auto",
-          width: "70%"
+          width: "70%",
+          opacity: "0.7"
         }}
       ></div>
       <div
@@ -82,10 +83,19 @@ const ContactFormBack = () => {
           position: "absolute",
           left: "50%",
           top: "50%",
-          transform: " translate(-50%,-50%)"
+          transform: " translate(-50%,-50%)",
+          color: "white",
+          mixBlendMode: "difference"
         }}
       >
-        <h3 className="text-center">Thank You for your trust!</h3>
+        <h3
+          className="text-center"
+          style={{
+            color: "white"
+          }}
+        >
+          Thank You for your trust!
+        </h3>
         <p>I will get in touch with you within 48h</p>
       </div>
     </div>

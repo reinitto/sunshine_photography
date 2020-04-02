@@ -535,7 +535,7 @@ h3 {
 #contactForm {
   margin: auto;
   width: 60%;
-  background-color: #faf7f6;
+  background-color: rgba(250, 247, 246, 0.7);
   padding: 1rem;
 }
 

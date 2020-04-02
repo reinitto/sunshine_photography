@@ -433,7 +433,7 @@ h3 {
 #contactForm {
   margin: auto;
   width: 60%;
-  background-color: $bgLight;
+  background-color: rgba($bgLight, 0.7);
   padding: 1rem;
   ::placeholder {
     text-align: center;
