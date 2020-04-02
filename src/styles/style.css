@@ -177,6 +177,10 @@ a:hover {
   background: white;
 }
 
+.bgLight {
+  background: #faf7f6;
+}
+
 .bg-base-color {
   background: #3d4856;
 }
@@ -339,6 +343,59 @@ nav.navbar.navbar-expand-md {
   background-repeat: "no-repeat";
 }
 
+.viewContainer {
+  -webkit-perspective: 1600px;
+          perspective: 1600px;
+  /*--- Faces ---*/
+}
+
+.viewContainer .slice {
+  position: relative;
+  min-width: 300px;
+  min-height: 300px;
+  width: 80vw;
+  height: 450px;
+  /* 3D Transforms attributes */
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  -webkit-animation-play-state: paused;
+          animation-play-state: paused;
+  -webkit-animation-name: flip;
+          animation-name: flip;
+  -webkit-animation-timing-function: ease;
+          animation-timing-function: ease;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-duration: 6s;
+          animation-duration: 6s;
+}
+
+.viewContainer .slice > div {
+  position: absolute;
+  min-width: 300px;
+  min-height: 300px;
+  width: 80vw;
+  height: 450px;
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+
+.viewContainer .facefront {
+  background-color: transparent;
+  -webkit-transform: translateZ(1px);
+          transform: translateZ(1px);
+}
+
+.viewContainer .faceback {
+  background-color: transparent;
+  -webkit-transform: rotateY(180deg) translateZ(1px);
+          transform: rotateY(180deg) translateZ(1px);
+}
+
 .fitted-image {
   width: 100%;
   height: 65vh;
@@ -471,7 +528,13 @@ h3 {
   /* So they look staggered */
 }
 
+.contact-form-container {
+  background-color: #faf7f6;
+}
+
 #contactForm {
+  margin: auto;
+  width: 60%;
   background-color: #faf7f6;
   padding: 1rem;
 }
@@ -857,6 +920,44 @@ h3 {
   100% {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes flip {
+  0% {
+    -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+  }
+  25% {
+    -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+  }
+  75% {
+    -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+  }
+  100% {
+    -webkit-transform: rotateY(360deg);
+            transform: rotateY(360deg);
+  }
+}
+
+@keyframes flip {
+  0% {
+    -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+  }
+  25% {
+    -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+  }
+  75% {
+    -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+  }
+  100% {
+    -webkit-transform: rotateY(360deg);
+            transform: rotateY(360deg);
   }
 }
 
