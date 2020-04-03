@@ -73,7 +73,7 @@ a:hover {
 
 .hero {
   position: absolute;
-  top: 70%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -81,23 +81,27 @@ a:hover {
   align-items: center;
   width: 80%;
   margin: auto;
-
-  .hero-keywords {
-    color: white;
-    border: 1px solid white;
-    padding: 0.5rem 2rem;
-  }
-  .hero-keyword {
-    color: black;
-    font-size: 1.5vw;
-    padding: 0.2rem 1rem;
-    letter-spacing: 0.3rem;
-  }
+  transition: top 1s ease-in-out;
+}
+.hero-keywords {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  border: 1px solid white;
+  padding: 0.5rem 2rem;
+}
+.hero-keyword {
+  color: $base-color;
+  font-size: 1.5vw;
+  padding: 0.2rem 1rem;
+  letter-spacing: 0.3rem;
 }
 .hero-social-container {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 3rem;
+  right: 3rem;
   padding: 1rem;
   .hero-social {
     margin: 0.5rem;
@@ -263,6 +267,7 @@ nav.navbar.navbar-expand-md {
   display: flex;
   flex-direction: column;
   width: 50%;
+  transition: width 1s ease-in-out;
   .two-links {
     display: flex;
     justify-content: center;
@@ -479,7 +484,7 @@ h3 {
   padding: 1rem;
   ::placeholder {
     text-align: center;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid $base-color;
   }
   input,
   textarea {
@@ -555,7 +560,7 @@ h3 {
 @media (min-width: 777px) {
   .links-to-gallery-layout {
     a:hover {
-      transform: scale(1.3);
+      transform: scale(1.15);
       z-index: 100;
       transition: 0.25s;
     }

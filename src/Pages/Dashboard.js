@@ -138,7 +138,7 @@ export default class Dashboard extends Component {
     return (
       <Fragment>
         <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
-          <IntroImage imageSrc={dashboardPageBg} text={["Your Dashboard"]} />
+          <IntroImage text={["Your Dashboard"]} />
         </Suspense>
         <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
           <div>

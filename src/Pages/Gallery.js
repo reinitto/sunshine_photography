@@ -46,7 +46,6 @@ export default function GalleryPage() {
 
       <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
         <IntroImage
-          imageSrc={portfoliogalleryBg}
           text={["Portfolio Gallery"]}
           // height="35vh"
         />
