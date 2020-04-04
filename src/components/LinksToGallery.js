@@ -26,7 +26,9 @@ let portfolioThumbs = [...Object.keys(portfolioImages)].map((key, i) => {
         >
           <Transformation quality="auto" fetchFormat="auto" />
         </Image>
-        <p className="link-overlay-text text-uppercase">{key}</p>
+        <div>
+          <p className="link-overlay-text text-uppercase">{key}</p>
+        </div>
       </div>
     </Link>
   );

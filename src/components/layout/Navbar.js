@@ -167,7 +167,7 @@ export default class Navbar extends Component {
                   return (
                     <Link
                       className="dropdown-item"
-                      to={`/gallery#${name}`}
+                      to={`/services/${name}`}
                       key={i}
                     >
                       {name[0].toUpperCase() + name.slice(1)}

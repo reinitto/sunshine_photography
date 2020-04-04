@@ -8,7 +8,7 @@ import ScrollToTop from "./ScrollToTop";
 import Home from "./Pages/Home";
 import Journal from "./Pages/Journal";
 import Pricing from "./Pages/Pricing";
-import Gallery from "./Pages/Gallery";
+import Services from "./Pages/Services";
 import Admin from "./Pages/Admin";
 import About from "./Pages/About";
 import Dashboard from "./Pages/Dashboard";
@@ -126,7 +126,10 @@ class App extends Component {
                   <Journal {...props} journals={this.state.journals} />
                 )}
               />
-              <Route path="/gallery" component={Gallery} />
+              <Route
+                path="/services/:service"
+                render={props => <Services {...props} />}
+              />
               <Route path="/Pricing" component={Pricing} />
               <Route path="/About" component={About} />
               <AdminRoute
