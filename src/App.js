@@ -7,7 +7,6 @@ import "firebase/functions";
 import ScrollToTop from "./ScrollToTop";
 import Home from "./Pages/Home";
 import Journal from "./Pages/Journal";
-import Pricing from "./Pages/Pricing";
 import Services from "./Pages/Services";
 import Admin from "./Pages/Admin";
 import About from "./Pages/About";
@@ -130,7 +129,6 @@ class App extends Component {
                 path="/services/:service"
                 render={props => <Services {...props} />}
               />
-              <Route path="/Pricing" component={Pricing} />
               <Route path="/About" component={About} />
               <AdminRoute
                 path="/admin"

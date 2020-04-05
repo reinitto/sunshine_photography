@@ -1,11 +1,9 @@
 import React, { Fragment, Component } from "react";
 import { uuid } from "uuidv4";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import IntroImage from "../components/IntroImage";
-import { JournalImageView } from "../components/admin/journalAdminImageView/JournalImageView";
-import { TitleAndTitleImage } from "../components/admin/journalAdminImageView/TitleAndTitleImage";
-import { Overlay } from "../components/admin/Overlay";
 import { setTextBlockText } from "../components/admin/setTextBlockText";
+import EditJournals from "../components/admin/EditJournals";
+import ServicesView from "../components/admin/ServicesView";
 import { createJournalToEdit } from "../components/admin/createJournalToEdit";
 import { updateImageSrc } from "../components/admin/updateImageSrc";
 import { updateImages } from "../components/admin/updateImages";
@@ -25,15 +23,15 @@ export default class Admin extends Component {
     }
   };
 
-  setShortTitle(text) {
+  setShortTitle = text => {
     let newJournal = { ...this.state.newJournal };
     newJournal.shortTitle = text;
     this.setState({
       newJournal
     });
-  }
+  };
 
-  updateTextBlockText(id, text, title = false) {
+  updateTextBlockText = (id, text, title = false) => {
     let newJournalImages = setTextBlockText(
       this.state.newJournal.journalImages,
       id,
@@ -45,7 +43,7 @@ export default class Admin extends Component {
       journalImages: newJournalImages
     };
     this.setState({ newJournal });
-  }
+  };
 
   setImageText = (id, text) => {
     // only variation==1 image can have text
@@ -164,7 +162,7 @@ export default class Admin extends Component {
     return;
   };
 
-  addNewTextBlock() {
+  addNewTextBlock = () => {
     let newTextBloc = { title: "", text: "" };
     let order = this.state.newJournal.journalImages.length;
     newTextBloc.variation = "text";
@@ -177,8 +175,8 @@ export default class Admin extends Component {
     this.setState({
       newJournal
     });
-  }
-  addNewJournalImage(variation = 1) {
+  };
+  addNewJournalImage = (variation = 1) => {
     let newJournalImages = {};
     let order = this.state.newJournal.journalImages.length;
     newJournalImages.variation = variation;
@@ -196,7 +194,7 @@ export default class Admin extends Component {
     this.setState({
       newJournal
     });
-  }
+  };
 
   deleteImageSet = draggableId => {
     // find correct imageSet
@@ -239,16 +237,19 @@ export default class Admin extends Component {
       setsToDelete: newSetsToDelete
     });
   };
-  toggleJournalView() {
-    this.setState({ journalsMenu: !this.state.journalsMenu });
-  }
+  setJournalView = () => {
+    this.setState({ menu: "journals" });
+  };
+  setServicesView = () => {
+    this.setState({ menu: "services" });
+  };
 
-  setJournalToEdit(journalId) {
+  setJournalToEdit = journalId => {
     let journalToEdit = createJournalToEdit(this.props.journals, journalId);
     this.setState({
       newJournal: journalToEdit
     });
-  }
+  };
 
   increaseImagesUploaded = () => {
     this.setState({
@@ -256,7 +257,7 @@ export default class Admin extends Component {
     });
   };
 
-  SubmitEdit = async e => {
+  submitEdit = async e => {
     e.preventDefault();
     let idToken = await this.props.user.getIdToken();
     let imagesToUpload = 0;
@@ -349,7 +350,7 @@ export default class Admin extends Component {
     });
   };
 
-  DeleteJournal = async e => {
+  deleteJournal = async e => {
     e.preventDefault();
     let idToken = await this.props.user.getIdToken();
     const deleteRequestOptions = {
@@ -365,7 +366,7 @@ export default class Admin extends Component {
     await fetch(realUrl, deleteRequestOptions);
   };
 
-  Submit = async e => {
+  submit = async e => {
     e.preventDefault();
     let imagesToUpload = 0;
     this.state.newJournal.journalImages.forEach(set => {
@@ -440,6 +441,8 @@ export default class Admin extends Component {
       journalImages,
       edit
     } = this.state.newJournal;
+    let { journals } = this.props;
+
     return (
       <Fragment>
         <IntroImage text={["Admin"]} height="35vh" />
@@ -455,158 +458,66 @@ export default class Admin extends Component {
               <a
                 href="#!"
                 onClick={() => {
-                  this.toggleJournalView();
+                  this.setJournalView();
                 }}
               >
                 Journals
               </a>
             </li>
-          </ul>
-        </div>
-        {this.state.journalsMenu ? (
-          <div
-            style={{
-              display: "flex",
-              width: "80%",
-              margin: "auto"
-            }}
-          >
-            <div className="d-flex flex-column w-25 mx-auto">
-              <h3>Current Blogs</h3>
-              {this.props.journals
-                ? Object.keys(this.props.journals).map((journalId, i) => {
-                    let { title, titleUrl: titleSrc } = this.props.journals[
-                      journalId
-                    ].title;
-                    return (
-                      <div
-                        style={{
-                          cursor: "pointer"
-                        }}
-                        key={i}
-                        onClick={() => {
-                          // SET EXISTING JOURNAL TO EDIT
-                          this.setJournalToEdit(journalId);
-                        }}
-                      >
-                        <div
-                          className="fitted-image"
-                          style={{
-                            backgroundImage: `url(${titleSrc})`,
-                            width: "100%",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                            color: "white",
-                            margin: "1rem"
-                          }}
-                        >
-                          <h4 className="text-center">{title}</h4>
-                        </div>
-                      </div>
-                    );
-                  })
-                : null}
-            </div>
-            <div
+            <li
               style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                width: "70%"
+                listStyleType: "none",
+                border: "1px solid black",
+                padding: "1rem"
               }}
             >
-              <Overlay
-                uploading={uploading}
-                updating={updating}
-                closeOverlay={this.closeOverlay}
-                info={{
-                  uploadingTitle,
-                  imagesUploaded,
-                  imagesToUpload,
-                  deletingSets,
-                  setsToDelete
-                }}
-              />
-              <div>{this.state.journals}</div>
-              <DragDropContext onDragEnd={this.onDragEnd}>
-                <Droppable droppableId={Date.now().toString()}>
-                  {provided => (
-                    <div {...provided.droppableProps} ref={provided.innerRef}>
-                      {provided.placeholder}
-                      <div>
-                        <input
-                          type="text"
-                          name="shortTitle"
-                          placeholder="Enter short title for navigation"
-                          value={shortTitle}
-                          onChange={e => this.setShortTitle(e.target.value)}
-                          style={{
-                            width: "100%"
-                          }}
-                        />
-                      </div>
-                      <TitleAndTitleImage
-                        titleText={title}
-                        setTitle={this.setTitle.bind(this)}
-                        loadTitle={this.loadTitle.bind(this)}
-                        titleSrc={titleImage}
-                      />
-                      <JournalImageView
-                        journalImages={journalImages}
-                        setImageText={this.setImageText.bind(this)}
-                        deleteImageSet={this.deleteImageSet.bind(this)}
-                        loadFile={this.loadFile.bind(this)}
-                        setTextBlockText={this.updateTextBlockText.bind(this)}
-                        edit={edit}
-                      />
-                    </div>
-                  )}
-                </Droppable>
-              </DragDropContext>
-              <button
+              <a
+                href="#!"
                 onClick={() => {
-                  this.addNewJournalImage(1);
+                  this.setServicesView();
                 }}
               >
-                Add Single Image
-              </button>
-              <button
-                onClick={() => {
-                  this.addNewJournalImage(2);
-                }}
-              >
-                Add 2 Images
-              </button>
-              <button
-                onClick={() => {
-                  this.addNewJournalImage(3);
-                }}
-              >
-                Add 3 Images
-              </button>
-              <button
-                onClick={() => {
-                  this.addNewTextBlock();
-                }}
-              >
-                Add Text Block
-              </button>
-              <hr />
-              <div className="d-flex flex-column mx-auto w-25">
-                <button onClick={e => this.Submit(e)}>Submit New</button>
-                <button onClick={e => this.SubmitEdit(e)}>Confirm Edit</button>
-                <button
-                  className="btn btn-danger"
-                  onClick={e => {
-                    this.DeleteJournal(e);
-                  }}
-                >
-                  Delete Journal
-                </button>
-              </div>
-            </div>
-          </div>
+                Services
+              </a>
+            </li>
+          </ul>
+        </div>
+        {this.state.menu === "journals" ? (
+          <EditJournals
+            {...{
+              journals,
+              uploading,
+              updating,
+              uploadingTitle,
+              imagesUploaded,
+              imagesToUpload,
+              deletingSets,
+              setsToDelete,
+              title,
+              shortTitle,
+              titleImage,
+              journalImages,
+              edit,
+              setJournalToEdit: this.setJournalToEdit,
+              addNewJournalImage: this.addNewJournalImage,
+              addNewTextBlock: this.addNewTextBlock,
+              deleteImageSet: this.deleteImageSet,
+              deleteJournal: this.deleteJournal,
+              onDragEnd: this.onDragEnd,
+              setShortTitle: this.setShortTitle,
+              setTitle: this.setTitle,
+              loadTitle: this.loadTitle,
+              setImageText: this.setImageText,
+              loadFile: this.loadFile,
+              updateTextBlockText: this.updateTextBlockText,
+              submit: this.submit,
+              submitEdit: this.submitEdit,
+              closeOverlay: this.closeOverlay
+            }}
+          />
+        ) : null}
+        {this.state.menu === "services" ? (
+          <ServicesView user={this.props.user} />
         ) : null}
       </Fragment>
     );
