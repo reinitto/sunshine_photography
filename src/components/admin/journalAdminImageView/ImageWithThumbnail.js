@@ -1,5 +1,5 @@
 import React from "react";
-import FileDrop from "react-file-drop";
+import { FileDrop } from "react-file-drop";
 import { inputStyles } from "./inputStyles";
 export let ImageWithThumbnail = ({ imageRef, loadFile, id, srcLink }) => {
   let handleDrop = files => {

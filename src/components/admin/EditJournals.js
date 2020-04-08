@@ -31,7 +31,8 @@ const EditJournals = ({
   edit,
   submit,
   submitEdit,
-  closeOverlay
+  closeOverlay,
+  resetCurrentJournal,
 }) => {
   console.log(journals);
   return (
@@ -39,7 +40,7 @@ const EditJournals = ({
       style={{
         display: "flex",
         width: "80%",
-        margin: "auto"
+        margin: "auto",
       }}
     >
       <div className="d-flex flex-column w-25 mx-auto">
@@ -50,7 +51,7 @@ const EditJournals = ({
               return (
                 <div
                   style={{
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                   key={i}
                   onClick={() => {
@@ -67,7 +68,7 @@ const EditJournals = ({
                       flexDirection: "column",
                       justifyContent: "center",
                       color: "white",
-                      margin: "1rem"
+                      margin: "1rem",
                     }}
                   >
                     <h4 className="text-center">{title}</h4>
@@ -82,7 +83,7 @@ const EditJournals = ({
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          width: "70%"
+          width: "70%",
         }}
       >
         <Overlay
@@ -94,12 +95,12 @@ const EditJournals = ({
             imagesUploaded,
             imagesToUpload,
             deletingSets,
-            setsToDelete
+            setsToDelete,
           }}
         />
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId={Date.now().toString()}>
-            {provided => (
+            {(provided) => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
                 {provided.placeholder}
                 <div>
@@ -108,9 +109,9 @@ const EditJournals = ({
                     name="shortTitle"
                     placeholder="Enter short title for navigation"
                     value={shortTitle}
-                    onChange={e => setShortTitle(e.target.value)}
+                    onChange={(e) => setShortTitle(e.target.value)}
                     style={{
-                      width: "100%"
+                      width: "100%",
                     }}
                   />
                 </div>
@@ -162,15 +163,18 @@ const EditJournals = ({
         </button>
         <hr />
         <div className="d-flex flex-column mx-auto w-25">
-          <button onClick={e => submit(e)}>Submit New</button>
-          <button onClick={e => submitEdit(e)}>Confirm Edit</button>
+          <button onClick={(e) => submit(e)}>Submit New</button>
+          <button onClick={(e) => submitEdit(e)}>Confirm Edit</button>
           <button
             className="btn btn-danger"
-            onClick={e => {
+            onClick={(e) => {
               deleteJournal(e);
             }}
           >
             Delete Journal
+          </button>
+          <button className="btn" onClick={resetCurrentJournal}>
+            New Journal
           </button>
         </div>
       </div>

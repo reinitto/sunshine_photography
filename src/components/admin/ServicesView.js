@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import * as firebase from "firebase/app";
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
-import FileDrop from "react-file-drop";
+import { FileDrop } from "react-file-drop";
 const shortid = require("shortid");
 shortid.characters(
   "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
@@ -15,17 +15,27 @@ let uploadImgUrl =
 let deleteImgUrl =
   "http://localhost:5001/momblog-15d1c/us-central1/deleteImageFromCloudinary-deleteImageFromCloudinary";
 
-let arrayFromObject = obj => {
+let arrayFromObject = (obj) => {
   let arr = [];
-  Object.keys(obj).forEach(key => arr.push(obj[key]));
+  if (Object.keys(obj).length === 0) {
+    return arr;
+  }
+  Object.keys(obj).forEach((key) => {
+    if (typeof obj[key] === "object") {
+      let val = Object.assign({}, obj[key]);
+      arr.push(val);
+    } else {
+      arr.push(obj[key]);
+    }
+  });
   return arr;
 };
 
 let ImageWithThumbnail = ({ loadFile, stateId, id, srcLink, stateUpdater }) => {
-  let handleDrop = files => {
+  let handleDrop = (files) => {
     loadFile(files[0], stateId, id, stateUpdater);
   };
-  let isLink = srcLink.match(/^images/);
+  let isLink = srcLink ? srcLink.match(/^images/) : null;
   return (
     <div
       className="cover-image"
@@ -37,7 +47,7 @@ let ImageWithThumbnail = ({ loadFile, stateId, id, srcLink, stateUpdater }) => {
         height: "100%",
         backgroundImage: isLink
           ? `url(https://res.cloudinary.com/sunshinephoto/image/upload/c_thumb,w_500,g_face/${srcLink})`
-          : srcLink
+          : srcLink,
       }}
     >
       <FileDrop onDrop={handleDrop}>
@@ -52,7 +62,7 @@ let loadFile = (file, stateId, id, stateUpdater) => {
   reader.onload = () => {
     var output = document.querySelector(`#${id}`);
     output.style.backgroundImage = `url(${reader.result})`;
-    stateUpdater(stateId, id, reader.result);
+    stateUpdater({ stateId, data: reader.result });
   };
   reader.readAsDataURL(file);
 };
@@ -64,9 +74,19 @@ export const ServicesView = ({ user }) => {
   let [sessions, setSessions] = useState([]);
   let [galleryImages, setGalleryImages] = useState([]);
   let [allServices, setAllServices] = useState([]);
-  let [folder_name, setFolder_name] = useState([]);
+  let [folder_name, setFolder_name] = useState("");
 
-  let setServiceToEdit = async service => {
+  let setNewService = async () => {
+    setKey("");
+    setServiceName("");
+    setServiceParagraph("");
+    setDetails([""]);
+    setGalleryImages([]);
+    setSessions([]);
+    setFolder_name("");
+  };
+
+  let setServiceToEdit = async (service) => {
     let {
       name,
       paragraphText,
@@ -74,15 +94,19 @@ export const ServicesView = ({ user }) => {
       details,
       imageGallery,
       sessions,
-      folder_name
+      folder_name,
     } = service;
-    let serviceDetails = arrayFromObject(details).map(detail => detail.text);
-    let serviceimageGallery = arrayFromObject(imageGallery);
-    sessions = arrayFromObject(sessions);
+    let serviceDetails = details
+      ? arrayFromObject(details).map((detail) => detail.text)
+      : [];
+    let serviceimageGallery = imageGallery ? arrayFromObject(imageGallery) : [];
+    sessions = sessions ? arrayFromObject(sessions) : [];
     let sessionObjects = [];
-    for await (let key of sessions) {
-      let session = await getSession(key);
-      sessionObjects.push({ ...session, key });
+    if (sessions) {
+      for await (let key of sessions) {
+        let session = await getSession(key);
+        sessionObjects.push({ ...session, key });
+      }
     }
     setKey(key);
     setServiceName(name);
@@ -98,11 +122,11 @@ export const ServicesView = ({ user }) => {
       .database()
       .ref("/services/")
       .once("value")
-      .then(snapshot => {
+      .then((snapshot) => {
         let journalSnap = snapshot.val();
         if (journalSnap) {
           let services = [];
-          Object.keys(journalSnap).map(key =>
+          Object.keys(journalSnap).map((key) =>
             services.push({ ...journalSnap[key], key })
           );
           console.log("services", services);
@@ -112,7 +136,7 @@ export const ServicesView = ({ user }) => {
       });
   };
 
-  let getSession = async sessionKey => {
+  let getSession = async (sessionKey) => {
     let snap = await firebase
       .database()
       .ref(`/sessions/${sessionKey}`)
@@ -120,16 +144,16 @@ export const ServicesView = ({ user }) => {
     return snap.val();
   };
 
-  let updateServiceName = e => {
+  let updateServiceName = (e) => {
     setServiceName(e.target.value);
   };
-  let updateServiceParagraph = e => {
+  let updateServiceParagraph = (e) => {
     setServiceParagraph(e.target.value);
   };
   let addDetail = () => {
     setDetails([...details, ""]);
   };
-  let updateServiceDetail = e => {
+  let updateServiceDetail = (e) => {
     let prevDetails = [...details];
     let id = e.target.id.match(/(\d+)/g)[0];
     prevDetails[id] = e.target.value;
@@ -145,8 +169,8 @@ export const ServicesView = ({ user }) => {
           name: "",
           price: 0,
           detailText: "",
-          image: ""
-        }
+          image: "",
+        },
       ]);
     } else {
       setSessions([
@@ -155,23 +179,22 @@ export const ServicesView = ({ user }) => {
           name: "",
           price: "",
           detailText: "",
-          image: ""
-        }
+          image: "",
+        },
       ]);
     }
   };
 
-  let editSessionImage = (stateId, sessionId, src) => {
-    let newSession = [...sessions.filter(s => s.id === stateId)][0];
+  let editSessionImage = ({ stateId, data }) => {
+    let newSession = [...sessions.filter((s) => s.id === stateId)][0];
     // IF CURRENT IMAGE IS A LINK,MARK IT FOR DELETION
-    let isUrl = newSession.image.match(/(images\/.*)/);
+    let isUrl = newSession.image.match(/(images\/\.*)/);
     if (isUrl) {
       // ADD OLD TO DELETE
-      console.log("adding old session image");
       newSession.oldImage = newSession.image;
     }
-    newSession.image = src;
-    let newSessions = sessions.map(session => {
+    newSession.image = data;
+    let newSessions = sessions.map((session) => {
       if (session.id === stateId) {
         return newSession;
       } else {
@@ -181,12 +204,12 @@ export const ServicesView = ({ user }) => {
     setSessions(newSessions);
   };
 
-  let editSession = e => {
+  let editSession = (e) => {
     let newSession = [
-      ...sessions.filter(s => s.id === e.target.parentNode.parentNode.id)
+      ...sessions.filter((s) => s.id === e.target.parentNode.parentNode.id),
     ][0];
     newSession[e.target.name] = e.target.value;
-    let newSessions = sessions.map(session => {
+    let newSessions = sessions.map((session) => {
       if (session.id === e.target.id) {
         return newSession;
       } else {
@@ -203,26 +226,26 @@ export const ServicesView = ({ user }) => {
         {
           id: shortid.generate(),
           image: "",
-          text: ""
-        }
+          text: "",
+        },
       ]);
     } else {
       setGalleryImages([
         {
           id: shortid.generate(),
           image: "",
-          text: ""
-        }
+          text: "",
+        },
       ]);
     }
   };
 
-  let updateGaleryImageText = e => {
+  let updateGaleryImageText = (e) => {
     let newGalleryImage = [
-      ...galleryImages.filter(s => s.id === e.target.parentNode.id)
+      ...galleryImages.filter((s) => s.id === e.target.parentNode.id),
     ][0];
     newGalleryImage[e.target.name] = e.target.value;
-    let newGalleryImages = galleryImages.map(galleryImage => {
+    let newGalleryImages = galleryImages.map((galleryImage) => {
       if (galleryImage.id === e.target.parentNode.id) {
         return newGalleryImage;
       } else {
@@ -232,15 +255,15 @@ export const ServicesView = ({ user }) => {
     setGalleryImages(newGalleryImages);
   };
 
-  let editGalleryImageImage = (stateId, id, data) => {
-    let newGalleryImage = [...galleryImages.filter(s => s.id === stateId)][0];
-    let isUrl = newGalleryImage.image.match(/\/(images\/.*)/);
+  let editGalleryImageImage = ({ stateId, data }) => {
+    let newGalleryImage = [...galleryImages.filter((s) => s.id === stateId)][0];
+    let isUrl = newGalleryImage.image.match(/(images\/.*)/);
     if (isUrl) {
       // ADD OLD TO DELETE
       newGalleryImage.oldImage = newGalleryImage.image;
     }
     newGalleryImage.image = data;
-    let newGalleryImages = galleryImages.map(image => {
+    let newGalleryImages = galleryImages.map((image) => {
       if (image.id === stateId) {
         return newGalleryImage;
       } else {
@@ -250,7 +273,43 @@ export const ServicesView = ({ user }) => {
     setGalleryImages(newGalleryImages);
   };
 
-  let createService = async e => {
+  let toggleDeleteSession = (sessionId) => {
+    let newSession = [...sessions.filter((s) => s.id === sessionId)][0];
+    newSession.delete && newSession.delete === true
+      ? (newSession.delete = false)
+      : (newSession.delete = true);
+    let newSessions = sessions.map((session) => {
+      if (session.id === sessionId) {
+        return newSession;
+      } else {
+        return session;
+      }
+    });
+    setSessions(newSessions);
+  };
+  let toggleDeleteGalleryImage = (imageId) => {
+    let newGalleryImage = [...galleryImages.filter((s) => s.id === imageId)][0];
+    newGalleryImage.delete && newGalleryImage.delete === true
+      ? (newGalleryImage.delete = false)
+      : (newGalleryImage.delete = true);
+    if (newGalleryImage.image === "") {
+      newGalleryImage.image = newGalleryImage.oldImage;
+      newGalleryImage.oldImage = "";
+    } else {
+      newGalleryImage.oldImage = newGalleryImage.image;
+      newGalleryImage.image = "";
+    }
+    let newGalleryImages = galleryImages.map((image) => {
+      if (image.id === imageId) {
+        return newGalleryImage;
+      } else {
+        return image;
+      }
+    });
+    setGalleryImages(newGalleryImages);
+  };
+
+  let createService = async (e) => {
     e.preventDefault();
     let idToken = await user.getIdToken();
     // UPLOAD SESSIONS IMAGES
@@ -259,15 +318,15 @@ export const ServicesView = ({ user }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${idToken}`
+        Authorization: `Bearer ${idToken}`,
       },
-      body: {}
+      body: {},
     };
     let newSessions = [];
     for await (let session of sessions) {
       imageRequestOptions.body = JSON.stringify({
         imageSrc: session.image,
-        path: `services/${folder_name}/sessionImages`
+        path: `services/${folder_name}/sessionImages`,
       });
       let res = await fetch(uploadImgUrl, imageRequestOptions);
       let { public_id } = await res.json();
@@ -279,7 +338,7 @@ export const ServicesView = ({ user }) => {
     for await (let galleryImage of galleryImages) {
       imageRequestOptions.body = JSON.stringify({
         imageSrc: galleryImage.image,
-        path: `services/${folder_name}/galleryImages`
+        path: `services/${folder_name}/galleryImages`,
       });
       let res = await fetch(uploadImgUrl, imageRequestOptions);
       let { public_id } = await res.json();
@@ -291,7 +350,7 @@ export const ServicesView = ({ user }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${idToken}`
+        Authorization: `Bearer ${idToken}`,
       },
       body: JSON.stringify({
         folder_name,
@@ -299,14 +358,15 @@ export const ServicesView = ({ user }) => {
         paragraphText: serviceParagraph,
         details,
         sessions: newSessions,
-        imageGallery: newGalleryImages
-      })
+        imageGallery: newGalleryImages,
+      }),
     };
     let data = await fetch(createServiceUrl, serviceRequestOptions);
     let result = await data.json();
+    console.log("finished");
     console.log("service", result);
   };
-  let updateService = async e => {
+  let updateService = async (e) => {
     e.preventDefault();
     let idToken = await user.getIdToken();
     // UPLOAD SESSIONS IMAGES
@@ -314,68 +374,87 @@ export const ServicesView = ({ user }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${idToken}`
+        Authorization: `Bearer ${idToken}`,
       },
-      body: {}
+      body: {},
     };
     let newSessions = [];
     for await (let session of sessions) {
       // UPLOAD NEW IMAGE IF ITS NOT AN URL
       let isUrl = session.image.match(/sessionImages/g);
-      if (isUrl && isUrl[0]) {
-        newSessions.push(session);
-      } else {
+      if (!session.delete && !isUrl) {
         imageRequestOptions.body = JSON.stringify({
           imageSrc: session.image,
-          path: `services/${folder_name}/sessionImages`
+          path: `services/${folder_name}/sessionImages`,
         });
         let res = await fetch(uploadImgUrl, imageRequestOptions);
         let { public_id } = await res.json();
         let newSession = { ...session, image: public_id };
         newSessions.push(newSession);
+      } else {
+        newSessions.push(session);
       }
     }
-    // DELETE OLD IMAGE FROM SESSIONS
+    // DELETE OLD SESSIONS IMAGE
     let imageDeleteRequestOptions = {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${idToken}`
+        Authorization: `Bearer ${idToken}`,
       },
-      body: {}
+      body: {},
     };
-    console.log("are there old images?");
     for await (let session of newSessions) {
-      console.log("delete old image", session.oldImage);
-      // UPLOAD NEW IMAGE IF ITS NOT AN URL
       if (session.oldImage) {
         imageDeleteRequestOptions.body = JSON.stringify({
-          public_id: session.oldImage
+          public_id: session.oldImage,
         });
         await fetch(deleteImgUrl, imageDeleteRequestOptions);
-      } else {
-        continue;
+        session.oldImage = "";
+      } else if (session.delete && session.image.match(/sessionImages/g)) {
+        imageDeleteRequestOptions.body = JSON.stringify({
+          public_id: session.image,
+        });
+        await fetch(deleteImgUrl, imageDeleteRequestOptions);
+        session.image = "";
       }
     }
 
-    // UPLOAD IMAGE GALLERY
+    // UPDATE IMAGE GALLERY
     let newGalleryImages = [];
-    // for await (let galleryImage of galleryImages) {
-    //   imageRequestOptions.body = JSON.stringify({
-    //     imageSrc: galleryImage.image,
-    //     path: `services/${serviceName}/galleryImages`
-    //   });
-    //   let res = await fetch(uploadImgUrl, imageRequestOptions);
-    //   let { public_id } = await res.json();
-    //   let newGalleryImage = { ...galleryImage, image: public_id };
-    //   newGalleryImages.push(newGalleryImage);
-    // }
+    for await (let galleryImage of galleryImages) {
+      // UPLOAD NEW IMAGE IF ITS NOT AN URL
+      let isUrl = galleryImage.image.match(/galleryImages/g);
+      if (!isUrl && galleryImage.image !== "") {
+        imageRequestOptions.body = JSON.stringify({
+          imageSrc: galleryImage.image,
+          path: `services/${folder_name}/galleryImages`,
+        });
+        let res = await fetch(uploadImgUrl, imageRequestOptions);
+        let { public_id } = await res.json();
+        let newGalleryImage = { ...galleryImage, image: public_id };
+        newGalleryImages.push(newGalleryImage);
+      } else {
+        newGalleryImages.push(galleryImage);
+      }
+    }
+
+    // DELETE OLD IMAGE FROM GALLERY
+    for await (let galleryImage of newGalleryImages) {
+      if (galleryImage.oldImage) {
+        imageDeleteRequestOptions.body = JSON.stringify({
+          public_id: galleryImage.oldImage,
+        });
+        await fetch(deleteImgUrl, imageDeleteRequestOptions);
+        galleryImage.oldImage = "";
+      }
+    }
 
     const serviceRequestOptions = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${idToken}`
+        Authorization: `Bearer ${idToken}`,
       },
       body: JSON.stringify({
         key,
@@ -383,9 +462,9 @@ export const ServicesView = ({ user }) => {
         paragraphText: serviceParagraph,
         details,
         sessions: newSessions,
-        folder_name
-        // imageGallery: newGalleryImages
-      })
+        folder_name,
+        imageGallery: newGalleryImages,
+      }),
     };
     let data = await fetch(updateServiceUrl, serviceRequestOptions);
     let result = await data.json();
@@ -395,15 +474,16 @@ export const ServicesView = ({ user }) => {
     <Fragment>
       <CloudinaryContext cloudName="sunshinephoto">
         <div className="d-flex">
-          <div className="d-flex flex-column w-25 m-auto">
-            {allServices.map(service => {
-              let image =
-                service.imageGallery[Object.keys(service.imageGallery)[0]]
-                  .image;
+          <div className="d-flex flex-column w-25 mx-auto">
+            {allServices.map((service) => {
+              let image = service.imageGallery
+                ? service.imageGallery[Object.keys(service.imageGallery)[0]]
+                    .image
+                : null;
               return (
                 <div
                   style={{
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                   key={service.key}
                   onClick={() => {
@@ -412,32 +492,9 @@ export const ServicesView = ({ user }) => {
                   }}
                 >
                   <h4 className="text-center">{service.name}</h4>
-                  <Image
-                    publicId={image}
-                    className="cover-image"
-                    // style={{
-                    //     width: "100%",
-                    //     objectFit: "cover",
-                    //     backgroundSize: "cover",
-                    //     backgroundPosition: "center"
-                    // }}
-                    secure="true"
-                  >
+                  <Image publicId={image} className="cover-image" secure="true">
                     <Transformation quality="auto" fetchFormat="auto" />
                   </Image>
-                  {/* <div
-                  className="fitted-image"
-                  style={{
-                    backgroundImage: `url(${image})`,
-                    width: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    color: "white",
-                    margin: "1rem"
-                  }}
-                >
-                </div> */}
                 </div>
               );
             })}
@@ -475,13 +532,13 @@ export const ServicesView = ({ user }) => {
             </div>
 
             <div className="text-center d-flex flex-column">
-              {sessions.map(session => {
+              {sessions.map((session) => {
                 return (
                   <div id={session.id} key={session.id} className="d-flex">
                     <div
                       className="text-center d-flex flex-column "
                       style={{
-                        flexGrow: 1
+                        flexGrow: 1,
                       }}
                     >
                       <input
@@ -514,10 +571,17 @@ export const ServicesView = ({ user }) => {
                           stateId: session.id,
                           id: `service-session-image-${session.id}`,
                           srcLink: session.image,
-                          stateUpdater: editSessionImage
+                          stateUpdater: editSessionImage,
                         }}
                       />
                     </div>
+                    <button
+                      onClick={() => {
+                        toggleDeleteSession(session.id);
+                      }}
+                    >
+                      Delete Session
+                    </button>
                   </div>
                 );
               })}
@@ -525,7 +589,7 @@ export const ServicesView = ({ user }) => {
             </div>
             <div className="d-flex flex-column">
               {/* gallery images */}
-              {galleryImages.map(image => {
+              {galleryImages.map((image) => {
                 return (
                   <div
                     key={image.id}
@@ -538,7 +602,7 @@ export const ServicesView = ({ user }) => {
                         stateId: image.id,
                         id: `service-galery-image-${image.id}`,
                         srcLink: image.image,
-                        stateUpdater: editGalleryImageImage
+                        stateUpdater: editGalleryImageImage,
                       }}
                     />
                     <input
@@ -548,6 +612,13 @@ export const ServicesView = ({ user }) => {
                       value={image.text}
                       onChange={updateGaleryImageText}
                     />
+                    <button
+                      onClick={() => {
+                        toggleDeleteGalleryImage(image.id);
+                      }}
+                    >
+                      Delete Image
+                    </button>
                   </div>
                 );
               })}
@@ -555,6 +626,7 @@ export const ServicesView = ({ user }) => {
             </div>
             <button onClick={createService}>Create Service</button>
             <button onClick={updateService}>Update Service</button>
+            <button onClick={setNewService}>Start New Service</button>
             <button onClick={getAllServices}>Get All Services</button>
           </div>
         </div>

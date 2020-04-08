@@ -1,5 +1,5 @@
 import React, { createRef } from "react";
-import FileDrop from "react-file-drop";
+import { FileDrop } from "react-file-drop";
 import { inputStyles } from "./inputStyles";
 export let TitleAndTitleImage = ({
   setTitle,
@@ -41,3 +41,5 @@ export let TitleAndTitleImage = ({
     </>
   );
 };
+
+export default TitleAndTitleImage;

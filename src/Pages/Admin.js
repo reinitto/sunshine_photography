@@ -19,15 +19,15 @@ export default class Admin extends Component {
       shortTitle: "",
       title: "",
       titleImage: "",
-      journalImages: []
-    }
+      journalImages: [],
+    },
   };
 
-  setShortTitle = text => {
+  setShortTitle = (text) => {
     let newJournal = { ...this.state.newJournal };
     newJournal.shortTitle = text;
     this.setState({
-      newJournal
+      newJournal,
     });
   };
 
@@ -40,7 +40,7 @@ export default class Admin extends Component {
     );
     let newJournal = {
       ...this.state.newJournal,
-      journalImages: newJournalImages
+      journalImages: newJournalImages,
     };
     this.setState({ newJournal });
   };
@@ -62,16 +62,16 @@ export default class Admin extends Component {
     this.setState({
       newJournal: {
         ...this.state.newJournal,
-        journalImages: newJournalImages
-      }
+        journalImages: newJournalImages,
+      },
     });
   };
-  setTitle = title => {
+  setTitle = (title) => {
     this.setState({
       newJournal: {
         ...this.state.newJournal,
-        title
-      }
+        title,
+      },
     });
   };
 
@@ -87,8 +87,8 @@ export default class Admin extends Component {
         this.setState({
           newJournal: {
             ...this.state.newJournal,
-            title_id_to_delete
-          }
+            title_id_to_delete,
+          },
         });
       }
       output.style.backgroundImage = `url(${reader.result})`;
@@ -96,8 +96,8 @@ export default class Admin extends Component {
       this.setState({
         newJournal: {
           ...this.state.newJournal,
-          titleImage: reader.result
-        }
+          titleImage: reader.result,
+        },
       });
     };
     reader.readAsDataURL(file);
@@ -123,14 +123,14 @@ export default class Admin extends Component {
       this.setState({
         newJournal: {
           ...this.state.newJournal,
-          journalImages: newJournalImages
-        }
+          journalImages: newJournalImages,
+        },
       });
     };
     reader.readAsDataURL(file);
   };
 
-  onDragEnd = result => {
+  onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
     // console.log("onDragEnd", result);
     if (!destination) {
@@ -146,7 +146,7 @@ export default class Admin extends Component {
 
     let newJournalImages = Array.from(this.state.newJournal.journalImages);
     let movedImage = [
-      ...newJournalImages.filter(image => image.draggableId === draggableId)
+      ...newJournalImages.filter((image) => image.draggableId === draggableId),
     ][0];
     newJournalImages.splice(source.index, 1);
     newJournalImages.splice(destination.index, 0, movedImage);
@@ -156,8 +156,8 @@ export default class Admin extends Component {
         ...this.state.newJournal,
         journalImages: newJournalImages.map((set, i) => {
           return { ...set, order: i };
-        })
-      }
+        }),
+      },
     });
     return;
   };
@@ -170,10 +170,10 @@ export default class Admin extends Component {
     newTextBloc.id = uuid();
     let newJournal = {
       ...this.state.newJournal,
-      journalImages: [...this.state.newJournal.journalImages, newTextBloc]
+      journalImages: [...this.state.newJournal.journalImages, newTextBloc],
     };
     this.setState({
-      newJournal
+      newJournal,
     });
   };
   addNewJournalImage = (variation = 1) => {
@@ -189,18 +189,18 @@ export default class Admin extends Component {
     }
     let newJournal = {
       ...this.state.newJournal,
-      journalImages: [...this.state.newJournal.journalImages, newJournalImages]
+      journalImages: [...this.state.newJournal.journalImages, newJournalImages],
     };
     this.setState({
-      newJournal
+      newJournal,
     });
   };
 
-  deleteImageSet = draggableId => {
+  deleteImageSet = (draggableId) => {
     // find correct imageSet
     let deleteInfo = {};
     let setToDelete = this.state.newJournal.journalImages.filter(
-      set => (set.draggableId || set.id) === draggableId
+      (set) => (set.draggableId || set.id) === draggableId
     )[0];
     // id or img urls
     if (setToDelete.isTextBlock) {
@@ -222,19 +222,19 @@ export default class Admin extends Component {
       : [deleteInfo];
     let newjournalImages = [
       ...this.state.newJournal.journalImages.filter(
-        set => (set.draggableId || set.id) !== draggableId
-      )
+        (set) => (set.draggableId || set.id) !== draggableId
+      ),
     ].map((set, i) => {
       return { ...set, order: i };
     });
     let newJournal = {
       ...this.state.newJournal,
-      journalImages: newjournalImages
+      journalImages: newjournalImages,
     };
     this.setState({
       ...this.state,
       newJournal,
-      setsToDelete: newSetsToDelete
+      setsToDelete: newSetsToDelete,
     });
   };
   setJournalView = () => {
@@ -244,24 +244,24 @@ export default class Admin extends Component {
     this.setState({ menu: "services" });
   };
 
-  setJournalToEdit = journalId => {
+  setJournalToEdit = (journalId) => {
     let journalToEdit = createJournalToEdit(this.props.journals, journalId);
     this.setState({
-      newJournal: journalToEdit
+      newJournal: journalToEdit,
     });
   };
 
   increaseImagesUploaded = () => {
     this.setState({
-      imagesUploaded: this.state.imagesUploaded + 1
+      imagesUploaded: this.state.imagesUploaded + 1,
     });
   };
 
-  submitEdit = async e => {
+  submitEdit = async (e) => {
     e.preventDefault();
     let idToken = await this.props.user.getIdToken();
     let imagesToUpload = 0;
-    this.state.newJournal.journalImages.forEach(set => {
+    this.state.newJournal.journalImages.forEach((set) => {
       if ([1, 2, 3].indexOf(set.variation) > -1) {
         imagesToUpload += set.variation;
       }
@@ -271,7 +271,7 @@ export default class Admin extends Component {
       updating: true,
       uploadingTitle: true,
       imagesToUpload,
-      imagesUploaded: 0
+      imagesUploaded: 0,
     });
 
     const {
@@ -281,13 +281,13 @@ export default class Admin extends Component {
       editKey,
       edit,
       titleImage,
-      journalImages
+      journalImages,
     } = this.state.newJournal;
     const titleRequestOptions = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${idToken}`
+        Authorization: `Bearer ${idToken}`,
       },
       body: JSON.stringify({
         isTitle: true,
@@ -296,13 +296,13 @@ export default class Admin extends Component {
         shortTitle,
         editKey,
         edit,
-        title_id_to_delete
-      })
+        title_id_to_delete,
+      }),
     };
     try {
       await fetch(realUrl, titleRequestOptions);
       this.setState({
-        uploadingTitle: false
+        uploadingTitle: false,
       });
       let journalId = editKey;
       await updateImages(
@@ -318,23 +318,23 @@ export default class Admin extends Component {
       // DELETE SETS MARKED FOR DELETION
       if (this.state.setsToDelete && this.state.setsToDelete.length > 0) {
         this.setState({
-          deletingSets: true
+          deletingSets: true,
         });
         let imageDeletionRequestOptions = {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${idToken}`
-          }
+            Authorization: `Bearer ${idToken}`,
+          },
         };
         imageDeletionRequestOptions.body = JSON.stringify({
           setsToDelete: this.state.setsToDelete,
           editKey,
-          edit
+          edit,
         });
         fetch(realUrl, imageDeletionRequestOptions).then(() => {
           this.setState({
-            deletingSets: false
+            deletingSets: false,
           });
         });
       }
@@ -346,30 +346,41 @@ export default class Admin extends Component {
   closeOverlay = () => {
     this.setState({
       uploading: false,
-      updating: false
+      updating: false,
     });
   };
 
-  deleteJournal = async e => {
+  resetCurrentJournal = (e) => {
+    this.setState({
+      newJournal: {
+        shortTitle: "",
+        title: "",
+        titleImage: "",
+        journalImages: [],
+      },
+    });
+  };
+
+  deleteJournal = async (e) => {
     e.preventDefault();
     let idToken = await this.props.user.getIdToken();
     const deleteRequestOptions = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${idToken}`
+        Authorization: `Bearer ${idToken}`,
       },
       body: JSON.stringify({
-        delete: { id: this.state.newJournal.editKey }
-      })
+        delete: { id: this.state.newJournal.editKey },
+      }),
     };
     await fetch(realUrl, deleteRequestOptions);
   };
 
-  submit = async e => {
+  submit = async (e) => {
     e.preventDefault();
     let imagesToUpload = 0;
-    this.state.newJournal.journalImages.forEach(set => {
+    this.state.newJournal.journalImages.forEach((set) => {
       if ([1, 2, 3].indexOf(set.variation) > -1) {
         imagesToUpload += set.variation;
       }
@@ -378,28 +389,28 @@ export default class Admin extends Component {
       shortTitle,
       title,
       titleImage,
-      journalImages
+      journalImages,
     } = this.state.newJournal;
     // Include the ID token in an Authorization: Bearer ID_TOKEN header in the request to the function.
     this.setState({
       uploading: true,
       uploadingTitle: true,
       imagesToUpload,
-      imagesUploaded: 0
+      imagesUploaded: 0,
     });
     let idToken = await this.props.user.getIdToken();
     const titleRequestOptions = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${idToken}`
+        Authorization: `Bearer ${idToken}`,
       },
       body: JSON.stringify({
         isTitle: true,
         title,
         titleImage,
-        shortTitle
-      })
+        shortTitle,
+      }),
     };
     try {
       // UPLOAD TITLE
@@ -407,7 +418,7 @@ export default class Admin extends Component {
       let titleData = await titleResponse.json();
       let journalId = titleData.journalId;
       this.setState({
-        uploadingTitle: false
+        uploadingTitle: false,
       });
       let edit = false;
       await updateImages(
@@ -424,7 +435,6 @@ export default class Admin extends Component {
     }
   };
   render() {
-    // console.log("state", this.state);
     let {
       uploadingTitle,
       imagesUploaded,
@@ -432,14 +442,14 @@ export default class Admin extends Component {
       deletingSets,
       setsToDelete,
       uploading,
-      updating
+      updating,
     } = this.state;
     let {
       title,
       shortTitle,
       titleImage,
       journalImages,
-      edit
+      edit,
     } = this.state.newJournal;
     let { journals } = this.props;
 
@@ -452,7 +462,7 @@ export default class Admin extends Component {
               style={{
                 listStyleType: "none",
                 border: "1px solid black",
-                padding: "1rem"
+                padding: "1rem",
               }}
             >
               <a
@@ -468,7 +478,7 @@ export default class Admin extends Component {
               style={{
                 listStyleType: "none",
                 border: "1px solid black",
-                padding: "1rem"
+                padding: "1rem",
               }}
             >
               <a
@@ -512,7 +522,8 @@ export default class Admin extends Component {
               updateTextBlockText: this.updateTextBlockText,
               submit: this.submit,
               submitEdit: this.submitEdit,
-              closeOverlay: this.closeOverlay
+              closeOverlay: this.closeOverlay,
+              resetCurrentJournal: this.resetCurrentJournal,
             }}
           />
         ) : null}
