@@ -533,6 +533,11 @@ h3 {
   margin: auto;
 }
 
+.session-delete::after {
+  background-color: red;
+  z-index: 100;
+}
+
 .horizontal-scroll-menu {
   background-color: $bgDark;
   .menu-item {

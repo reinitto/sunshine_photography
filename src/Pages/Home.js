@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense, useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import ContactForm from "../components/contact/ContactForm";
 import Hero from "../components/Hero";
 // import Pricing from "../components/pricing/PricingList";
@@ -7,7 +7,6 @@ import { mainBg, contactFormBg } from "../content/backgroundImages";
 import LinksToGallery from "../components/LinksToGallery";
 // import { HorizontalScroll } from "../components/HorizontalScroll";
 import { createJournalItems } from "../components/createJournalItems";
-const IntroImage = lazy(() => import("../components/IntroImage"));
 const HorizontalScroll = lazy(() => import("../components/HorizontalScroll"));
 
 // let isAnyPartOfElementInViewport = el => {

@@ -1,5 +1,8 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import * as firebase from "firebase/app";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinusCircle, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 import { FileDrop } from "react-file-drop";
 const shortid = require("shortid");
@@ -50,9 +53,7 @@ let ImageWithThumbnail = ({ loadFile, stateId, id, srcLink, stateUpdater }) => {
           : srcLink,
       }}
     >
-      <FileDrop onDrop={handleDrop}>
-        Session background image.Drop an image here!
-      </FileDrop>
+      <FileDrop onDrop={handleDrop}>Drop an image here!</FileDrop>
     </div>
   );
 };
@@ -71,18 +72,48 @@ export const ServicesView = ({ user }) => {
   let [serviceName, setServiceName] = useState("");
   let [serviceParagraph, setServiceParagraph] = useState("");
   let [details, setDetails] = useState([""]);
-  let [sessions, setSessions] = useState([]);
-  let [galleryImages, setGalleryImages] = useState([]);
+  let [sessions, setSessions] = useState([
+    {
+      id: shortid.generate(),
+      name: "",
+      price: 0,
+      detailText: "",
+      image: "",
+    },
+  ]);
+  let [galleryImages, setGalleryImages] = useState([
+    {
+      id: shortid.generate(),
+      image: "",
+      text: "",
+    },
+  ]);
   let [allServices, setAllServices] = useState([]);
   let [folder_name, setFolder_name] = useState("");
-
+  useEffect(() => {
+    getAllServices();
+  }, [allServices]);
   let setNewService = async () => {
     setKey("");
     setServiceName("");
     setServiceParagraph("");
     setDetails([""]);
-    setGalleryImages([]);
-    setSessions([]);
+    setGalleryImages([
+      {
+        id: shortid.generate(),
+        image: "",
+        text: "",
+      },
+    ]);
+    setSessions([
+      {
+        id: shortid.generate(),
+        name: "",
+        price: 0,
+        detailText: "",
+        image: "",
+      },
+    ]);
     setFolder_name("");
   };
 
@@ -129,8 +160,6 @@ export const ServicesView = ({ user }) => {
           Object.keys(journalSnap).map((key) =>
             services.push({ ...journalSnap[key], key })
           );
-          console.log("services", services);
-          // SET JOURNALS
           setAllServices(services);
         }
       });
@@ -158,6 +187,12 @@ export const ServicesView = ({ user }) => {
     let id = e.target.id.match(/(\d+)/g)[0];
     prevDetails[id] = e.target.value;
     setDetails(prevDetails);
+  };
+
+  let removeDetail = (i) => {
+    let newDetails = [...details];
+    newDetails.splice(i, 1);
+    setDetails(newDetails);
   };
 
   let addSession = () => {
@@ -206,7 +241,9 @@ export const ServicesView = ({ user }) => {
 
   let editSession = (e) => {
     let newSession = [
-      ...sessions.filter((s) => s.id === e.target.parentNode.parentNode.id),
+      ...sessions.filter(
+        (s) => s.id === e.target.parentNode.parentNode.parentNode.id
+      ),
     ][0];
     newSession[e.target.name] = e.target.value;
     let newSessions = sessions.map((session) => {
@@ -242,11 +279,13 @@ export const ServicesView = ({ user }) => {
 
   let updateGaleryImageText = (e) => {
     let newGalleryImage = [
-      ...galleryImages.filter((s) => s.id === e.target.parentNode.id),
+      ...galleryImages.filter(
+        (s) => s.id === e.target.parentNode.parentNode.parentNode.id
+      ),
     ][0];
     newGalleryImage[e.target.name] = e.target.value;
     let newGalleryImages = galleryImages.map((galleryImage) => {
-      if (galleryImage.id === e.target.parentNode.id) {
+      if (galleryImage.id === e.target.parentNode.parentNode.parentNode.id) {
         return newGalleryImage;
       } else {
         return galleryImage;
@@ -502,91 +541,177 @@ export const ServicesView = ({ user }) => {
 
           <div className="d-flex flex-column w-50 m-auto">
             <div className="text-center d-flex flex-column">
+              <button onClick={setNewService}>New Service</button>
+              <hr
+                style={{
+                  border: "1px solid black",
+                  width: "100%",
+                }}
+              />
               <input
+                className="text-center"
                 type="text"
                 placeholder="service name"
                 value={serviceName}
                 onChange={updateServiceName}
               />
               <textarea
+                className="text-center"
                 type="text"
                 placeholder="service text"
                 value={serviceParagraph}
                 onChange={updateServiceParagraph}
               />
             </div>
+            <hr
+              style={{
+                border: "1px solid black",
+                width: "100%",
+              }}
+            />
             <div className="text-center d-flex flex-column">
               {details.map((detail, i) => {
                 return (
-                  <input
-                    type="text"
-                    placeholder="Service detail."
-                    id={`service-detail-${i}`}
+                  <div
                     key={`service-detail-${i}`}
-                    value={detail}
-                    onChange={updateServiceDetail}
-                  />
+                    className="text-center d-flex"
+                  >
+                    <input
+                      type="text"
+                      placeholder="Service detail."
+                      id={`service-detail-${i}`}
+                      value={detail}
+                      onChange={updateServiceDetail}
+                      style={{
+                        width: "100%",
+                      }}
+                    />
+                    <button
+                      onClick={() => removeDetail(i)}
+                      className="d-flex align-items-center"
+                    >
+                      <FontAwesomeIcon
+                        color="red"
+                        icon={faMinusCircle}
+                        size="sm"
+                      />
+                    </button>
+                  </div>
                 );
               })}
-              <button onClick={addDetail}>Add detail</button>
+              <button
+                onClick={addDetail}
+                className="d-flex align-items-center justify-content-center"
+              >
+                <FontAwesomeIcon color="green" icon={faPlusCircle} size="sm" />
+                Add detail
+              </button>
             </div>
-
+            <hr
+              style={{
+                border: "1px solid black",
+                width: "100%",
+              }}
+            />
             <div className="text-center d-flex flex-column">
               {sessions.map((session) => {
                 return (
                   <div id={session.id} key={session.id} className="d-flex">
                     <div
-                      className="text-center d-flex flex-column "
+                      className="d-flex"
                       style={{
                         flexGrow: 1,
+                        position: "relative",
                       }}
                     >
-                      <input
-                        type="text"
-                        placeholder="session name"
-                        name="name"
-                        value={session.name}
-                        onChange={editSession}
-                      />
-                      <input
-                        type="text"
-                        placeholder="session price"
-                        name="price"
-                        value={session.price}
-                        onChange={editSession}
-                      />
-                      <textarea
-                        rows={5}
-                        type="text"
-                        placeholder="session detailText"
-                        name="detailText"
-                        value={session.detailText}
-                        onChange={editSession}
-                      />
-                    </div>
-                    <div>
-                      <ImageWithThumbnail
-                        {...{
-                          loadFile,
-                          stateId: session.id,
-                          id: `service-session-image-${session.id}`,
-                          srcLink: session.image,
-                          stateUpdater: editSessionImage,
+                      <div
+                        className="overlay justify-content-center align-items-center text-center"
+                        style={{
+                          position: "absolute",
+                          width: "100%",
+                          height: "100%",
+                          top: 0,
+                          left: 0,
+                          zIndex: "100",
+                          background: "rgba(220,10,35,0.8)",
+                          display: `${session.delete ? "flex" : "none"}`,
                         }}
-                      />
+                      >
+                        <p>DELETE</p>
+                      </div>
+                      <div
+                        className="text-center d-flex flex-column"
+                        style={{
+                          flexGrow: 1,
+                        }}
+                      >
+                        <input
+                          type="text"
+                          placeholder="session name"
+                          name="name"
+                          value={session.name}
+                          onChange={editSession}
+                        />
+                        <input
+                          type="text"
+                          placeholder="session price"
+                          name="price"
+                          value={session.price}
+                          onChange={editSession}
+                        />
+                        <textarea
+                          rows={6}
+                          type="text"
+                          placeholder="session detailText"
+                          name="detailText"
+                          value={session.detailText}
+                          onChange={editSession}
+                        />
+                      </div>
+                      <div
+                        style={{
+                          border: "1px solid black",
+                        }}
+                      >
+                        <ImageWithThumbnail
+                          {...{
+                            loadFile,
+                            stateId: session.id,
+                            id: `service-session-image-${session.id}`,
+                            srcLink: session.image,
+                            stateUpdater: editSessionImage,
+                          }}
+                        />
+                      </div>
                     </div>
                     <button
-                      onClick={() => {
-                        toggleDeleteSession(session.id);
-                      }}
+                      onClick={() => toggleDeleteSession(session.id)}
+                      className="d-flex flex-column align-items-center justify-content-center"
                     >
-                      Delete Session
+                      <FontAwesomeIcon
+                        color={session.delete ? "green" : "red"}
+                        icon={session.delete ? faPlusCircle : faMinusCircle}
+                        size="sm"
+                      />
+                      {session.delete ? "Restore Session" : "Delete Session"}
                     </button>
                   </div>
                 );
               })}
-              <button onClick={addSession}>Add session</button>
+              <button
+                onClick={addSession}
+                className="d-flex align-items-center justify-content-center"
+              >
+                <FontAwesomeIcon color="green" icon={faPlusCircle} size="sm" />
+                Add session
+              </button>
             </div>
+            <hr
+              style={{
+                border: "1px solid black",
+                width: "100%",
+              }}
+            />
             <div className="d-flex flex-column">
               {/* gallery images */}
               {galleryImages.map((image) => {
@@ -594,40 +719,88 @@ export const ServicesView = ({ user }) => {
                   <div
                     key={image.id}
                     id={image.id}
-                    className="d-flex flex-column"
+                    className={`d-flex ${
+                      image.delete ? "gallery-image-delete" : ""
+                    }`}
                   >
-                    <ImageWithThumbnail
-                      {...{
-                        loadFile,
-                        stateId: image.id,
-                        id: `service-galery-image-${image.id}`,
-                        srcLink: image.image,
-                        stateUpdater: editGalleryImageImage,
+                    <div
+                      className="d-flex flex-column"
+                      style={{
+                        flexGrow: "1",
+                        border: "1px solid black",
+                        position: "relative",
                       }}
-                    />
-                    <input
-                      type="text"
-                      name="text"
-                      placeholder="a short comment if you want"
-                      value={image.text}
-                      onChange={updateGaleryImageText}
-                    />
+                    >
+                      <div
+                        className="overlay justify-content-center align-items-center text-center"
+                        style={{
+                          position: "absolute",
+                          width: "100%",
+                          height: "100%",
+                          top: 0,
+                          left: 0,
+                          zIndex: "100",
+                          background: "rgba(220,10,35,0.8)",
+                          display: `${image.delete ? "flex" : "none"}`,
+                        }}
+                      >
+                        <p>DELETE</p>
+                      </div>
+                      <ImageWithThumbnail
+                        {...{
+                          loadFile,
+                          stateId: image.id,
+                          id: `service-galery-image-${image.id}`,
+                          srcLink: image.image,
+                          stateUpdater: editGalleryImageImage,
+                        }}
+                      />
+                      <input
+                        type="text"
+                        name="text"
+                        placeholder="a short comment if you want"
+                        value={image.text}
+                        onChange={updateGaleryImageText}
+                        style={{ width: "100%" }}
+                      />
+                    </div>
                     <button
+                      className="d-flex flex-column align-items-center justify-content-center"
                       onClick={() => {
                         toggleDeleteGalleryImage(image.id);
                       }}
                     >
-                      Delete Image
+                      <FontAwesomeIcon
+                        color={image.delete ? "green" : "red"}
+                        icon={image.delete ? faPlusCircle : faMinusCircle}
+                        size="sm"
+                      />
+                      {image.delete ? "Restore Image" : "Delete Image"}
                     </button>
                   </div>
                 );
               })}
-              <button onClick={addGalleryImage}>Add Gallery Image</button>
+              <button
+                onClick={addGalleryImage}
+                className="d-flex align-items-center justify-content-center"
+              >
+                <FontAwesomeIcon color="green" icon={faPlusCircle} size="sm" />
+                Add Gallery Image
+              </button>
             </div>
-            <button onClick={createService}>Create Service</button>
-            <button onClick={updateService}>Update Service</button>
-            <button onClick={setNewService}>Start New Service</button>
-            <button onClick={getAllServices}>Get All Services</button>
+            <hr
+              style={{
+                border: "1px solid black",
+                width: "100%",
+              }}
+            />
+            {folder_name ? (
+              <button onClick={updateService}>Update Service</button>
+            ) : (
+              <button onClick={createService}>Create Service</button>
+            )}
+
+            {/* <button onClick={getAllServices}>Get All Services</button> */}
           </div>
         </div>
       </CloudinaryContext>
