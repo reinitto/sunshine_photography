@@ -2,21 +2,25 @@ import React, { useState, useEffect, Fragment } from "react";
 import * as firebase from "firebase/app";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinusCircle, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 import { FileDrop } from "react-file-drop";
+import { Overlay } from "./Overlay";
 const shortid = require("shortid");
 shortid.characters(
   "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
 );
 let createServiceUrl =
-  "http://localhost:5001/momblog-15d1c/us-central1/services-services";
+  "https://us-central1-momblog-15d1c.cloudfunctions.net/services-services";
+// "http://localhost:5001/momblog-15d1c/us-central1/services-services";
 let updateServiceUrl =
-  "http://localhost:5001/momblog-15d1c/us-central1/services-services";
+  "https://us-central1-momblog-15d1c.cloudfunctions.net/services-services";
+// "http://localhost:5001/momblog-15d1c/us-central1/services-services";
 let uploadImgUrl =
-  "http://localhost:5001/momblog-15d1c/us-central1/uploadImageToCloudinary-uploadImageToCloudinary";
+  "https://us-central1-momblog-15d1c.cloudfunctions.net/uploadImageToCloudinary-uploadImageToCloudinary";
+// "http://localhost:5001/momblog-15d1c/us-central1/uploadImageToCloudinary-uploadImageToCloudinary";
 let deleteImgUrl =
-  "http://localhost:5001/momblog-15d1c/us-central1/deleteImageFromCloudinary-deleteImageFromCloudinary";
+  "https://us-central1-momblog-15d1c.cloudfunctions.net/deleteImageFromCloudinary-deleteImageFromCloudinary";
+// "http://localhost:5001/momblog-15d1c/us-central1/deleteImageFromCloudinary-deleteImageFromCloudinary";
 
 let arrayFromObject = (obj) => {
   let arr = [];
@@ -49,11 +53,13 @@ let ImageWithThumbnail = ({ loadFile, stateId, id, srcLink, stateUpdater }) => {
         width: "100%",
         height: "100%",
         backgroundImage: isLink
-          ? `url(https://res.cloudinary.com/sunshinephoto/image/upload/c_thumb,w_500,g_face/${srcLink})`
+          ? `url(https://res.cloudinary.com/sunshinephoto/image/upload/c_thumb,w_300,g_face/${srcLink})`
           : srcLink,
       }}
     >
-      <FileDrop onDrop={handleDrop}>Drop an image here!</FileDrop>
+      <FileDrop onDrop={handleDrop} frame={document.querySelector(`#${id}`)}>
+        Drop an image here!
+      </FileDrop>
     </div>
   );
 };
@@ -72,6 +78,7 @@ export const ServicesView = ({ user }) => {
   let [serviceName, setServiceName] = useState("");
   let [serviceParagraph, setServiceParagraph] = useState("");
   let [details, setDetails] = useState([""]);
+  let [overlay, setOverlay] = useState(false);
   let [sessions, setSessions] = useState([
     {
       id: shortid.generate(),
@@ -91,8 +98,11 @@ export const ServicesView = ({ user }) => {
   let [allServices, setAllServices] = useState([]);
   let [folder_name, setFolder_name] = useState("");
   useEffect(() => {
-    getAllServices();
+    if (allServices.length === 0) {
+      getAllServices();
+    }
   }, [allServices]);
+
   let setNewService = async () => {
     setKey("");
     setServiceName("");
@@ -160,7 +170,9 @@ export const ServicesView = ({ user }) => {
           Object.keys(journalSnap).map((key) =>
             services.push({ ...journalSnap[key], key })
           );
-          setAllServices(services);
+          if (allServices) {
+            setAllServices(services);
+          }
         }
       });
   };
@@ -280,12 +292,12 @@ export const ServicesView = ({ user }) => {
   let updateGaleryImageText = (e) => {
     let newGalleryImage = [
       ...galleryImages.filter(
-        (s) => s.id === e.target.parentNode.parentNode.parentNode.id
+        (s) => s.id === e.target.parentNode.parentNode.id
       ),
     ][0];
     newGalleryImage[e.target.name] = e.target.value;
     let newGalleryImages = galleryImages.map((galleryImage) => {
-      if (galleryImage.id === e.target.parentNode.parentNode.parentNode.id) {
+      if (galleryImage.id === e.target.parentNode.parentNode.id) {
         return newGalleryImage;
       } else {
         return galleryImage;
@@ -350,6 +362,7 @@ export const ServicesView = ({ user }) => {
 
   let createService = async (e) => {
     e.preventDefault();
+    setOverlay(true);
     let idToken = await user.getIdToken();
     // UPLOAD SESSIONS IMAGES
     let folder_name = shortid.generate();
@@ -402,12 +415,14 @@ export const ServicesView = ({ user }) => {
     };
     let data = await fetch(createServiceUrl, serviceRequestOptions);
     let result = await data.json();
+    setOverlay(false);
     console.log("finished");
     console.log("service", result);
   };
   let updateService = async (e) => {
     e.preventDefault();
-    let idToken = await user.getIdToken();
+    setOverlay(true);
+    let idToken = await user.getIdToken(true);
     // UPLOAD SESSIONS IMAGES
     let imageRequestOptions = {
       method: "POST",
@@ -418,7 +433,8 @@ export const ServicesView = ({ user }) => {
       body: {},
     };
     let newSessions = [];
-    for await (let session of sessions) {
+    console.log("updating sessions");
+    for (let session of sessions) {
       // UPLOAD NEW IMAGE IF ITS NOT AN URL
       let isUrl = session.image.match(/sessionImages/g);
       if (!session.delete && !isUrl) {
@@ -434,6 +450,8 @@ export const ServicesView = ({ user }) => {
         newSessions.push(session);
       }
     }
+    console.log("deleting sessions");
+
     // DELETE OLD SESSIONS IMAGE
     let imageDeleteRequestOptions = {
       method: "DELETE",
@@ -443,7 +461,7 @@ export const ServicesView = ({ user }) => {
       },
       body: {},
     };
-    for await (let session of newSessions) {
+    for (let session of newSessions) {
       if (session.oldImage) {
         imageDeleteRequestOptions.body = JSON.stringify({
           public_id: session.oldImage,
@@ -460,8 +478,10 @@ export const ServicesView = ({ user }) => {
     }
 
     // UPDATE IMAGE GALLERY
+    console.log("updating gallery");
+
     let newGalleryImages = [];
-    for await (let galleryImage of galleryImages) {
+    for (let galleryImage of galleryImages) {
       // UPLOAD NEW IMAGE IF ITS NOT AN URL
       let isUrl = galleryImage.image.match(/galleryImages/g);
       if (!isUrl && galleryImage.image !== "") {
@@ -477,9 +497,10 @@ export const ServicesView = ({ user }) => {
         newGalleryImages.push(galleryImage);
       }
     }
+    console.log("deleting gallery images");
 
     // DELETE OLD IMAGE FROM GALLERY
-    for await (let galleryImage of newGalleryImages) {
+    for (let galleryImage of newGalleryImages) {
       if (galleryImage.oldImage) {
         imageDeleteRequestOptions.body = JSON.stringify({
           public_id: galleryImage.oldImage,
@@ -488,9 +509,9 @@ export const ServicesView = ({ user }) => {
         galleryImage.oldImage = "";
       }
     }
-
     const serviceRequestOptions = {
-      method: "PUT",
+      method: "PATCH",
+      cache: "no-cache",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${idToken}`,
@@ -505,12 +526,20 @@ export const ServicesView = ({ user }) => {
         imageGallery: newGalleryImages,
       }),
     };
-    let data = await fetch(updateServiceUrl, serviceRequestOptions);
-    let result = await data.json();
-    console.log("update service", result);
+    try {
+      let updateRes = await fetch(updateServiceUrl, serviceRequestOptions);
+      console.log("updateRes", updateRes);
+      let data = await updateRes.json();
+      setOverlay(false);
+      console.log("data", data);
+    } catch (error) {
+      console.log("error", error);
+    }
   };
+  console.log("rendering");
   return (
     <Fragment>
+      <Overlay uploading={overlay} />
       <CloudinaryContext cloudName="sunshinephoto">
         <div className="d-flex">
           <div className="d-flex flex-column w-25 mx-auto">
@@ -523,6 +552,7 @@ export const ServicesView = ({ user }) => {
                 <div
                   style={{
                     cursor: "pointer",
+                    overflow: "hidden",
                   }}
                   key={service.key}
                   onClick={() => {
@@ -532,14 +562,18 @@ export const ServicesView = ({ user }) => {
                 >
                   <h4 className="text-center">{service.name}</h4>
                   <Image publicId={image} className="cover-image" secure="true">
-                    <Transformation quality="auto" fetchFormat="auto" />
+                    <Transformation
+                      width="250"
+                      quality="auto"
+                      fetchFormat="auto"
+                    />
                   </Image>
                 </div>
               );
             })}
           </div>
 
-          <div className="d-flex flex-column w-50 m-auto">
+          <div id="services-tab" className="d-flex flex-column w-50 m-auto">
             <div className="text-center d-flex flex-column">
               <button onClick={setNewService}>New Service</button>
               <hr

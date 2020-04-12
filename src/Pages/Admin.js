@@ -452,7 +452,7 @@ export default class Admin extends Component {
       edit,
     } = this.state.newJournal;
     let { journals } = this.props;
-
+    console.log("admin render");
     return (
       <Fragment>
         <IntroImage text={["Admin"]} height="35vh" />

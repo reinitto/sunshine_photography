@@ -5,10 +5,10 @@ export let TitleAndTitleImage = ({
   setTitle,
   loadTitle,
   titleText,
-  titleSrc
+  titleSrc,
 }) => {
   let titleImageRef = createRef(null);
-  let handleDrop = files => {
+  let handleDrop = (files) => {
     loadTitle(files[0], titleImageRef);
   };
   let isLink = titleSrc ? titleSrc.match(/^http/) : null;
@@ -17,7 +17,9 @@ export let TitleAndTitleImage = ({
       <div
         style={{
           ...inputStyles,
-          backgroundImage: isLink ? `url(${titleSrc})` : titleSrc
+          backgroundImage: isLink
+            ? `url(${titleSrc.replace(/upload\//, "/upload/c_scale,w_500/")})`
+            : titleSrc,
         }}
         className="fitted-image"
         ref={titleImageRef}
@@ -26,13 +28,13 @@ export let TitleAndTitleImage = ({
           Drop title image here!
           <textarea
             style={{
-              color: "white"
+              color: "white",
             }}
             className="title-input"
             name="journalTitle"
             placeholder="Enter title"
             value={titleText}
-            onChange={e => {
+            onChange={(e) => {
               setTitle(e.target.value);
             }}
           />

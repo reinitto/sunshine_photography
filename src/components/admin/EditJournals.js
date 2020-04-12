@@ -48,6 +48,8 @@ const EditJournals = ({
         {journals
           ? Object.keys(journals).map((journalId, i) => {
               let { title, titleUrl: titleSrc } = journals[journalId].title;
+              titleSrc = titleSrc.replace(/upload\//, "upload/c_scale,w_250/");
+
               return (
                 <div
                   style={{
