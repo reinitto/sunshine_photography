@@ -25,7 +25,6 @@ const HorizontalScroll = lazy(() => import("../components/HorizontalScroll"));
 const Home = ({ journals }) => {
   let [travelJournals, setTravelJournals] = useState();
   useEffect(() => {
-    console.log("home", journals);
     if (journals) {
       setTravelJournals(createJournalItems(journals));
     }

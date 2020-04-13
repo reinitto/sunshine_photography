@@ -25,7 +25,7 @@ const firebaseConfig = {
   projectId: "momblog-15d1c",
   storageBucket: "",
   messagingSenderId: "754776938435",
-  appId: "1:754776938435:web:43cadca033fb5094ec0f76"
+  appId: "1:754776938435:web:43cadca033fb5094ec0f76",
 };
 firebase.initializeApp(firebaseConfig);
 
@@ -34,20 +34,23 @@ class App extends Component {
     super(props);
     this.state = {
       user: null,
-      admin: false
+      admin: false,
+      journals: [],
+      services: [],
     };
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
+    this.getServices();
+    firebase.auth().onAuthStateChanged((user) => {
       this.setState({ user: user });
       firebase
         .auth()
         .currentUser.getIdTokenResult()
-        .then(idTokenResult => {
+        .then((idTokenResult) => {
           this.setAdmin(!!idTokenResult.claims.admin);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     });
@@ -63,13 +66,13 @@ class App extends Component {
       firebase
         .auth()
         .signInWithEmailLink(email, window.location.href)
-        .then(result => {
+        .then((result) => {
           // Clear email from storage.
           window.localStorage.removeItem("emailForSignIn");
           const { user } = result;
           this.setUser(user);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log("login erorr", error);
         });
     }
@@ -80,12 +83,31 @@ class App extends Component {
       .database()
       .ref("/journals/")
       .once("value")
-      .then(snapshot => {
+      .then((snapshot) => {
         let journalSnap = snapshot.val();
         if (journalSnap) {
           // SET JOURNALS
           this.setState({
-            journals: journalSnap
+            journals: journalSnap,
+          });
+        }
+      });
+  }
+  getServices() {
+    firebase
+      .database()
+      .ref("/services/")
+      .once("value")
+      .then((snapshot) => {
+        let servicesSnap = snapshot.val();
+        if (servicesSnap) {
+          // SET SERVICES
+          // let arr = [];
+          // Object.keys(servicesSnap).forEach((key) => {
+          //   arr.push({ ...servicesSnap[key], key });
+          // });
+          this.setState({
+            services: servicesSnap,
           });
         }
       });
@@ -109,25 +131,29 @@ class App extends Component {
               firebase={firebase}
               setUser={this.setUser.bind(this)}
               getJournals={this.getJournals.bind(this)}
+              // getServices={this.getServices.bind(this)}
               journals={this.state.journals}
+              services={this.state.services}
             />
             <Switch>
               <Route
                 exact
                 path="/"
-                render={props => (
+                render={(props) => (
                   <Home {...props} journals={this.state.journals} />
                 )}
               />
               <Route
                 path="/journal/:name"
-                render={props => (
+                render={(props) => (
                   <Journal {...props} journals={this.state.journals} />
                 )}
               />
               <Route
                 path="/services/:service"
-                render={props => <Services {...props} />}
+                render={(props) => (
+                  <Services {...props} services={this.state.services} />
+                )}
               />
               <Route path="/About" component={About} />
               <AdminRoute
@@ -146,7 +172,7 @@ class App extends Component {
                 user={this.state.user}
               />
               <Route
-                render={props => (
+                render={(props) => (
                   <Home {...props} journals={this.state.journals} />
                 )}
               />

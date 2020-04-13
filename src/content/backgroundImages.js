@@ -4,4 +4,6 @@ const contactFormBg =
   "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/v1584683818/images/backgrounds/contact_background_ckzd1z.jpg";
 const journalIntroBg =
   "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/images/backgrounds/IMG_8951_1500_oxpgkq.jpg";
-export { mainBg, contactFormBg, journalIntroBg };
+const serviceIntroBg =
+  "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/images/backgrounds/IMG_8951_1500_oxpgkq.jpg";
+export { mainBg, contactFormBg, journalIntroBg, serviceIntroBg };

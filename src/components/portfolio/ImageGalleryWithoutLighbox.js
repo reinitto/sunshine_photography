@@ -10,7 +10,7 @@ const LazyImg = ({ imageSrc }) => {
         width: "100%",
         objectFit: "cover",
         backgroundSize: "cover",
-        backgroundPosition: "center"
+        backgroundPosition: "center",
       }}
       secure="true"
     >
@@ -25,7 +25,7 @@ const SingleImage = ({ img }) => {
       style={{
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        marginBottom: "5px"
+        marginBottom: "5px",
       }}
     >
       <LazyImg imageSrc={img.src} />
@@ -33,7 +33,7 @@ const SingleImage = ({ img }) => {
         <p
           style={{
             textAlign: "center",
-            fontStyle: "italic"
+            fontStyle: "italic",
           }}
         >
           {img.text}
@@ -49,7 +49,7 @@ const Doubles = ({ images }) => {
       style={{
         display: "flex",
         justifyContent: "space-between",
-        marginBottom: "5px"
+        marginBottom: "5px",
       }}
       className="side-by-side"
     >
@@ -70,7 +70,7 @@ const Triples = ({ images }) => {
       style={{
         display: "flex",
         justifyContent: "space-between",
-        marginBottom: "5px"
+        marginBottom: "5px",
       }}
     >
       {images.map((img, i) => {
@@ -97,7 +97,7 @@ const TextBlock = ({ title, text }) => {
 export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
   if (journalImages) {
     let gallery = [];
-    let newImages = Object.keys(journalImages).map(key => journalImages[key]);
+    let newImages = Object.keys(journalImages).map((key) => journalImages[key]);
     let ordered = newImages.sort((a, b) => (a.order > b.order ? 1 : -1));
     for (let i = 0; i < ordered.length; ) {
       if (ordered[i].isTextBlock) {
@@ -113,7 +113,7 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
             key={i}
             img={{
               src: ordered[i].imageUrl,
-              text: ordered[i].text
+              text: ordered[i].text,
             }}
           />
         );
@@ -126,12 +126,12 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
             images={[
               {
                 src: ordered[i].imageUrl,
-                text: ordered[i].text
+                text: ordered[i].text,
               },
               {
                 src: ordered[i + 1].imageUrl,
-                text: ordered[i + 1].text
-              }
+                text: ordered[i + 1].text,
+              },
             ]}
           />
         );
@@ -144,16 +144,16 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
             images={[
               {
                 src: ordered[i].imageUrl,
-                text: ordered[i].text
+                text: ordered[i].text,
               },
               {
                 src: ordered[i + 1].imageUrl,
-                text: ordered[i + 1].text
+                text: ordered[i + 1].text,
               },
               {
                 src: ordered[i + 2].imageUrl,
-                text: ordered[i + 2].text
-              }
+                text: ordered[i + 2].text,
+              },
             ]}
           />
         );
@@ -208,7 +208,7 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
                 images={[
                   images[currentImgIndex],
                   images[currentImgIndex + 1],
-                  images[currentImgIndex + 2]
+                  images[currentImgIndex + 2],
                 ]}
               />
             );

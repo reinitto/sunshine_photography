@@ -9,7 +9,7 @@ const servicesNames = [
   "couples",
   "friends",
   "lifestyle",
-  "company"
+  "company",
 ];
 
 export default class Navbar extends Component {
@@ -19,7 +19,7 @@ export default class Navbar extends Component {
     loggedIn: this.props.isSignedIn,
     loginDisplay: "none",
     dropdownDisplay: false,
-    journals: []
+    journals: [],
   };
 
   componentDidMount() {
@@ -36,7 +36,7 @@ export default class Navbar extends Component {
   handleWidth = () => {
     let width = document.documentElement.clientWidth;
     this.setState({
-      windowWidth: width
+      windowWidth: width,
     });
   };
 
@@ -46,12 +46,12 @@ export default class Navbar extends Component {
       (document.documentElement || document.body.parentNode || document.body)
         .scrollTop;
     this.setState({
-      scrollTop
+      scrollTop,
     });
   };
   toggleLogin() {
     this.setState({
-      loginDisplay: this.state.loginDisplay === "none" ? "flex" : "none"
+      loginDisplay: this.state.loginDisplay === "none" ? "flex" : "none",
     });
   }
 
@@ -63,20 +63,20 @@ export default class Navbar extends Component {
       //   url: "https://momblog-15d1c.firebaseapp.com",
       url: window.location.href,
       // This must be true.
-      handleCodeInApp: true
+      handleCodeInApp: true,
     };
     return new Promise((resolve, reject) => {
       firebase
         .auth()
         .sendSignInLinkToEmail(email, actionCodeSettings)
-        .then(function() {
+        .then(function () {
           // The link was successfully sent. Inform the user.
           // Save the email locally so you don't need to ask the user for it again
           // if they open the link on the same device.
           window.localStorage.setItem("emailForSignIn", email);
           resolve(true);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           reject(error);
         });
     });
@@ -84,7 +84,7 @@ export default class Navbar extends Component {
 
   render() {
     let { scrollTop } = this.state;
-    let { isSignedIn, firebase, setUser, isAdmin } = this.props;
+    let { isSignedIn, firebase, setUser, isAdmin, services } = this.props;
     return (
       <nav
         className={`navbar navbar-expand-md fixed-top
@@ -119,7 +119,7 @@ export default class Navbar extends Component {
           <span
             className="navbar-toggler-icon"
             style={{
-              marginTop: this.state.windowWidth < 439 ? "0rem" : "initial"
+              marginTop: this.state.windowWidth < 439 ? "0rem" : "initial",
             }}
           ></span>
         </button>
@@ -163,17 +163,31 @@ export default class Navbar extends Component {
                     : "bg-base-color"
                 } `}
               >
-                {servicesNames.map((name, i) => {
-                  return (
-                    <Link
-                      className="dropdown-item"
-                      to={`/services/${name}`}
-                      key={i}
-                    >
-                      {name[0].toUpperCase() + name.slice(1)}
-                    </Link>
-                  );
-                })}
+                {
+                  Object.keys(services).map((key) => {
+                    return (
+                      <Link
+                        className="dropdown-item"
+                        to={`/services/${key}`}
+                        key={services[key].folder_name}
+                      >
+                        {services[key].name[0].toUpperCase() +
+                          services[key].name.slice(1)}
+                      </Link>
+                    );
+                  })
+                  // services.map((service, i) => {
+                  //   return (
+                  //     <Link
+                  //       className="dropdown-item"
+                  //       to={`/services/${service.key}`}
+                  //       key={service.folder_name}
+                  //     >
+                  //       {service.name[0].toUpperCase() + service.name.slice(1)}
+                  //     </Link>
+                  //   );
+                  // })
+                }
               </div>
             </li>
             <li className="nav-item dropdown">
@@ -249,13 +263,10 @@ export default class Navbar extends Component {
                   className="nav-link"
                   style={{
                     textAlign: this.state.windowWidth < 439 ? "center" : "left",
-                    background: "transparent"
+                    background: "transparent",
                   }}
                   onClick={() => {
-                    firebase
-                      .app()
-                      .auth()
-                      .signOut();
+                    firebase.app().auth().signOut();
                     setUser(null);
                   }}
                 >
@@ -270,7 +281,7 @@ export default class Navbar extends Component {
                   onClick={() => this.toggleLogin()}
                   style={{
                     textAlign: this.state.windowWidth < 439 ? "center" : "left",
-                    background: "transparent"
+                    background: "transparent",
                   }}
                 >
                   Login
