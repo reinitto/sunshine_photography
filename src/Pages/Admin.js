@@ -450,14 +450,14 @@ export default class Admin extends Component {
       titleImage,
       journalImages,
       edit,
+      editKey,
     } = this.state.newJournal;
     let { journals } = this.props;
-    console.log("admin render");
     return (
       <Fragment>
-        <IntroImage text={["Admin"]} height="35vh" />
+        <IntroImage />
         <div>
-          <ul style={{ display: "flex" }}>
+          <ul style={{ display: "flex", marginTop: "1rem" }}>
             <li
               style={{
                 listStyleType: "none",
@@ -508,6 +508,7 @@ export default class Admin extends Component {
               titleImage,
               journalImages,
               edit,
+              editKey,
               setJournalToEdit: this.setJournalToEdit,
               addNewJournalImage: this.addNewJournalImage,
               addNewTextBlock: this.addNewTextBlock,

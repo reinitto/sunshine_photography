@@ -1,5 +1,5 @@
 import React, { Fragment, Suspense, Component } from "react";
-import firebase from "firebase/app";
+import * as firebase from "firebase/app";
 import { CloudinaryContext } from "cloudinary-react";
 import IntroImage from "../components/IntroImage";
 const Img = React.lazy(() => import("react-cloudinary-lazy-image"));
@@ -9,32 +9,31 @@ const LazyCloudinaryImg = ({ publicId }) => {
       cloudName={"sunshinephoto"}
       imageName={publicId}
       fluid={{
-        maxWidth: 300
+        maxWidth: 300,
       }}
       style={{
         position: "relative",
         overflow: "hidden",
         width: "initial",
-        height: "initial"
+        height: "initial",
       }}
       urlParams={"c_scale"}
       // urlParams={"g_face,c_lfill"}
     />
   );
 };
-const dashboardPageBg =
-  "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/images/backgrounds/IMG_8951_1500_oxpgkq.jpg";
+
 export default class Dashboard extends Component {
   state = {
     pictures: null,
-    selected_pictures: []
+    selected_pictures: [],
   };
 
   componentDidMount() {
     this.getUser(this.props.user);
   }
 
-  getUserPhotos = picture_set => {
+  getUserPhotos = (picture_set) => {
     const db = firebase.firestore();
     var picturesRef = db.collection("pictures");
 
@@ -42,49 +41,49 @@ export default class Dashboard extends Component {
       picturesRef
         .doc(picture_set)
         .get()
-        .then(doc => {
+        .then((doc) => {
           if (doc.exists) {
             resolve(doc.data());
           } else {
             console.log("No User photos.");
           }
         })
-        .catch(err => {
+        .catch((err) => {
           reject();
           console.log(err);
         });
     });
   };
 
-  getUser = user => {
+  getUser = (user) => {
     const db = firebase.firestore();
     var UserRef = db.collection("users");
     UserRef.doc(user.email)
       .get()
-      .then(doc => {
+      .then((doc) => {
         if (doc.exists) {
           let { picture_sets, selected_pictures } = doc.data();
           this.getUserPhotos(picture_sets[0])
-            .then(res => {
+            .then((res) => {
               if (res) {
-                let picUrls = res.pictures.map(p => {
+                let picUrls = res.pictures.map((p) => {
                   return {
-                    src: p
+                    src: p,
                     // src: `https://res.cloudinary.com/sunshinephoto/image/upload/${p}`
                   };
                 });
                 this.setState({
                   pictures: picUrls,
-                  selected_pictures
+                  selected_pictures,
                 });
               }
             })
-            .catch(err => console.log(err));
+            .catch((err) => console.log(err));
         } else {
           console.log("No such document!");
         }
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log("Error getting document:", error);
       });
   };
@@ -95,27 +94,27 @@ export default class Dashboard extends Component {
     UserRef.doc(user.email)
       .set(
         {
-          selected_pictures: this.state.selected_pictures
+          selected_pictures: this.state.selected_pictures,
         },
         { merge: true }
       )
       .then(() => {
         this.getUser(user);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }
 
-  toggleImageSelect = url => {
+  toggleImageSelect = (url) => {
     // console.log("url", url);
     if (
       this.state.selected_pictures &&
       this.state.selected_pictures.includes(url)
     ) {
-      let newPics = this.state.selected_pictures.filter(p => p !== url);
+      let newPics = this.state.selected_pictures.filter((p) => p !== url);
       this.setState({
-        selected_pictures: newPics
+        selected_pictures: newPics,
       });
     } else {
       if (
@@ -123,11 +122,11 @@ export default class Dashboard extends Component {
         this.state.selected_pictures.length > 0
       ) {
         this.setState({
-          selected_pictures: [...this.state.selected_pictures, url]
+          selected_pictures: [...this.state.selected_pictures, url],
         });
       } else {
         this.setState({
-          selected_pictures: [url]
+          selected_pictures: [url],
         });
       }
     }
@@ -185,7 +184,7 @@ export default class Dashboard extends Component {
 const ImageSelectGallery = ({
   pictures,
   toggleSelect,
-  selected_pictures = []
+  selected_pictures = [],
 }) => {
   let content = pictures.map((pic, i) => {
     return (
@@ -196,7 +195,7 @@ const ImageSelectGallery = ({
         <div
           style={{
             margin: "5px",
-            border: "2px solid transparent"
+            border: "2px solid transparent",
             // border: `2px solid ${
             //   selected_pictures.includes(pic.src.src) ? "green" : "transparent"
             // }`
@@ -226,7 +225,7 @@ const ImageSelectGallery = ({
     <CloudinaryContext cloudName="sunshinephoto">
       <div
         style={{
-          display: "flex"
+          display: "flex",
         }}
       >
         {content}

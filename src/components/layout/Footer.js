@@ -9,7 +9,7 @@ const Footer = ({ journals }) => {
   }
   return (
     <footer className="d-flex flex-column">
-      <HorizontalScroll list={journalItems} />
+      <HorizontalScroll hideArrows={true} list={journalItems} />
       <div className="d-flex justify-content-center">
         <button
           className="btn btn-primary btn-base"

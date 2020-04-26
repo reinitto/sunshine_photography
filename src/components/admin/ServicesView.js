@@ -101,7 +101,7 @@ export const ServicesView = ({ user }) => {
     if (allServices.length === 0) {
       getAllServices();
     }
-  }, [allServices]);
+  });
 
   let setNewService = async () => {
     setKey("");
@@ -416,7 +416,6 @@ export const ServicesView = ({ user }) => {
     let data = await fetch(createServiceUrl, serviceRequestOptions);
     let result = await data.json();
     setOverlay(false);
-    console.log("finished");
     console.log("service", result);
   };
   let updateService = async (e) => {
@@ -433,7 +432,6 @@ export const ServicesView = ({ user }) => {
       body: {},
     };
     let newSessions = [];
-    console.log("updating sessions");
     for (let session of sessions) {
       // UPLOAD NEW IMAGE IF ITS NOT AN URL
       let isUrl = session.image.match(/sessionImages/g);
@@ -527,16 +525,13 @@ export const ServicesView = ({ user }) => {
       }),
     };
     try {
-      let updateRes = await fetch(updateServiceUrl, serviceRequestOptions);
-      console.log("updateRes", updateRes);
-      let data = await updateRes.json();
+      await fetch(updateServiceUrl, serviceRequestOptions);
+      // let data = await updateRes.json();
       setOverlay(false);
-      console.log("data", data);
     } catch (error) {
       console.log("error", error);
     }
   };
-  console.log("rendering");
   return (
     <Fragment>
       <Overlay uploading={overlay} />
@@ -573,7 +568,7 @@ export const ServicesView = ({ user }) => {
             })}
           </div>
 
-          <div id="services-tab" className="d-flex flex-column w-50 m-auto">
+          <div id="services-tab" className="d-flex flex-column w-50 mx-auto">
             <div className="text-center d-flex flex-column">
               <button onClick={setNewService}>New Service</button>
               <hr

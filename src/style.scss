@@ -73,8 +73,9 @@ a:hover {
 
 .hero {
   position: absolute;
-  top: 60%;
+  height: 60%;
   left: 50%;
+  top: 60%;
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
@@ -83,25 +84,29 @@ a:hover {
   margin: auto;
   transition: top 1s ease-in-out;
 }
+.title-text {
+  font-weight: 500;
+}
+.hero-subtitle {
+  letter-spacing: 1.34rem;
+  padding: 1rem;
+  border: 1px solid $base-color;
+}
 .hero-keywords {
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  border: 1px solid white;
   padding: 0.5rem 2rem;
+  position: absolute;
+  bottom: 0;
 }
 .hero-keyword {
-  color: $base-color;
-  font-size: 1.5vw;
-  padding: 0.2rem 1rem;
-  letter-spacing: 0.3rem;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 1.22rem;
 }
 .hero-social-container {
   position: absolute;
-  bottom: 3rem;
-  right: 3rem;
+  bottom: 2rem;
+  right: 2rem;
   padding: 1rem;
   .hero-social {
     margin: 0.5rem;
@@ -428,7 +433,7 @@ nav.navbar.navbar-expand-md {
     letter-spacing: 9px;
   }
   .carousel-text-subtitle {
-    color: white;
+    color: $base-color;
     font-family: "Sui_generis";
     letter-spacing: 10px;
     font-size: 1.6rem;

@@ -35,6 +35,7 @@ const Home = ({ journals }) => {
         <Hero
           imageSrc={mainBg}
           title={"More than just capturing moments"}
+          subtitle={"photography"}
           keywords={["lifestyle", "nature", "travel"]}
         />
       </Suspense>

@@ -3,15 +3,6 @@ import Login from "../auth/Login";
 import { Link } from "react-router-dom";
 import * as firebase from "firebase/app";
 
-const servicesNames = [
-  "family",
-  "children",
-  "couples",
-  "friends",
-  "lifestyle",
-  "company",
-];
-
 export default class Navbar extends Component {
   state = {
     scrollTop: 0,
@@ -83,32 +74,10 @@ export default class Navbar extends Component {
   };
 
   render() {
-    let { scrollTop } = this.state;
     let { isSignedIn, firebase, setUser, isAdmin, services } = this.props;
     return (
       <nav
-        className={`navbar navbar-expand-md fixed-top
-         ${
-           window.location.pathname.length === 1 && scrollTop > 0
-             ? "bg-base border-bottom border-secondary"
-             : ""
-         }
-         ${
-           window.location.pathname.length === 1 && scrollTop === 0
-             ? "bg-transparent"
-             : ""
-         }
-         ${
-           window.location.pathname.length > 1 && scrollTop > 0
-             ? "bg-base border-bottom border-secondary"
-             : ""
-         }
-         ${
-           window.location.pathname.length > 1 && scrollTop === 0
-             ? "bg-transparent"
-             : ""
-         }
-    `}
+        className={`navbar navbar-expand-md fixed-top bg-base border-bottom border-secondary`}
       >
         <button
           className="navbar-toggler"
@@ -157,37 +126,20 @@ export default class Navbar extends Component {
                 Services
               </Link>
               <div
-                className={`dropdown-menu mt-0 border-top-0 pt-0 ${
-                  window.location.pathname === "/" && scrollTop === 0
-                    ? "bg-transparent"
-                    : "bg-base-color"
-                } `}
+                className={`dropdown-menu mt-0 border-top-0 pt-0 bg-base-color `}
               >
-                {
-                  Object.keys(services).map((key) => {
-                    return (
-                      <Link
-                        className="dropdown-item"
-                        to={`/services/${key}`}
-                        key={services[key].folder_name}
-                      >
-                        {services[key].name[0].toUpperCase() +
-                          services[key].name.slice(1)}
-                      </Link>
-                    );
-                  })
-                  // services.map((service, i) => {
-                  //   return (
-                  //     <Link
-                  //       className="dropdown-item"
-                  //       to={`/services/${service.key}`}
-                  //       key={service.folder_name}
-                  //     >
-                  //       {service.name[0].toUpperCase() + service.name.slice(1)}
-                  //     </Link>
-                  //   );
-                  // })
-                }
+                {Object.keys(services).map((key) => {
+                  return (
+                    <Link
+                      className="dropdown-item"
+                      to={`/services/${key}`}
+                      key={services[key].folder_name}
+                    >
+                      {services[key].name[0].toUpperCase() +
+                        services[key].name.slice(1)}
+                    </Link>
+                  );
+                })}
               </div>
             </li>
             <li className="nav-item dropdown">
@@ -201,11 +153,7 @@ export default class Navbar extends Component {
                 Info
               </Link>
               <div
-                className={`dropdown-menu mt-0 border-top-0 pt-0 ${
-                  window.location.pathname === "/" && scrollTop === 0
-                    ? "bg-transparent"
-                    : "bg-base-color"
-                } `}
+                className={`dropdown-menu mt-0 border-top-0 pt-0 bg-base-color `}
               >
                 <Link className="dropdown-item" to="/About">
                   About Me
@@ -234,11 +182,7 @@ export default class Navbar extends Component {
                 Blog
               </Link>
               <div
-                className={`dropdown-menu mt-0 border-top-0 pt-0 ${
-                  window.location.pathname === "/" && scrollTop === 0
-                    ? "bg-transparent"
-                    : "bg-base-color"
-                } `}
+                className={`dropdown-menu mt-0 border-top-0 pt-0 bg-base-color`}
               >
                 {this.props.journals
                   ? Object.keys(this.props.journals).map((journalId, i) => {

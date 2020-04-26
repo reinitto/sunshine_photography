@@ -59,8 +59,9 @@ a:hover {
 
 .hero {
   position: absolute;
-  top: 60%;
+  height: 60%;
   left: 50%;
+  top: 60%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   display: -webkit-box;
@@ -79,28 +80,33 @@ a:hover {
   transition: top 1s ease-in-out;
 }
 
+.title-text {
+  font-weight: 500;
+}
+
+.hero-subtitle {
+  letter-spacing: 1.34rem;
+  padding: 1rem;
+  border: 1px solid #3d4856;
+}
+
 .hero-keywords {
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  color: white;
-  border: 1px solid white;
   padding: 0.5rem 2rem;
+  position: absolute;
+  bottom: 0;
 }
 
 .hero-keyword {
-  color: #3d4856;
-  font-size: 1.5vw;
-  padding: 0.2rem 1rem;
-  letter-spacing: 0.3rem;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 1.22rem;
 }
 
 .hero-social-container {
   position: absolute;
-  bottom: 3rem;
-  right: 3rem;
+  bottom: 2rem;
+  right: 2rem;
   padding: 1rem;
 }
 
@@ -530,7 +536,7 @@ nav.navbar.navbar-expand-md {
 }
 
 .carousel-text .carousel-text-subtitle {
-  color: white;
+  color: #3d4856;
   font-family: "Sui_generis";
   letter-spacing: 10px;
   font-size: 1.6rem;

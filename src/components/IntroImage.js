@@ -1,26 +1,25 @@
 import React from "react";
-import { mainBg } from "../content/backgroundImages";
 
 export default function IntroImage({
   imageSrc,
   title,
   subtitle,
   text3,
-  height = "35vh",
-  inJournal
+  height = "55px",
+  inJournal,
 }) {
   return (
     <div
       className="fitted-image intro-image"
       style={{
-        backgroundImage: `url(${imageSrc})`,
-        height
+        backgroundImage: `url(${imageSrc ? imageSrc : null})`,
+        height,
       }}
     >
       <div
         className="carousel-text"
         style={{
-          fontSize: inJournal ? "4rem" : "8rem"
+          fontSize: inJournal ? "4rem" : "8rem",
         }}
       >
         <p>{title}</p>
@@ -38,6 +37,3 @@ export default function IntroImage({
     </div>
   );
 }
-IntroImage.defaultProps = {
-  imageSrc: mainBg
-};

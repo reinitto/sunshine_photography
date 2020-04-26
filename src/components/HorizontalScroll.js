@@ -11,7 +11,7 @@ export const MenuItem = ({ text, link, imageUrl, sideLength }) => {
     <Link to={`/journal/${link}`} className={`menu-item`}>
       <div
         style={{
-          position: "relative"
+          position: "relative",
         }}
       >
         <Image
@@ -32,7 +32,7 @@ export const MenuItem = ({ text, link, imageUrl, sideLength }) => {
 // All items component
 // Important! add unique key
 export const Menu = (list, sideLength) =>
-  list.map(el => {
+  list.map((el) => {
     const { title, journalUrl, imageUrl } = el;
 
     return (
@@ -53,7 +53,7 @@ const Arrow = ({ text, className }) => {
 export const ArrowLeft = Arrow({ text: "<", className: "arrow-prev" });
 export const ArrowRight = Arrow({ text: ">", className: "arrow-next" });
 
-export const HorizontalScroll = ({ list }) => {
+export const HorizontalScroll = ({ list, ...rest }) => {
   let windowWidth = useWindowWidth();
   let sideLength = Math.floor(windowWidth / 3);
   let menu = [];
@@ -63,7 +63,12 @@ export const HorizontalScroll = ({ list }) => {
   return (
     <CloudinaryContext cloudName="sunshinephoto">
       <div className="horizontal-scroll-menu">
-        <ScrollMenu data={menu} arrowLeft={ArrowLeft} arrowRight={ArrowRight} />
+        <ScrollMenu
+          data={menu}
+          arrowLeft={ArrowLeft}
+          arrowRight={ArrowRight}
+          {...rest}
+        />
       </div>
     </CloudinaryContext>
   );

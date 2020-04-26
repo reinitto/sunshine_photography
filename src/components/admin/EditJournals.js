@@ -29,12 +29,12 @@ const EditJournals = ({
   loadFile,
   updateTextBlockText,
   edit,
+  editKey,
   submit,
   submitEdit,
   closeOverlay,
   resetCurrentJournal,
 }) => {
-  console.log(journals);
   return (
     <div
       style={{
@@ -100,6 +100,9 @@ const EditJournals = ({
             setsToDelete,
           }}
         />
+        <button className="btn w-100" onClick={resetCurrentJournal}>
+          New Journal
+        </button>
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId={Date.now().toString()}>
             {(provided) => (
@@ -165,8 +168,16 @@ const EditJournals = ({
         </button>
         <hr />
         <div className="d-flex flex-column mx-auto w-25">
-          <button onClick={(e) => submit(e)}>Submit New</button>
-          <button onClick={(e) => submitEdit(e)}>Confirm Edit</button>
+          {editKey ? (
+            <button className="btn btn-success" onClick={(e) => submitEdit(e)}>
+              Confirm Edit
+            </button>
+          ) : (
+            <button className="btn btn-success" onClick={(e) => submit(e)}>
+              Submit New
+            </button>
+          )}
+
           <button
             className="btn btn-danger"
             onClick={(e) => {
@@ -174,9 +185,6 @@ const EditJournals = ({
             }}
           >
             Delete Journal
-          </button>
-          <button className="btn" onClick={resetCurrentJournal}>
-            New Journal
           </button>
         </div>
       </div>
