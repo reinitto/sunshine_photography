@@ -33,7 +33,6 @@ export default function Service({ services }) {
       </Suspense>
       <div style={{ width: "90%", margin: "auto" }}>
         <ImageGalleryWithoutLighbox images={images} />
-
         <ServicePricing {...service} />
       </div>
     </Fragment>

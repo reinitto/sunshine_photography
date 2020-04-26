@@ -162,7 +162,12 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
       }
     }
     return (
-      <div>
+      <div
+        //disable right click
+        onContextMenu={(e) => {
+          e.preventDefault();
+        }}
+      >
         <CloudinaryContext cloudName="sunshinephoto">
           {gallery}
         </CloudinaryContext>
@@ -219,7 +224,12 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
         }
       }
       return (
-        <div>
+        <div
+          //disable right click
+          onContextMenu={(e) => {
+            e.preventDefault();
+          }}
+        >
           <CloudinaryContext cloudName="sunshinephoto">
             {gallery}
           </CloudinaryContext>

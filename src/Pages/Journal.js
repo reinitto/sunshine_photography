@@ -15,10 +15,8 @@ export default function Journal({ journals }) {
     <Fragment>
       <Suspense fallback={<div style={{ height: "400px" }}></div>}>
         <IntroImage
-          // imageSrc={journal ? journal.title.titleUrl : journalIntroBg}
           subtitle={journal ? [journal.title.title] : null}
           height="35vh"
-          // inJournal={true}
         />
       </Suspense>
       <div className="container">
