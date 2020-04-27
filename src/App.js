@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import * as firebase from "firebase/app";
+import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/functions";
@@ -12,7 +12,7 @@ import Admin from "./Pages/Admin";
 import About from "./Pages/About";
 import Dashboard from "./Pages/Dashboard";
 import Footer from "./components/layout/Footer";
-import Navbar from "./components/layout/Navbar";
+import { MyNavbar as Navbar } from "./components/layout/Navbar";
 import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./components/ProtectedRoute";
 import "./styles/style.css";
@@ -140,7 +140,11 @@ class App extends Component {
                 exact
                 path="/"
                 render={(props) => (
-                  <Home {...props} journals={this.state.journals} />
+                  <Home
+                    {...props}
+                    journals={this.state.journals}
+                    services={this.state.services}
+                  />
                 )}
               />
               <Route
@@ -173,7 +177,11 @@ class App extends Component {
               />
               <Route
                 render={(props) => (
-                  <Home {...props} journals={this.state.journals} />
+                  <Home
+                    {...props}
+                    journals={this.state.journals}
+                    services={this.state.services}
+                  />
                 )}
               />
             </Switch>

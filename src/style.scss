@@ -93,7 +93,6 @@ a:hover {
   border: 1px solid $base-color;
 }
 .hero-keywords {
-  padding: 0.5rem 2rem;
   position: absolute;
   bottom: 0;
 }
@@ -255,16 +254,16 @@ nav.navbar.navbar-expand-md {
 
 .link-overlay-text {
   position: absolute;
-  top: 65%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
-  font-size: 1rem;
   font-weight: 600;
   font-family: "Garamond";
   letter-spacing: 3px;
   text-decoration: underline;
 }
+
 .links-to-gallery {
   display: flex;
 }
@@ -276,6 +275,7 @@ nav.navbar.navbar-expand-md {
   .two-links {
     display: flex;
     justify-content: center;
+    height: 100%;
   }
   .single-link {
     display: flex;
@@ -459,7 +459,6 @@ nav.navbar.navbar-expand-md {
 
 .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0,0,0, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-  margin-top: 3rem;
 }
 
 footer h6,
@@ -491,7 +490,7 @@ h3 {
 
 #contactForm {
   margin: auto;
-  width: 60%;
+  width: 90%;
   background-color: rgba($bgLight, 0.7);
   padding: 1rem;
   ::placeholder {
@@ -582,6 +581,9 @@ h3 {
       transition: 0.25s;
     }
   }
+  #contactForm {
+    width: 70%;
+  }
 }
 @media (min-width: 1440px) {
   .about-intro-text {
@@ -656,6 +658,11 @@ h3 {
         width: 100%;
         height: 100%;
       }
+    }
+  }
+  footer {
+    .link-overlay-text {
+      font-size: 10px;
     }
   }
 }
@@ -850,30 +857,10 @@ h3 {
 
   /* horizontally and vertically center all content */
   display: flex;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-
   flex-direction: column;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-
   align-items: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-
   justify-content: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-
   align-content: center;
-  -webkit-align-content: center;
-  -ms-flex-line-pack: center;
-
   text-align: center;
   /* --------------- */
 }

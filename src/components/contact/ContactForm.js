@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import * as firebase from "firebase/app";
+import { useWindowWidth } from "../useWindowWidth";
 import { contactFormBg } from "../../content/backgroundImages";
 
 const ContactFormFront = ({ submitMessage }) => {
@@ -59,7 +60,7 @@ const ContactFormBack = () => {
           zIndex: "-2",
           margin: "auto",
           width: "70%",
-          opacity: "0.7"
+          opacity: "0.7",
         }}
       ></div>
       <div
@@ -75,7 +76,7 @@ const ContactFormBack = () => {
           maxWidth: "450px",
           margin: "auto",
           zIndex: "-1",
-          backgroundRepeat: " no-repeat"
+          backgroundRepeat: " no-repeat",
         }}
       ></div>
       <div
@@ -85,13 +86,13 @@ const ContactFormBack = () => {
           top: "50%",
           transform: " translate(-50%,-50%)",
           color: "white",
-          mixBlendMode: "difference"
+          mixBlendMode: "difference",
         }}
       >
         <h3
           className="text-center"
           style={{
-            color: "white"
+            color: "white",
           }}
         >
           Thank You for your trust!
@@ -103,7 +104,10 @@ const ContactFormBack = () => {
 };
 
 export default function ContactForm() {
-  const saveMessage = props => {
+  let contactFormRef = useRef(null);
+  let height = "80vh";
+  let windowWidth = useWindowWidth();
+  const saveMessage = (props) => {
     var messagesRef = firebase.database().ref("messages");
     const { name, email, message } = props;
     const timestamp = Date.now();
@@ -112,11 +116,11 @@ export default function ContactForm() {
       name,
       email,
       message,
-      timestamp
+      timestamp,
     });
   };
 
-  const submitMessage = e => {
+  const submitMessage = (e) => {
     e.preventDefault();
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
@@ -133,17 +137,35 @@ export default function ContactForm() {
       contact.style.animationPlayState = "paused";
     }, 6000);
   };
+  if (
+    contactFormRef &&
+    contactFormRef.current &&
+    contactFormRef.current.clientHeight > 0.8 * window.innerHeight
+  ) {
+    height = contactFormRef.current.clientHeight;
+  }
   return (
     <div
       className="d-flex flex-column contact-form-container cover-image justify-content-center align-items-center"
-      style={{
-        backgroundAttachment: `fixed`,
-        backgroundRepeat: `no-repeat`,
-        backgroundImage: `url(${contactFormBg})`,
-        height: `80vh`
-      }}
+      style={
+        windowWidth > 768
+          ? {
+              backgroundAttachment: `fixed`,
+              backgroundRepeat: `no-repeat`,
+              backgroundImage: `url(${contactFormBg})`,
+              height: height,
+            }
+          : {
+              backgroundImage: `url(${contactFormBg})`,
+              height: height,
+            }
+      }
     >
-      <div className="d-flex flex-column" id="contact-form">
+      <div
+        className="d-flex flex-column"
+        id="contact-form"
+        ref={contactFormRef}
+      >
         <div className="viewContainer">
           <div className="slice">
             <ContactFormFront submitMessage={submitMessage} />

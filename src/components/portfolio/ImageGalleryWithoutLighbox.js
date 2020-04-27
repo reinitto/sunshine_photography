@@ -2,7 +2,7 @@ import React from "react";
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 import Spinner from "../Spinner";
 
-const LazyImg = ({ imageSrc }) => {
+const LazyImg = ({ imageSrc, style = {} }) => {
   return (
     <Image
       publicId={imageSrc}
@@ -11,6 +11,7 @@ const LazyImg = ({ imageSrc }) => {
         objectFit: "cover",
         backgroundSize: "cover",
         backgroundPosition: "center",
+        ...style,
       }}
       secure="true"
     >
@@ -55,9 +56,9 @@ const Doubles = ({ images }) => {
     >
       {images.map((img, i) => {
         return img ? (
-          <div key={i} style={{ width: "49%" }}>
+          <div key={img.src} style={{ width: "49%" }}>
             {img.text ? <p>{img.text}</p> : null}
-            <LazyImg imageSrc={img.src} />
+            <LazyImg imageSrc={img.src} style={{ height: "100%" }} />
           </div>
         ) : null;
       })}
@@ -75,9 +76,9 @@ const Triples = ({ images }) => {
     >
       {images.map((img, i) => {
         return img ? (
-          <div key={i} style={{ width: "32%" }}>
+          <div key={img.src} style={{ width: "32%" }}>
             {img.text ? <p>{img.text}</p> : null}
-            <LazyImg imageSrc={img.src} />
+            <LazyImg imageSrc={img.src} style={{ height: "100%" }} />
           </div>
         ) : null;
       })}
@@ -123,6 +124,7 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
       if (ordered[i].variation === 2) {
         gallery.push(
           <Doubles
+            key={i}
             images={[
               {
                 src: ordered[i].imageUrl,
@@ -141,6 +143,7 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
       if (ordered[i].variation === 3) {
         gallery.push(
           <Triples
+            key={i}
             images={[
               {
                 src: ordered[i].imageUrl,

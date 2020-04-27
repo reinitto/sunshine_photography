@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as firebase from "firebase";
+import firebase from "firebase/app";
 
 let getSession = async (id) => {
   return new Promise((resolve, reject) => {
@@ -9,7 +9,6 @@ let getSession = async (id) => {
       .once("value")
       .then((snapshot) => {
         let servicesSnap = snapshot.val();
-        console.log("servicesSnap", servicesSnap);
         if (servicesSnap) {
           resolve(servicesSnap);
         } else {

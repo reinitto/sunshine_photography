@@ -1,5 +1,4 @@
 import React, { Fragment, Suspense, useState, useEffect } from "react";
-import ImageGalleryWithoutLighbox from "../components/portfolio/ImageGalleryWithoutLighbox";
 import IntroImage from "../components/IntroImage";
 import ServicePricing from "../components/pricing/ServicePricing";
 
@@ -22,7 +21,6 @@ export default function Service({ services }) {
       }
     }
   }, [serviceId, services]);
-  console.log(service);
   return (
     <Fragment>
       <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
@@ -32,8 +30,7 @@ export default function Service({ services }) {
         />
       </Suspense>
       <div style={{ width: "90%", margin: "auto" }}>
-        <ImageGalleryWithoutLighbox images={images} />
-        <ServicePricing {...service} />
+        <ServicePricing {...service} images={images} />
       </div>
     </Fragment>
   );

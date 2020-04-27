@@ -22,13 +22,19 @@ const HorizontalScroll = lazy(() => import("../components/HorizontalScroll"));
 //   return vertInView && horInView;
 // };
 
-const Home = ({ journals }) => {
+const Home = ({ journals, services }) => {
   let [travelJournals, setTravelJournals] = useState();
+  let [allServices, setServices] = useState();
   useEffect(() => {
     if (journals) {
       setTravelJournals(createJournalItems(journals));
     }
   }, [journals]);
+  useEffect(() => {
+    if (services) {
+      setServices(services);
+    }
+  }, [services]);
   return (
     <div id="home">
       <Suspense fallback={<div style={{ height: "100vh" }}></div>}>
@@ -39,7 +45,7 @@ const Home = ({ journals }) => {
           keywords={["lifestyle", "nature", "travel"]}
         />
       </Suspense>
-      <LinksToGallery />
+      <LinksToGallery services={allServices} />
       <Suspense fallback={"Still loading..."}>
         <h2 className="text-center">Latest Travel Adventures</h2>
         <HorizontalScroll list={travelJournals} />

@@ -5,7 +5,7 @@ import ScrollMenu from "react-horizontal-scrolling-menu";
 import { CloudinaryContext } from "cloudinary-react";
 import { useWindowWidth } from "./useWindowWidth";
 
-export const MenuItem = ({ text, link, imageUrl, sideLength }) => {
+export const MenuItem = ({ text, link, imageUrl, sideLength, style = {} }) => {
   let public_id = imageUrl.match(/(images\/.*)/)[1].split(".")[0];
   return (
     <Link to={`/journal/${link}`} className={`menu-item`}>
@@ -23,7 +23,9 @@ export const MenuItem = ({ text, link, imageUrl, sideLength }) => {
         >
           <Transformation quality="auto" fetchFormat="auto" />
         </Image>
-        <p className="link-overlay-text text-uppercase">{text}</p>
+        <p className="link-overlay-text text-uppercase" style={{ ...style }}>
+          {text}
+        </p>
       </div>
     </Link>
   );
@@ -31,17 +33,18 @@ export const MenuItem = ({ text, link, imageUrl, sideLength }) => {
 
 // All items component
 // Important! add unique key
-export const Menu = (list, sideLength) =>
+export const Menu = ({ list, sideLength, footer, style = {} }) =>
   list.map((el) => {
     const { title, journalUrl, imageUrl } = el;
 
     return (
       <MenuItem
-        text={title}
+        text={footer ? "" : title}
         link={journalUrl}
         key={title}
         imageUrl={imageUrl}
         sideLength={sideLength}
+        style={style}
       />
     );
   });
@@ -53,12 +56,14 @@ const Arrow = ({ text, className }) => {
 export const ArrowLeft = Arrow({ text: "<", className: "arrow-prev" });
 export const ArrowRight = Arrow({ text: ">", className: "arrow-next" });
 
-export const HorizontalScroll = ({ list, ...rest }) => {
+export const HorizontalScroll = ({ list, footer, style, ...rest }) => {
   let windowWidth = useWindowWidth();
-  let sideLength = Math.floor(windowWidth / 3);
+  let sideLength = footer
+    ? Math.max(Math.floor(windowWidth / 10), 125)
+    : Math.floor(windowWidth / 3);
   let menu = [];
   if (list) {
-    menu = Menu(list, sideLength);
+    menu = Menu({ list, sideLength, style, footer });
   }
   return (
     <CloudinaryContext cloudName="sunshinephoto">

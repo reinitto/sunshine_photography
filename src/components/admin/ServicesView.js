@@ -38,7 +38,14 @@ let arrayFromObject = (obj) => {
   return arr;
 };
 
-let ImageWithThumbnail = ({ loadFile, stateId, id, srcLink, stateUpdater }) => {
+let ImageWithThumbnail = ({
+  loadFile,
+  stateId,
+  id,
+  srcLink,
+  stateUpdater,
+  style = {},
+}) => {
   let handleDrop = (files) => {
     loadFile(files[0], stateId, id, stateUpdater);
   };
@@ -53,8 +60,9 @@ let ImageWithThumbnail = ({ loadFile, stateId, id, srcLink, stateUpdater }) => {
         width: "100%",
         height: "100%",
         backgroundImage: isLink
-          ? `url(https://res.cloudinary.com/sunshinephoto/image/upload/c_thumb,w_300,g_face/${srcLink})`
+          ? `url(https://res.cloudinary.com/sunshinephoto/image/upload/c_thumb,w_300/${srcLink})`
           : srcLink,
+        ...style,
       }}
     >
       <FileDrop onDrop={handleDrop} frame={document.querySelector(`#${id}`)}>
@@ -79,6 +87,10 @@ export const ServicesView = ({ user }) => {
   let [serviceParagraph, setServiceParagraph] = useState("");
   let [details, setDetails] = useState([""]);
   let [overlay, setOverlay] = useState(false);
+  let [thumbnailImage, setThumbnailImage] = useState({
+    id: shortid.generate(),
+    image: "",
+  });
   let [sessions, setSessions] = useState([
     {
       id: shortid.generate(),
@@ -106,6 +118,10 @@ export const ServicesView = ({ user }) => {
   let setNewService = async () => {
     setKey("");
     setServiceName("");
+    setThumbnailImage({
+      id: shortid.generate(),
+      image: "",
+    });
     setServiceParagraph("");
     setDetails([""]);
     setGalleryImages([
@@ -136,6 +152,7 @@ export const ServicesView = ({ user }) => {
       imageGallery,
       sessions,
       folder_name,
+      thumbnailImage,
     } = service;
     let serviceDetails = details
       ? arrayFromObject(details).map((detail) => detail.text)
@@ -151,11 +168,26 @@ export const ServicesView = ({ user }) => {
     }
     setKey(key);
     setServiceName(name);
+    editThumbnail(thumbnailImage);
     setServiceParagraph(paragraphText);
     setDetails(serviceDetails);
     setGalleryImages(serviceimageGallery);
     setSessions(sessionObjects);
     setFolder_name(folder_name);
+  };
+
+  let editThumbnail = (thumbnailImage) => {
+    if (thumbnailImage) {
+      setThumbnailImage({
+        id: shortid.generate(),
+        image: thumbnailImage,
+      });
+    } else {
+      setThumbnailImage({
+        id: shortid.generate(),
+        image: "",
+      });
+    }
   };
 
   let getAllServices = () => {
@@ -306,6 +338,17 @@ export const ServicesView = ({ user }) => {
     setGalleryImages(newGalleryImages);
   };
 
+  let updateThumbnailImage = ({ stateId, data }) => {
+    let newThumbnailImage = { ...thumbnailImage };
+    let isUrl = newThumbnailImage.image.match(/(images\/.*)/);
+    if (isUrl) {
+      // ADD OLD TO DELETE
+      newThumbnailImage.oldImage = thumbnailImage.image;
+    }
+    newThumbnailImage.image = data;
+    setThumbnailImage(newThumbnailImage);
+  };
+
   let editGalleryImageImage = ({ stateId, data }) => {
     let newGalleryImage = [...galleryImages.filter((s) => s.id === stateId)][0];
     let isUrl = newGalleryImage.image.match(/(images\/.*)/);
@@ -398,6 +441,15 @@ export const ServicesView = ({ user }) => {
       newGalleryImages.push(newGalleryImage);
     }
 
+    // UPLOAD THUMBNAIL IMAGE
+    let thumbnailImagePublicId = "";
+    imageRequestOptions.body = JSON.stringify({
+      imageSrc: thumbnailImage.image,
+      path: `services/${folder_name}/thumbnailImage`,
+    });
+    let res = await fetch(uploadImgUrl, imageRequestOptions);
+    let { public_id: thumbnailId } = await res.json();
+    thumbnailImagePublicId = thumbnailId;
     const serviceRequestOptions = {
       method: "POST",
       headers: {
@@ -411,12 +463,13 @@ export const ServicesView = ({ user }) => {
         details,
         sessions: newSessions,
         imageGallery: newGalleryImages,
+        thumbnailImage: thumbnailImagePublicId,
       }),
     };
-    let data = await fetch(createServiceUrl, serviceRequestOptions);
-    let result = await data.json();
+    await fetch(createServiceUrl, serviceRequestOptions);
+    // let result = await data.json();
     setOverlay(false);
-    console.log("service", result);
+    // console.log("service", result);
   };
   let updateService = async (e) => {
     e.preventDefault();
@@ -507,6 +560,30 @@ export const ServicesView = ({ user }) => {
         galleryImage.oldImage = "";
       }
     }
+    // UPLOAD THUMBNAIL IMAGE
+    console.log("uploading thumbnailImage");
+    let thumbnailImagePublicId = thumbnailImage.image.match(/thumbnailImage/g);
+    // UPLOAD NEW UPLOAD THUMBNAIL IMAGE IF ITS NOT AN URL
+    if (!thumbnailImagePublicId && thumbnailImage.image !== "") {
+      imageRequestOptions.body = JSON.stringify({
+        imageSrc: thumbnailImage.image,
+        path: `services/${folder_name}/thumbnailImage`,
+      });
+      let res = await fetch(uploadImgUrl, imageRequestOptions);
+      let { public_id: thumbnailId } = await res.json();
+      thumbnailImagePublicId = thumbnailId;
+    } else {
+      thumbnailImagePublicId = thumbnailImage.image;
+    }
+    //DELETE OLD THUMB IMAGE
+    if (thumbnailImage.oldImage) {
+      imageDeleteRequestOptions.body = JSON.stringify({
+        public_id: thumbnailImage.oldImage,
+      });
+      await fetch(deleteImgUrl, imageDeleteRequestOptions);
+      thumbnailImage.oldImage = "";
+    }
+
     const serviceRequestOptions = {
       method: "PATCH",
       cache: "no-cache",
@@ -522,6 +599,7 @@ export const ServicesView = ({ user }) => {
         sessions: newSessions,
         folder_name,
         imageGallery: newGalleryImages,
+        thumbnailImage: thumbnailImagePublicId,
       }),
     };
     try {
@@ -539,15 +617,18 @@ export const ServicesView = ({ user }) => {
         <div className="d-flex">
           <div className="d-flex flex-column w-25 mx-auto">
             {allServices.map((service) => {
-              let image = service.imageGallery
-                ? service.imageGallery[Object.keys(service.imageGallery)[0]]
-                    .image
-                : null;
+              let image =
+                service && service.thumbnailImage
+                  ? service.thumbnailImage
+                  : "images/portfolio/couples/placeholder_klk233";
               return (
                 <div
                   style={{
                     cursor: "pointer",
                     overflow: "hidden",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                   }}
                   key={service.key}
                   onClick={() => {
@@ -556,12 +637,16 @@ export const ServicesView = ({ user }) => {
                   }}
                 >
                   <h4 className="text-center">{service.name}</h4>
-                  <Image publicId={image} className="cover-image" secure="true">
-                    <Transformation
-                      width="250"
-                      quality="auto"
-                      fetchFormat="auto"
-                    />
+                  <Image
+                    publicId={image}
+                    width="250"
+                    height="250"
+                    secure="true"
+                    style={{
+                      backgroundSize: "cover",
+                    }}
+                  >
+                    <Transformation quality="auto" fetchFormat="auto" />
                   </Image>
                 </div>
               );
@@ -782,6 +867,10 @@ export const ServicesView = ({ user }) => {
                           id: `service-galery-image-${image.id}`,
                           srcLink: image.image,
                           stateUpdater: editGalleryImageImage,
+                          style: {
+                            height: "450px",
+                            backgroundSize: "cover",
+                          },
                         }}
                       />
                       <input
@@ -823,13 +912,36 @@ export const ServicesView = ({ user }) => {
                 width: "100%",
               }}
             />
+            <div
+              className="w-50 mx-auto h-100 d-flex flex-column align-items-center"
+              style={{
+                maxHeight: "300px",
+                overflow: "hidden",
+                margin: "1rem",
+              }}
+            >
+              <h4>Thumbnail Image</h4>
+
+              <ImageWithThumbnail
+                {...{
+                  loadFile,
+                  stateId: thumbnailImage.id,
+                  id: `service-thumbnailImage-image-${thumbnailImage.id}`,
+                  srcLink: thumbnailImage.image,
+                  stateUpdater: updateThumbnailImage,
+                  style: {
+                    height: "300px",
+                    width: "300px",
+                    border: "1px solid black",
+                  },
+                }}
+              />
+            </div>
             {folder_name ? (
               <button onClick={updateService}>Update Service</button>
             ) : (
               <button onClick={createService}>Create Service</button>
             )}
-
-            {/* <button onClick={getAllServices}>Get All Services</button> */}
           </div>
         </div>
       </CloudinaryContext>

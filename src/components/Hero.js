@@ -19,7 +19,7 @@ export default function Hero({
   let keywordPadding = "0.2rem 3rem";
   let keywordLetterSpacing = "1.22rem";
   let subtitleSpacing = "1.34rem";
-  let keywordSize = windowWidth * 0.01 > 16 ? "16px" : "1vw";
+  let keywordSize = windowWidth * 0.01 > 16 ? "1rem" : "10px";
   let color = "white";
   if (windowWidth * 0.08 < 65) {
     titleSize = "65px";
@@ -55,7 +55,7 @@ export default function Hero({
         >
           {subtitle}
         </h2>
-        <div className="hero-keywords">
+        <div className="hero-keywords d-flex justify-content-center flex-wrap">
           {keywords
             ? keywords.map((word, i) => {
                 return (

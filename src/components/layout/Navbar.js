@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Login from "../auth/Login";
-import { Link } from "react-router-dom";
-import * as firebase from "firebase/app";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
-export default class Navbar extends Component {
+export default class MyNavbar extends Component {
   state = {
     scrollTop: 0,
     windowWidth: null,
@@ -57,7 +57,7 @@ export default class Navbar extends Component {
       handleCodeInApp: true,
     };
     return new Promise((resolve, reject) => {
-      firebase
+      this.props.firebase
         .auth()
         .sendSignInLinkToEmail(email, actionCodeSettings)
         .then(function () {
@@ -76,170 +76,105 @@ export default class Navbar extends Component {
   render() {
     let { isSignedIn, firebase, setUser, isAdmin, services } = this.props;
     return (
-      <nav
+      <Navbar
+        collapseOnSelect={true}
+        fixed="top"
+        expand="md"
         className={`navbar navbar-expand-md fixed-top bg-base border-bottom border-secondary`}
       >
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#collapsibleNavbar"
-        >
-          <span
-            className="navbar-toggler-icon"
-            style={{
-              marginTop: this.state.windowWidth < 439 ? "0rem" : "initial",
-            }}
-          ></span>
-        </button>
-        <div className="collapse navbar-collapse" id="collapsibleNavbar">
-          <ul className="navbar-nav ml-auto">
+        {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
+        <Navbar.Toggle aria-controls="collapsibleNavbar" />
+        <Navbar.Collapse id="collapsibleNavbar">
+          <Nav className="ml-auto mr-2">
             {isAdmin ? (
-              <li>
-                <Link to={"/admin"} className="nav-link">
-                  Admin
-                </Link>
-              </li>
+              <LinkContainer to="/admin">
+                <Nav.Link>Admin</Nav.Link>
+              </LinkContainer>
             ) : null}
             {isSignedIn ? (
-              <li>
-                <Link to={"/dashboard"} className="nav-link">
-                  Dashboard
-                </Link>
-              </li>
+              <LinkContainer to="/dashboard">
+                <Nav.Link>Dashboard</Nav.Link>
+              </LinkContainer>
             ) : null}
+            <LinkContainer to="/">
+              <Nav.Link>Home</Nav.Link>
+            </LinkContainer>
 
-            <li>
-              <Link to={"/"} className="nav-link">
-                Home
-              </Link>
-            </li>
-
-            <li className="nav-item dropdown">
-              <Link
-                className="nav-link dropdown-toggle"
-                to={"#"}
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Services
-              </Link>
-              <div
-                className={`dropdown-menu mt-0 border-top-0 pt-0 bg-base-color `}
-              >
-                {Object.keys(services).map((key) => {
-                  return (
-                    <Link
-                      className="dropdown-item"
-                      to={`/services/${key}`}
-                      key={services[key].folder_name}
-                    >
+            <NavDropdown title="Services" id="collasible-nav-dropdown-services">
+              {Object.keys(services).map((key) => {
+                return (
+                  <LinkContainer
+                    to={`/services/${key}`}
+                    key={services[key].folder_name}
+                  >
+                    <NavDropdown.Item>
                       {services[key].name[0].toUpperCase() +
                         services[key].name.slice(1)}
-                    </Link>
-                  );
-                })}
-              </div>
-            </li>
-            <li className="nav-item dropdown">
-              <Link
-                to={"#"}
-                className="nav-link dropdown-toggle"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Info
-              </Link>
-              <div
-                className={`dropdown-menu mt-0 border-top-0 pt-0 bg-base-color `}
-              >
-                <Link className="dropdown-item" to="/About">
-                  About Me
-                </Link>
-                <Link className="dropdown-item" to="#">
-                  What they are saying
-                </Link>
-                <Link className="dropdown-item" to="#">
-                  Photo Book
-                </Link>
-              </div>
-            </li>
-            <li>
-              <a as={Link} href="/#contactForm" className="nav-link">
-                Contact
-              </a>
-            </li>
-            <li className="nav-item dropdown">
-              <Link
-                to={"#"}
-                className="nav-link dropdown-toggle"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Blog
-              </Link>
-              <div
-                className={`dropdown-menu mt-0 border-top-0 pt-0 bg-base-color`}
-              >
-                {this.props.journals
-                  ? Object.keys(this.props.journals).map((journalId, i) => {
-                      let { shortTitle } = this.props.journals[journalId].title;
-                      return (
-                        <Link
-                          className="dropdown-item"
-                          to={`/journal/${journalId}`}
-                          key={i}
-                        >
+                    </NavDropdown.Item>
+                  </LinkContainer>
+                );
+              })}
+            </NavDropdown>
+            <NavDropdown title="Info" id="collasible-nav-dropdown-info">
+              <LinkContainer to="/About">
+                <NavDropdown.Item>About Me</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to={`#`}>
+                <NavDropdown.Item>What they are saying</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to={`#`}>
+                <NavDropdown.Item>Photo Book</NavDropdown.Item>
+              </LinkContainer>
+            </NavDropdown>
+            <Nav.Link href={`/#contactForm`}>Contact</Nav.Link>
+            <NavDropdown title="Blog" id="collasible-nav-dropdown-blog">
+              {this.props.journals
+                ? Object.keys(this.props.journals).map((journalId, i) => {
+                    let { shortTitle } = this.props.journals[journalId].title;
+                    return (
+                      <LinkContainer
+                        key={journalId}
+                        to={`/journal/${journalId}`}
+                      >
+                        <NavDropdown.Item>
                           {shortTitle[0].toUpperCase() + shortTitle.slice(1)}
-                        </Link>
-                      );
-                    })
-                  : null}
-              </div>
-            </li>
+                        </NavDropdown.Item>
+                      </LinkContainer>
+                    );
+                  })
+                : null}
+            </NavDropdown>
             {isSignedIn ? (
-              <li>
-                <Link
-                  to={"#"}
-                  className="nav-link"
-                  style={{
-                    textAlign: this.state.windowWidth < 439 ? "center" : "left",
-                    background: "transparent",
-                  }}
+              <LinkContainer to="/#">
+                <Nav.Link
                   onClick={() => {
                     firebase.app().auth().signOut();
                     setUser(null);
                   }}
                 >
                   Logout
-                </Link>
-              </li>
+                </Nav.Link>
+              </LinkContainer>
             ) : (
-              <li>
-                <Link
-                  to={"#"}
+              <LinkContainer to="/#">
+                <Nav.Link
                   className="nav-link"
                   onClick={() => this.toggleLogin()}
-                  style={{
-                    textAlign: this.state.windowWidth < 439 ? "center" : "left",
-                    background: "transparent",
-                  }}
                 >
                   Login
-                </Link>
-              </li>
+                </Nav.Link>
+              </LinkContainer>
             )}
-          </ul>
-        </div>
-        <Login
-          toggleLogin={this.toggleLogin.bind(this)}
-          display={this.state.loginDisplay}
-          requestLogin={this.requestLogin}
-        />
-      </nav>
+            <Login
+              toggleLogin={this.toggleLogin.bind(this)}
+              display={this.state.loginDisplay}
+              requestLogin={this.requestLogin}
+            />
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     );
   }
 }
+
+export { MyNavbar };
