@@ -74,75 +74,56 @@ export const ArrowRight = Arrow({ text: ">", className: "arrow-next" });
 export const HorizontalScroll = ({ list, footer, style = {} }) => {
   let windowWidth = useWindowWidth();
   let sideLength = footer ? Math.max(Math.floor(windowWidth / 10), 125) : 250;
-  return (
-    <CloudinaryContext cloudName="sunshinephoto">
-      <ScrollingHorizontally
-        pageLock={true}
-        reverseScroll={true}
+
+  if (list) {
+    if (windowWidth > 768) {
+      return (
+        <CloudinaryContext cloudName="sunshinephoto">
+          <ScrollingHorizontally
+            pageLock={true}
+            reverseScroll={true}
+            style={{
+              height: `${sideLength * 1.5}px`,
+              borderTop: "1px solid black",
+              borderBottom: "1px solid black",
+              margin: "1rem auto",
+              width: "70%",
+            }}
+            // className="scrolling-horizontally"
+            //  config        = {{ stiffness: int, damping: int }}
+            //  animValues    = { int }
+          >
+            {list &&
+              Menu({ list: [...list, ...list], sideLength, style, footer })}
+          </ScrollingHorizontally>
+        </CloudinaryContext>
+      );
+    } else {
+      return (
+        <CloudinaryContext cloudName="sunshinephoto">
+          <div
+            className="d-flex scrolling-horizontally"
+            style={{
+              overflowX: "scroll",
+              margin: "1rem auto",
+              width: "90%",
+            }}
+          >
+            {list &&
+              Menu({ list: [...list, ...list], sideLength, style, footer })}
+          </div>
+        </CloudinaryContext>
+      );
+    }
+  } else {
+    return (
+      <div
         style={{
           height: `${sideLength * 1.5}px`,
-          borderTop: "1px solid black",
-          borderBottom: "1px solid black",
-          marginTop: "1rem",
-          marginBottom: "1rem",
         }}
-        //  config        = {{ stiffness: int, damping: int }}
-        // className="d-flex justify-content-center align-items-center"
-        //  animValues    = { int }
-      >
-        {list && Menu({ list: [...list, ...list], sideLength, style, footer })}
-      </ScrollingHorizontally>
-    </CloudinaryContext>
-  );
+      ></div>
+    );
+  }
 };
-
-// export const HorizontalScroll = ({ list, footer, style, ...rest }) => {
-//   // let scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-//   let windowWidth = useWindowWidth();
-//   let sideLength = footer
-//     ? Math.max(Math.floor(windowWidth / 10), 125)
-//     : Math.floor(windowWidth / 3);
-//   let menu = [];
-//   if (list) {
-//     menu = Menu({ list, sideLength, style, footer });
-//   }
-//   // const disableScroll = (e, scrollBarWidth) => {
-//   //   e.preventDefault();
-//   //   console.log("disableScroll");
-//   //   let body = document.querySelector("html");
-//   //   let navBar = document.querySelector(".navbar");
-//   //   body.style.overflowY = "hidden";
-//   //   body.style.marginRight = `${scrollBarWidth}px`;
-//   //   navBar.style.marginRight = `${scrollBarWidth}px`;
-//   //   console.log("scrollBarWidth", scrollBarWidth);
-//   // };
-//   // const enableScroll = (e, scrollBarWidth) => {
-//   //   console.log("enableScroll");
-//   //   let body = document.querySelector("html");
-//   //   let navBar = document.querySelector(".navbar");
-//   //   body.style.overflowY = "visible";
-//   //   body.style.marginRight = 0;
-//   //   navBar.style.marginRight = 0;
-
-//   //   e.preventDefault();
-//   // };
-//   return (
-//     <CloudinaryContext cloudName="sunshinephoto">
-//       <div
-//         className="horizontal-scroll-menu"
-//         // onMouseEnter={(e) => disableScroll(e, scrollBarWidth)}
-//         // onMouseLeave={(e) => enableScroll(e, scrollBarWidth)}
-//       >
-//         <ScrollMenu
-//           data={menu}
-//           arrowLeft={ArrowLeft}
-//           arrowRight={ArrowRight}
-//           {...rest}
-//           scrollBy={1}
-//         />
-//       </div>
-//     </CloudinaryContext>
-//   );
-// };
 
 export default HorizontalScroll;
