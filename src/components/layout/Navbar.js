@@ -11,6 +11,7 @@ export default class MyNavbar extends Component {
     loginDisplay: "none",
     dropdownDisplay: false,
     journals: [],
+    active: "/home",
   };
 
   componentDidMount() {
@@ -38,6 +39,12 @@ export default class MyNavbar extends Component {
         .scrollTop;
     this.setState({
       scrollTop,
+    });
+  };
+  handleSelect = (eventKey) => {
+    console.log(eventKey);
+    this.setState({
+      active: eventKey,
     });
   };
   toggleLogin() {
@@ -85,7 +92,12 @@ export default class MyNavbar extends Component {
         {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
         <Navbar.Toggle aria-controls="collapsibleNavbar" />
         <Navbar.Collapse id="collapsibleNavbar">
-          <Nav className="ml-auto mr-2">
+          <Nav
+            className="ml-auto mr-2"
+            // defaultActiveKey="/"
+            activeKey={this.state.active}
+            onSelect={this.handleSelect}
+          >
             {isAdmin ? (
               <LinkContainer to="/admin">
                 <Nav.Link>Admin</Nav.Link>
@@ -96,7 +108,7 @@ export default class MyNavbar extends Component {
                 <Nav.Link>Dashboard</Nav.Link>
               </LinkContainer>
             ) : null}
-            <LinkContainer to="/">
+            <LinkContainer to="/home">
               <Nav.Link>Home</Nav.Link>
             </LinkContainer>
 
@@ -120,10 +132,12 @@ export default class MyNavbar extends Component {
                 <NavDropdown.Item>About Me</NavDropdown.Item>
               </LinkContainer>
               <LinkContainer to={`#`}>
-                <NavDropdown.Item>What they are saying</NavDropdown.Item>
+                <NavDropdown.Item disabled>
+                  What they are saying
+                </NavDropdown.Item>
               </LinkContainer>
               <LinkContainer to={`#`}>
-                <NavDropdown.Item>Photo Book</NavDropdown.Item>
+                <NavDropdown.Item disabled>Photo Book</NavDropdown.Item>
               </LinkContainer>
             </NavDropdown>
             <Nav.Link href={`/#contactForm`}>Contact</Nav.Link>
