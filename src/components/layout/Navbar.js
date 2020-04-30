@@ -11,7 +11,6 @@ export default class MyNavbar extends Component {
     loginDisplay: "none",
     dropdownDisplay: false,
     journals: [],
-    active: "/home",
   };
 
   componentDidMount() {
@@ -41,12 +40,7 @@ export default class MyNavbar extends Component {
       scrollTop,
     });
   };
-  handleSelect = (eventKey) => {
-    console.log(eventKey);
-    this.setState({
-      active: eventKey,
-    });
-  };
+
   toggleLogin() {
     this.setState({
       loginDisplay: this.state.loginDisplay === "none" ? "flex" : "none",
@@ -81,7 +75,33 @@ export default class MyNavbar extends Component {
   };
 
   render() {
-    let { isSignedIn, firebase, setUser, isAdmin, services } = this.props;
+    let {
+      isSignedIn,
+      firebase,
+      setUser,
+      isAdmin,
+      services,
+      location,
+    } = this.props;
+    let locationHash = location && location.hash ? location.hash : "";
+    let locationPathname =
+      location && location.pathname ? location.pathname.split("/")[1] : "";
+    ["services", "journal", "info"].forEach((path) => {
+      let item = document.querySelector(`#collasible-nav-dropdown-${path}`);
+      if (item && item.classList.length > 0) {
+        item.classList.remove("active");
+      }
+    });
+    if (
+      locationPathname === "services" ||
+      locationPathname === "journal" ||
+      locationPathname === "info"
+    ) {
+      document
+        .querySelector(`#collasible-nav-dropdown-${locationPathname}`)
+        .classList.add("active");
+    }
+
     return (
       <Navbar
         collapseOnSelect={true}
@@ -94,9 +114,7 @@ export default class MyNavbar extends Component {
         <Navbar.Collapse id="collapsibleNavbar">
           <Nav
             className="ml-auto mr-2"
-            // defaultActiveKey="/"
-            activeKey={this.state.active}
-            onSelect={this.handleSelect}
+            activeKey={`/${locationHash}` || `/${locationPathname}`}
           >
             {isAdmin ? (
               <LinkContainer to="/admin">
@@ -141,7 +159,7 @@ export default class MyNavbar extends Component {
               </LinkContainer>
             </NavDropdown>
             <Nav.Link href={`/#contactForm`}>Contact</Nav.Link>
-            <NavDropdown title="Blog" id="collasible-nav-dropdown-blog">
+            <NavDropdown title="Blog" id="collasible-nav-dropdown-journal">
               {this.props.journals
                 ? Object.keys(this.props.journals).map((journalId, i) => {
                     let { shortTitle } = this.props.journals[journalId].title;

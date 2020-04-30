@@ -7,18 +7,21 @@ export function GalleryNav({ collections, isJournal }) {
         <div
           className="journal-link-image"
           style={{
-            backgroundImage: `${"url(https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_400/" +
+            backgroundImage: `${
+              "url(https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_400/" +
               collections[collection][0].src +
-              ")"}`
+              ")"
+            }`,
           }}
         >
           <p
             style={{
               background: "white",
-              padding: "1rem 3rem"
+              padding: "1rem 3rem",
             }}
-          >{`${collection[0].toUpperCase() +
-            collection.replace("_", " ").slice(1)}`}</p>
+          >{`${
+            collection[0].toUpperCase() + collection.replace("_", " ").slice(1)
+          }`}</p>
         </div>
       </Link>
     );
@@ -38,7 +41,7 @@ export function GalleryNav({ collections, isJournal }) {
           borderRight: i % 2 === 0 ? "2px solid grey" : "",
           borderLeft: i % 2 === 1 ? "2px solid grey" : "",
           borderTop: i - 2 >= 0 ? "2px solid grey" : "",
-          borderBottom: 2 - i >= 1 ? "2px solid grey" : ""
+          borderBottom: 2 - i >= 1 ? "2px solid grey" : "",
         }}
         to={`/gallery#${collection}`}
       >
@@ -55,7 +58,7 @@ export function GalleryNav({ collections, isJournal }) {
         gridTemplateColumns: "repeat(2, 1fr)",
         justifyItems: "center",
         width: "50%",
-        margin: "auto"
+        margin: "auto",
       }}
     >
       {portfolioLinks}

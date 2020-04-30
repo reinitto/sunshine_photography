@@ -39,7 +39,10 @@ export const PriceImage = ({ sessionKey }) => {
         key={id}
         className="text-center d-flex flex-column justify-content-center align-items-center m-3"
         style={{
-          backgroundImage: `url(https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_200/${image})`,
+          background: `linear-gradient(
+            rgba(61, 72, 86, 0.15), 
+            rgba(61, 72, 86, 0.45)
+          ),url(https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_200/${image})`,
           width: "200px",
           height: "200px",
           color: "white",

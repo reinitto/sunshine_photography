@@ -37,11 +37,13 @@ class App extends Component {
       admin: false,
       journals: [],
       services: [],
+      currentRoute: "/home",
     };
   }
 
   componentDidMount() {
     this.getServices();
+
     firebase.auth().onAuthStateChanged((user) => {
       this.setState({ user: user });
       firebase
@@ -76,7 +78,14 @@ class App extends Component {
           console.log("login erorr", error);
         });
     }
+    this.setLocation(window.location);
   }
+
+  setLocation = (location) => {
+    this.setState({
+      currentRoute: location,
+    });
+  };
 
   getJournals() {
     firebase
@@ -123,7 +132,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <ScrollToTop>
+        <ScrollToTop setLocation={this.setLocation.bind(this)}>
           <Fragment>
             <Navbar
               isAdmin={this.state.admin}
@@ -134,6 +143,7 @@ class App extends Component {
               // getServices={this.getServices.bind(this)}
               journals={this.state.journals}
               services={this.state.services}
+              location={this.state.currentRoute}
             />
             <Switch>
               <Route

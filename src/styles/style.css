@@ -406,6 +406,11 @@ nav.navbar.navbar-expand-md {
   background-repeat: "no-repeat";
 }
 
+.scroll-horizontal:after {
+  background: -webkit-gradient(linear, left top, right top, color-stop(10%, rgba(0, 0, 0, 0.55)), color-stop(25%, rgba(0, 0, 0, 0.1)), color-stop(75%, rgba(0, 0, 0, 0.1)), color-stop(90%, rgba(0, 0, 0, 0.55))), black;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.55) 10%, rgba(0, 0, 0, 0.1) 25%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.55) 90%), black;
+}
+
 .viewContainer {
   -webkit-perspective: 1600px;
           perspective: 1600px;
@@ -883,7 +888,7 @@ h3 {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #fff;
+  background: #93adcf;
   margin: -4px 0 0 -4px;
 }
 
@@ -986,44 +991,6 @@ h3 {
   100% {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes flip {
-  0% {
-    -webkit-transform: rotateY(0deg);
-            transform: rotateY(0deg);
-  }
-  25% {
-    -webkit-transform: rotateY(180deg);
-            transform: rotateY(180deg);
-  }
-  75% {
-    -webkit-transform: rotateY(180deg);
-            transform: rotateY(180deg);
-  }
-  100% {
-    -webkit-transform: rotateY(360deg);
-            transform: rotateY(360deg);
-  }
-}
-
-@keyframes flip {
-  0% {
-    -webkit-transform: rotateY(0deg);
-            transform: rotateY(0deg);
-  }
-  25% {
-    -webkit-transform: rotateY(180deg);
-            transform: rotateY(180deg);
-  }
-  75% {
-    -webkit-transform: rotateY(180deg);
-            transform: rotateY(180deg);
-  }
-  100% {
-    -webkit-transform: rotateY(360deg);
-            transform: rotateY(360deg);
   }
 }
 

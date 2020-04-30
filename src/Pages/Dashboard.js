@@ -27,10 +27,19 @@ export default class Dashboard extends Component {
   state = {
     pictures: null,
     selected_pictures: [],
+    isMounted: false,
   };
 
   componentDidMount() {
     this.getUser(this.props.user);
+    this.setState({
+      isMounted: true,
+    });
+  }
+  componentWillUnmount() {
+    this.setState({
+      isMounted: false,
+    });
   }
 
   getUserPhotos = (picture_set) => {
@@ -72,10 +81,12 @@ export default class Dashboard extends Component {
                     // src: `https://res.cloudinary.com/sunshinephoto/image/upload/${p}`
                   };
                 });
-                this.setState({
-                  pictures: picUrls,
-                  selected_pictures,
-                });
+                if (this.state.isMounted) {
+                  this.setState({
+                    pictures: picUrls,
+                    selected_pictures,
+                  });
+                }
               }
             })
             .catch((err) => console.log(err));
@@ -134,6 +145,7 @@ export default class Dashboard extends Component {
   render() {
     const { user } = this.props;
     const { displayName, email } = user;
+
     return (
       <Fragment>
         <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
@@ -196,27 +208,9 @@ const ImageSelectGallery = ({
           style={{
             margin: "5px",
             border: "2px solid transparent",
-            // border: `2px solid ${
-            //   selected_pictures.includes(pic.src.src) ? "green" : "transparent"
-            // }`
           }}
-          // onClick={() => {
-          //   return toggleSelect(pic.src.src);
-          // }}
         >
           <LazyCloudinaryImg publicId={pic.src.src} />
-          {/* {selected_pictures.includes(pic.src.src) ? (
-            <div
-              style={{
-                backgroundColor: "green",
-                textAlign: "center"
-              }}
-            >
-              Selected
-            </div>
-          ) : (
-            <div style={{ textAlign: "center" }}>Click to select</div>
-          )} */}
         </div>
       </Suspense>
     );

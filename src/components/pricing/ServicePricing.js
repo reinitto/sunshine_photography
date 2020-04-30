@@ -1,5 +1,6 @@
 import React from "react";
 import PriceImage from "./PriceImage";
+import Spinner from "../Spinner";
 import ImageGalleryWithoutLighbox from "../../components/portfolio/ImageGalleryWithoutLighbox";
 
 export default function ServicePricing({
@@ -9,13 +10,14 @@ export default function ServicePricing({
   sessions,
   details,
 }) {
-  return (
+  return images && images.length > 0 ? (
     <div>
-      {/* <h2 className="text-center">{name}</h2> */}
       <div>
         <p className="text-center">{paragraphText}</p>
       </div>
       <ImageGalleryWithoutLighbox images={images} />
+      <hr />
+      <h3 className="text-center">Available Sessions</h3>
       <div className="d-flex justify-content-center">
         {sessions
           ? Object.keys(sessions).map((key) => (
@@ -45,6 +47,15 @@ export default function ServicePricing({
           </div>
         </div>
       )}
+    </div>
+  ) : (
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{
+        height: "100vh",
+      }}
+    >
+      <Spinner />
     </div>
   );
 }

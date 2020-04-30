@@ -34,8 +34,22 @@ export const MenuItem = ({
           height={height}
           crop="scale"
           className="p-3 cover-image"
+          secure="true"
+          style={{
+            background: footer
+              ? ""
+              : `linear-gradient(
+              rgba(147, 173, 207, 0.15), 
+              rgba(147, 173, 207, 0.45)
+            )`,
+          }}
         >
-          <Transformation quality="auto" fetchFormat="auto" />
+          <Transformation
+            quality="auto"
+            fetchFormat="auto"
+            flags="progressive:semi"
+            dpr="auto"
+          />
         </Image>
         <p className="link-overlay-text text-uppercase" style={{ ...style }}>
           {text}
@@ -79,38 +93,78 @@ export const HorizontalScroll = ({ list, footer, style = {} }) => {
     if (windowWidth > 768) {
       return (
         <CloudinaryContext cloudName="sunshinephoto">
-          <ScrollingHorizontally
-            pageLock={true}
-            reverseScroll={true}
+          <div
+            className="d-flex justify-content-center align-items-center"
             style={{
-              height: `${sideLength * 1.5}px`,
+              position: "relative",
+              // background: `linear-gradient(90deg,
+              //    rgba(147, 173, 207, 1) 10%,
+              //    rgba(255, 255, 255, 1) 25%,
+              //    rgba(255, 255, 255, 1) 75%,
+              //    rgba(147, 173, 207, 1) 90%)`,
               borderTop: "1px solid black",
               borderBottom: "1px solid black",
               margin: "1rem auto",
-              width: "70%",
             }}
-            // className="scrolling-horizontally"
-            //  config        = {{ stiffness: int, damping: int }}
-            //  animValues    = { int }
           >
-            {list &&
-              Menu({ list: [...list, ...list], sideLength, style, footer })}
-          </ScrollingHorizontally>
+            <ScrollingHorizontally
+              pageLock={true}
+              reverseScroll={true}
+              style={{
+                height: `${sideLength * 1.5}px`,
+                width: "100%",
+                // background: `linear-gradient(90deg, rgba(0, 0, 0, 0.55) 10%, rgba(0, 0, 0, 0.10) 25%, rgba(0, 0, 0, 0.10) 75%, rgba(0, 0, 0, 0.55) 90%)`,
+              }}
+              // className="scrolling-horizontally"
+              //  config        = {{ stiffness: int, damping: int }}
+              //  animValues    = { int }
+            >
+              {list &&
+                Menu({ list: [...list, ...list], sideLength, style, footer })}
+            </ScrollingHorizontally>
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                background: `linear-gradient(90deg,
+                  rgba(255, 255, 255, 1) 0%, 
+                  rgba(255, 255, 255, 0) 100%)`,
+                width: "15%",
+                height: "100%",
+              }}
+            ></div>
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                background: `linear-gradient(90deg,
+                  rgba(255, 255, 255, 0) 0%, 
+                  rgba(255, 255, 255, 1) 100%)`,
+                width: "15%",
+                height: "100%",
+              }}
+            ></div>
+          </div>
         </CloudinaryContext>
       );
     } else {
       return (
         <CloudinaryContext cloudName="sunshinephoto">
-          <div
-            className="d-flex scrolling-horizontally"
-            style={{
-              overflowX: "scroll",
-              margin: "1rem auto",
-              width: "90%",
-            }}
-          >
-            {list &&
-              Menu({ list: [...list, ...list], sideLength, style, footer })}
+          <div className="d-flex">
+            <div
+              className="d-flex scrolling-horizontally"
+              style={{
+                overflowX: "scroll",
+                margin: "1rem auto",
+                width: "90%",
+                // background: `linear-gradient(90deg, rgba(0, 0, 0, 0.55) 10%, rgba(0, 0, 0, 0.10) 25%, rgba(0, 0, 0, 0.10) 75%, rgba(0, 0, 0, 0.55) 90%)`,
+              }}
+            >
+              {list &&
+                Menu({ list: [...list, ...list], sideLength, style, footer })}
+            </div>
           </div>
         </CloudinaryContext>
       );

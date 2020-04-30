@@ -324,6 +324,17 @@ nav.navbar.navbar-expand-md {
   background-repeat: "no-repeat";
 }
 
+.scroll-horizontal:after {
+  background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.55) 10%,
+      rgba(0, 0, 0, 0.1) 25%,
+      rgba(0, 0, 0, 0.1) 75%,
+      rgba(0, 0, 0, 0.55) 90%
+    ),
+    black;
+}
+
 .viewContainer {
   perspective: 1600px;
   // perspective-origin: 300px 300px;
@@ -736,7 +747,7 @@ h3 {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #fff;
+  background: $base-light-color;
   margin: -4px 0 0 -4px;
 }
 .lds-roller div:nth-child(1) {
@@ -801,21 +812,6 @@ h3 {
   }
   100% {
     transform: rotate(360deg);
-  }
-}
-
-@keyframes flip {
-  0% {
-    transform: rotateY(0deg);
-  }
-  25% {
-    transform: rotateY(180deg);
-  }
-  75% {
-    transform: rotateY(180deg);
-  }
-  100% {
-    transform: rotateY(360deg);
   }
 }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 import { useWindowWidth } from "./useWindowWidth";
 import { mainBg } from "../content/backgroundImages";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,66 +30,86 @@ export default function Hero({
     subtitleSpacing = "0.8rem";
   }
   return (
-    <div
-      className="cover-image"
-      style={{
-        backgroundImage: `url(${imageSrc})`,
-        height,
-      }}
-    >
-      <div className="hero">
-        <h1
-          className="text-center title-text"
+    <CloudinaryContext cloudName="sunshinephoto">
+      <div
+        // className="cover-image"
+        style={{
+          width: "100%",
+          height,
+        }}
+      >
+        <Image
+          publicId={mainBg}
+          width={1600}
+          crop="fill"
+          className="cover-image"
           style={{
-            fontSize: titleSize,
-            color,
+            width: "100%",
+            height: "100%",
           }}
+          secure="true"
         >
-          {title}
-        </h1>
-        <h2
-          className="text-center text-uppercase hero-subtitle"
-          style={{
-            fontSize: subtitleSize,
-            letterSpacing: subtitleSpacing,
-          }}
-        >
-          {subtitle}
-        </h2>
-        <div className="hero-keywords d-flex justify-content-center flex-wrap">
-          {keywords
-            ? keywords.map((word, i) => {
-                return (
-                  <span
-                    className="hero-keyword text-uppercase"
-                    key={i}
-                    style={{
-                      padding: keywordPadding,
-                      letterSpacing: keywordLetterSpacing,
-                      fontSize: keywordSize,
-                    }}
-                  >
-                    {word}
-                  </span>
-                );
-              })
-            : null}
+          <Transformation
+            quality="auto"
+            fetchFormat="auto"
+            flags="progressive:semi"
+            dpr="auto"
+          />
+        </Image>
+        <div className="hero">
+          <h1
+            className="text-center title-text"
+            style={{
+              fontSize: titleSize,
+              color,
+            }}
+          >
+            {title}
+          </h1>
+          <h2
+            className="text-center text-uppercase hero-subtitle"
+            style={{
+              fontSize: subtitleSize,
+              letterSpacing: subtitleSpacing,
+            }}
+          >
+            {subtitle}
+          </h2>
+          <div className="hero-keywords d-flex justify-content-center flex-wrap">
+            {keywords
+              ? keywords.map((word, i) => {
+                  return (
+                    <span
+                      className="hero-keyword text-uppercase"
+                      key={i}
+                      style={{
+                        padding: keywordPadding,
+                        letterSpacing: keywordLetterSpacing,
+                        fontSize: keywordSize,
+                      }}
+                    >
+                      {word}
+                    </span>
+                  );
+                })
+              : null}
+          </div>
+        </div>
+        <div className="hero-social-container">
+          <Link to="#" className="hero-social">
+            <FontAwesomeIcon inverse icon={faFacebook} size="lg" />
+          </Link>
+          <Link to="#" className="hero-social">
+            <FontAwesomeIcon inverse icon={faInstagram} size="lg" />
+          </Link>
+          <a as={Link} href="/#contactForm" className="hero-social">
+            <FontAwesomeIcon inverse icon={faEnvelope} size="lg" />
+          </a>
         </div>
       </div>
-      <div className="hero-social-container">
-        <Link to="#" className="hero-social">
-          <FontAwesomeIcon inverse icon={faFacebook} size="lg" />
-        </Link>
-        <Link to="#" className="hero-social">
-          <FontAwesomeIcon inverse icon={faInstagram} size="lg" />
-        </Link>
-        <a as={Link} href="/#contactForm" className="hero-social">
-          <FontAwesomeIcon inverse icon={faEnvelope} size="lg" />
-        </a>
-      </div>
-    </div>
+    </CloudinaryContext>
   );
 }
 Hero.defaultProps = {
-  imageSrc: mainBg,
+  imageSrc: "images/backgrounds/Front_mount-1_po42ya",
 };

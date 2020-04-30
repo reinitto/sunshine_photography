@@ -1,47 +1,91 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 import Spinner from "../Spinner";
 
-const LazyImg = ({ imageSrc, style = {} }) => {
+const LazyImg = ({
+  imageSrc,
+  imageWidth = 600,
+  imageHeight = "",
+  style = {},
+}) => {
+  let [loaded, setLoaded] = useState(false);
   return (
-    <Image
-      publicId={imageSrc}
-      style={{
-        width: "100%",
-        objectFit: "cover",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        ...style,
-      }}
-      secure="true"
-    >
-      <Transformation quality="auto" fetchFormat="auto" />
-    </Image>
+    <Fragment>
+      {!loaded ? (
+        <div
+          style={{
+            width: "100%",
+            objectFit: "cover",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            ...style,
+            background: "black",
+            filter: "blur(1px)",
+            transition: "opacity ease-in 1000ms",
+          }}
+        ></div>
+      ) : null}
+      <Image
+        publicId={imageSrc}
+        width={imageWidth}
+        crop="fill"
+        style={{
+          width: "100%",
+          objectFit: "cover",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          ...style,
+          visibility: loaded ? "visible" : "hidden",
+        }}
+        secure="true"
+        onLoad={() => {
+          setLoaded(true);
+        }}
+      >
+        <Transformation
+          quality="auto"
+          fetchFormat="auto"
+          flags="progressive:semi"
+          dpr="auto"
+        />
+      </Image>
+    </Fragment>
   );
 };
 
 const SingleImage = ({ img }) => {
-  return img ? (
+  return (
     <div
       style={{
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         marginBottom: "5px",
+        height: "100vh",
       }}
     >
-      <LazyImg imageSrc={img.src} />
-      {img.text ? (
+      {img && (
+        <LazyImg
+          imageSrc={img && img.src}
+          imageHeight="100vh"
+          style={{
+            height: img && img.text ? "90vh" : "100vh",
+          }}
+          imageWidth={1200}
+        />
+      )}
+      {img && img.text && (
         <p
           style={{
             textAlign: "center",
             fontStyle: "italic",
+            fontSize: "12px",
           }}
         >
           {img.text}
         </p>
-      ) : null}
+      )}
     </div>
-  ) : null;
+  );
 };
 
 const Doubles = ({ images }) => {
@@ -58,7 +102,11 @@ const Doubles = ({ images }) => {
         return img ? (
           <div key={img.src} style={{ width: "49%" }}>
             {img.text ? <p>{img.text}</p> : null}
-            <LazyImg imageSrc={img.src} style={{ height: "100%" }} />
+            <LazyImg
+              imageSrc={img.src}
+              imageHeight={"49%"}
+              style={{ height: "100%" }}
+            />
           </div>
         ) : null;
       })}
@@ -78,7 +126,11 @@ const Triples = ({ images }) => {
         return img ? (
           <div key={img.src} style={{ width: "32%" }}>
             {img.text ? <p>{img.text}</p> : null}
-            <LazyImg imageSrc={img.src} style={{ height: "100%" }} />
+            <LazyImg
+              imageSrc={img.src}
+              imageHeight={"32%"}
+              style={{ height: "100%" }}
+            />
           </div>
         ) : null;
       })}
@@ -180,29 +232,45 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
     let gallery = [];
     if (images) {
       // CHOOSE IMAGES IN ORGER 1,2,1,3
+      let imagesLeft = images.length;
       let imgPerRow = [1, 2, 1, 3];
+      let rows = 0;
+      while (imagesLeft > 0) {
+        if (imagesLeft === 1) {
+          rows++;
+          imagesLeft -= 1;
+        } else if (imagesLeft === 2) {
+          rows += 2;
+          imagesLeft -= 2;
+        } else {
+          let choice = imgPerRow[rows % imgPerRow.length];
+          imagesLeft -= choice;
+          rows++;
+        }
+      }
       let currentImgIndex = 0;
-      for (let i = 0; i < images.length; i++) {
+      for (let row = 0; row < rows; row++) {
+        let choice = imgPerRow[row % imgPerRow.length];
         //  if only 1 image left in array, use it as full size
-        let choice = imgPerRow[i % imgPerRow.length];
         if (images.length - currentImgIndex === 1) {
           choice = 1;
         }
         if (images.length - currentImgIndex === 2) {
           choice = 2;
         }
-
         switch (choice) {
           case 1:
             //  ADD SINGLE IMG
-            gallery.push(<SingleImage key={i} img={images[currentImgIndex]} />);
+            gallery.push(
+              <SingleImage key={row} img={images[currentImgIndex]} />
+            );
             currentImgIndex++;
             break;
           case 2:
             // ADD 2 IMAGES
             gallery.push(
               <Doubles
-                key={i}
+                key={row}
                 images={[images[currentImgIndex], images[currentImgIndex + 1]]}
               />
             );
@@ -212,7 +280,7 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
             // ADD 3 images
             gallery.push(
               <Triples
-                key={i}
+                key={row}
                 images={[
                   images[currentImgIndex],
                   images[currentImgIndex + 1],

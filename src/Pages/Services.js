@@ -1,5 +1,6 @@
 import React, { Fragment, Suspense, useState, useEffect } from "react";
 import IntroImage from "../components/IntroImage";
+import Spinner from "../components/Spinner";
 import ServicePricing from "../components/pricing/ServicePricing";
 
 export default function Service({ services }) {
@@ -21,9 +22,9 @@ export default function Service({ services }) {
       }
     }
   }, [serviceId, services]);
-  return (
+  return service && images ? (
     <Fragment>
-      <Suspense fallback={<div style={{ height: "35vh" }}></div>}>
+      <Suspense fallback={<div style={{ height: "35vh" }}> </div>}>
         <IntroImage
           subtitle={(service && service.name) || null}
           height="35vh"
@@ -33,5 +34,14 @@ export default function Service({ services }) {
         <ServicePricing {...service} images={images} />
       </div>
     </Fragment>
+  ) : (
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{
+        height: "100vh",
+      }}
+    >
+      <Spinner />
+    </div>
   );
 }

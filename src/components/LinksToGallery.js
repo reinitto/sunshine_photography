@@ -11,9 +11,9 @@ let swapArrayElements = function (arr, indexA, indexB) {
 
 let SingleLink = ({ link, dimensions = { w: 450, h: "auto" }, style = {} }) => {
   let { w, h } = dimensions;
-  let imageWidth = w > 300 ? 450 : 300;
+  let imageWidth = 450;
   if (link) {
-    let { key, name, thumbnailImage } = link;
+    let { key, name, thumbnailImage: publicId } = link;
     return (
       <Link to={`/services/${key}`} key={key}>
         <div
@@ -25,8 +25,8 @@ let SingleLink = ({ link, dimensions = { w: 450, h: "auto" }, style = {} }) => {
         >
           <Image
             publicId={
-              thumbnailImage
-                ? thumbnailImage
+              publicId
+                ? publicId
                 : "images/portfolio/couples/placeholder_klk233"
             }
             width={imageWidth}
@@ -37,9 +37,18 @@ let SingleLink = ({ link, dimensions = { w: 450, h: "auto" }, style = {} }) => {
               width: "100%",
               height: "100%",
               ...style,
+              background: `linear-gradient(
+                rgba(147, 173, 207, 0.15), 
+                rgba(147, 173, 207, 0.45)
+              )`,
             }}
+            secure="true"
           >
-            <Transformation quality="auto" fetchFormat="auto" />
+            <Transformation
+              flags="progressive:semi"
+              quality="auto"
+              fetchFormat="auto"
+            />
           </Image>
           <div>
             <p className="link-overlay-text text-uppercase">
@@ -116,9 +125,9 @@ export default function LinksToGallery({ services }) {
   return (
     <div
       className={width <= 768 ? "pb-3 mx-auto w-90 " : "container pb-3"}
-      style={{
-        backgroundColor: "#faf7f6",
-      }}
+      // style={{
+      //   backgroundColor: "#faf7f6",
+      // }}
     >
       <h2 className="text-center">Capture Your Life's Journey</h2>
       <CloudinaryContext cloudName="sunshinephoto">

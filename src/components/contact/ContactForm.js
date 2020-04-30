@@ -154,17 +154,22 @@ export default function ContactForm() {
               backgroundRepeat: `no-repeat`,
               backgroundImage: `url(${contactFormBg})`,
               height: height,
+              width: "100%",
             }
           : {
               backgroundImage: `url(${contactFormBg})`,
               height: height,
+              width: "100%",
             }
       }
     >
       <div
-        className="d-flex flex-column"
+        className="d-flex flex-column justify-content-center align-items-center"
         id="contact-form"
         ref={contactFormRef}
+        style={{
+          position: "absolute",
+        }}
       >
         <div className="viewContainer">
           <div className="slice">
