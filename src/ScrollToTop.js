@@ -3,8 +3,20 @@ import { withRouter } from "react-router-dom";
 
 class ScrollToTop extends Component {
   componentDidUpdate(prevProps) {
-    if (this.props.location !== prevProps.location) {
-      window.scrollTo(0, 0);
+    const {
+      location: { pathname, hash },
+    } = this.props;
+
+    if (
+      pathname !== prevProps.location.pathname ||
+      hash !== prevProps.location.hash
+    ) {
+      const element = document.getElementById(hash.replace("#", ""));
+      window.scrollTo({
+        behavior: element ? "smooth" : "auto",
+        top: element ? element.offsetTop : 0,
+      });
+      // window.scrollTo(0, 0);
       this.props.setLocation(this.props.location);
     }
   }
