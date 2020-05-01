@@ -86,20 +86,26 @@ export default class MyNavbar extends Component {
     let locationHash = location && location.hash ? location.hash : "";
     let locationPathname =
       location && location.pathname ? location.pathname.split("/")[1] : "";
-    ["services", "journal", "info"].forEach((path) => {
-      let item = document.querySelector(`#collasible-nav-dropdown-${path}`);
-      if (item && item.classList.length > 0) {
-        item.classList.remove("active");
-      }
+    // remove all active classes
+    let allActives = document.querySelector(".navbar")
+      ? document.querySelector(".navbar").querySelectorAll(".active")
+      : [];
+    allActives.forEach((withActiveClass) => {
+      withActiveClass.classList.remove("active");
     });
-    if (
-      locationPathname === "services" ||
-      locationPathname === "journal" ||
-      locationPathname === "info"
-    ) {
+    let dropdowns = ["services", "journal", "info"];
+    if (dropdowns.includes(locationPathname)) {
       document
         .querySelector(`#collasible-nav-dropdown-${locationPathname}`)
         .classList.add("active");
+    }
+    if (locationPathname === "About") {
+      document
+        .querySelector(`#collasible-nav-dropdown-info`)
+        .classList.add("active");
+    }
+    if (locationHash === "#contactForm") {
+      document.querySelector(`#navlink-contactForm`).classList.add("active");
     }
 
     return (
@@ -158,7 +164,9 @@ export default class MyNavbar extends Component {
                 <NavDropdown.Item disabled>Photo Book</NavDropdown.Item>
               </LinkContainer>
             </NavDropdown>
-            <Nav.Link href={`/#contactForm`}>Contact</Nav.Link>
+            <Nav.Link id="navlink-contactForm" href={`/#contactForm`}>
+              Contact
+            </Nav.Link>
             <NavDropdown title="Blog" id="collasible-nav-dropdown-journal">
               {this.props.journals
                 ? Object.keys(this.props.journals).map((journalId, i) => {

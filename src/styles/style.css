@@ -606,35 +606,35 @@ h3 {
   background-color: #faf7f6;
 }
 
-#contactForm {
+#contactFormForm {
   margin: auto;
   width: 90%;
   background-color: rgba(250, 247, 246, 0.7);
   padding: 1rem;
 }
 
-#contactForm ::-webkit-input-placeholder {
+#contactFormForm ::-webkit-input-placeholder {
   text-align: center;
   border-bottom: 1px solid #3d4856;
 }
 
-#contactForm :-ms-input-placeholder {
+#contactFormForm :-ms-input-placeholder {
   text-align: center;
   border-bottom: 1px solid #3d4856;
 }
 
-#contactForm ::-ms-input-placeholder {
+#contactFormForm ::-ms-input-placeholder {
   text-align: center;
   border-bottom: 1px solid #3d4856;
 }
 
-#contactForm ::placeholder {
+#contactFormForm ::placeholder {
   text-align: center;
   border-bottom: 1px solid #3d4856;
 }
 
-#contactForm input,
-#contactForm textarea {
+#contactFormForm input,
+#contactFormForm textarea {
   border: none;
   background: transparent;
   width: 70%;
@@ -727,7 +727,7 @@ h3 {
     -webkit-transition: 0.25s;
     transition: 0.25s;
   }
-  #contactForm {
+  #contactFormForm {
     width: 70%;
   }
 }

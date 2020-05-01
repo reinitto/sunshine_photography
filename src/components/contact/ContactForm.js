@@ -6,7 +6,7 @@ import { contactFormBg } from "../../content/backgroundImages";
 const ContactFormFront = ({ submitMessage }) => {
   return (
     <div className="facefront d-flex flex-column justify-content-center">
-      <form onSubmit={submitMessage} id="contactForm" name="contactForm">
+      <form onSubmit={submitMessage} id="contactFormForm" name="contactForm">
         <div className="form-group">
           <h2 className="text-center text-capitalize container">
             I'd Like To Hear From You!
@@ -125,7 +125,7 @@ export default function ContactForm() {
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
     let message = document.getElementById("message").value;
-    let contactForm = document.getElementById("contactForm");
+    let contactForm = document.getElementById("contactFormForm");
 
     saveMessage({ name, email, message });
     //  Reset form
@@ -147,6 +147,7 @@ export default function ContactForm() {
   return (
     <div
       className="d-flex flex-column contact-form-container cover-image justify-content-center align-items-center"
+      id="contactForm"
       style={
         windowWidth > 768
           ? {
