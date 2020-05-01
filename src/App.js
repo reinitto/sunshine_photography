@@ -1,5 +1,10 @@
 import React, { Component, Fragment } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
@@ -148,7 +153,7 @@ class App extends Component {
             <Switch>
               <Route
                 exact
-                path="/"
+                path="/home"
                 render={(props) => (
                   <Home
                     {...props}
@@ -185,7 +190,12 @@ class App extends Component {
                 isSignedIn={this.state.user}
                 user={this.state.user}
               />
-              <Route
+              <Redirect
+                to={{
+                  pathname: "/home",
+                }}
+              />
+              {/* <Route
                 render={(props) => (
                   <Home
                     {...props}
@@ -193,7 +203,7 @@ class App extends Component {
                     services={this.state.services}
                   />
                 )}
-              />
+              /> */}
             </Switch>
           </Fragment>
         </ScrollToTop>
