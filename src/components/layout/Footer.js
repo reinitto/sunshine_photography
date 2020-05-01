@@ -9,7 +9,16 @@ const Footer = ({ journals }) => {
     journalItems = createJournalItems(journals);
   }
   let windowWidth = useWindowWidth();
-  let height = Math.max(Math.floor(windowWidth / 10), 125) * 1.5 + 32;
+  let itemHeight = Math.max(Math.floor(windowWidth / 10), 125);
+  // padding 2 x 1rem
+  // border 2 x 1px
+  // scrollbar 17px
+  // console.log("windowWidth", windowWidth);
+  // console.log("itemHeight", itemHeight);
+  // console.log("itemHeight*1.5", itemHeight * 1.5);
+  let smallHeight = itemHeight + 32 + 17;
+  // console.log("smallHeight", smallHeight);
+  let height = windowWidth > 768 ? itemHeight * 1.5 + 32 + 2 : smallHeight;
   let style = {};
   let fontSize = windowWidth * 0.01;
   if (fontSize > 16) {
@@ -19,6 +28,7 @@ const Footer = ({ journals }) => {
     fontSize = 8;
   }
   style.fontsize = fontSize;
+  // console.log("footer height", height);
   return (
     <footer className="d-flex flex-column">
       {journalItems && journalItems.length > 0 ? (

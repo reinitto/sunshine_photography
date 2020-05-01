@@ -1,7 +1,7 @@
-import React, { lazy, Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import ContactForm from "../components/contact/ContactForm";
 import Hero from "../components/Hero";
-import Spinner from "../components/Spinner";
+// import Spinner from "../components/Spinner";
 import LinksToGallery from "../components/LinksToGallery";
 import HorizontalScroll from "../components/HorizontalScroll";
 import { mainBg, contactFormBg } from "../content/backgroundImages";

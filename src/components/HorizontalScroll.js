@@ -89,7 +89,7 @@ export const HorizontalScroll = ({ list, footer, style = {} }) => {
   let windowWidth = useWindowWidth();
   let sideLength = footer ? Math.max(Math.floor(windowWidth / 10), 125) : 250;
 
-  if (list) {
+  if (list && list.length > 0) {
     if (windowWidth > 768) {
       return (
         <CloudinaryContext cloudName="sunshinephoto">
@@ -167,7 +167,11 @@ export const HorizontalScroll = ({ list, footer, style = {} }) => {
     return (
       <div
         style={{
-          height: `${sideLength * 1.5}px`,
+          height: `${
+            windowWidth > 768
+              ? sideLength * 1.5 + 1 * 16 + 2
+              : sideLength * 1.5 + 2 * 16 + 17
+          }px`,
         }}
       ></div>
     );
