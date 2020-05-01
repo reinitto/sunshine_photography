@@ -1,10 +1,11 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import ContactForm from "../components/contact/ContactForm";
 import Hero from "../components/Hero";
+import Spinner from "../components/Spinner";
 import LinksToGallery from "../components/LinksToGallery";
+import HorizontalScroll from "../components/HorizontalScroll";
 import { mainBg, contactFormBg } from "../content/backgroundImages";
 import { createJournalItems } from "../components/createJournalItems";
-const HorizontalScroll = lazy(() => import("../components/HorizontalScroll"));
 
 const Home = ({ journals, services }) => {
   let [travelJournals, setTravelJournals] = useState();
@@ -30,10 +31,8 @@ const Home = ({ journals, services }) => {
         />
       </Suspense>
       <LinksToGallery services={allServices} />
-      <Suspense fallback={"Still loading..."}>
-        <h2 className="text-center">Latest Travel Adventures</h2>
-        <HorizontalScroll list={travelJournals} />
-      </Suspense>
+      <h2 className="text-center">Latest Travel Adventures</h2>
+      <HorizontalScroll list={travelJournals} />
       <ContactForm backgroundImage={contactFormBg} />
     </div>
   );

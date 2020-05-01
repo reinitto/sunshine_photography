@@ -78,12 +78,12 @@ export const Menu = ({ list, sideLength, footer, style = {} }) =>
     );
   });
 
-const Arrow = ({ text, className }) => {
-  return <div className={className}>{text}</div>;
-};
+// const Arrow = ({ text, className }) => {
+//   return <div className={className}>{text}</div>;
+// };
 
-export const ArrowLeft = Arrow({ text: "<", className: "arrow-prev" });
-export const ArrowRight = Arrow({ text: ">", className: "arrow-next" });
+// export const ArrowLeft = Arrow({ text: "<", className: "arrow-prev" });
+// export const ArrowRight = Arrow({ text: ">", className: "arrow-next" });
 
 export const HorizontalScroll = ({ list, footer, style = {} }) => {
   let windowWidth = useWindowWidth();
@@ -97,27 +97,22 @@ export const HorizontalScroll = ({ list, footer, style = {} }) => {
             className="d-flex justify-content-center align-items-center"
             style={{
               position: "relative",
-              // background: `linear-gradient(90deg,
-              //    rgba(147, 173, 207, 1) 10%,
-              //    rgba(255, 255, 255, 1) 25%,
-              //    rgba(255, 255, 255, 1) 75%,
-              //    rgba(147, 173, 207, 1) 90%)`,
               borderTop: "1px solid black",
               borderBottom: "1px solid black",
               margin: "1rem auto",
             }}
           >
             <ScrollingHorizontally
-              pageLock={true}
+              // pageLock={true}
               reverseScroll={true}
               style={{
                 height: `${sideLength * 1.5}px`,
                 width: "100%",
-                // background: `linear-gradient(90deg, rgba(0, 0, 0, 0.55) 10%, rgba(0, 0, 0, 0.10) 25%, rgba(0, 0, 0, 0.10) 75%, rgba(0, 0, 0, 0.55) 90%)`,
               }}
+              config={{ stiffness: 60, damping: 10 }}
               // className="scrolling-horizontally"
-              //  config        = {{ stiffness: int, damping: int }}
-              //  animValues    = { int }
+              //  config = {{ stiffness: int, damping: int }}
+              // animValues={10}
             >
               {list &&
                 Menu({ list: [...list, ...list], sideLength, style, footer })}
@@ -159,7 +154,6 @@ export const HorizontalScroll = ({ list, footer, style = {} }) => {
                 overflowX: "scroll",
                 margin: "1rem auto",
                 width: "90%",
-                // background: `linear-gradient(90deg, rgba(0, 0, 0, 0.55) 10%, rgba(0, 0, 0, 0.10) 25%, rgba(0, 0, 0, 0.10) 75%, rgba(0, 0, 0, 0.55) 90%)`,
               }}
             >
               {list &&

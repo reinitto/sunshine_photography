@@ -9,6 +9,7 @@ const Footer = ({ journals }) => {
     journalItems = createJournalItems(journals);
   }
   let windowWidth = useWindowWidth();
+  let height = Math.max(Math.floor(windowWidth / 10), 125) * 1.5 + 32;
   let style = {};
   let fontSize = windowWidth * 0.01;
   if (fontSize > 16) {
@@ -20,12 +21,21 @@ const Footer = ({ journals }) => {
   style.fontsize = fontSize;
   return (
     <footer className="d-flex flex-column">
-      <HorizontalScroll
-        hideArrows={true}
-        list={journalItems}
-        footer={true}
-        style={style}
-      />
+      {journalItems && journalItems.length > 0 ? (
+        <HorizontalScroll
+          hideArrows={true}
+          list={journalItems}
+          footer={true}
+          style={style}
+        />
+      ) : (
+        <div
+          style={{
+            ...style,
+            height,
+          }}
+        ></div>
+      )}
       <div className="d-flex justify-content-center">
         <button
           className="btn btn-primary btn-base"
