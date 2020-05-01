@@ -86,25 +86,45 @@ export default class MyNavbar extends Component {
     let locationHash = location && location.hash ? location.hash : "";
     let locationPathname =
       location && location.pathname ? location.pathname.split("/")[1] : "";
-    // remove all active classes
+
+    let dropdowns = ["services", "journal", "info"];
     let allActives = document.querySelector(".navbar")
       ? document.querySelector(".navbar").querySelectorAll(".active")
       : [];
-    allActives.forEach((withActiveClass) => {
-      withActiveClass.classList.remove("active");
-    });
-    let dropdowns = ["services", "journal", "info"];
+    if (
+      !dropdowns.includes(locationPathname) &&
+      (locationHash || locationPathname)
+    ) {
+      // remove all active classes
+      dropdowns.forEach((dropdown) => {
+        document
+          .querySelector(`#collasible-nav-dropdown-${dropdown}`)
+          .classList.remove("active");
+      });
+    }
     if (dropdowns.includes(locationPathname)) {
+      // remove all active classes
+      allActives.forEach((withActiveClass) => {
+        withActiveClass.classList.remove("active");
+      });
       document
         .querySelector(`#collasible-nav-dropdown-${locationPathname}`)
         .classList.add("active");
     }
     if (locationPathname === "About") {
+      // remove all active classes
+      allActives.forEach((withActiveClass) => {
+        withActiveClass.classList.remove("active");
+      });
       document
         .querySelector(`#collasible-nav-dropdown-info`)
         .classList.add("active");
     }
     if (locationHash === "#contactForm") {
+      // remove all active classes
+      allActives.forEach((withActiveClass) => {
+        withActiveClass.classList.remove("active");
+      });
       document.querySelector(`#navlink-contactForm`).classList.add("active");
     }
 
@@ -120,7 +140,7 @@ export default class MyNavbar extends Component {
         <Navbar.Collapse id="collapsibleNavbar">
           <Nav
             className="ml-auto mr-2"
-            activeKey={`/${locationHash}` || `/${locationPathname}`}
+            activeKey={`/${locationPathname || locationHash || "home"}`}
           >
             {isAdmin ? (
               <LinkContainer to="/admin">
