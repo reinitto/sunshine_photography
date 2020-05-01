@@ -240,7 +240,7 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
           rows++;
           imagesLeft -= 1;
         } else if (imagesLeft === 2) {
-          rows += 2;
+          rows += 1;
           imagesLeft -= 2;
         } else {
           let choice = imgPerRow[rows % imgPerRow.length];
