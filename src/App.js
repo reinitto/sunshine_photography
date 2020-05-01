@@ -190,12 +190,12 @@ class App extends Component {
                 isSignedIn={this.state.user}
                 user={this.state.user}
               />
-              <Redirect
+              {/* <Redirect
                 to={{
                   pathname: "/home",
                 }}
-              />
-              {/* <Route
+              /> */}
+              <Route
                 render={(props) => (
                   <Home
                     {...props}
@@ -203,7 +203,7 @@ class App extends Component {
                     services={this.state.services}
                   />
                 )}
-              /> */}
+              />
             </Switch>
           </Fragment>
         </ScrollToTop>
