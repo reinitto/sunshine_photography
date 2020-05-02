@@ -1,11 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
+import LazyBackground from "./LazyBackground";
 import { useWindowWidth } from "./useWindowWidth";
-import { mainBg } from "../content/backgroundImages";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import getIcons from "./SocialIcons";
+let { FontAwesomeIcon, faFacebook, faInstagram, faEnvelope } = {};
+let mainBg =
+  "https://res.cloudinary.com/sunshinephoto/image/upload/w_1600/images/backgrounds/Front_mount-1_po42ya";
+let placeholderBg =
+  "https://res.cloudinary.com/sunshinephoto/image/upload/w_1/images/backgrounds/Front_mount-1_po42ya";
+getIcons().then((res) => {
+  FontAwesomeIcon = res.FontAwesomeIcon;
+  faFacebook = res.faFacebook;
+  faInstagram = res.faInstagram;
+  faEnvelope = res.faEnvelope;
+});
 
 export default function Hero({
   imageSrc,
@@ -30,7 +38,16 @@ export default function Hero({
     subtitleSpacing = "0.8rem";
   }
   return (
-    <CloudinaryContext cloudName="sunshinephoto">
+    // <CloudinaryContext cloudName="sunshinephoto">
+    <LazyBackground
+      src={mainBg}
+      placeholder={placeholderBg}
+      className="cover-image"
+      style={{
+        width: "100%",
+        height,
+      }}
+    >
       <div
         // className="cover-image"
         style={{
@@ -38,24 +55,6 @@ export default function Hero({
           height,
         }}
       >
-        <Image
-          publicId={mainBg}
-          width={1600}
-          crop="fill"
-          className="cover-image"
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
-          secure="true"
-        >
-          <Transformation
-            quality="auto"
-            fetchFormat="auto"
-            flags="progressive:semi"
-            dpr="auto"
-          />
-        </Image>
         <div className="hero">
           <h1
             className="text-center title-text"
@@ -97,17 +96,26 @@ export default function Hero({
         </div>
         <div className="hero-social-container">
           <Link to="#" className="hero-social">
-            <FontAwesomeIcon inverse icon={faFacebook} size="lg" />
+            {FontAwesomeIcon && faFacebook && (
+              <FontAwesomeIcon inverse icon={faFacebook} size="lg" />
+            )}
           </Link>
           <Link to="#" className="hero-social">
-            <FontAwesomeIcon inverse icon={faInstagram} size="lg" />
+            {FontAwesomeIcon && faInstagram && (
+              <FontAwesomeIcon inverse icon={faInstagram} size="lg" />
+            )}
+            {/* <FontAwesomeIcon inverse icon={faInstagram} size="lg" /> */}
           </Link>
           <a as={Link} href="/#contactForm" className="hero-social">
-            <FontAwesomeIcon inverse icon={faEnvelope} size="lg" />
+            {FontAwesomeIcon && faEnvelope && (
+              <FontAwesomeIcon inverse icon={faEnvelope} size="lg" />
+            )}
+            {/* <FontAwesomeIcon inverse icon={faEnvelope} size="lg" /> */}
           </a>
         </div>
       </div>
-    </CloudinaryContext>
+    </LazyBackground>
+    // </CloudinaryContext>
   );
 }
 Hero.defaultProps = {

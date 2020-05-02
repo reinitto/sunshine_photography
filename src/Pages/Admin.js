@@ -1,12 +1,15 @@
-import React, { Fragment, Component } from "react";
+import React, { Fragment, Component, Suspense, lazy } from "react";
 import { uuid } from "uuidv4";
 import IntroImage from "../components/IntroImage";
 import { setTextBlockText } from "../components/admin/setTextBlockText";
-import EditJournals from "../components/admin/EditJournals";
-import ServicesView from "../components/admin/ServicesView";
+
+// import EditJournals from "../components/admin/EditJournals";
+// import ServicesView from "../components/admin/ServicesView";
 import { createJournalToEdit } from "../components/admin/createJournalToEdit";
 import { updateImageSrc } from "../components/admin/updateImageSrc";
 import { updateImages } from "../components/admin/updateImages";
+const EditJournals = lazy(() => import("../components/admin/EditJournals"));
+const ServicesView = lazy(() => import("../components/admin/ServicesView"));
 let realUrl =
   "https://us-central1-momblog-15d1c.cloudfunctions.net/uploadToCloudinary-uploadToCloudinary";
 // "http://localhost:5001/momblog-15d1c/us-central1/uploadToCloudinary-uploadToCloudinary";
@@ -454,84 +457,110 @@ export default class Admin extends Component {
     } = this.state.newJournal;
     let { journals } = this.props;
     return (
-      <Fragment>
-        <IntroImage />
-        <div>
-          <ul style={{ display: "flex", marginTop: "1rem" }}>
-            <li
-              style={{
-                listStyleType: "none",
-                border: "1px solid black",
-                padding: "1rem",
-              }}
-            >
-              <a
-                href="#!"
-                onClick={() => {
-                  this.setJournalView();
+      <Suspense
+        fallback={<div style={{ height: "100vh", width: "100%" }}>Loading</div>}
+      >
+        <Fragment>
+          <IntroImage />
+          <div>
+            <ul style={{ display: "flex", marginTop: "1rem" }}>
+              <li
+                style={{
+                  listStyleType: "none",
+                  border: "1px solid black",
+                  padding: "1rem",
                 }}
               >
-                Journals
-              </a>
-            </li>
-            <li
-              style={{
-                listStyleType: "none",
-                border: "1px solid black",
-                padding: "1rem",
-              }}
-            >
-              <a
-                href="#!"
-                onClick={() => {
-                  this.setServicesView();
+                <a
+                  href="#!"
+                  onClick={() => {
+                    this.setJournalView();
+                  }}
+                >
+                  Journals
+                </a>
+              </li>
+              <li
+                style={{
+                  listStyleType: "none",
+                  border: "1px solid black",
+                  padding: "1rem",
                 }}
               >
-                Services
-              </a>
-            </li>
-          </ul>
-        </div>
-        {this.state.menu === "journals" ? (
-          <EditJournals
-            {...{
-              journals,
-              uploading,
-              updating,
-              uploadingTitle,
-              imagesUploaded,
-              imagesToUpload,
-              deletingSets,
-              setsToDelete,
-              title,
-              shortTitle,
-              titleImage,
-              journalImages,
-              edit,
-              editKey,
-              setJournalToEdit: this.setJournalToEdit,
-              addNewJournalImage: this.addNewJournalImage,
-              addNewTextBlock: this.addNewTextBlock,
-              deleteImageSet: this.deleteImageSet,
-              deleteJournal: this.deleteJournal,
-              onDragEnd: this.onDragEnd,
-              setShortTitle: this.setShortTitle,
-              setTitle: this.setTitle,
-              loadTitle: this.loadTitle,
-              setImageText: this.setImageText,
-              loadFile: this.loadFile,
-              updateTextBlockText: this.updateTextBlockText,
-              submit: this.submit,
-              submitEdit: this.submitEdit,
-              closeOverlay: this.closeOverlay,
-              resetCurrentJournal: this.resetCurrentJournal,
-            }}
-          />
-        ) : null}
-        {this.state.menu === "services" ? (
-          <ServicesView user={this.props.user} />
-        ) : null}
-      </Fragment>
+                <a
+                  href="#!"
+                  onClick={() => {
+                    this.setServicesView();
+                  }}
+                >
+                  Services
+                </a>
+              </li>
+            </ul>
+          </div>
+          {this.state.menu === "journals" ? (
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    height: "100vh",
+                    width: "100%",
+                  }}
+                ></div>
+              }
+            >
+              <EditJournals
+                {...{
+                  journals,
+                  uploading,
+                  updating,
+                  uploadingTitle,
+                  imagesUploaded,
+                  imagesToUpload,
+                  deletingSets,
+                  setsToDelete,
+                  title,
+                  shortTitle,
+                  titleImage,
+                  journalImages,
+                  edit,
+                  editKey,
+                  setJournalToEdit: this.setJournalToEdit,
+                  addNewJournalImage: this.addNewJournalImage,
+                  addNewTextBlock: this.addNewTextBlock,
+                  deleteImageSet: this.deleteImageSet,
+                  deleteJournal: this.deleteJournal,
+                  onDragEnd: this.onDragEnd,
+                  setShortTitle: this.setShortTitle,
+                  setTitle: this.setTitle,
+                  loadTitle: this.loadTitle,
+                  setImageText: this.setImageText,
+                  loadFile: this.loadFile,
+                  updateTextBlockText: this.updateTextBlockText,
+                  submit: this.submit,
+                  submitEdit: this.submitEdit,
+                  closeOverlay: this.closeOverlay,
+                  resetCurrentJournal: this.resetCurrentJournal,
+                }}
+              />
+            </Suspense>
+          ) : null}
+          {this.state.menu === "services" ? (
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    height: "100vh",
+                    width: "100%",
+                  }}
+                ></div>
+              }
+            >
+              <ServicesView user={this.props.user} />
+            </Suspense>
+          ) : null}
+        </Fragment>
+      </Suspense>
     );
   }
 }

@@ -1,7 +1,9 @@
-import React from "react";
-import { HorizontalScroll } from "../HorizontalScroll";
+import React, { lazy } from "react";
+
+// import { HorizontalScroll } from "../HorizontalScroll";
 import { createJournalItems } from "../createJournalItems";
 import { useWindowWidth } from "../useWindowWidth";
+const HorizontalScroll = lazy(() => import("../HorizontalScroll"));
 
 const Footer = ({ journals }) => {
   let journalItems = [];

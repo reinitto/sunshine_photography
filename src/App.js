@@ -1,33 +1,48 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import firebase from "firebase/app";
-import "firebase/database";
-import "firebase/firestore";
-import "firebase/functions";
 import ScrollToTop from "./ScrollToTop";
-import Home from "./Pages/Home";
-import Journal from "./Pages/Journal";
-import Services from "./Pages/Services";
-import Admin from "./Pages/Admin";
-import About from "./Pages/About";
-import Dashboard from "./Pages/Dashboard";
-import Footer from "./components/layout/Footer";
-import { MyNavbar as Navbar } from "./components/layout/Navbar";
+// import "./styles/style.css";
+// import firebase from "firebase/app";
+// import "firebase/database";
+// import "firebase/firestore";
+// import "firebase/functions";
+import firebase from "./Firebase";
+// import Home from "./Pages/Home";
+// import Journal from "./Pages/Journal";
+// import Services from "./Pages/Services";
+// import Admin from "./Pages/Admin";
+// import About from "./Pages/About";
+// import Dashboard from "./Pages/Dashboard";
+// import Footer from "./components/layout/Footer";
+// import { MyNavbar as Navbar } from "./components/layout/Navbar";
 import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./components/ProtectedRoute";
-import "./styles/style.css";
-require("../node_modules/firebase/firebase-auth");
+// const ScrollToTop = lazy(() => import("./ScrollToTop"));
+const Home = lazy(() => import("./Pages/Home"));
+const Journal = lazy(() => import("./Pages/Journal"));
+const Services = lazy(() => import("./Pages/Services"));
+const Admin = lazy(() => import("./Pages/Admin"));
+const About = lazy(() => import("./Pages/About"));
+const Dashboard = lazy(() => import("./Pages/Dashboard"));
+const Footer = lazy(() => import("./components/layout/Footer"));
+const Navbar = lazy(() => import("./components/layout/Navbar"));
+// const AdminRoute = lazy(() => import("./components/AdminRoute"));
+// const PrivateRoute = lazy(() => import("./components/ProtectedRoute"));
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDU7pnAHmVuuf2nKxa5HpBBI4GaCobCQRw",
-  authDomain: "momblog-15d1c.firebaseapp.com",
-  databaseURL: "https://momblog-15d1c.firebaseio.com",
-  projectId: "momblog-15d1c",
-  storageBucket: "",
-  messagingSenderId: "754776938435",
-  appId: "1:754776938435:web:43cadca033fb5094ec0f76",
-};
-firebase.initializeApp(firebaseConfig);
+// const firebase = lazy(() => import("./Firebase"));
+
+// require("../node_modules/firebase/firebase-auth");
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDU7pnAHmVuuf2nKxa5HpBBI4GaCobCQRw",
+//   authDomain: "momblog-15d1c.firebaseapp.com",
+//   databaseURL: "https://momblog-15d1c.firebaseio.com",
+//   projectId: "momblog-15d1c",
+//   storageBucket: "",
+//   messagingSenderId: "754776938435",
+//   appId: "1:754776938435:web:43cadca033fb5094ec0f76",
+// };
+// firebase.initializeApp(firebaseConfig);
 
 class App extends Component {
   constructor(props) {
@@ -41,43 +56,45 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    this.getServices();
+  async componentDidMount() {
+    await this.getServices();
+    await this.getJournals();
 
-    firebase.auth().onAuthStateChanged((user) => {
-      this.setState({ user: user });
-      firebase
-        .auth()
-        .currentUser.getIdTokenResult()
-        .then((idTokenResult) => {
-          this.setAdmin(!!idTokenResult.claims.admin);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
-    // Confirm the link is a sign-in with email link.
-    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-      var email = window.localStorage.getItem("emailForSignIn");
-      if (!email) {
-        // User opened the link on a different device. To prevent session fixation
-        // attacks, ask the user to provide the associated email again. For example:
-        email = window.prompt("Please provide your email for confirmation");
+    firebase().then(({ auth }) => {
+      auth.onAuthStateChanged((user) => {
+        this.setState({ user: user });
+        auth.currentUser
+          .getIdTokenResult()
+          .then((idTokenResult) => {
+            this.setAdmin(!!idTokenResult.claims.admin);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+
+      // Confirm the link is a sign-in with email link.
+      if (auth.isSignInWithEmailLink(window.location.href)) {
+        var email = window.localStorage.getItem("emailForSignIn");
+        if (!email) {
+          // User opened the link on a different device. To prevent session fixation
+          // attacks, ask the user to provide the associated email again. For example:
+          email = window.prompt("Please provide your email for confirmation");
+        }
+        // The client SDK will parse the code from the link for you.
+        auth
+          .signInWithEmailLink(email, window.location.href)
+          .then((result) => {
+            // Clear email from storage.
+            window.localStorage.removeItem("emailForSignIn");
+            const { user } = result;
+            this.setUser(user);
+          })
+          .catch(function (error) {
+            console.log("login erorr", error);
+          });
       }
-      // The client SDK will parse the code from the link for you.
-      firebase
-        .auth()
-        .signInWithEmailLink(email, window.location.href)
-        .then((result) => {
-          // Clear email from storage.
-          window.localStorage.removeItem("emailForSignIn");
-          const { user } = result;
-          this.setUser(user);
-        })
-        .catch(function (error) {
-          console.log("login erorr", error);
-        });
-    }
+    });
     this.setLocation(window.location);
   }
 
@@ -88,38 +105,40 @@ class App extends Component {
   };
 
   getJournals() {
-    firebase
-      .database()
-      .ref("/journals/")
-      .once("value")
-      .then((snapshot) => {
-        let journalSnap = snapshot.val();
-        if (journalSnap) {
-          // SET JOURNALS
-          this.setState({
-            journals: journalSnap,
-          });
-        }
-      });
+    firebase().then(({ database }) => {
+      database
+        .ref("/journals/")
+        .once("value")
+        .then((snapshot) => {
+          let journalSnap = snapshot.val();
+          if (journalSnap) {
+            // SET JOURNALS
+            this.setState({
+              journals: journalSnap,
+            });
+          }
+        });
+    });
   }
   getServices() {
-    firebase
-      .database()
-      .ref("/services/")
-      .once("value")
-      .then((snapshot) => {
-        let servicesSnap = snapshot.val();
-        if (servicesSnap) {
-          // SET SERVICES
-          // let arr = [];
-          // Object.keys(servicesSnap).forEach((key) => {
-          //   arr.push({ ...servicesSnap[key], key });
-          // });
-          this.setState({
-            services: servicesSnap,
-          });
-        }
-      });
+    firebase().then(({ database }) => {
+      database
+        .ref("/services/")
+        .once("value")
+        .then((snapshot) => {
+          let servicesSnap = snapshot.val();
+          if (servicesSnap) {
+            // SET SERVICES
+            // let arr = [];
+            // Object.keys(servicesSnap).forEach((key) => {
+            //   arr.push({ ...servicesSnap[key], key });
+            // });
+            this.setState({
+              services: servicesSnap,
+            });
+          }
+        });
+    });
   }
 
   setAdmin(admin) {
@@ -134,46 +153,98 @@ class App extends Component {
       <Router>
         <ScrollToTop setLocation={this.setLocation.bind(this)}>
           <Fragment>
-            <Navbar
-              isAdmin={this.state.admin}
-              isSignedIn={this.state.user}
-              firebase={firebase}
-              setUser={this.setUser.bind(this)}
-              getJournals={this.getJournals.bind(this)}
-              // getServices={this.getServices.bind(this)}
-              journals={this.state.journals}
-              services={this.state.services}
-              location={this.state.currentRoute}
-            />
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    height: "57px",
+                    width: "100%",
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                  }}
+                ></div>
+              }
+            >
+              <Navbar
+                isAdmin={this.state.admin}
+                isSignedIn={this.state.user}
+                firebase={firebase}
+                setUser={this.setUser.bind(this)}
+                // getJournals={this.getJournals.bind(this)}
+                // getServices={this.getServices.bind(this)}
+                journals={this.state.journals}
+                services={this.state.services}
+                location={this.state.currentRoute}
+              />
+            </Suspense>
             <Switch>
               <Route
                 exact
                 path="/"
-                render={(props) => (
-                  <Home
-                    {...props}
-                    journals={this.state.journals}
-                    services={this.state.services}
-                  />
-                )}
+                render={(props) => {
+                  return (
+                    <Suspense
+                      fallback={
+                        <div style={{ height: "100vh", width: "100%" }}>
+                          Loading
+                        </div>
+                      }
+                    >
+                      <Home
+                        {...props}
+                        journals={this.state.journals}
+                        services={this.state.services}
+                      />
+                    </Suspense>
+                  );
+                }}
               />
               <Route
                 path="/journal/:name"
                 render={(props) => (
-                  <Journal {...props} journals={this.state.journals} />
+                  <Suspense
+                    fallback={
+                      <div style={{ height: "100vh", width: "100%" }}>
+                        Loading
+                      </div>
+                    }
+                  >
+                    <Journal {...props} journals={this.state.journals} />
+                  </Suspense>
                 )}
               />
               <Route
                 path="/services/:service"
                 render={(props) => (
-                  <Services {...props} services={this.state.services} />
+                  <Suspense
+                    fallback={
+                      <div style={{ height: "100vh", width: "100%" }}>
+                        Loading
+                      </div>
+                    }
+                  >
+                    <Services {...props} services={this.state.services} />
+                  </Suspense>
                 )}
               />
-              <Route path="/About" component={About} />
+              <Route
+                path="/About"
+                render={(props) => (
+                  <Suspense
+                    fallback={
+                      <div style={{ height: "100vh", width: "100%" }}>
+                        Loading
+                      </div>
+                    }
+                  >
+                    <About />
+                  </Suspense>
+                )}
+              />
               <AdminRoute
                 path="/admin"
                 component={Admin}
-                firebase={firebase}
                 isAdmin={this.state.admin}
                 user={this.state.user}
                 journals={this.state.journals}
@@ -185,24 +256,34 @@ class App extends Component {
                 isSignedIn={this.state.user}
                 user={this.state.user}
               />
-              {/* <Redirect
-                to={{
-                  pathname: "/home",
-                }}
-              /> */}
               <Route
                 render={(props) => (
-                  <Home
-                    {...props}
-                    journals={this.state.journals}
-                    services={this.state.services}
-                  />
+                  <Suspense
+                    fallback={
+                      <div style={{ height: "100vh", width: "100%" }}>
+                        Loading
+                      </div>
+                    }
+                  >
+                    <Home
+                      {...props}
+                      journals={this.state.journals}
+                      services={this.state.services}
+                    />
+                  </Suspense>
                 )}
               />
+              {/* <Redirect
+                  to={{
+                    pathname: "/home",
+                  }}
+                /> */}
             </Switch>
           </Fragment>
         </ScrollToTop>
-        <Footer journals={this.state.journals} />
+        <Suspense fallback={<div></div>}>
+          <Footer journals={this.state.journals} />
+        </Suspense>
       </Router>
     );
   }

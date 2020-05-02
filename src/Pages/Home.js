@@ -1,11 +1,16 @@
-import React, { Suspense, useEffect, useState } from "react";
-import ContactForm from "../components/contact/ContactForm";
-import Hero from "../components/Hero";
-// import Spinner from "../components/Spinner";
-import LinksToGallery from "../components/LinksToGallery";
-import HorizontalScroll from "../components/HorizontalScroll";
-import { mainBg, contactFormBg } from "../content/backgroundImages";
+import React, { Suspense, useEffect, useState, lazy } from "react";
 import { createJournalItems } from "../components/createJournalItems";
+import { mainBg, contactFormBg } from "../content/backgroundImages";
+// import { CloudinaryContext } from "cloudinary-react";
+const CloudinaryContext = lazy(() =>
+  import("cloudinary-react").then((module) => {
+    return { default: module.CloudinaryContext };
+  })
+);
+const ContactForm = lazy(() => import("../components/contact/ContactForm"));
+const Hero = lazy(() => import("../components/Hero"));
+const LinksToGallery = lazy(() => import("../components/LinksToGallery"));
+const HorizontalScroll = lazy(() => import("../components/HorizontalScroll"));
 
 const Home = ({ journals, services }) => {
   let [travelJournals, setTravelJournals] = useState();
@@ -30,9 +35,13 @@ const Home = ({ journals, services }) => {
           keywords={["lifestyle", "nature", "travel"]}
         />
       </Suspense>
-      <LinksToGallery services={allServices} />
-      <h2 className="text-center">Latest Travel Adventures</h2>
-      <HorizontalScroll list={travelJournals} />
+      <Suspense fallback={<div style={{ height: "100vh" }}></div>}>
+        <CloudinaryContext cloudName="sunshinephoto">
+          <LinksToGallery services={allServices} />
+          <h2 className="text-center">Latest Travel Adventures</h2>
+          <HorizontalScroll list={travelJournals} />
+        </CloudinaryContext>
+      </Suspense>
       <ContactForm backgroundImage={contactFormBg} />
     </div>
   );

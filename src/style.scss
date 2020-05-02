@@ -1,19 +1,4 @@
-@font-face {
-  font-family: "Frutilla-Script";
-  src: local("Frutilla"),
-    url(../fonts/Frutilla/Frutilla_Script.ttf) format("truetype");
-}
-
-@font-face {
-  font-family: "Garamond";
-  src: local("Garamond"), url(../fonts/Garamond/Garamond.ttf) format("truetype");
-}
-
-@font-face {
-  font-family: "Sui_generis";
-  src: local("Sui_generis"),
-    url(../fonts/Sui_generis/sui_generis_rg.ttf) format("truetype");
-}
+@import "../node_modules/bootstrap/scss/bootstrap";
 
 $base-color: #3d4856;
 $base-light-color: #93adcf;
@@ -40,16 +25,16 @@ body {
 
 a {
   color: $base-color;
-  font-family: "Garamond";
+  font-family: "EB Garamond", sans-serif;
   letter-spacing: 2px;
 }
 
 p {
-  font-family: "Garamond";
+  font-family: "EB Garamond", sans-serif;
 }
 
 h1 {
-  font-family: "Frutilla-Script";
+  font-family: "Frutilla_Script", sans-serif;
   color: white;
   font-size: 8vw;
 }
@@ -59,7 +44,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Sui_generis";
+  font-family: "Sui_generis", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   letter-spacing: 5px;
 }
 
@@ -259,7 +244,7 @@ nav.navbar.navbar-expand-md {
   transform: translate(-50%, -50%);
   color: white;
   font-weight: 600;
-  font-family: "Garamond";
+  font-family: "EB Garamond", sans-serif;
   letter-spacing: 3px;
   text-decoration: underline;
 }
@@ -435,17 +420,11 @@ nav.navbar.navbar-expand-md {
   margin-right: auto;
   justify-content: center;
   align-items: center;
-  p {
-    font-size: 8rem;
-    font-family: "Frutilla-Script";
-    text-align: center;
-    color: $link-text-color;
-    margin-bottom: -1rem;
-    letter-spacing: 9px;
-  }
+
   .carousel-text-subtitle {
     color: $base-color;
-    font-family: "Sui_generis";
+    font-family: "Sui_generis", "Lucida Sans Unicode", "Lucida Grande",
+      sans-serif;
     letter-spacing: 10px;
     font-size: 1.6rem;
   }
@@ -453,7 +432,7 @@ nav.navbar.navbar-expand-md {
 
 .carousel-text3 {
   font-size: 1rem;
-  font-family: "Sui_generis";
+  font-family: "Sui_generis", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;

@@ -10,14 +10,12 @@ export default class MyNavbar extends Component {
     loggedIn: this.props.isSignedIn,
     loginDisplay: "none",
     dropdownDisplay: false,
-    journals: [],
   };
 
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("resize", this.handleWidth);
     this.handleWidth();
-    this.props.getJournals();
   }
   componentWillUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -58,19 +56,20 @@ export default class MyNavbar extends Component {
       handleCodeInApp: true,
     };
     return new Promise((resolve, reject) => {
-      this.props.firebase
-        .auth()
-        .sendSignInLinkToEmail(email, actionCodeSettings)
-        .then(function () {
-          // The link was successfully sent. Inform the user.
-          // Save the email locally so you don't need to ask the user for it again
-          // if they open the link on the same device.
-          window.localStorage.setItem("emailForSignIn", email);
-          resolve(true);
-        })
-        .catch(function (error) {
-          reject(error);
-        });
+      this.props.firebase().then(({ auth }) => {
+        auth
+          .sendSignInLinkToEmail(email, actionCodeSettings)
+          .then(function () {
+            // The link was successfully sent. Inform the user.
+            // Save the email locally so you don't need to ask the user for it again
+            // if they open the link on the same device.
+            window.localStorage.setItem("emailForSignIn", email);
+            resolve(true);
+          })
+          .catch(function (error) {
+            reject(error);
+          });
+      });
     });
   };
 
@@ -82,6 +81,7 @@ export default class MyNavbar extends Component {
       isAdmin,
       services,
       location,
+      journals,
     } = this.props;
     let locationHash = location && location.hash ? location.hash : "";
     let locationPathname =
@@ -92,6 +92,7 @@ export default class MyNavbar extends Component {
       ? document.querySelector(".navbar").querySelectorAll(".active")
       : [];
     if (
+      allActives.length > 0 &&
       !dropdowns.includes(locationPathname) &&
       (locationHash || locationPathname)
     ) {
@@ -104,28 +105,34 @@ export default class MyNavbar extends Component {
     }
     if (dropdowns.includes(locationPathname)) {
       // remove all active classes
-      allActives.forEach((withActiveClass) => {
-        withActiveClass.classList.remove("active");
-      });
-      document
-        .querySelector(`#collasible-nav-dropdown-${locationPathname}`)
-        .classList.add("active");
+      allActives.length > 0 &&
+        allActives.forEach((withActiveClass) => {
+          withActiveClass.classList.remove("active");
+        });
+      document.querySelector(`#collasible-nav-dropdown-${locationPathname}`) &&
+        document
+          .querySelector(`#collasible-nav-dropdown-${locationPathname}`)
+          .classList.add("active");
     }
     if (locationPathname === "About") {
       // remove all active classes
-      allActives.forEach((withActiveClass) => {
-        withActiveClass.classList.remove("active");
-      });
-      document
-        .querySelector(`#collasible-nav-dropdown-info`)
-        .classList.add("active");
+      allActives.length > 0 &&
+        allActives.forEach((withActiveClass) => {
+          withActiveClass.classList.remove("active");
+        });
+      document.querySelector(`#collasible-nav-dropdown-info`) &&
+        document
+          .querySelector(`#collasible-nav-dropdown-info`)
+          .classList.add("active");
     }
     if (locationHash === "#contactForm") {
       // remove all active classes
-      allActives.forEach((withActiveClass) => {
-        withActiveClass.classList.remove("active");
-      });
-      document.querySelector(`#navlink-contactForm`).classList.add("active");
+      allActives.length > 0 &&
+        allActives.forEach((withActiveClass) => {
+          withActiveClass.classList.remove("active");
+        });
+      document.querySelector(`#navlink-contactForm`) &&
+        document.querySelector(`#navlink-contactForm`).classList.add("active");
     }
 
     return (
@@ -157,19 +164,20 @@ export default class MyNavbar extends Component {
             </LinkContainer>
 
             <NavDropdown title="Services" id="collasible-nav-dropdown-services">
-              {Object.keys(services).map((key) => {
-                return (
-                  <LinkContainer
-                    to={`/services/${key}`}
-                    key={services[key].folder_name}
-                  >
-                    <NavDropdown.Item>
-                      {services[key].name[0].toUpperCase() +
-                        services[key].name.slice(1)}
-                    </NavDropdown.Item>
-                  </LinkContainer>
-                );
-              })}
+              {typeof services === "object" &&
+                Object.keys(services).map((key) => {
+                  return (
+                    <LinkContainer
+                      to={`/services/${key}`}
+                      key={services[key].folder_name}
+                    >
+                      <NavDropdown.Item>
+                        {services[key].name[0].toUpperCase() +
+                          services[key].name.slice(1)}
+                      </NavDropdown.Item>
+                    </LinkContainer>
+                  );
+                })}
             </NavDropdown>
             <NavDropdown title="Info" id="collasible-nav-dropdown-info">
               <LinkContainer to="/About">
@@ -188,9 +196,9 @@ export default class MyNavbar extends Component {
               Contact
             </Nav.Link>
             <NavDropdown title="Blog" id="collasible-nav-dropdown-journal">
-              {this.props.journals
-                ? Object.keys(this.props.journals).map((journalId, i) => {
-                    let { shortTitle } = this.props.journals[journalId].title;
+              {typeof journals === "object"
+                ? Object.keys(journals).map((journalId, i) => {
+                    let { shortTitle } = journals[journalId].title;
                     return (
                       <LinkContainer
                         key={journalId}
@@ -208,8 +216,10 @@ export default class MyNavbar extends Component {
               <LinkContainer to="/#">
                 <Nav.Link
                   onClick={() => {
-                    firebase.app().auth().signOut();
-                    setUser(null);
+                    firebase().then(({ auth }) => {
+                      auth.signOut();
+                      setUser(null);
+                    });
                   }}
                 >
                   Logout

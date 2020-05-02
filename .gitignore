@@ -28,6 +28,7 @@ firebase.js
 
 /src/firebaseInit.js
 /src/firebase-creds.js
+/src/importFirebase.js
 
 # misc
 .DS_Store

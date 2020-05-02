@@ -1,11 +1,13 @@
-export const createJournalItems = journals => {
-  let items = Object.keys(journals).map(key => {
+export const createJournalItems = (journals) => {
+  let items = Object.keys(journals).map((key) => {
     let { title, titleUrl } = journals[key].title;
     return {
       journalUrl: key,
       title,
-      imageUrl: titleUrl
+      imageUrl: titleUrl,
     };
   });
   return items;
 };
+
+export default createJournalItems;

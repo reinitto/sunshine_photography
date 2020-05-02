@@ -1,5 +1,15 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+require("./styles/style.css");
+require("bootstrap");
+const App = lazy(() => {
+  return import("./App");
+});
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <Suspense fallback={<div>Loading</div>}>
+    <App />
+  </Suspense>,
+
+  document.getElementById("root")
+);

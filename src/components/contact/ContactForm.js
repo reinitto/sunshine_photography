@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import * as firebase from "firebase/app";
 import { useWindowWidth } from "../useWindowWidth";
 import { contactFormBg } from "../../content/backgroundImages";
+import LazyBackground from "../LazyBackground";
 
 const ContactFormFront = ({ submitMessage }) => {
   return (
@@ -63,7 +64,25 @@ const ContactFormBack = () => {
           opacity: "0.7",
         }}
       ></div>
-      <div
+      <LazyBackground
+        className="cover-image"
+        style={{
+          // backgroundImage:
+          //   "url(https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_200/v1584563659/images/about/aboutme3other_qzw1fm.jpg)",
+          position: "absolute",
+          left: "75%",
+          top: "50%",
+          transform: " translate(-50%,-50%)",
+          width: "60%",
+          maxWidth: "450px",
+          margin: "auto",
+          zIndex: "-1",
+          backgroundRepeat: " no-repeat",
+        }}
+        src="https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_200/v1584563659/images/about/aboutme3other_qzw1fm.jpg"
+        placeholder="https://res.cloudinary.com/sunshinephoto/image/upload/w_1/v1584563659/images/about/aboutme3other_qzw1fm.jpg"
+      />
+      {/* <div
         className="cover-image"
         style={{
           backgroundImage:
@@ -78,7 +97,7 @@ const ContactFormBack = () => {
           zIndex: "-1",
           backgroundRepeat: " no-repeat",
         }}
-      ></div>
+      ></div> */}
       <div
         style={{
           position: "absolute",
@@ -145,7 +164,28 @@ export default function ContactForm() {
     height = contactFormRef.current.clientHeight;
   }
   return (
-    <div
+    <LazyBackground
+      className="d-flex flex-column contact-form-container cover-image justify-content-center align-items-center"
+      id="contactForm"
+      style={
+        windowWidth > 768
+          ? {
+              backgroundAttachment: `fixed`,
+              backgroundRepeat: `no-repeat`,
+              // backgroundImage: `url(${contactFormBg})`,
+              height: height,
+              width: "100%",
+            }
+          : {
+              // backgroundImage: `url(${contactFormBg})`,
+              height: height,
+              width: "100%",
+            }
+      }
+      src={contactFormBg}
+      placeholder="https://res.cloudinary.com/sunshinephoto/image/upload/w_1/v1584563659/images/about/aboutme3other_qzw1fm.jpg"
+    >
+      {/* <div
       className="d-flex flex-column contact-form-container cover-image justify-content-center align-items-center"
       id="contactForm"
       style={
@@ -163,7 +203,7 @@ export default function ContactForm() {
               width: "100%",
             }
       }
-    >
+    > */}
       <div
         className="d-flex flex-column justify-content-center align-items-center"
         id="contact-form"
@@ -179,6 +219,7 @@ export default function ContactForm() {
           </div>
         </div>
       </div>
-    </div>
+      {/* </div> */}
+    </LazyBackground>
   );
 }

@@ -1,15 +1,17 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Route, Redirect } from "react-router-dom";
 const PrivateRoute = ({ component: Component, isSignedIn, ...rest }) => {
   return (
     <Route
-      render={props =>
+      render={(props) =>
         isSignedIn ? (
-          <Component {...props} {...rest} />
+          <Suspense fallback={<div></div>}>
+            <Component {...props} {...rest} />
+          </Suspense>
         ) : (
           <Redirect
             to={{
-              pathname: "/"
+              pathname: "/",
             }}
           />
         )
