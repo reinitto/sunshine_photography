@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import * as firebase from "firebase/app";
 import { useWindowWidth } from "../useWindowWidth";
 import { contactFormBg } from "../../content/backgroundImages";
 import LazyBackground from "../LazyBackground";
@@ -67,8 +66,6 @@ const ContactFormBack = () => {
       <LazyBackground
         className="cover-image"
         style={{
-          // backgroundImage:
-          //   "url(https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_200/v1584563659/images/about/aboutme3other_qzw1fm.jpg)",
           position: "absolute",
           left: "75%",
           top: "50%",
@@ -78,26 +75,11 @@ const ContactFormBack = () => {
           margin: "auto",
           zIndex: "-1",
           backgroundRepeat: " no-repeat",
+          backgroundColor: "#b4c7d4",
         }}
-        src="https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_200/v1584563659/images/about/aboutme3other_qzw1fm.jpg"
-        placeholder="https://res.cloudinary.com/sunshinephoto/image/upload/w_1/v1584563659/images/about/aboutme3other_qzw1fm.jpg"
+        src="https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_500/v1584563659/images/about/aboutme3other_qzw1fm.jpg"
+        // placeholder="https://res.cloudinary.com/sunshinephoto/image/upload/w_1/v1584563659/images/about/aboutme3other_qzw1fm.jpg"
       />
-      {/* <div
-        className="cover-image"
-        style={{
-          backgroundImage:
-            "url(https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_200/v1584563659/images/about/aboutme3other_qzw1fm.jpg)",
-          position: "absolute",
-          left: "75%",
-          top: "50%",
-          transform: " translate(-50%,-50%)",
-          width: "60%",
-          maxWidth: "450px",
-          margin: "auto",
-          zIndex: "-1",
-          backgroundRepeat: " no-repeat",
-        }}
-      ></div> */}
       <div
         style={{
           position: "absolute",
@@ -122,20 +104,23 @@ const ContactFormBack = () => {
   );
 };
 
-export default function ContactForm() {
+export default function ContactForm({ firebase }) {
   let contactFormRef = useRef(null);
   let height = "80vh";
   let windowWidth = useWindowWidth();
+
   const saveMessage = (props) => {
-    var messagesRef = firebase.database().ref("messages");
-    const { name, email, message } = props;
-    const timestamp = Date.now();
-    let newMessageRef = messagesRef.push();
-    newMessageRef.set({
-      name,
-      email,
-      message,
-      timestamp,
+    firebase("database").then(({ database }) => {
+      var messagesRef = database.ref("messages");
+      const { name, email, message } = props;
+      const timestamp = Date.now();
+      let newMessageRef = messagesRef.push();
+      newMessageRef.set({
+        name,
+        email,
+        message,
+        timestamp,
+      });
     });
   };
 
@@ -172,12 +157,10 @@ export default function ContactForm() {
           ? {
               backgroundAttachment: `fixed`,
               backgroundRepeat: `no-repeat`,
-              // backgroundImage: `url(${contactFormBg})`,
               height: height,
               width: "100%",
             }
           : {
-              // backgroundImage: `url(${contactFormBg})`,
               height: height,
               width: "100%",
             }
@@ -185,25 +168,6 @@ export default function ContactForm() {
       src={contactFormBg}
       placeholder="https://res.cloudinary.com/sunshinephoto/image/upload/w_1/v1584563659/images/about/aboutme3other_qzw1fm.jpg"
     >
-      {/* <div
-      className="d-flex flex-column contact-form-container cover-image justify-content-center align-items-center"
-      id="contactForm"
-      style={
-        windowWidth > 768
-          ? {
-              backgroundAttachment: `fixed`,
-              backgroundRepeat: `no-repeat`,
-              backgroundImage: `url(${contactFormBg})`,
-              height: height,
-              width: "100%",
-            }
-          : {
-              backgroundImage: `url(${contactFormBg})`,
-              height: height,
-              width: "100%",
-            }
-      }
-    > */}
       <div
         className="d-flex flex-column justify-content-center align-items-center"
         id="contact-form"
@@ -219,7 +183,6 @@ export default function ContactForm() {
           </div>
         </div>
       </div>
-      {/* </div> */}
     </LazyBackground>
   );
 }

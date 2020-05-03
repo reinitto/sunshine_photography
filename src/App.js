@@ -1,49 +1,30 @@
 import React, { Component, Fragment, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
-// import "./styles/style.css";
-// import firebase from "firebase/app";
-// import "firebase/database";
-// import "firebase/firestore";
-// import "firebase/functions";
 import firebase from "./Firebase";
-// import Home from "./Pages/Home";
+import Home from "./Pages/Home";
 // import Journal from "./Pages/Journal";
 // import Services from "./Pages/Services";
 // import Admin from "./Pages/Admin";
 // import About from "./Pages/About";
 // import Dashboard from "./Pages/Dashboard";
-// import Footer from "./components/layout/Footer";
+import Footer from "./components/layout/Footer";
+import Navbar from "./components/layout/Navbar";
 // import { MyNavbar as Navbar } from "./components/layout/Navbar";
 import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./components/ProtectedRoute";
+import "./styles/style.css";
 // const ScrollToTop = lazy(() => import("./ScrollToTop"));
-const Home = lazy(() => import("./Pages/Home"));
+// const Home = lazy(() => import("./Pages/Home"));
 const Journal = lazy(() => import("./Pages/Journal"));
 const Services = lazy(() => import("./Pages/Services"));
 const Admin = lazy(() => import("./Pages/Admin"));
 const About = lazy(() => import("./Pages/About"));
 const Dashboard = lazy(() => import("./Pages/Dashboard"));
-const Footer = lazy(() => import("./components/layout/Footer"));
-const Navbar = lazy(() => import("./components/layout/Navbar"));
+// const Footer = lazy(() => import("./components/layout/Footer"));
+// const Navbar = lazy(() => import("./components/layout/Navbar"));
 // const AdminRoute = lazy(() => import("./components/AdminRoute"));
 // const PrivateRoute = lazy(() => import("./components/ProtectedRoute"));
-
-// const firebase = lazy(() => import("./Firebase"));
-
-// require("../node_modules/firebase/firebase-auth");
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyDU7pnAHmVuuf2nKxa5HpBBI4GaCobCQRw",
-//   authDomain: "momblog-15d1c.firebaseapp.com",
-//   databaseURL: "https://momblog-15d1c.firebaseio.com",
-//   projectId: "momblog-15d1c",
-//   storageBucket: "",
-//   messagingSenderId: "754776938435",
-//   appId: "1:754776938435:web:43cadca033fb5094ec0f76",
-// };
-// firebase.initializeApp(firebaseConfig);
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -60,7 +41,7 @@ class App extends Component {
     await this.getServices();
     await this.getJournals();
 
-    firebase().then(({ auth }) => {
+    await firebase("auth").then(({ auth }) => {
       auth.onAuthStateChanged((user) => {
         this.setState({ user: user });
         auth.currentUser
@@ -104,8 +85,8 @@ class App extends Component {
     });
   };
 
-  getJournals() {
-    firebase().then(({ database }) => {
+  async getJournals() {
+    firebase("database").then(({ database }) => {
       database
         .ref("/journals/")
         .once("value")
@@ -120,8 +101,8 @@ class App extends Component {
         });
     });
   }
-  getServices() {
-    firebase().then(({ database }) => {
+  async getServices() {
+    firebase("database").then(({ database }) => {
       database
         .ref("/services/")
         .once("value")
@@ -195,6 +176,7 @@ class App extends Component {
                         {...props}
                         journals={this.state.journals}
                         services={this.state.services}
+                        firebase={firebase}
                       />
                     </Suspense>
                   );

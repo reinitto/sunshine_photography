@@ -1,5 +1,4 @@
 import React, { Fragment, Suspense, Component } from "react";
-import * as firebase from "firebase/app";
 import { CloudinaryContext } from "cloudinary-react";
 import IntroImage from "../components/IntroImage";
 const Img = React.lazy(() => import("react-cloudinary-lazy-image"));
@@ -27,25 +26,28 @@ export default class Dashboard extends Component {
   state = {
     pictures: null,
     selected_pictures: [],
-    isMounted: false,
   };
 
   componentDidMount() {
     this.getUser(this.props.user);
-    this.setState({
-      isMounted: true,
-    });
   }
-  componentWillUnmount() {
-    this.setState({
-      isMounted: false,
-    });
-  }
-
-  getUserPhotos = (picture_set) => {
-    const db = firebase.firestore();
-    var picturesRef = db.collection("pictures");
-
+  // firebase("database").then(({ database }) => {
+  //   database
+  //     .ref("/journals/")
+  //     .once("value")
+  //     .then((snapshot) => {
+  //       let journalSnap = snapshot.val();
+  //       if (journalSnap) {
+  //         // SET JOURNALS
+  //         this.setState({
+  //           journals: journalSnap,
+  //         });
+  //       }
+  //     });
+  // });
+  getUserPhotos = async (picture_set, picturesRef) => {
+    // let firestore = await this.props.firebase("firestore");
+    // var picturesRef =  firestore.collection("pictures");
     return new Promise((resolve, reject) => {
       picturesRef
         .doc(picture_set)
@@ -65,56 +67,60 @@ export default class Dashboard extends Component {
   };
 
   getUser = (user) => {
-    const db = firebase.firestore();
-    var UserRef = db.collection("users");
-    UserRef.doc(user.email)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          let { picture_sets, selected_pictures } = doc.data();
-          this.getUserPhotos(picture_sets[0])
-            .then((res) => {
-              if (res) {
-                let picUrls = res.pictures.map((p) => {
-                  return {
-                    src: p,
-                    // src: `https://res.cloudinary.com/sunshinephoto/image/upload/${p}`
-                  };
-                });
-                if (this.state.isMounted) {
+    this.props.firebase("firestore").then(({ firestore }) => {
+      const db = firestore;
+      var UserRef = db.collection("users");
+      var picturesRef = db.collection("pictures");
+      UserRef.doc(user.email)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            let { picture_sets, selected_pictures } = doc.data();
+            this.getUserPhotos(picture_sets[0], picturesRef)
+              .then((res) => {
+                if (res) {
+                  let picUrls = res.pictures.map((p) => {
+                    return {
+                      src: p,
+                      // src: `https://res.cloudinary.com/sunshinephoto/image/upload/${p}`
+                    };
+                  });
+
                   this.setState({
                     pictures: picUrls,
                     selected_pictures,
                   });
                 }
-              }
-            })
-            .catch((err) => console.log(err));
-        } else {
-          console.log("No such document!");
-        }
-      })
-      .catch(function (error) {
-        console.log("Error getting document:", error);
-      });
+              })
+              .catch((err) => console.log(err));
+          } else {
+            console.log("No such document!");
+          }
+        })
+        .catch(function (error) {
+          console.log("Error getting document:", error);
+        });
+    });
   };
 
   updateUserInfo(user) {
-    const db = firebase.firestore();
-    var UserRef = db.collection("users");
-    UserRef.doc(user.email)
-      .set(
-        {
-          selected_pictures: this.state.selected_pictures,
-        },
-        { merge: true }
-      )
-      .then(() => {
-        this.getUser(user);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.props.firebase("firestore").then(({ firestore }) => {
+      let db = firestore;
+      var UserRef = db.collection("users");
+      UserRef.doc(user.email)
+        .set(
+          {
+            selected_pictures: this.state.selected_pictures,
+          },
+          { merge: true }
+        )
+        .then(() => {
+          this.getUser(user);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
   }
 
   toggleImageSelect = (url) => {
@@ -184,14 +190,6 @@ export default class Dashboard extends Component {
     );
   }
 }
-
-// const LazyImg = ({ imageSrc }) => {
-//   return (
-//     <Image publicId={imageSrc} className="contain-image" width="300">
-//       <Transformation quality="auto" fetchFormat="auto" />
-//     </Image>
-//   );
-// };
 
 const ImageSelectGallery = ({
   pictures,

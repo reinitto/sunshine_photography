@@ -5,6 +5,7 @@ uploadUserPics.js
 addAdmin.js
 firebaseServiceAccount.json
 firebase-debug.log
+analyzeBundles.js
 # dependencies
 /node_modules
 /.pnp

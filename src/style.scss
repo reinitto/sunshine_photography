@@ -34,9 +34,9 @@ p {
 }
 
 h1 {
-  font-family: "Frutilla_Script", sans-serif;
+  font-family: "Mrs Sheppards", sans-serif;
   color: white;
-  font-size: 8vw;
+  font-size: 6vw;
 }
 
 h2,
@@ -44,7 +44,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Sui_generis", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-family: "Open Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   letter-spacing: 5px;
 }
 
@@ -69,9 +69,7 @@ a:hover {
   margin: auto;
   transition: top 1s ease-in-out;
 }
-.title-text {
-  font-weight: 500;
-}
+
 .hero-subtitle {
   letter-spacing: 1.34rem;
   padding: 1rem;
@@ -381,6 +379,7 @@ nav.navbar.navbar-expand-md {
   object-fit: cover;
   background-size: cover;
   background-position: center;
+  transition: all 0.5s ease;
 }
 
 .contain-image {
@@ -423,8 +422,7 @@ nav.navbar.navbar-expand-md {
 
   .carousel-text-subtitle {
     color: $base-color;
-    font-family: "Sui_generis", "Lucida Sans Unicode", "Lucida Grande",
-      sans-serif;
+    font-family: "Open Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
     letter-spacing: 10px;
     font-size: 1.6rem;
   }
@@ -432,7 +430,7 @@ nav.navbar.navbar-expand-md {
 
 .carousel-text3 {
   font-size: 1rem;
-  font-family: "Sui_generis", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-family: "Open Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -791,6 +789,14 @@ h3 {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+@keyframes flip {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
   }
 }
 

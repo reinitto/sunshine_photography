@@ -10,73 +10,50 @@
     <meta name="theme-color" content="#000000" />
 
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link rel="preconnect" href="https://fonts.gstatic.com/" />
-    <link
-      rel="preload"
-      href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600"
-      as="style"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&display=swap"
-    />
+
+    <title>Sunshine Pictures</title>
 
     <link
       rel="preload"
+      href="%PUBLIC_URL%/fonts/EB_Garamond/EB_Garamond.woff2"
       as="font"
-      href="./fonts/Frutilla/Frutilla_Script.woff2"
       type="font/woff2"
       crossorigin="anonymous"
     />
     <link
       rel="preload"
+      href="%PUBLIC_URL%/fonts/Mrs_Sheppards/Mrs_Sheppards.woff2"
       as="font"
-      href="./fonts/Sui_generis/sui_generis_rg.woff2"
       type="font/woff2"
       crossorigin="anonymous"
     />
-    <!-- <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"
-    /> -->
-    <title>Sunshine Pictures</title>
+    <link
+      rel="preload"
+      href="%PUBLIC_URL%/fonts/Open_Sans/Open_Sans.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
     <style>
       @font-face {
-        font-family: "Frutilla_Script";
-        src: local("Frutilla_Script"),
-          url(./fonts/Frutilla/Frutilla_Script.woff2) format("woff2");
+        font-family: "EB Garamond";
+        src: url("fonts/EB_Garamond/EB_Garamond.woff2") format("woff2");
         font-display: swap;
       }
       @font-face {
-        font-family: "Sui_generis";
-        src: local("Sui_generis"),
-          url(./fonts/Sui_generis/sui_generis_rg.woff2) format("woff2");
+        font-family: "Mrs Sheppards";
+        src: url("fonts/Mrs_Sheppards/Mrs_Sheppards.woff2") format("woff2");
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Open Sans";
+        src: url("fonts/Open_Sans/Open_Sans.woff2") format("woff2");
         font-display: swap;
       }
     </style>
   </head>
   <body>
     <div id="root"></div>
-    <!-- <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-      async
-      defer
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-      async
-      defer
-    ></script> -->
-    <!-- <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-      async
-      defer
-    ></script> -->
   </body>
 </html>

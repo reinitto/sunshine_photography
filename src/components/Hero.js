@@ -1,19 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LazyBackground from "./LazyBackground";
 import { useWindowWidth } from "./useWindowWidth";
-import getIcons from "./SocialIcons";
-let { FontAwesomeIcon, faFacebook, faInstagram, faEnvelope } = {};
+import "./SocialIcons";
 let mainBg =
   "https://res.cloudinary.com/sunshinephoto/image/upload/w_1600/images/backgrounds/Front_mount-1_po42ya";
-let placeholderBg =
-  "https://res.cloudinary.com/sunshinephoto/image/upload/w_1/images/backgrounds/Front_mount-1_po42ya";
-getIcons().then((res) => {
-  FontAwesomeIcon = res.FontAwesomeIcon;
-  faFacebook = res.faFacebook;
-  faInstagram = res.faInstagram;
-  faEnvelope = res.faEnvelope;
-});
+let placeholderColor = "#b4c7d4";
 
 export default function Hero({
   imageSrc,
@@ -41,11 +34,12 @@ export default function Hero({
     // <CloudinaryContext cloudName="sunshinephoto">
     <LazyBackground
       src={mainBg}
-      placeholder={placeholderBg}
+      // placeholder={placeholderBg}
       className="cover-image"
       style={{
         width: "100%",
         height,
+        backgroundColor: placeholderColor,
       }}
     >
       <div
@@ -96,21 +90,13 @@ export default function Hero({
         </div>
         <div className="hero-social-container">
           <Link to="#" className="hero-social">
-            {FontAwesomeIcon && faFacebook && (
-              <FontAwesomeIcon inverse icon={faFacebook} size="lg" />
-            )}
+            <FontAwesomeIcon inverse icon={["fab", "facebook"]} size="lg" />
           </Link>
           <Link to="#" className="hero-social">
-            {FontAwesomeIcon && faInstagram && (
-              <FontAwesomeIcon inverse icon={faInstagram} size="lg" />
-            )}
-            {/* <FontAwesomeIcon inverse icon={faInstagram} size="lg" /> */}
+            <FontAwesomeIcon inverse icon={["fab", "instagram"]} size="lg" />
           </Link>
           <a as={Link} href="/#contactForm" className="hero-social">
-            {FontAwesomeIcon && faEnvelope && (
-              <FontAwesomeIcon inverse icon={faEnvelope} size="lg" />
-            )}
-            {/* <FontAwesomeIcon inverse icon={faEnvelope} size="lg" /> */}
+            <FontAwesomeIcon inverse icon={["fa", "envelope"]} size="lg" />
           </a>
         </div>
       </div>

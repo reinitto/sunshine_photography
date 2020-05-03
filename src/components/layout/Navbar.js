@@ -1,42 +1,13 @@
-import React, { Component } from "react";
-import Login from "../auth/Login";
+import React, { Component, lazy } from "react";
+import { NavHashLink } from "react-router-hash-link";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-
+const Login = lazy(() => import("../auth/Login"));
+// import Login from "../auth/Login";
 export default class MyNavbar extends Component {
   state = {
-    scrollTop: 0,
-    windowWidth: null,
     loggedIn: this.props.isSignedIn,
     loginDisplay: "none",
-    dropdownDisplay: false,
-  };
-
-  componentDidMount() {
-    window.addEventListener("scroll", this.handleScroll);
-    window.addEventListener("resize", this.handleWidth);
-    this.handleWidth();
-  }
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
-    window.removeEventListener("resize", this.handleWidth);
-  }
-
-  handleWidth = () => {
-    let width = document.documentElement.clientWidth;
-    this.setState({
-      windowWidth: width,
-    });
-  };
-
-  handleScroll = () => {
-    var scrollTop =
-      window.pageYOffset ||
-      (document.documentElement || document.body.parentNode || document.body)
-        .scrollTop;
-    this.setState({
-      scrollTop,
-    });
   };
 
   toggleLogin() {
@@ -56,7 +27,7 @@ export default class MyNavbar extends Component {
       handleCodeInApp: true,
     };
     return new Promise((resolve, reject) => {
-      this.props.firebase().then(({ auth }) => {
+      this.props.firebase("auth").then(({ auth }) => {
         auth
           .sendSignInLinkToEmail(email, actionCodeSettings)
           .then(function () {
@@ -87,53 +58,56 @@ export default class MyNavbar extends Component {
     let locationPathname =
       location && location.pathname ? location.pathname.split("/")[1] : "";
 
-    let dropdowns = ["services", "journal", "info"];
-    let allActives = document.querySelector(".navbar")
-      ? document.querySelector(".navbar").querySelectorAll(".active")
-      : [];
-    if (
-      allActives.length > 0 &&
-      !dropdowns.includes(locationPathname) &&
-      (locationHash || locationPathname)
-    ) {
-      // remove all active classes
-      dropdowns.forEach((dropdown) => {
-        document
-          .querySelector(`#collasible-nav-dropdown-${dropdown}`)
-          .classList.remove("active");
-      });
-    }
-    if (dropdowns.includes(locationPathname)) {
-      // remove all active classes
-      allActives.length > 0 &&
-        allActives.forEach((withActiveClass) => {
-          withActiveClass.classList.remove("active");
-        });
-      document.querySelector(`#collasible-nav-dropdown-${locationPathname}`) &&
-        document
-          .querySelector(`#collasible-nav-dropdown-${locationPathname}`)
-          .classList.add("active");
-    }
-    if (locationPathname === "About") {
-      // remove all active classes
-      allActives.length > 0 &&
-        allActives.forEach((withActiveClass) => {
-          withActiveClass.classList.remove("active");
-        });
-      document.querySelector(`#collasible-nav-dropdown-info`) &&
-        document
-          .querySelector(`#collasible-nav-dropdown-info`)
-          .classList.add("active");
-    }
-    if (locationHash === "#contactForm") {
-      // remove all active classes
-      allActives.length > 0 &&
-        allActives.forEach((withActiveClass) => {
-          withActiveClass.classList.remove("active");
-        });
-      document.querySelector(`#navlink-contactForm`) &&
-        document.querySelector(`#navlink-contactForm`).classList.add("active");
-    }
+    // let dropdowns = ["services", "journal", "info"];
+    // let allActives = document.querySelector(".navbar")
+    //   ? document.querySelector(".navbar").querySelectorAll(".active")
+    //   : [];
+    // if (
+    //   allActives.length > 0 &&
+    //   !dropdowns.includes(locationPathname) &&
+    //   (locationHash || locationPathname)
+    // ) {
+    //   // remove all active classes
+    //   dropdowns.forEach((dropdown) => {
+    //     document
+    //       .querySelector(`#collasible-nav-dropdown-${dropdown}`)
+    //       .classList.remove("active");
+    //   });
+    //   allActives.forEach((withActiveClass) => {
+    //     withActiveClass.classList.remove("active");
+    //   });
+    // }
+    // if (dropdowns.includes(locationPathname)) {
+    //   // remove all active classes
+    //   allActives.length > 0 &&
+    //     allActives.forEach((withActiveClass) => {
+    //       withActiveClass.classList.remove("active");
+    //     });
+    //   document.querySelector(`#collasible-nav-dropdown-${locationPathname}`) &&
+    //     document
+    //       .querySelector(`#collasible-nav-dropdown-${locationPathname}`)
+    //       .classList.add("active");
+    // }
+    // if (locationPathname === "About") {
+    //   // remove all active classes
+    //   allActives.length > 0 &&
+    //     allActives.forEach((withActiveClass) => {
+    //       withActiveClass.classList.remove("active");
+    //     });
+    //   document.querySelector(`#collasible-nav-dropdown-info`) &&
+    //     document
+    //       .querySelector(`#collasible-nav-dropdown-info`)
+    //       .classList.add("active");
+    // }
+    // if (locationHash === "#contactForm") {
+    //   // remove all active classes
+    //   allActives.length > 0 &&
+    //     allActives.forEach((withActiveClass) => {
+    //       withActiveClass.classList.remove("active");
+    //     });
+    //   document.querySelector(`#navlink-contactForm`) &&
+    //     document.querySelector(`#navlink-contactForm`).classList.add("active");
+    // }
 
     return (
       <Navbar
@@ -149,16 +123,16 @@ export default class MyNavbar extends Component {
             className="ml-auto mr-2"
             activeKey={`/${locationPathname || locationHash || "home"}`}
           >
-            {isAdmin ? (
+            {isAdmin && (
               <LinkContainer to="/admin">
                 <Nav.Link>Admin</Nav.Link>
               </LinkContainer>
-            ) : null}
-            {isSignedIn ? (
+            )}
+            {isSignedIn && (
               <LinkContainer to="/dashboard">
                 <Nav.Link>Dashboard</Nav.Link>
               </LinkContainer>
-            ) : null}
+            )}
             <LinkContainer to="/home">
               <Nav.Link>Home</Nav.Link>
             </LinkContainer>
@@ -192,9 +166,13 @@ export default class MyNavbar extends Component {
                 <NavDropdown.Item disabled>Photo Book</NavDropdown.Item>
               </LinkContainer>
             </NavDropdown>
-            <Nav.Link id="navlink-contactForm" href={`/#contactForm`}>
+            <NavHashLink
+              className="nav-link"
+              id="navlink-contactForm"
+              to={`/home#contactForm`}
+            >
               Contact
-            </Nav.Link>
+            </NavHashLink>
             <NavDropdown title="Blog" id="collasible-nav-dropdown-journal">
               {typeof journals === "object"
                 ? Object.keys(journals).map((journalId, i) => {
@@ -216,7 +194,7 @@ export default class MyNavbar extends Component {
               <LinkContainer to="/#">
                 <Nav.Link
                   onClick={() => {
-                    firebase().then(({ auth }) => {
+                    firebase("auth").then(({ auth }) => {
                       auth.signOut();
                       setUser(null);
                     });

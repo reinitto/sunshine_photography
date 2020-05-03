@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useState, lazy } from "react";
 import { createJournalItems } from "../components/createJournalItems";
 import { mainBg, contactFormBg } from "../content/backgroundImages";
+import Hero from "../components/Hero";
 // import { CloudinaryContext } from "cloudinary-react";
 const CloudinaryContext = lazy(() =>
   import("cloudinary-react").then((module) => {
@@ -8,11 +9,11 @@ const CloudinaryContext = lazy(() =>
   })
 );
 const ContactForm = lazy(() => import("../components/contact/ContactForm"));
-const Hero = lazy(() => import("../components/Hero"));
+// const Hero = lazy(() => import("../components/Hero"));
 const LinksToGallery = lazy(() => import("../components/LinksToGallery"));
 const HorizontalScroll = lazy(() => import("../components/HorizontalScroll"));
 
-const Home = ({ journals, services }) => {
+const Home = ({ journals, services, firebase }) => {
   let [travelJournals, setTravelJournals] = useState();
   let [allServices, setServices] = useState();
   useEffect(() => {
@@ -27,14 +28,12 @@ const Home = ({ journals, services }) => {
   }, [services]);
   return (
     <div id="home">
-      <Suspense fallback={<div style={{ height: "100vh" }}></div>}>
-        <Hero
-          imageSrc={mainBg}
-          title={"More than just capturing moments"}
-          subtitle={"photography"}
-          keywords={["lifestyle", "nature", "travel"]}
-        />
-      </Suspense>
+      <Hero
+        imageSrc={mainBg}
+        title={"More than just capturing moments"}
+        subtitle={"photography"}
+        keywords={["lifestyle", "nature", "travel"]}
+      />
       <Suspense fallback={<div style={{ height: "100vh" }}></div>}>
         <CloudinaryContext cloudName="sunshinephoto">
           <LinksToGallery services={allServices} />
@@ -42,7 +41,7 @@ const Home = ({ journals, services }) => {
           <HorizontalScroll list={travelJournals} />
         </CloudinaryContext>
       </Suspense>
-      <ContactForm backgroundImage={contactFormBg} />
+      <ContactForm backgroundImage={contactFormBg} firebase={firebase} />
     </div>
   );
 };
