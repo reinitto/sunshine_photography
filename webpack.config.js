@@ -1,5 +1,4 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 
 module.exports = {
   module: {
@@ -15,22 +14,11 @@ module.exports = {
           },
         },
       },
-      {
-        test: /\.css$/i,
-        use: [ExtractCssChunks.loader, "css-loader"],
-        options: {
-          esModule: true,
-        },
-      },
     ],
     plugins: [
       new HtmlWebPackPlugin({
         template: "./src/index.html",
         fileName: "./index.html",
-      }),
-      new ExtractCssChunks({
-        filename: "[name].css",
-        chunkFilename: "[id].css",
       }),
     ],
     optimization: {

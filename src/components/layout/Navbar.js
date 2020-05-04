@@ -3,7 +3,7 @@ import { NavHashLink } from "react-router-hash-link";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 const Login = lazy(() => import("../auth/Login"));
-// import Login from "../auth/Login";
+
 export default class MyNavbar extends Component {
   state = {
     loggedIn: this.props.isSignedIn,
