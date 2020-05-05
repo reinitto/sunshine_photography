@@ -2,12 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 import Spinner from "../Spinner";
 
-const LazyImg = ({
-  imageSrc,
-  imageWidth = 600,
-  imageHeight = "",
-  style = {},
-}) => {
+const LazyImg = ({ imageSrc, style = {} }) => {
   let [loaded, setLoaded] = useState(false);
   return (
     <Fragment>
@@ -15,38 +10,36 @@ const LazyImg = ({
         <div
           style={{
             width: "100%",
+            height: "100%",
             objectFit: "cover",
             backgroundSize: "cover",
             backgroundPosition: "center",
-            ...style,
             background: "black",
             filter: "blur(1px)",
             transition: "opacity ease-in 1000ms",
+            ...style,
           }}
         ></div>
       ) : null}
       <Image
+        dpr="auto"
+        responsive
+        width="auto"
+        crop="scale"
+        responsiveUseBreakpoints="true"
         publicId={imageSrc}
-        width={imageWidth}
-        crop="fill"
-        style={{
-          width: "100%",
-          objectFit: "cover",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          ...style,
-          visibility: loaded ? "visible" : "hidden",
-        }}
         secure="true"
         onLoad={() => {
           setLoaded(true);
+        }}
+        style={{
+          width: "100%",
         }}
       >
         <Transformation
           quality="auto"
           fetchFormat="auto"
           flags="progressive:semi"
-          dpr="auto"
         />
       </Image>
     </Fragment>
@@ -60,19 +53,10 @@ const SingleImage = ({ img }) => {
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         marginBottom: "5px",
-        height: "100vh",
+        height: "auto",
       }}
     >
-      {img && (
-        <LazyImg
-          imageSrc={img && img.src}
-          imageHeight="100vh"
-          style={{
-            height: img && img.text ? "90vh" : "100vh",
-          }}
-          imageWidth={1200}
-        />
-      )}
+      {img && <LazyImg imageSrc={img && img.src} />}
       {img && img.text && (
         <p
           style={{
@@ -104,8 +88,8 @@ const Doubles = ({ images }) => {
             {img.text ? <p>{img.text}</p> : null}
             <LazyImg
               imageSrc={img.src}
-              imageHeight={"49%"}
-              style={{ height: "100%" }}
+              // imageHeight={"49%"}
+              // style={{ height: "100%" }}
             />
           </div>
         ) : null;
@@ -128,8 +112,8 @@ const Triples = ({ images }) => {
             {img.text ? <p>{img.text}</p> : null}
             <LazyImg
               imageSrc={img.src}
-              imageHeight={"32%"}
-              style={{ height: "100%" }}
+              // imageHeight={"32%"}
+              // style={{ height: "100%" }}
             />
           </div>
         ) : null;
