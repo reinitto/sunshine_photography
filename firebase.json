@@ -2,13 +2,19 @@
   "hosting": {
     "public": "build",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
     "headers": [
       {
         "source": "/",
         "headers": [
           {
             "key": "Link",
-            "value": "</static/main.chunk.css>;rel=preload;as=style,</fonts/EB_Garamond/EB_Garamond.woff2>;rel=preload;as=font,</fonts/Mrs_Sheppards/Mrs_Sheppards.woff2>;rel=preload;as=font,</fonts/Open_Sans/Open_Sans.woff2>;rel=preload;as=font,"
+            "value": "</static/main.chunk.css>;rel=preload;as=style;crossorigin=anonymous,</fonts/EB_Garamond/EB_Garamond.woff2>;rel=preload;as=font;crossorigin=anonymous,</fonts/Mrs_Sheppards/Mrs_Sheppards.woff2>;rel=preload;as=font;crossorigin=anonymous,</fonts/Open_Sans/Open_Sans.woff2>;rel=preload;as=font;crossorigin=anonymous,"
           }
         ]
       }
