@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 import firebase from "./Firebase";
 import Home from "./Pages/Home";
+import Spinner from "./components/Spinner";
 // import Journal from "./Pages/Journal";
 // import Services from "./Pages/Services";
 // import Admin from "./Pages/Admin";
@@ -165,13 +166,7 @@ class App extends Component {
                 path="/"
                 render={(props) => {
                   return (
-                    <Suspense
-                      fallback={
-                        <div style={{ height: "100vh", width: "100%" }}>
-                          Loading
-                        </div>
-                      }
-                    >
+                    <Suspense fallback={<Spinner />}>
                       <Home
                         {...props}
                         journals={this.state.journals}
@@ -185,13 +180,7 @@ class App extends Component {
               <Route
                 path="/journal/:name"
                 render={(props) => (
-                  <Suspense
-                    fallback={
-                      <div style={{ height: "100vh", width: "100%" }}>
-                        Loading
-                      </div>
-                    }
-                  >
+                  <Suspense fallback={<Spinner />}>
                     <Journal {...props} journals={this.state.journals} />
                   </Suspense>
                 )}
@@ -199,13 +188,7 @@ class App extends Component {
               <Route
                 path="/services/:service"
                 render={(props) => (
-                  <Suspense
-                    fallback={
-                      <div style={{ height: "100vh", width: "100%" }}>
-                        Loading
-                      </div>
-                    }
-                  >
+                  <Suspense fallback={<Spinner />}>
                     <Services {...props} services={this.state.services} />
                   </Suspense>
                 )}
@@ -213,13 +196,7 @@ class App extends Component {
               <Route
                 path="/About"
                 render={(props) => (
-                  <Suspense
-                    fallback={
-                      <div style={{ height: "100vh", width: "100%" }}>
-                        Loading
-                      </div>
-                    }
-                  >
+                  <Suspense fallback={<Spinner />}>
                     <About />
                   </Suspense>
                 )}
@@ -240,13 +217,7 @@ class App extends Component {
               />
               <Route
                 render={(props) => (
-                  <Suspense
-                    fallback={
-                      <div style={{ height: "100vh", width: "100%" }}>
-                        Loading
-                      </div>
-                    }
-                  >
+                  <Suspense fallback={<Spinner />}>
                     <Home
                       {...props}
                       journals={this.state.journals}
@@ -255,15 +226,10 @@ class App extends Component {
                   </Suspense>
                 )}
               />
-              {/* <Redirect
-                  to={{
-                    pathname: "/home",
-                  }}
-                /> */}
             </Switch>
           </Fragment>
         </ScrollToTop>
-        <Suspense fallback={<div></div>}>
+        <Suspense fallback={<Spinner />}>
           <Footer journals={this.state.journals} />
         </Suspense>
       </Router>

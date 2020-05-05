@@ -1,26 +1,10 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 import Spinner from "../Spinner";
 
 const LazyImg = ({ imageSrc, style = {} }) => {
-  let [loaded, setLoaded] = useState(false);
   return (
     <Fragment>
-      {!loaded ? (
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            background: "black",
-            filter: "blur(1px)",
-            transition: "opacity ease-in 1000ms",
-            ...style,
-          }}
-        ></div>
-      ) : null}
       <Image
         dpr="auto"
         responsive
@@ -29,18 +13,11 @@ const LazyImg = ({ imageSrc, style = {} }) => {
         responsiveUseBreakpoints="true"
         publicId={imageSrc}
         secure="true"
-        onLoad={() => {
-          setLoaded(true);
-        }}
         style={{
           width: "100%",
         }}
       >
-        <Transformation
-          quality="auto"
-          fetchFormat="auto"
-          flags="progressive:semi"
-        />
+        <Transformation flags="progressive:steep" fetchFormat="jpg" />
       </Image>
     </Fragment>
   );
@@ -86,11 +63,7 @@ const Doubles = ({ images }) => {
         return img ? (
           <div key={img.src} style={{ width: "49%" }}>
             {img.text ? <p>{img.text}</p> : null}
-            <LazyImg
-              imageSrc={img.src}
-              // imageHeight={"49%"}
-              // style={{ height: "100%" }}
-            />
+            <LazyImg imageSrc={img.src} />
           </div>
         ) : null;
       })}
