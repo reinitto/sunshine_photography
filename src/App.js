@@ -42,7 +42,7 @@ class App extends Component {
     await this.getServices();
     await this.getJournals();
 
-    await firebase("auth").then(({ auth }) => {
+    firebase("auth").then(({ auth }) => {
       auth.onAuthStateChanged((user) => {
         this.setState({ user: user });
         auth.currentUser
@@ -86,7 +86,7 @@ class App extends Component {
     });
   };
 
-  async getJournals() {
+  getJournals() {
     firebase("database").then(({ database }) => {
       database
         .ref("/journals/")
@@ -102,7 +102,7 @@ class App extends Component {
         });
     });
   }
-  async getServices() {
+  getServices() {
     firebase("database").then(({ database }) => {
       database
         .ref("/services/")
@@ -222,6 +222,7 @@ class App extends Component {
                       {...props}
                       journals={this.state.journals}
                       services={this.state.services}
+                      firebase={firebase}
                     />
                   </Suspense>
                 )}

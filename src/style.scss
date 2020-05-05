@@ -240,11 +240,10 @@ nav.navbar.navbar-expand-md {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  color: $bgBase;
   font-weight: 600;
   font-family: "EB Garamond", sans-serif;
   letter-spacing: 3px;
-  text-decoration: underline;
 }
 
 .links-to-gallery {
@@ -561,8 +560,9 @@ h3 {
   }
 }
 
-@media (min-width: 777px) {
-  .links-to-gallery-layout {
+@media (min-width: 768px) {
+  .links-to-gallery-layout,
+  .scroll-horizontal {
     a:hover {
       transform: scale(1.15);
       z-index: 100;

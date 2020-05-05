@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useWindowWidth } from "../useWindowWidth";
 import { contactFormBg } from "../../content/backgroundImages";
 import LazyBackground from "../LazyBackground";
-
+let placeholderColor = "#b4c7d4";
 const ContactFormFront = ({ submitMessage }) => {
   return (
     <div className="facefront d-flex flex-column justify-content-center">
@@ -77,7 +77,7 @@ const ContactFormBack = () => {
           backgroundRepeat: " no-repeat",
           backgroundColor: "#b4c7d4",
         }}
-        src="https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_500/v1584563659/images/about/aboutme3other_qzw1fm.jpg"
+        src="https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_250/v1584563659/images/about/aboutme3other_qzw1fm.jpg"
         // placeholder="https://res.cloudinary.com/sunshinephoto/image/upload/w_1/v1584563659/images/about/aboutme3other_qzw1fm.jpg"
       />
       <div
@@ -108,7 +108,6 @@ export default function ContactForm({ firebase }) {
   let contactFormRef = useRef(null);
   let height = "80vh";
   let windowWidth = useWindowWidth();
-
   const saveMessage = (props) => {
     firebase("database").then(({ database }) => {
       var messagesRef = database.ref("messages");
@@ -159,14 +158,15 @@ export default function ContactForm({ firebase }) {
               backgroundRepeat: `no-repeat`,
               height: height,
               width: "100%",
+              backgroundColor: placeholderColor,
             }
           : {
               height: height,
               width: "100%",
+              backgroundColor: placeholderColor,
             }
       }
       src={contactFormBg}
-      placeholder="https://res.cloudinary.com/sunshinephoto/image/upload/w_1/v1584563659/images/about/aboutme3other_qzw1fm.jpg"
     >
       <div
         className="d-flex flex-column justify-content-center align-items-center"

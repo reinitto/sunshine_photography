@@ -11054,7 +11054,6 @@ nav.navbar.navbar-expand-md {
   font-weight: 600;
   font-family: "EB Garamond", sans-serif;
   letter-spacing: 3px;
-  text-decoration: underline;
 }
 
 .links-to-gallery {
@@ -11459,8 +11458,9 @@ h3 {
   }
 }
 
-@media (min-width: 777px) {
-  .links-to-gallery-layout a:hover {
+@media (min-width: 768px) {
+  .links-to-gallery-layout a:hover,
+  .scroll-horizontal a:hover {
     -webkit-transform: scale(1.15);
             transform: scale(1.15);
     z-index: 100;

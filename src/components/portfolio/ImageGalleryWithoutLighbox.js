@@ -1,27 +1,7 @@
-import React, { Fragment } from "react";
-import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
+import React from "react";
+import { CloudinaryContext } from "cloudinary-react";
 import Spinner from "../Spinner";
-
-const LazyImg = ({ imageSrc, style = {} }) => {
-  return (
-    <Fragment>
-      <Image
-        dpr="auto"
-        responsive
-        width="auto"
-        crop="scale"
-        responsiveUseBreakpoints="true"
-        publicId={imageSrc}
-        secure="true"
-        style={{
-          width: "100%",
-        }}
-      >
-        <Transformation flags="progressive:steep" fetchFormat="jpg" />
-      </Image>
-    </Fragment>
-  );
-};
+import { ProgressiveCloudinaryImage } from "../ProgressiveCloudinaryImage";
 
 const SingleImage = ({ img }) => {
   return (
@@ -33,7 +13,7 @@ const SingleImage = ({ img }) => {
         height: "auto",
       }}
     >
-      {img && <LazyImg imageSrc={img && img.src} />}
+      {img && <ProgressiveCloudinaryImage publicId={img && img.src} />}
       {img && img.text && (
         <p
           style={{
@@ -63,7 +43,7 @@ const Doubles = ({ images }) => {
         return img ? (
           <div key={img.src} style={{ width: "49%" }}>
             {img.text ? <p>{img.text}</p> : null}
-            <LazyImg imageSrc={img.src} />
+            <ProgressiveCloudinaryImage publicId={img.src} />
           </div>
         ) : null;
       })}
@@ -83,8 +63,8 @@ const Triples = ({ images }) => {
         return img ? (
           <div key={img.src} style={{ width: "32%" }}>
             {img.text ? <p>{img.text}</p> : null}
-            <LazyImg
-              imageSrc={img.src}
+            <ProgressiveCloudinaryImage
+              publicId={img.src}
               // imageHeight={"32%"}
               // style={{ height: "100%" }}
             />

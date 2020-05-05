@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
+import { CloudinaryContext } from "cloudinary-react";
+import { ProgressiveCloudinaryImage } from "./ProgressiveCloudinaryImage";
 import { useWindowWidth } from "./useWindowWidth";
 
 let swapArrayElements = function (arr, indexA, indexB) {
@@ -9,9 +10,8 @@ let swapArrayElements = function (arr, indexA, indexB) {
   arr[indexB] = temp;
 };
 
-let SingleLink = ({ link, dimensions = { w: 450, h: "auto" }, style = {} }) => {
+let SingleLink = ({ link, dimensions, style = {} }) => {
   let { w, h } = dimensions;
-  let imageWidth = 450;
   if (link) {
     let { key, name, thumbnailImage: publicId } = link;
     return (
@@ -21,35 +21,22 @@ let SingleLink = ({ link, dimensions = { w: 450, h: "auto" }, style = {} }) => {
             position: "relative",
             width: `${w}px`,
             height: `${h}px`,
+            background: `linear-gradient(
+              rgba(147, 173, 207, 0.15), 
+              rgba(147, 173, 207, 0.45)
+            )`,
+            padding: "1rem",
           }}
         >
-          <Image
-            publicId={
-              publicId
-                ? publicId
-                : "images/portfolio/couples/placeholder_klk233"
-            }
-            width={imageWidth}
-            // height={h}
-            crop="fill"
-            className="p-3 fitted-image"
+          <ProgressiveCloudinaryImage
+            publicId={publicId}
             style={{
               width: "100%",
               height: "100%",
+              objectFit: "cover",
               ...style,
-              background: `linear-gradient(
-                rgba(147, 173, 207, 0.15), 
-                rgba(147, 173, 207, 0.45)
-              )`,
             }}
-            secure="true"
-          >
-            <Transformation
-              flags="progressive:semi"
-              quality="auto"
-              fetchFormat="auto"
-            />
-          </Image>
+          />
           <div>
             <p className="link-overlay-text text-uppercase">
               {name[0].toUpperCase() + name.slice(1)}
@@ -120,8 +107,9 @@ export default function LinksToGallery({ services }) {
     actualInnerWidth = 1110;
   }
   let bigImageWH = Math.floor(actualInnerWidth / 2);
+  let bigDimensions = { w: bigImageWH, h: Math.floor(bigImageWH * 0.8) };
   let smallImageWidth = Math.floor(bigImageWH / 2);
-  let smallImageHeight = Math.ceil(1.4 * smallImageWidth);
+  let smallImageHeight = Math.ceil(1.25 * smallImageWidth);
   return (
     <div
       className={width <= 768 ? "pb-3 mx-auto w-90 " : "container pb-3"}
@@ -160,13 +148,13 @@ export default function LinksToGallery({ services }) {
           <div className="d-flex links-to-gallery">
             <LinkLayout
               links={arr.slice(0, 3)}
-              largeWH={{ w: bigImageWH, h: bigImageWH }}
+              largeWH={bigDimensions}
               smallImageWH={{ w: smallImageWidth, h: smallImageHeight }}
             />
             <LinkLayout
               links={arr.slice(3)}
               reverse={true}
-              largeWH={{ w: bigImageWH, h: bigImageWH }}
+              largeWH={bigDimensions}
               smallImageWH={{ w: smallImageWidth, h: smallImageHeight }}
             />
           </div>

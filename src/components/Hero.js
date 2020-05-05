@@ -8,13 +8,7 @@ let mainBg =
   "https://res.cloudinary.com/sunshinephoto/image/upload/w_1600/images/backgrounds/Front_mount-1_po42ya";
 let placeholderColor = "#b4c7d4";
 
-export default function Hero({
-  imageSrc,
-  title,
-  subtitle,
-  keywords,
-  height = "100vh",
-}) {
+export default function Hero({ title, subtitle, keywords, height = "100vh" }) {
   let windowWidth = useWindowWidth();
   let titleSize = "8vw";
   let subtitleSize = windowWidth * 0.024 > 30 ? "30px" : "2.4vw";
