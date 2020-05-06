@@ -13,7 +13,14 @@ export default function ServicePricing({
   return images && images.length > 0 ? (
     <div>
       <div>
-        <p className="text-center">{paragraphText}</p>
+        <p
+          className="text-center mx-auto"
+          style={{
+            width: "70%",
+          }}
+        >
+          {paragraphText}
+        </p>
       </div>
       <ImageGalleryWithoutLighbox images={images} />
       <hr />

@@ -19,7 +19,7 @@ const SingleImage = ({ img }) => {
           style={{
             textAlign: "center",
             fontStyle: "italic",
-            fontSize: "12px",
+            fontSize: "16px",
           }}
         >
           {img.text}
@@ -77,7 +77,12 @@ const Triples = ({ images }) => {
 
 const TextBlock = ({ title, text }) => {
   return (
-    <div className="text-center">
+    <div
+      className="text-center mx-auto"
+      style={{
+        width: "70%",
+      }}
+    >
       <h3>{title ? title[0].toUpperCase() + title.slice(1) : null}</h3>
       <p>{text ? text : null}</p>
     </div>
