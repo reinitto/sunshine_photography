@@ -37,9 +37,20 @@ export const MenuItem = ({
           publicId={public_id}
           style={{ objectFit: "cover", height: "100%" }}
         />
-        <p className="link-overlay-text text-uppercase" style={{ ...style }}>
-          {text}
-        </p>
+        {text ? (
+          <div
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: `${width}px`,
+              height: `${height}px`,
+              background: `rgba(0, 0, 0, 0.20)`,
+            }}
+          >
+            <p className="link-overlay-text text-uppercase">{text}</p>
+          </div>
+        ) : null}
       </div>
     </Link>
   );
