@@ -15,6 +15,13 @@ export default class MyNavbar extends Component {
       loginDisplay: this.state.loginDisplay === "none" ? "flex" : "none",
     });
   }
+  collapseNavOnMobile(e) {
+    let collapsibleNav = document.querySelector("#collapsibleNavbar.show");
+    let navbarToggler = document.querySelector(".navbar-toggler");
+    if (collapsibleNav && navbarToggler) {
+      navbarToggler.click();
+    }
+  }
 
   requestLogin = (e, email) => {
     e.preventDefault();
@@ -170,6 +177,7 @@ export default class MyNavbar extends Component {
               className="nav-link"
               id="navlink-contactForm"
               to={`/home#contactForm`}
+              onClick={this.collapseNavOnMobile}
             >
               Contact
             </NavHashLink>

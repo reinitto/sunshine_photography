@@ -78,6 +78,25 @@ class App extends Component {
       }
     });
     this.setLocation(window.location);
+    // ONLY ON MOBILE
+    // COLLAPSE NAVBAR IF CLICKED OUTSIDE
+    if (window.innerWidth <= 768) {
+      document.addEventListener("click", this.handleCollapseNav);
+    }
+  }
+  componentWillUnmount() {
+    document.removeEventListener("click", this.handleCollapseNav);
+  }
+  handleCollapseNav(e) {
+    let collapsibleNav = document.querySelector("#collapsibleNavbar.show");
+    if (
+      collapsibleNav &&
+      e.target !== collapsibleNav &&
+      !collapsibleNav.contains(e.target)
+    ) {
+      let navbarToggler = document.querySelector(".navbar-toggler");
+      navbarToggler.click();
+    }
   }
 
   setLocation = (location) => {
