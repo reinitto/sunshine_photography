@@ -130,7 +130,8 @@ export default function LinksToGallery({ services }) {
   let smallImageHeight = Math.ceil(1.25 * smallImageWidth);
   return (
     <div className={width <= 768 ? "pb-3 mx-auto w-90 " : "container pb-3"}>
-      <h2 className="text-center">Capture Your Life's Journey</h2>
+      <h2 className="text-center">Every Picture Has A Story To Tell</h2>
+      <h2 className="text-center">Let's Start Yours</h2>
       <CloudinaryContext cloudName="sunshinephoto">
         {width <= 768 ? (
           <div
