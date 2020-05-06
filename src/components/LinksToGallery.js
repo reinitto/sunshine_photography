@@ -41,10 +41,10 @@ let SingleLink = ({ link, dimensions, style = {}, textStyle = {} }) => {
           <div
             style={{
               position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
+              top: "1rem",
+              left: "1rem",
+              width: `${w - 32}px`,
+              height: `${h - 32}px`,
               background: `rgba(0, 0, 0, 0.20)`,
             }}
           >
