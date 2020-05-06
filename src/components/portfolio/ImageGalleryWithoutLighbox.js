@@ -63,11 +63,7 @@ const Triples = ({ images }) => {
         return img ? (
           <div key={img.src} style={{ width: "32%" }}>
             {img.text ? <p>{img.text}</p> : null}
-            <ProgressiveCloudinaryImage
-              publicId={img.src}
-              // imageHeight={"32%"}
-              // style={{ height: "100%" }}
-            />
+            <ProgressiveCloudinaryImage publicId={img.src} />
           </div>
         ) : null;
       })}
@@ -77,12 +73,7 @@ const Triples = ({ images }) => {
 
 const TextBlock = ({ title, text }) => {
   return (
-    <div
-      className="text-center mx-auto"
-      style={{
-        width: "70%",
-      }}
-    >
+    <div className="text-center mx-auto w-75">
       <h3>{title ? title[0].toUpperCase() + title.slice(1) : null}</h3>
       <p>{text ? text : null}</p>
     </div>
