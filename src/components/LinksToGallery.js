@@ -10,7 +10,7 @@ let swapArrayElements = function (arr, indexA, indexB) {
   arr[indexB] = temp;
 };
 
-let SingleLink = ({ link, dimensions, style = {} }) => {
+let SingleLink = ({ link, dimensions, style = {}, textStyle = {} }) => {
   let { w, h } = dimensions;
   if (link) {
     let { key, name, thumbnailImage: publicId } = link;
@@ -37,8 +37,18 @@ let SingleLink = ({ link, dimensions, style = {} }) => {
               ...style,
             }}
           />
-          <div>
-            <p className="link-overlay-text text-uppercase">
+
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              background: `rgba(0, 0, 0, 0.20)`,
+            }}
+          >
+            <p className="link-overlay-text text-uppercase" style={textStyle}>
               {name[0].toUpperCase() + name.slice(1)}
             </p>
           </div>
@@ -61,7 +71,11 @@ let LinkLayout = ({ links, largeWH, smallImageWH, reverse = false }) => {
   if (reverse) {
     return (
       <div className="links-to-gallery-layout">
-        <SingleLink link={links[0]} dimensions={largeWH} />
+        <SingleLink
+          link={links[0]}
+          dimensions={largeWH}
+          textStyle={{ fontSize: "24px" }}
+        />
         <div className="two-links">
           <SingleLink link={links[1]} dimensions={smallImageWH} />
           <SingleLink link={links[2]} dimensions={smallImageWH} />
@@ -75,7 +89,11 @@ let LinkLayout = ({ links, largeWH, smallImageWH, reverse = false }) => {
           <SingleLink link={links[0]} dimensions={smallImageWH} />
           <SingleLink link={links[1]} dimensions={smallImageWH} />
         </div>
-        <SingleLink link={links[2]} dimensions={largeWH} />
+        <SingleLink
+          link={links[2]}
+          dimensions={largeWH}
+          textStyle={{ fontSize: "24px" }}
+        />
       </div>
     );
   }
@@ -108,15 +126,10 @@ export default function LinksToGallery({ services }) {
   }
   let bigImageWH = Math.floor(actualInnerWidth / 2);
   let bigDimensions = { w: bigImageWH, h: Math.floor(bigImageWH * 0.8) };
-  let smallImageWidth = Math.floor(bigImageWH / 2);
+  let smallImageWidth = Math.ceil(bigImageWH / 2);
   let smallImageHeight = Math.ceil(1.25 * smallImageWidth);
   return (
-    <div
-      className={width <= 768 ? "pb-3 mx-auto w-90 " : "container pb-3"}
-      // style={{
-      //   backgroundColor: "#faf7f6",
-      // }}
-    >
+    <div className={width <= 768 ? "pb-3 mx-auto w-90 " : "container pb-3"}>
       <h2 className="text-center">Capture Your Life's Journey</h2>
       <CloudinaryContext cloudName="sunshinephoto">
         {width <= 768 ? (
@@ -125,7 +138,7 @@ export default function LinksToGallery({ services }) {
             style={{
               height:
                 width <= 768
-                  ? Math.floor(bigImageWH * 1.4) * 3
+                  ? Math.floor(bigImageWH * 1.25) * 3
                   : bigImageWH + smallImageHeight,
             }}
           >
@@ -138,7 +151,7 @@ export default function LinksToGallery({ services }) {
                   }}
                   dimensions={{
                     w: bigImageWH,
-                    h: Math.floor(bigImageWH * 1.4),
+                    h: bigImageWH * 1.25,
                   }}
                 />
               </div>
