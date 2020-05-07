@@ -12,24 +12,8 @@ export default function ServicePricing({
 }) {
   return images && images.length > 0 ? (
     <div>
-      <div className="text-center mx-auto w-75">
-        <span
-          className="d-flex justify-content-start"
-          style={{
-            fontSize: "50px",
-          }}
-        >
-          "
-        </span>
-        <p>{paragraphText}</p>
-        <span
-          className="d-flex justify-content-end"
-          style={{
-            fontSize: "50px",
-          }}
-        >
-          "
-        </span>
+      <div className="mx-auto w-75">
+        <p className="text-left">{paragraphText}</p>
       </div>
       <ImageGalleryWithoutLighbox images={images} />
       <hr />

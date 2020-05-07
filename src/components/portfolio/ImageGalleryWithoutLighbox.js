@@ -73,9 +73,9 @@ const Triples = ({ images }) => {
 
 const TextBlock = ({ title, text }) => {
   return (
-    <div className="text-center mx-auto w-75">
+    <div className="mx-auto w-75">
       <h3>{title ? title[0].toUpperCase() + title.slice(1) : null}</h3>
-      <p>{text ? text : null}</p>
+      <p className="text-left">{text ? text : null}</p>
     </div>
   );
 };
