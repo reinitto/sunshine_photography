@@ -30,7 +30,6 @@ const Home = ({ journals, services, firebase }) => {
       <MetaTags id="homeMeta">
         <title>Home Page</title>
         <meta name="description" content="Welcome to Sunshine Pictures" />
-        <meta property="og:title" content="Sunshine Pictures" />
       </MetaTags>
       <Hero
         title={"More than just capturing moments"}

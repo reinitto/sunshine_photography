@@ -30,6 +30,7 @@ let SingleLink = ({ link, dimensions, style = {}, textStyle = {} }) => {
         >
           <ProgressiveCloudinaryImage
             publicId={publicId}
+            altText={name}
             style={{
               width: "100%",
               height: "100%",

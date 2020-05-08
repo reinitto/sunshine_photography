@@ -25,6 +25,7 @@ export const MenuItem = ({
           rgba(147, 173, 207, 0.45)
         )`,
       }}
+      aria-label={`journal ${text}`}
     >
       <div
         style={{
@@ -36,6 +37,7 @@ export const MenuItem = ({
         <ProgressiveCloudinaryImage
           publicId={public_id}
           style={{ objectFit: "cover", height: "100%" }}
+          altText={text}
         />
         {text ? (
           <div

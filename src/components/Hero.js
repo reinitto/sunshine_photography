@@ -58,13 +58,18 @@ export default function Hero({ title, subtitle, keywords, height = "100vh" }) {
           </div>
         </div>
         <div className="hero-social-container">
-          <Link to="#" className="hero-social">
+          <Link to="#" className="hero-social" aria-label="Facebook">
             <FontAwesomeIcon inverse icon={["fab", "facebook"]} size="lg" />
           </Link>
-          <Link to="#" className="hero-social">
+          <Link to="#" className="hero-social" aria-label="instagram">
             <FontAwesomeIcon inverse icon={["fab", "instagram"]} size="lg" />
           </Link>
-          <a as={Link} href="/#contactForm" className="hero-social">
+          <a
+            as={Link}
+            href="/#contactForm"
+            className="hero-social"
+            aria-label="email"
+          >
             <FontAwesomeIcon inverse icon={["fa", "envelope"]} size="lg" />
           </a>
         </div>

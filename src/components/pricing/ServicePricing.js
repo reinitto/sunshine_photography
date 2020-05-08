@@ -15,7 +15,7 @@ export default function ServicePricing({
       <div className="mx-auto w-75">
         <p className="text-left">{paragraphText}</p>
       </div>
-      <ImageGalleryWithoutLighbox images={images} />
+      <ImageGalleryWithoutLighbox images={images} name={name} />
       <hr />
       <h3 className="text-center">Available Sessions</h3>
       <div className="d-flex justify-content-center">

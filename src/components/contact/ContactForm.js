@@ -7,30 +7,33 @@ const ContactFormFront = ({ submitMessage }) => {
   return (
     <div className="facefront d-flex flex-column justify-content-center">
       <form onSubmit={submitMessage} id="contactFormForm" name="contactForm">
-        <div className="form-group">
-          <h2 className="text-center text-capitalize container">
-            I'd Like To Hear From You!
-          </h2>
+        <h2 className="text-center text-capitalize container">
+          I'd Like To Hear From You!
+        </h2>
+        <div className="d-flex form-group w-75 mx-auto">
+          <label htmlFor="name">Your Name:</label>
           <input
             type="text"
             className="form-control"
             id="name"
-            aria-describedby="nameHelp"
+            aria-describedby="name"
             placeholder="Your name"
             required
           />
         </div>
-        <div className="form-group">
+        <div className="d-flex form-group w-75 mx-auto">
+          <label htmlFor="email">Your Email:</label>
           <input
             type="email"
             className="form-control"
             id="email"
-            aria-describedby="emailHelp"
+            aria-describedby="email"
             placeholder="Your Email"
             required
           />
         </div>
-        <div className="form-group">
+        <div className="d-flex form-group w-75 mx-auto">
+          <label htmlFor="message">Your Event:</label>
           <input
             className="form-control"
             id="message"
