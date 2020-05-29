@@ -45,14 +45,16 @@ class App extends Component {
     firebase("auth").then(({ auth }) => {
       auth.onAuthStateChanged((user) => {
         this.setState({ user: user });
-        auth.currentUser
-          .getIdTokenResult()
-          .then((idTokenResult) => {
-            this.setAdmin(!!idTokenResult.claims.admin);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        if (auth.currentUser) {
+          auth.currentUser
+            .getIdTokenResult()
+            .then((idTokenResult) => {
+              this.setAdmin(!!idTokenResult.claims.admin);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
       });
 
       // Confirm the link is a sign-in with email link.

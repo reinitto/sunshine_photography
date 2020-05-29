@@ -14,11 +14,6 @@ export default function About() {
           content="I like travel and lifestyle photography. It’s basically the perfect combination of both of my passions."
         />
       </MetaTags>
-      <div
-        style={{
-          height: "45px",
-        }}
-      ></div>
       <AboutSection />
       <div className="container">
         <ContactForm backgroundImage={contactFormBg} />

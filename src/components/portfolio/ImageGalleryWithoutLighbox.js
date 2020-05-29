@@ -4,7 +4,6 @@ import Spinner from "../Spinner";
 import { ProgressiveCloudinaryImage } from "../ProgressiveCloudinaryImage";
 
 const SingleImage = ({ img, altText = "" }) => {
-  console.log("altText", altText);
   return (
     <div
       style={{

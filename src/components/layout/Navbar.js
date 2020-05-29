@@ -66,12 +66,12 @@ export default class MyNavbar extends Component {
         collapseOnSelect={true}
         fixed="top"
         expand="md"
-        className={`navbar navbar-expand-md fixed-top bg-base border-bottom border-secondary`}
+        className="navbar navbar-expand-md fixed-top"
       >
         {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
         <Navbar.Toggle aria-controls="collapsibleNavbar" />
         <Navbar.Collapse id="collapsibleNavbar">
-          <Nav className="ml-auto mr-2">
+          <Nav className="ml-auto">
             {isAdmin && (
               <NavLink
                 className="nav-link"
@@ -97,6 +97,7 @@ export default class MyNavbar extends Component {
                 location.pathname === "/home" && location.hash === ""
               }
               activeClassName="selected"
+              onClick={this.collapseNavOnMobile}
             >
               Home
             </NavLink>
