@@ -11006,7 +11006,7 @@ a:hover {
 nav.navbar.navbar-expand-md {
   -webkit-transition: background-color 500ms ease-in;
   transition: background-color 500ms ease-in;
-  background: #93adcf;
+  background: rgba(147, 173, 207, 0.18);
 }
 
 .w-90 {
@@ -11309,6 +11309,11 @@ nav.navbar.navbar-expand-md {
   font-size: 1rem;
 }
 
+.navbar-nav .nav-link.active,
+.selected {
+  background: black;
+}
+
 .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0,0,0, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
@@ -11502,7 +11507,16 @@ h3 {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
+  .hero {
+    height: 75%;
+  }
+  .hero-keywords {
+    bottom: 10%;
+  }
+  .hero-keyword {
+    letter-spacing: 1.22rem;
+  }
   .about-intro-text {
     background-color: rgba(250, 247, 246, 0.5);
     width: 25rem;
@@ -11556,6 +11570,9 @@ h3 {
   footer .link-overlay-text {
     font-size: 10px;
   }
+  .navbar .navbar-toggler {
+    margin: auto;
+  }
 }
 
 @media (max-width: 500px) {
@@ -11599,11 +11616,14 @@ h3 {
   .about-text-2 {
     margin: 1rem;
   }
+  .hero-keywords {
+    bottom: 13%;
+  }
 }
 
-@media (max-width: 337px) {
-  .navbar .navbar-toggler {
-    margin: auto;
+@media (max-width: 375px) {
+  .hero-keywords {
+    position: static;
   }
 }
 

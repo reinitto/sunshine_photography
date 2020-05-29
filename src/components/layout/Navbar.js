@@ -1,5 +1,6 @@
 import React, { Component, lazy } from "react";
 import { NavHashLink } from "react-router-hash-link";
+import { NavLink, Link } from "react-router-dom";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 const Login = lazy(() => import("../auth/Login"));
@@ -9,7 +10,6 @@ export default class MyNavbar extends Component {
     loggedIn: this.props.isSignedIn,
     loginDisplay: "none",
   };
-
   toggleLogin() {
     this.setState({
       loginDisplay: this.state.loginDisplay === "none" ? "flex" : "none",
@@ -58,63 +58,8 @@ export default class MyNavbar extends Component {
       setUser,
       isAdmin,
       services,
-      location,
       journals,
     } = this.props;
-    let locationHash = location && location.hash ? location.hash : "";
-    let locationPathname =
-      location && location.pathname ? location.pathname.split("/")[1] : "";
-
-    // let dropdowns = ["services", "journal", "info"];
-    // let allActives = document.querySelector(".navbar")
-    //   ? document.querySelector(".navbar").querySelectorAll(".active")
-    //   : [];
-    // if (
-    //   allActives.length > 0 &&
-    //   !dropdowns.includes(locationPathname) &&
-    //   (locationHash || locationPathname)
-    // ) {
-    //   // remove all active classes
-    //   dropdowns.forEach((dropdown) => {
-    //     document
-    //       .querySelector(`#collasible-nav-dropdown-${dropdown}`)
-    //       .classList.remove("active");
-    //   });
-    //   allActives.forEach((withActiveClass) => {
-    //     withActiveClass.classList.remove("active");
-    //   });
-    // }
-    // if (dropdowns.includes(locationPathname)) {
-    //   // remove all active classes
-    //   allActives.length > 0 &&
-    //     allActives.forEach((withActiveClass) => {
-    //       withActiveClass.classList.remove("active");
-    //     });
-    //   document.querySelector(`#collasible-nav-dropdown-${locationPathname}`) &&
-    //     document
-    //       .querySelector(`#collasible-nav-dropdown-${locationPathname}`)
-    //       .classList.add("active");
-    // }
-    // if (locationPathname === "About") {
-    //   // remove all active classes
-    //   allActives.length > 0 &&
-    //     allActives.forEach((withActiveClass) => {
-    //       withActiveClass.classList.remove("active");
-    //     });
-    //   document.querySelector(`#collasible-nav-dropdown-info`) &&
-    //     document
-    //       .querySelector(`#collasible-nav-dropdown-info`)
-    //       .classList.add("active");
-    // }
-    // if (locationHash === "#contactForm") {
-    //   // remove all active classes
-    //   allActives.length > 0 &&
-    //     allActives.forEach((withActiveClass) => {
-    //       withActiveClass.classList.remove("active");
-    //     });
-    //   document.querySelector(`#navlink-contactForm`) &&
-    //     document.querySelector(`#navlink-contactForm`).classList.add("active");
-    // }
 
     return (
       <Navbar
@@ -126,25 +71,43 @@ export default class MyNavbar extends Component {
         {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
         <Navbar.Toggle aria-controls="collapsibleNavbar" />
         <Navbar.Collapse id="collapsibleNavbar">
-          <Nav
-            className="ml-auto mr-2"
-            activeKey={`/${locationPathname || locationHash || "home"}`}
-          >
+          <Nav className="ml-auto mr-2">
             {isAdmin && (
-              <LinkContainer to="/admin">
-                <Nav.Link>Admin</Nav.Link>
-              </LinkContainer>
+              <NavLink
+                className="nav-link"
+                to="/admin"
+                activeClassName="selected"
+              >
+                Admin
+              </NavLink>
             )}
             {isSignedIn && (
-              <LinkContainer to="/dashboard">
-                <Nav.Link>Dashboard</Nav.Link>
-              </LinkContainer>
+              <NavLink
+                className="nav-link"
+                to="/dashboard"
+                activeClassName="selected"
+              >
+                Dashboard
+              </NavLink>
             )}
-            <LinkContainer to="/home">
-              <Nav.Link>Home</Nav.Link>
-            </LinkContainer>
+            <NavLink
+              className="nav-link"
+              to="/home"
+              isActive={(match, location) =>
+                location.pathname === "/home" && location.hash === ""
+              }
+              activeClassName="selected"
+            >
+              Home
+            </NavLink>
 
-            <NavDropdown title="Services" id="collasible-nav-dropdown-services">
+            <NavDropdown
+              title="Services"
+              id="collapsible-nav-dropdown-services"
+              active={
+                window.location.pathname.includes("services") ? true : false
+              }
+            >
               {typeof services === "object" &&
                 Object.keys(services).map((key) => {
                   return (
@@ -160,7 +123,11 @@ export default class MyNavbar extends Component {
                   );
                 })}
             </NavDropdown>
-            <NavDropdown title="Info" id="collasible-nav-dropdown-info">
+            <NavDropdown
+              title="Info"
+              id="collasible-nav-dropdown-info"
+              active={window.location.pathname.includes("About") ? true : false}
+            >
               <LinkContainer to="/About">
                 <NavDropdown.Item>About Me</NavDropdown.Item>
               </LinkContainer>
@@ -169,19 +136,23 @@ export default class MyNavbar extends Component {
                   What they are saying
                 </NavDropdown.Item>
               </LinkContainer>
-              <LinkContainer to={`#`}>
-                <NavDropdown.Item disabled>Photo Book</NavDropdown.Item>
-              </LinkContainer>
             </NavDropdown>
             <NavHashLink
               className="nav-link"
-              id="navlink-contactForm"
+              isActive={(match, location) => location.hash === "#contactForm"}
+              activeClassName="selected"
               to={`/home#contactForm`}
               onClick={this.collapseNavOnMobile}
             >
               Contact
             </NavHashLink>
-            <NavDropdown title="Blog" id="collasible-nav-dropdown-journal">
+            <NavDropdown
+              title="Blog"
+              id="collasible-nav-dropdown-journal"
+              active={
+                window.location.pathname.includes("journal") ? true : false
+              }
+            >
               {typeof journals === "object"
                 ? Object.keys(journals).map((journalId, i) => {
                     let { shortTitle } = journals[journalId].title;
@@ -199,27 +170,26 @@ export default class MyNavbar extends Component {
                 : null}
             </NavDropdown>
             {isSignedIn ? (
-              <LinkContainer to="/#">
-                <Nav.Link
-                  onClick={() => {
-                    firebase("auth").then(({ auth }) => {
-                      auth.signOut();
-                      setUser(null);
-                    });
-                  }}
-                >
-                  Logout
-                </Nav.Link>
-              </LinkContainer>
+              <Link
+                to="/#"
+                className="nav-link"
+                onClick={() => {
+                  firebase("auth").then(({ auth }) => {
+                    auth.signOut();
+                    setUser(null);
+                  });
+                }}
+              >
+                Logout
+              </Link>
             ) : (
-              <LinkContainer to="/#">
-                <Nav.Link
-                  className="nav-link"
-                  onClick={() => this.toggleLogin()}
-                >
-                  Login
-                </Nav.Link>
-              </LinkContainer>
+              <Link
+                to="/#"
+                className="nav-link"
+                onClick={() => this.toggleLogin()}
+              >
+                Login
+              </Link>
             )}
             <Login
               toggleLogin={this.toggleLogin.bind(this)}

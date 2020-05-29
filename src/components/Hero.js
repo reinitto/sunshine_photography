@@ -10,6 +10,8 @@ let placeholderColor = "#b4c7d4";
 
 export default function Hero({ title, subtitle, keywords, height = "100vh" }) {
   let windowWidth = useWindowWidth();
+  // let subtitleSize = windowWidth * 0.024 > 30 ? "30px" : "2.4vw";
+  // let keywordSize = windowWidth * 0.01 > 16 ? "1rem" : "10px";
   let titleSize = "8vw";
   let subtitleSize = windowWidth * 0.024 > 30 ? "30px" : "2.4vw";
   let keywordPadding = "0.2rem 3rem";
@@ -25,10 +27,8 @@ export default function Hero({ title, subtitle, keywords, height = "100vh" }) {
     subtitleSpacing = "0.8rem";
   }
   return (
-    // <CloudinaryContext cloudName="sunshinephoto">
     <LazyBackground
       src={mainBg}
-      // placeholder={placeholderBg}
       className="cover-image"
       style={{
         width: "100%",
@@ -37,7 +37,6 @@ export default function Hero({ title, subtitle, keywords, height = "100vh" }) {
       }}
     >
       <div
-        // className="cover-image"
         style={{
           width: "100%",
           height,
@@ -95,7 +94,6 @@ export default function Hero({ title, subtitle, keywords, height = "100vh" }) {
         </div>
       </div>
     </LazyBackground>
-    // </CloudinaryContext>
   );
 }
 Hero.defaultProps = {
