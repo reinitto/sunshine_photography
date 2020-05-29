@@ -1,5 +1,6 @@
 import React, { Fragment, Suspense, useState, useEffect } from "react";
 import IntroImage from "../components/IntroImage";
+import MetaTags from "react-meta-tags";
 import Spinner from "../components/Spinner";
 import ServicePricing from "../components/pricing/ServicePricing";
 
@@ -24,6 +25,10 @@ export default function Service({ services }) {
   }, [serviceId, services]);
   return service && images ? (
     <Fragment>
+      <MetaTags id={serviceId}>
+        <title>{service.name}</title>
+        <meta name="description" content={service.paragraphText} />
+      </MetaTags>
       <Suspense fallback={<div style={{ height: "35vh" }}> </div>}>
         <IntroImage
           subtitle={(service && service.name) || null}

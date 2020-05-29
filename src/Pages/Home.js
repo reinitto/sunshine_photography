@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect, useState, lazy } from "react";
 import { createJournalItems } from "../components/createJournalItems";
+import MetaTags from "react-meta-tags";
 import Hero from "../components/Hero";
 import Spinner from "../components/Spinner";
 const CloudinaryContext = lazy(() =>
@@ -26,6 +27,10 @@ const Home = ({ journals, services, firebase }) => {
   }, [services]);
   return (
     <div id="home">
+      <MetaTags id="homeMeta">
+        <title>Home Page</title>
+        <meta name="description" content="Welcome to Sunshine Pictures" />
+      </MetaTags>
       <Hero
         title={"More than just capturing moments"}
         subtitle={"photography"}

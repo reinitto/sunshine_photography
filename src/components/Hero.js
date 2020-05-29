@@ -10,22 +10,9 @@ let placeholderColor = "#b4c7d4";
 
 export default function Hero({ title, subtitle, keywords, height = "100vh" }) {
   let windowWidth = useWindowWidth();
-  // let subtitleSize = windowWidth * 0.024 > 30 ? "30px" : "2.4vw";
-  // let keywordSize = windowWidth * 0.01 > 16 ? "1rem" : "10px";
-  let titleSize = "8vw";
   let subtitleSize = windowWidth * 0.024 > 30 ? "30px" : "2.4vw";
-  let keywordPadding = "0.2rem 3rem";
-  let keywordLetterSpacing = "1.22rem";
-  let subtitleSpacing = "1.34rem";
   let keywordSize = windowWidth * 0.01 > 16 ? "1rem" : "10px";
-  let color = "white";
-  if (windowWidth * 0.08 < 65) {
-    titleSize = "65px";
-    color = "#3d4856";
-    keywordPadding = "0.2rem 1rem";
-    keywordLetterSpacing = "0.3rem";
-    subtitleSpacing = "0.8rem";
-  }
+
   return (
     <LazyBackground
       src={mainBg}
@@ -43,20 +30,11 @@ export default function Hero({ title, subtitle, keywords, height = "100vh" }) {
         }}
       >
         <div className="hero">
-          <h1
-            className="text-center title-text"
-            style={{
-              fontSize: titleSize,
-              color,
-            }}
-          >
-            {title}
-          </h1>
+          <h1 className="text-center title-text">{title}</h1>
           <h2
             className="text-center text-uppercase hero-subtitle"
             style={{
               fontSize: subtitleSize,
-              letterSpacing: subtitleSpacing,
             }}
           >
             {subtitle}
@@ -69,8 +47,6 @@ export default function Hero({ title, subtitle, keywords, height = "100vh" }) {
                       className="hero-keyword text-uppercase"
                       key={i}
                       style={{
-                        padding: keywordPadding,
-                        letterSpacing: keywordLetterSpacing,
                         fontSize: keywordSize,
                       }}
                     >
@@ -82,13 +58,18 @@ export default function Hero({ title, subtitle, keywords, height = "100vh" }) {
           </div>
         </div>
         <div className="hero-social-container">
-          <Link to="#" className="hero-social">
+          <Link to="#" className="hero-social" aria-label="Facebook">
             <FontAwesomeIcon inverse icon={["fab", "facebook"]} size="lg" />
           </Link>
-          <Link to="#" className="hero-social">
+          <Link to="#" className="hero-social" aria-label="instagram">
             <FontAwesomeIcon inverse icon={["fab", "instagram"]} size="lg" />
           </Link>
-          <a as={Link} href="/#contactForm" className="hero-social">
+          <a
+            as={Link}
+            href="/#contactForm"
+            className="hero-social"
+            aria-label="email"
+          >
             <FontAwesomeIcon inverse icon={["fa", "envelope"]} size="lg" />
           </a>
         </div>

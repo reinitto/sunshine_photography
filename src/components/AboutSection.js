@@ -4,26 +4,26 @@ About.defaultProps = {
   paragraphs: [
     `I like travel and lifestyle photography. It’s basically the perfect combination of both of my passions. Taking photos, meeting peoples and exploring the beauty of the world. There’s no better feeling than waking up with the sun and exploring new locations for the first time. Photo has always been a very important part of my life and always will be. This is my way of feeling, of touching, of telling a story, of loving!`,
     `My way into the job as a lifestyle photographer was probably a bit random, since I'm not a professional photographer. After many hours of online photography and editing courses at several photoschools, my interest in photography has not diminished! Photography has always been a hobby and a passion of mine, but it wasn't until I tried doing travel and lifestyle photography that I realized I was really on the right track.`,
-    `My name is Jelena and I was born in Latvia , now I'm living in South Norway with my partner. We have an outstanding view over the fjord right from the house and mountains are not so far away. Meeting our children and grandchildren in addition to this makes my life complete!`
+    `My name is Jelena and I was born in Latvia , now I'm living in South Norway with my partner. We have an outstanding view over the fjord right from the house and mountains are not so far away. Meeting our children and grandchildren in addition to this makes my life complete!`,
   ],
   images: aboutImages,
   contactInfo: {
     email: "info@gmail.com",
     phone: "+ 01 234 567 88",
-    area: "Telemark/ Norway"
+    area: "Telemark/ Norway",
   },
   social: {
     facebook: "https://www.facebook.com",
     instagram: "https://www.instagram.com",
-    shutterstock: "https://www.shutterstock.com"
-  }
+    shutterstock: "https://www.shutterstock.com",
+  },
 };
 
 export default function About({ images, paragraphs }) {
   return (
     <div
       style={{
-        lineHeight: "2.2rem"
+        lineHeight: "2.2rem",
       }}
     >
       <div id="aboutMe" name="aboutMe">
@@ -34,20 +34,20 @@ export default function About({ images, paragraphs }) {
             position: "relative",
             height: "100vh",
             backgroundAttachment: `fixed`,
-            backgroundRepeat: `no-repeat`
+            backgroundRepeat: `no-repeat`,
           }}
         >
           <div className="about-intro-text">
             <h6
               style={{
-                textTransform: "uppercase"
+                textTransform: "uppercase",
               }}
             >
               the photographer
             </h6>
             <h2
               style={{
-                textTransform: "uppercase"
+                textTransform: "uppercase",
               }}
             >
               about me
@@ -55,13 +55,13 @@ export default function About({ images, paragraphs }) {
             <hr
               style={{
                 borderTop: "1px solid black",
-                width: "70%"
+                width: "70%",
               }}
             />
             <p
               style={{
                 lineHeight: "2.1rem",
-                fontSize: "21px"
+                fontSize: "21px",
               }}
             >
               {paragraphs[0]}
@@ -73,7 +73,7 @@ export default function About({ images, paragraphs }) {
         </div>
         <div
           style={{
-            padding: "50px 0px"
+            padding: "50px 0px",
           }}
         >
           <div className="about-last-section">
@@ -87,8 +87,8 @@ export default function About({ images, paragraphs }) {
               </div>
             </div>
             <div className="about-image-container">
-              <img src={images[2]} alt="" />
-              <img src={images[1]} alt="" />
+              <img src={images[2]} alt="Me and My family" />
+              <img src={images[1]} alt="Me from afar" />
             </div>
           </div>
         </div>

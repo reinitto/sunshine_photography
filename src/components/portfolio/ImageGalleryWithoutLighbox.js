@@ -3,7 +3,8 @@ import { CloudinaryContext } from "cloudinary-react";
 import Spinner from "../Spinner";
 import { ProgressiveCloudinaryImage } from "../ProgressiveCloudinaryImage";
 
-const SingleImage = ({ img }) => {
+const SingleImage = ({ img, altText = "" }) => {
+  console.log("altText", altText);
   return (
     <div
       style={{
@@ -13,13 +14,18 @@ const SingleImage = ({ img }) => {
         height: "auto",
       }}
     >
-      {img && <ProgressiveCloudinaryImage publicId={img && img.src} />}
+      {img && (
+        <ProgressiveCloudinaryImage
+          publicId={img && img.src}
+          altText={altText || img.text || ""}
+        />
+      )}
       {img && img.text && (
         <p
           style={{
             textAlign: "center",
             fontStyle: "italic",
-            fontSize: "12px",
+            fontSize: "16px",
           }}
         >
           {img.text}
@@ -29,7 +35,7 @@ const SingleImage = ({ img }) => {
   );
 };
 
-const Doubles = ({ images }) => {
+const Doubles = ({ images, altText = "" }) => {
   return (
     <div
       style={{
@@ -43,14 +49,17 @@ const Doubles = ({ images }) => {
         return img ? (
           <div key={img.src} style={{ width: "49%" }}>
             {img.text ? <p>{img.text}</p> : null}
-            <ProgressiveCloudinaryImage publicId={img.src} />
+            <ProgressiveCloudinaryImage
+              publicId={img.src}
+              altText={altText || img.text || ""}
+            />
           </div>
         ) : null;
       })}
     </div>
   );
 };
-const Triples = ({ images }) => {
+const Triples = ({ images, altText = "" }) => {
   return (
     <div
       style={{
@@ -65,8 +74,7 @@ const Triples = ({ images }) => {
             {img.text ? <p>{img.text}</p> : null}
             <ProgressiveCloudinaryImage
               publicId={img.src}
-              // imageHeight={"32%"}
-              // style={{ height: "100%" }}
+              altText={altText || img.text || ""}
             />
           </div>
         ) : null;
@@ -77,14 +85,18 @@ const Triples = ({ images }) => {
 
 const TextBlock = ({ title, text }) => {
   return (
-    <div className="text-center">
+    <div className="mx-auto w-75">
       <h3>{title ? title[0].toUpperCase() + title.slice(1) : null}</h3>
-      <p>{text ? text : null}</p>
+      <p className="text-left">{text ? text : null}</p>
     </div>
   );
 };
 
-export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
+export default function ImageGalleryWithoutLighbox({
+  journalImages,
+  images,
+  name = "",
+}) {
   if (journalImages) {
     let gallery = [];
     let newImages = Object.keys(journalImages).map((key) => journalImages[key]);
@@ -105,6 +117,7 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
               src: ordered[i].imageUrl,
               text: ordered[i].text,
             }}
+            altText={name || ""}
           />
         );
         i++;
@@ -114,6 +127,7 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
         gallery.push(
           <Doubles
             key={i}
+            altText={name || ""}
             images={[
               {
                 src: ordered[i].imageUrl,
@@ -133,6 +147,7 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
         gallery.push(
           <Triples
             key={i}
+            altText={name || ""}
             images={[
               {
                 src: ordered[i].imageUrl,
@@ -199,7 +214,11 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
           case 1:
             //  ADD SINGLE IMG
             gallery.push(
-              <SingleImage key={row} img={images[currentImgIndex]} />
+              <SingleImage
+                key={row}
+                img={images[currentImgIndex]}
+                altText={`${name} example photo` || ""}
+              />
             );
             currentImgIndex++;
             break;
@@ -209,6 +228,7 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
               <Doubles
                 key={row}
                 images={[images[currentImgIndex], images[currentImgIndex + 1]]}
+                altText={`${name} example photo` || ""}
               />
             );
             currentImgIndex += 2;
@@ -223,6 +243,7 @@ export default function ImageGalleryWithoutLighbox({ journalImages, images }) {
                   images[currentImgIndex + 1],
                   images[currentImgIndex + 2],
                 ]}
+                altText={`${name} example photo` || ""}
               />
             );
             currentImgIndex += 3;

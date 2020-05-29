@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Image, Transformation } from "cloudinary-react";
 export const ProgressiveCloudinaryImage = (
-  { publicId, style = {} },
+  { publicId, altText = "", style = {} },
   ...rest
 ) => {
   let imageRef = useRef();
@@ -46,6 +46,7 @@ export const ProgressiveCloudinaryImage = (
   }, [publicId, imagePublicId]);
   return (
     <Image
+      alt={altText}
       ref={imageRef}
       dpr="auto"
       responsive
