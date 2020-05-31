@@ -1,8 +1,30 @@
-const mainBg = "images/backgrounds/Front_mount-1_po42ya";
-//res.cloudinary.com/sunshinephoto/image/upload/f_auto,fl_progressive:semi,q_auto/c_fill,w_1600/v1/images/backgrounds/Front_mount-1_po42ya
-const contactFormBg =
-  "https://res.cloudinary.com/sunshinephoto/image/upload/f_auto,w_500/v1587319764/images/backgrounds/aerial-2_pynhkz.jpg";
-// "images/backgrounds/aerial-2_pynhkz.jpg";
-// "https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_1000/v1584683818/images/backgrounds/contact_background_ckzd1z.jpg";
+const mainBg = {
+  public_id: "images/backgrounds/Front_mount-1_po42ya",
+  default:
+    "https://res.cloudinary.com/sunshinephoto/image/upload/q_70,w_1440/images/backgrounds/Front_mount-1_po42ya",
+  sizes: {
+    "1024":
+      "https://res.cloudinary.com/sunshinephoto/image/upload/q_70,w_1024/images/backgrounds/Front_mount-1_po42ya",
+    "1536":
+      "https://res.cloudinary.com/sunshinephoto/image/upload/q_70,w_1536/images/backgrounds/Front_mount-1_po42ya",
+    "1920":
+      "https://res.cloudinary.com/sunshinephoto/image/upload/q_70,w_1920/images/backgrounds/Front_mount-1_po42ya",
+  },
+  width: "100vw",
+};
 
+const contactFormBg = {
+  public_id: "images/backgrounds/3000-1_o8fzta",
+  default:
+    "https://res.cloudinary.com/sunshinephoto/image/upload/q_70,w_1024/v1590859974/images/backgrounds/3000-1_o8fzta",
+  sizes: {
+    "1024":
+      "https://res.cloudinary.com/sunshinephoto/image/upload/q_70,f_auto,w_1024/v1590859974/images/backgrounds/3000-1_o8fzta",
+    "1536":
+      "https://res.cloudinary.com/sunshinephoto/image/upload/q_70,f_auto,w_1536/v1590859974/images/backgrounds/3000-1_o8fzta",
+    "1920":
+      "https://res.cloudinary.com/sunshinephoto/image/upload/q_70,f_auto,w_1920/v1590859974/images/backgrounds/3000-1_o8fzta",
+  },
+  width: "100vw",
+};
 export { mainBg, contactFormBg };

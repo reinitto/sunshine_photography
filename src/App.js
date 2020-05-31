@@ -4,28 +4,17 @@ import ScrollToTop from "./ScrollToTop";
 import firebase from "./Firebase";
 import Home from "./Pages/Home";
 import Spinner from "./components/Spinner";
-// import Journal from "./Pages/Journal";
-// import Services from "./Pages/Services";
-// import Admin from "./Pages/Admin";
-// import About from "./Pages/About";
-// import Dashboard from "./Pages/Dashboard";
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
-// import { MyNavbar as Navbar } from "./components/layout/Navbar";
 import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./components/ProtectedRoute";
 import "./styles/style.css";
-// const ScrollToTop = lazy(() => import("./ScrollToTop"));
-// const Home = lazy(() => import("./Pages/Home"));
 const Journal = lazy(() => import("./Pages/Journal"));
 const Services = lazy(() => import("./Pages/Services"));
 const Admin = lazy(() => import("./Pages/Admin"));
 const About = lazy(() => import("./Pages/About"));
 const Dashboard = lazy(() => import("./Pages/Dashboard"));
-// const Footer = lazy(() => import("./components/layout/Footer"));
-// const Navbar = lazy(() => import("./components/layout/Navbar"));
-// const AdminRoute = lazy(() => import("./components/AdminRoute"));
-// const PrivateRoute = lazy(() => import("./components/ProtectedRoute"));
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -131,11 +120,6 @@ class App extends Component {
         .then((snapshot) => {
           let servicesSnap = snapshot.val();
           if (servicesSnap) {
-            // SET SERVICES
-            // let arr = [];
-            // Object.keys(servicesSnap).forEach((key) => {
-            //   arr.push({ ...servicesSnap[key], key });
-            // });
             this.setState({
               services: servicesSnap,
             });
@@ -174,8 +158,6 @@ class App extends Component {
                 isSignedIn={this.state.user}
                 firebase={firebase}
                 setUser={this.setUser.bind(this)}
-                // getJournals={this.getJournals.bind(this)}
-                // getServices={this.getServices.bind(this)}
                 journals={this.state.journals}
                 services={this.state.services}
                 location={this.state.currentRoute}

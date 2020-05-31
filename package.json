@@ -34,7 +34,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "functions": "firebase emulators:start --only functions",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "node analyzeBundles.js"
   },
   "eslintConfig": {
     "extends": "react-app"

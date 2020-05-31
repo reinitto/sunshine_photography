@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useState, lazy } from "react";
 import { createJournalItems } from "../components/createJournalItems";
 import MetaTags from "react-meta-tags";
+import { mainBg } from "../content/backgroundImages";
 import Hero from "../components/Hero";
 import Spinner from "../components/Spinner";
 const CloudinaryContext = lazy(() =>
@@ -34,6 +35,7 @@ const Home = ({ journals, services, firebase }) => {
       <Hero
         title={"More than just capturing moments"}
         subtitle={"photography"}
+        background={mainBg}
         keywords={["lifestyle", "nature", "travel"]}
       />
       <Suspense fallback={<Spinner />}>

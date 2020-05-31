@@ -35,7 +35,7 @@ export default function Service({ services }) {
           height="35vh"
         />
       </Suspense>
-      <div style={{ width: "90%", margin: "auto" }}>
+      <div className="container">
         <ServicePricing {...service} images={images} />
       </div>
     </Fragment>

@@ -12,13 +12,13 @@ export default function ServicePricing({
 }) {
   return images && images.length > 0 ? (
     <div>
-      <div className="mx-auto w-75">
+      <div className="mx-auto">
         <p className="text-left">{paragraphText}</p>
       </div>
       <ImageGalleryWithoutLighbox images={images} name={name} />
       <hr />
       <h3 className="text-center">Available Sessions</h3>
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center flex-wrap">
         {sessions
           ? Object.keys(sessions).map((key) => (
               <PriceImage key={key} sessionKey={sessions[key]} />

@@ -1,26 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import LazyBackground from "./LazyBackground";
+// import LazyBackground from "./LazyBackground";
 import { useWindowWidth } from "./useWindowWidth";
 import "./SocialIcons";
-let mainBg =
-  "https://res.cloudinary.com/sunshinephoto/image/upload/w_1600/images/backgrounds/Front_mount-1_po42ya";
-let placeholderColor = "#b4c7d4";
 
-export default function Hero({ title, subtitle, keywords, height = "100vh" }) {
+let placeholderColor = "#b4c7d4";
+export default function Hero({
+  title,
+  subtitle,
+  keywords,
+  background,
+  height = "100vh",
+}) {
   let windowWidth = useWindowWidth();
   let subtitleSize = windowWidth * 0.024 > 30 ? "30px" : "2.4vw";
   let keywordSize = windowWidth * 0.01 > 16 ? "1rem" : "10px";
 
   return (
-    <LazyBackground
-      src={mainBg}
+    <div
       className="cover-image"
       style={{
         width: "100%",
         height,
         backgroundColor: placeholderColor,
+        backgroundImage: `url(${background.default})`,
+        position: "relative",
+        backgroundAttachment: `fixed`,
+        backgroundRepeat: `no-repeat`,
       }}
     >
       <div
@@ -74,9 +81,6 @@ export default function Hero({ title, subtitle, keywords, height = "100vh" }) {
           </a>
         </div>
       </div>
-    </LazyBackground>
+    </div>
   );
 }
-Hero.defaultProps = {
-  imageSrc: "images/backgrounds/Front_mount-1_po42ya",
-};

@@ -1,5 +1,6 @@
 import React from "react";
-import { aboutImages } from "../content/aboutImages";
+import LazyBackground from "./LazyBackground";
+import { aboutImages, aboutMain } from "../content/aboutImages";
 About.defaultProps = {
   paragraphs: [
     `I like travel and lifestyle photography. It’s basically the perfect combination of both of my passions. Taking photos, meeting peoples and exploring the beauty of the world. There’s no better feeling than waking up with the sun and exploring new locations for the first time. Photo has always been a very important part of my life and always will be. This is my way of feeling, of touching, of telling a story, of loving!`,
@@ -18,6 +19,7 @@ About.defaultProps = {
     shutterstock: "https://www.shutterstock.com",
   },
 };
+let placeholderColor = "#b4c7d4";
 
 export default function About({ images, paragraphs }) {
   return (
@@ -27,14 +29,15 @@ export default function About({ images, paragraphs }) {
       }}
     >
       <div id="aboutMe" name="aboutMe">
-        <div
+        <LazyBackground
+          src={aboutMain.sizes[1024]}
           className="fitted-image"
           style={{
-            backgroundImage: `url(${images[0]})`,
             position: "relative",
             height: "100vh",
             backgroundAttachment: `fixed`,
             backgroundRepeat: `no-repeat`,
+            backgroundColor: placeholderColor,
           }}
         >
           <div className="about-intro-text">
@@ -67,7 +70,7 @@ export default function About({ images, paragraphs }) {
               {paragraphs[0]}
             </p>
           </div>
-        </div>
+        </LazyBackground>
         <div className="about-text-2">
           <p>{paragraphs[1]}</p>
         </div>

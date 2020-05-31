@@ -37,14 +37,14 @@ export const PriceImage = ({ sessionKey }) => {
     return (
       <div
         key={id}
-        className="text-center d-flex flex-column justify-content-center align-items-center m-3"
+        className="text-center d-flex flex-column justify-content-center align-items-center m-1"
         style={{
           background: `linear-gradient(
             rgba(61, 72, 86, 0.15), 
             rgba(61, 72, 86, 0.45)
-          ),url(https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_200/${image})`,
+          ),url(https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_300/${image})`,
           width: "200px",
-          height: "200px",
+          height: "250px",
           color: "white",
         }}
       >

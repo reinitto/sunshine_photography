@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useWindowWidth } from "../useWindowWidth";
 import { contactFormBg } from "../../content/backgroundImages";
+import aboutMeImg from "../../content/aboutImages";
 import LazyBackground from "../LazyBackground";
 let placeholderColor = "#b4c7d4";
 const ContactFormFront = ({ submitMessage }) => {
@@ -80,8 +81,7 @@ const ContactFormBack = () => {
           backgroundRepeat: " no-repeat",
           backgroundColor: "#b4c7d4",
         }}
-        src="https://res.cloudinary.com/sunshinephoto/image/upload/c_scale,w_250/v1584563659/images/about/aboutme3other_qzw1fm.jpg"
-        // placeholder="https://res.cloudinary.com/sunshinephoto/image/upload/w_1/v1584563659/images/about/aboutme3other_qzw1fm.jpg"
+        src={aboutMeImg[0]}
       />
       <div
         style={{
@@ -152,6 +152,7 @@ export default function ContactForm({ firebase }) {
   }
   return (
     <LazyBackground
+      src={contactFormBg.default}
       className="d-flex flex-column contact-form-container cover-image justify-content-center align-items-center"
       id="contactForm"
       style={
@@ -169,7 +170,6 @@ export default function ContactForm({ firebase }) {
               backgroundColor: placeholderColor,
             }
       }
-      src={contactFormBg}
     >
       <div
         className="d-flex flex-column justify-content-center align-items-center"

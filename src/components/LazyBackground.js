@@ -1,26 +1,25 @@
-import React from "react";
+import React, { Component } from "react";
 
-class LazyBackground extends React.Component {
+class LazyBackground extends Component {
   state = { src: null };
 
   componentDidMount() {
     const { src } = this.props;
-
     const imageLoader = new Image();
     imageLoader.src = src;
-
     imageLoader.onload = () => {
       this.setState({ src });
     };
   }
 
   render() {
+    const { style, src, ...rest } = this.props;
     return (
       <div
-        {...this.props}
+        {...rest}
         style={{
-          backgroundImage: `url(${this.state.src || this.props.placeholder})`,
-          ...this.props.style,
+          backgroundImage: `url(${this.state.src})`,
+          ...style,
         }}
       />
     );
