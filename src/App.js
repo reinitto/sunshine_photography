@@ -169,7 +169,21 @@ class App extends Component {
                 path="/"
                 render={(props) => {
                   return (
-                    <Suspense fallback={<Spinner />}>
+                    <Suspense
+                      fallback={
+                        <div
+                          style={{
+                            width: "100vw",
+                            height: "100vh",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Spinner />
+                        </div>
+                      }
+                    >
                       <Home
                         {...props}
                         journals={this.state.journals}
@@ -183,7 +197,21 @@ class App extends Component {
               <Route
                 path="/journal/:name"
                 render={(props) => (
-                  <Suspense fallback={<Spinner />}>
+                  <Suspense
+                    fallback={
+                      <div
+                        style={{
+                          width: "100vw",
+                          height: "100vh",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Spinner />
+                      </div>
+                    }
+                  >
                     <Journal {...props} journals={this.state.journals} />
                   </Suspense>
                 )}
@@ -191,7 +219,21 @@ class App extends Component {
               <Route
                 path="/services/:service"
                 render={(props) => (
-                  <Suspense fallback={<Spinner />}>
+                  <Suspense
+                    fallback={
+                      <div
+                        style={{
+                          width: "100vw",
+                          height: "100vh",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Spinner />
+                      </div>
+                    }
+                  >
                     <Services {...props} services={this.state.services} />
                   </Suspense>
                 )}
@@ -199,7 +241,21 @@ class App extends Component {
               <Route
                 path="/About"
                 render={(props) => (
-                  <Suspense fallback={<Spinner />}>
+                  <Suspense
+                    fallback={
+                      <div
+                        style={{
+                          width: "100vw",
+                          height: "100vh",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Spinner />
+                      </div>
+                    }
+                  >
                     <About />
                   </Suspense>
                 )}
@@ -220,7 +276,21 @@ class App extends Component {
               />
               <Route
                 render={(props) => (
-                  <Suspense fallback={<Spinner />}>
+                  <Suspense
+                    fallback={
+                      <div
+                        style={{
+                          width: "100vw",
+                          height: "100vh",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Spinner />
+                      </div>
+                    }
+                  >
                     <Home
                       {...props}
                       journals={this.state.journals}
@@ -233,7 +303,21 @@ class App extends Component {
             </Switch>
           </Fragment>
         </ScrollToTop>
-        <Suspense fallback={<Spinner />}>
+        <Suspense
+          fallback={
+            <div
+              style={{
+                width: "100vw",
+                height: "100vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Spinner />
+            </div>
+          }
+        >
           <Footer journals={this.state.journals} />
         </Suspense>
       </Router>
