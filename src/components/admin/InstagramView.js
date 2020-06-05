@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { arrayFromObject } from "./arrayFromObject";
+import { arrayFromObject } from "../arrayFromObject";
 import "../FontAwesomeIcons";
 let instaUrl =
   "https://us-central1-momblog-15d1c.cloudfunctions.net/instagram-instagram";

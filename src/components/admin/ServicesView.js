@@ -5,7 +5,7 @@ import { faMinusCircle, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 import { FileDrop } from "react-file-drop";
 import { Overlay } from "./Overlay";
-import { arrayFromObject } from "./arrayFromObject";
+import { arrayFromObject } from "../arrayFromObject";
 const shortid = require("shortid");
 shortid.characters(
   "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"

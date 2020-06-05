@@ -1,5 +1,6 @@
 import React, { lazy, useState, useEffect } from "react";
 import { useWindowWidth } from "../useWindowWidth";
+import { arrayFromObject } from "../arrayFromObject";
 import HorizontalScroll from "../HorizontalScroll";
 
 const instagramUrls = [
@@ -13,7 +14,7 @@ const instagramUrls = [
 let getInstagramPosts =
   "http://localhost:5001/momblog-15d1c/us-central1/instagram-instagram";
 
-const Footer = () => {
+const Footer = ({ instagram }) => {
   let windowWidth = useWindowWidth();
   let itemHeight = Math.max(Math.floor(windowWidth / 10), 125);
   // padding 2 x 1rem
@@ -36,7 +37,7 @@ const Footer = () => {
   // console.log("result", await result.json());
   let [instaPosts, setInstaPosts] = useState([]);
   useEffect(() => {
-    let urls = instagramUrls.map((url) => {
+    let urls = arrayFromObject(instagram).map((url) => {
       return new Promise((resolve, reject) => {
         fetch(`https://api.instagram.com/oembed?url=${url}`)
           .then((res) => {
@@ -51,15 +52,13 @@ const Footer = () => {
       });
       setInstaPosts(posts);
     });
-  }, []);
+  }, [instagram]);
   return (
     <footer className="d-flex flex-column">
       {instaPosts.length > 0 && (
         <div className="container pt-3">
           <h4 className="text-center">
-            <a href={instaPosts[0].author_url}>
-              More photos on Instagram
-             </a>
+            <a href={instaPosts[0].author_url}>More photos on Instagram</a>
           </h4>
         </div>
       )}

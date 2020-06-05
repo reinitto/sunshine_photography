@@ -130,16 +130,15 @@ class App extends Component {
     });
   }
 
-getInstagram  () {
+  getInstagram() {
     firebase("database").then(({ database }) => {
       database
         .ref("/instagram/")
         .once("value")
         .then((snapshot) => {
           let instaSnap = snapshot.val();
-            console.log('instaSnap',instaSnap)
           if (instaSnap) {
-                      this.setState({
+            this.setState({
               instagram: instaSnap,
             });
           }
@@ -155,6 +154,7 @@ getInstagram  () {
   }
 
   render() {
+    console.log("instagram", this.state.instagram);
     return (
       <Router>
         <ScrollToTop setLocation={this.setLocation.bind(this)}>
