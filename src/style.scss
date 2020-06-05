@@ -332,7 +332,7 @@ nav.navbar.navbar-expand-md {
     animation-name: flip;
     animation-timing-function: ease;
     animation-iteration-count: infinite;
-    animation-duration: 6s;
+    animation-duration: 12s;
   }
 
   .slice > div {
@@ -354,7 +354,7 @@ nav.navbar.navbar-expand-md {
   }
   .faceback {
     // height: 50vh;
-    background-color: transparent;
+    background-color: transparent black;
     transform: rotateY(180deg) translateZ(1px);
   }
 }
@@ -892,6 +892,12 @@ h3 {
 @keyframes flip {
   0% {
     transform: rotateY(0deg);
+  }
+  25% {
+    transform: rotateY(180deg);
+  }
+  75% {
+    transform: rotateY(180deg);
   }
   100% {
     transform: rotateY(360deg);

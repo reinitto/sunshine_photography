@@ -4,6 +4,7 @@ import MetaTags from "react-meta-tags";
 import { mainBg } from "../content/backgroundImages";
 import Hero from "../components/Hero";
 import Spinner from "../components/Spinner";
+import ContactForm from "../components/contact/ContactForm";
 const CloudinaryContext = lazy(() =>
   import("cloudinary-react").then((module) => {
     return { default: module.CloudinaryContext };
@@ -11,8 +12,7 @@ const CloudinaryContext = lazy(() =>
 );
 const LinksToGallery = lazy(() => import("../components/LinksToGallery"));
 const HorizontalScroll = lazy(() => import("../components/HorizontalScroll"));
-const ContactForm = lazy(() => import("../components/contact/ContactForm"));
-
+// const ContactForm = lazy(() => import("../components/contact/ContactForm"));
 const Home = ({ journals, services, firebase }) => {
   let [travelJournals, setTravelJournals] = useState();
   let [allServices, setServices] = useState();

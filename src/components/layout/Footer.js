@@ -1,27 +1,11 @@
-import React, { lazy, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useWindowWidth } from "../useWindowWidth";
 import { arrayFromObject } from "../arrayFromObject";
 import HorizontalScroll from "../HorizontalScroll";
 
-const instagramUrls = [
-  "https://instagram.com/p/B-7mDcDByu_/",
-  "https://instagram.com/p/BOeVb9Pgp24/",
-  "https://instagram.com/p/BM0tMcFh-tU/",
-  "https://instagram.com/p/_PALghL-Mi/",
-  "https://instagram.com/p/-qWL__L-A9/",
-];
-
-let getInstagramPosts =
-  "http://localhost:5001/momblog-15d1c/us-central1/instagram-instagram";
-
 const Footer = ({ instagram }) => {
   let windowWidth = useWindowWidth();
-  let itemHeight = Math.max(Math.floor(windowWidth / 10), 125);
-  // padding 2 x 1rem
-  // border 2 x 1px
-  // scrollbar 17px
-  let smallHeight = itemHeight + 32 + 17;
-  let height = windowWidth > 768 ? itemHeight * 1.5 + 32 + 2 : smallHeight;
+
   let style = {};
   let fontSize = windowWidth * 0.01;
   if (fontSize > 16) {
@@ -31,10 +15,6 @@ const Footer = ({ instagram }) => {
     fontSize = 8;
   }
   style.fontsize = fontSize;
-
-  // let result = await fetch(url);
-  // console.log("result", result);
-  // console.log("result", await result.json());
   let [instaPosts, setInstaPosts] = useState([]);
   useEffect(() => {
     let urls = arrayFromObject(instagram).map((url) => {

@@ -175,8 +175,7 @@ export default function InstagramView({ instagram, user }) {
       },
       body: JSON.stringify({ urls: newUrls }),
     };
-    let result = await fetch(instaUrl, instagramRequestOptions);
-    let data = await result.json();
+    await fetch(instaUrl, instagramRequestOptions);
     setUploadFinished(true);
   };
   return (

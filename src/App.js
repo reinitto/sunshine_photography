@@ -154,7 +154,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("instagram", this.state.instagram);
     return (
       <Router>
         <ScrollToTop setLocation={this.setLocation.bind(this)}>

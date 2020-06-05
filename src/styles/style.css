@@ -11173,8 +11173,8 @@ nav.navbar.navbar-expand-md {
           animation-timing-function: ease;
   -webkit-animation-iteration-count: infinite;
           animation-iteration-count: infinite;
-  -webkit-animation-duration: 6s;
-          animation-duration: 6s;
+  -webkit-animation-duration: 12s;
+          animation-duration: 12s;
 }
 
 .viewContainer .slice > div {
@@ -11196,7 +11196,7 @@ nav.navbar.navbar-expand-md {
 }
 
 .viewContainer .faceback {
-  background-color: transparent;
+  background-color: transparent black;
   -webkit-transform: rotateY(180deg) translateZ(1px);
           transform: rotateY(180deg) translateZ(1px);
 }
@@ -11822,6 +11822,14 @@ h3 {
     -webkit-transform: rotateY(0deg);
             transform: rotateY(0deg);
   }
+  25% {
+    -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+  }
+  75% {
+    -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+  }
   100% {
     -webkit-transform: rotateY(360deg);
             transform: rotateY(360deg);
@@ -11832,6 +11840,14 @@ h3 {
   0% {
     -webkit-transform: rotateY(0deg);
             transform: rotateY(0deg);
+  }
+  25% {
+    -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+  }
+  75% {
+    -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
   }
   100% {
     -webkit-transform: rotateY(360deg);

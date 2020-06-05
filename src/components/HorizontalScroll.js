@@ -126,7 +126,6 @@ export const HorizontalScroll = ({ list = [], footer, style = {} }) => {
   let sideLength = footer ? Math.max(Math.floor(windowWidth / 10), 125) : 250;
 
   let content = Menu({ list: [...list, ...list], sideLength, style, footer });
-  console.log("list", list);
   if (windowWidth > 768) {
     return (
       <CloudinaryContext cloudName="sunshinephoto">

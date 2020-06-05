@@ -67,7 +67,7 @@ const ContactFormBack = () => {
           opacity: "0.7",
         }}
       ></div>
-      <LazyBackground
+      <div
         className="cover-image"
         style={{
           position: "absolute",
@@ -80,6 +80,7 @@ const ContactFormBack = () => {
           zIndex: "-1",
           backgroundRepeat: " no-repeat",
           backgroundColor: "#b4c7d4",
+          backgroundImage: `url(${aboutMeImg[0]})`,
         }}
         src={aboutMeImg[0]}
       />
@@ -141,7 +142,7 @@ export default function ContactForm({ firebase }) {
     contact.style.animationPlayState = "running";
     setTimeout(() => {
       contact.style.animationPlayState = "paused";
-    }, 6000);
+    }, 12000);
   };
   if (
     contactFormRef &&

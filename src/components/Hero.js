@@ -71,14 +71,9 @@ export default function Hero({
           <Link to="#" className="hero-social" aria-label="instagram">
             <FontAwesomeIcon inverse icon={["fab", "instagram"]} size="lg" />
           </Link>
-          <a
-            as={Link}
-            href="/#contactForm"
-            className="hero-social"
-            aria-label="email"
-          >
+          <Link to="/#contactForm" className="hero-social" aria-label="email">
             <FontAwesomeIcon inverse icon={["fa", "envelope"]} size="lg" />
-          </a>
+          </Link>
         </div>
       </div>
     </div>
