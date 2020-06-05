@@ -70,9 +70,10 @@ const ItemView = ({ url, i, updateUrl, toggleDelete }) => {
       setThumbnailUrl(data.thumbnail_url);
       setTitle(data.title);
     });
-  }, [url]);
+  }, [url.url]);
   return (
     <div
+      key={url.url || i}
       className="d-flex"
       style={{
         border: "1px solid black",
