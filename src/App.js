@@ -23,6 +23,7 @@ class App extends Component {
       admin: false,
       journals: [],
       services: [],
+      instagram: [],
       currentRoute: "/home",
     };
   }
@@ -30,6 +31,7 @@ class App extends Component {
   async componentDidMount() {
     await this.getServices();
     await this.getJournals();
+    await this.getInstagram();
 
     firebase("auth").then(({ auth }) => {
       auth.onAuthStateChanged((user) => {
@@ -122,6 +124,23 @@ class App extends Component {
           if (servicesSnap) {
             this.setState({
               services: servicesSnap,
+            });
+          }
+        });
+    });
+  }
+
+getInstagram  () {
+    firebase("database").then(({ database }) => {
+      database
+        .ref("/instagram/")
+        .once("value")
+        .then((snapshot) => {
+          let instaSnap = snapshot.val();
+            console.log('instaSnap',instaSnap)
+          if (instaSnap) {
+                      this.setState({
+              instagram: instaSnap,
             });
           }
         });
@@ -266,6 +285,7 @@ class App extends Component {
                 isAdmin={this.state.admin}
                 user={this.state.user}
                 journals={this.state.journals}
+                instagram={this.state.instagram}
               />
               <PrivateRoute
                 path="/dashboard"
@@ -318,7 +338,7 @@ class App extends Component {
             </div>
           }
         >
-          <Footer journals={this.state.journals} />
+          <Footer instagram={this.state.instagram} />
         </Suspense>
       </Router>
     );

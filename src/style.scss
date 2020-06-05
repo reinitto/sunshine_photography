@@ -472,6 +472,10 @@ footer {
   background: rgba(169, 169, 169, 0.3);
 }
 
+footer .Embed .HoverCard {
+  display: none;
+}
+
 h2,
 h3 {
   color: $base-color;

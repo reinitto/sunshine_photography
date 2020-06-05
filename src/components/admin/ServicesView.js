@@ -5,6 +5,7 @@ import { faMinusCircle, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
 import { FileDrop } from "react-file-drop";
 import { Overlay } from "./Overlay";
+import { arrayFromObject } from "./arrayFromObject";
 const shortid = require("shortid");
 shortid.characters(
   "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
@@ -20,24 +21,6 @@ let uploadImgUrl =
 // "http://localhost:5001/momblog-15d1c/us-central1/uploadImageToCloudinary-uploadImageToCloudinary";
 let deleteImgUrl =
   "https://us-central1-momblog-15d1c.cloudfunctions.net/deleteImageFromCloudinary-deleteImageFromCloudinary";
-// "http://localhost:5001/momblog-15d1c/us-central1/deleteImageFromCloudinary-deleteImageFromCloudinary";
-
-let arrayFromObject = (obj) => {
-  let arr = [];
-  if (Object.keys(obj).length === 0) {
-    return arr;
-  }
-  Object.keys(obj).forEach((key) => {
-    if (typeof obj[key] === "object") {
-      let val = Object.assign({}, obj[key]);
-      arr.push(val);
-    } else {
-      arr.push(obj[key]);
-    }
-  });
-  return arr;
-};
-
 let ImageWithThumbnail = ({
   loadFile,
   stateId,

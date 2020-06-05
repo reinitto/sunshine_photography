@@ -9,6 +9,7 @@ import { createJournalToEdit } from "../components/admin/createJournalToEdit";
 import { updateImageSrc } from "../components/admin/updateImageSrc";
 import { updateImages } from "../components/admin/updateImages";
 const EditJournals = lazy(() => import("../components/admin/EditJournals"));
+const InstagramView = lazy(() => import("../components/admin/InstagramView"));
 const ServicesView = lazy(() => import("../components/admin/ServicesView"));
 let realUrl =
   "https://us-central1-momblog-15d1c.cloudfunctions.net/uploadToCloudinary-uploadToCloudinary";
@@ -16,7 +17,7 @@ let realUrl =
 // "https://us-central1-momblog-15d1c.cloudfunctions.net/uploadToCloudinary-uploadToCloudinary";
 export default class Admin extends Component {
   state = {
-    journalsMenu: false,
+    menu:'journals',
     journals: [],
     newJournal: {
       shortTitle: "",
@@ -245,6 +246,9 @@ export default class Admin extends Component {
   };
   setServicesView = () => {
     this.setState({ menu: "services" });
+  };
+  setInstagramView = () => {
+    this.setState({ menu: "instagram" });
   };
 
   setJournalToEdit = (journalId) => {
@@ -495,6 +499,24 @@ export default class Admin extends Component {
                 >
                   Services
                 </a>
+ 
+              </li>
+              <li
+              style={{
+                  listStyleType: "none",
+                  border: "1px solid black",
+                  padding: "1rem",
+                }}
+              >
+               <a
+                  href="#!"
+                  onClick={() => {
+                    this.setInstagramView();
+                  }}
+                >
+                  Instagram
+                </a>
+
               </li>
             </ul>
           </div>
@@ -557,6 +579,20 @@ export default class Admin extends Component {
               }
             >
               <ServicesView user={this.props.user} />
+            </Suspense>
+          ) : null}
+          {this.state.menu === "instagram" ? (
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    height: "100vh",
+                    width: "100%",
+                  }}
+                ></div>
+              }
+            >
+              <InstagramView instagram={this.props.instagram} user={this.props.user} />
             </Suspense>
           ) : null}
         </Fragment>

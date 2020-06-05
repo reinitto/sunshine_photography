@@ -11,50 +11,83 @@ export const MenuItem = ({
   imageUrl,
   width,
   height,
+  footer = false,
   style = {},
 }) => {
-  let public_id = imageUrl.match(/(images\/.*)/)[1].split(".")[0];
+  let public_id = !footer
+    ? imageUrl.match(/(images\/.*)/)[1].split(".")[0]
+    : null;
 
-  return (
-    <Link
-      to={`/journal/${link}`}
-      className={`menu-item d-flex flex-column align-items-center justify-content-center p-3`}
+  let Item = () => (
+    <div
       style={{
-        background: `linear-gradient(
-          rgba(147, 173, 207, 0.15), 
-          rgba(147, 173, 207, 0.45)
-        )`,
+        position: "relative",
+        width: `${width}px`,
+        height: `${height}px`,
+        overflow: "hidden",
       }}
-      aria-label={`journal ${text}`}
     >
-      <div
-        style={{
-          position: "relative",
-          width: `${width}px`,
-          height: `${height}px`,
-        }}
-      >
+      {footer ? (
+        <img
+          src={imageUrl}
+          alt={text}
+          loading="lazy"
+          style={{ objectFit: "cover", height: "100%" }}
+        />
+      ) : (
         <ProgressiveCloudinaryImage
           publicId={public_id}
           style={{ objectFit: "cover", height: "100%" }}
           altText={text}
         />
-        {text ? (
-          <div
-            style={{
-              position: "absolute",
-              top: "0",
-              left: "0",
-              width: `${width}px`,
-              height: `${height}px`,
-              background: `rgba(0, 0, 0, 0.20)`,
-            }}
-          >
-            <p className="link-overlay-text text-uppercase">{text}</p>
-          </div>
-        ) : null}
-      </div>
+      )}
+      {text ? (
+        <div
+          style={{
+            position: "absolute",
+            top: "0",
+            left: "0",
+            width: `${width}px`,
+            height: `${height}px`,
+            background: `rgba(0, 0, 0, 0.20)`,
+          }}
+        >
+          <p className="link-overlay-text text-uppercase">{text}</p>
+        </div>
+      ) : null}
+    </div>
+  );
+
+  return !footer ? (
+    <Link
+      to={footer ? "" : `/journal/${link}`}
+      className={`menu-item d-flex flex-column align-items-center justify-content-center p-3`}
+      style={{
+        background: `linear-gradient(
+        rgba(147, 173, 207, 0.15), 
+        rgba(147, 173, 207, 0.45)
+      )`,
+      }}
+      aria-label={footer ? text : `journal ${text}`}
+    >
+      <Item />
     </Link>
+  ) : (
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href={link}
+      className={`menu-item d-flex flex-column align-items-center justify-content-center p-3`}
+      style={{
+        background: `linear-gradient(
+        rgba(147, 173, 207, 0.15), 
+        rgba(147, 173, 207, 0.45)
+      )`,
+      }}
+      aria-label={footer ? text : `journal ${text}`}
+    >
+      <Item />
+    </a>
   );
 };
 
@@ -63,7 +96,6 @@ export const MenuItem = ({
 export const Menu = ({ list, sideLength, footer, style = {} }) => {
   let width = sideLength > 300 ? 300 : sideLength;
   let height = width * 1.25;
-
   return list.map((el, i) => {
     const { title, journalUrl, imageUrl } = el;
 
@@ -94,7 +126,7 @@ export const HorizontalScroll = ({ list = [], footer, style = {} }) => {
   let sideLength = footer ? Math.max(Math.floor(windowWidth / 10), 125) : 250;
 
   let content = Menu({ list: [...list, ...list], sideLength, style, footer });
-
+  console.log("list", list);
   if (windowWidth > 768) {
     return (
       <CloudinaryContext cloudName="sunshinephoto">

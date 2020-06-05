@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./FontAwesomeIcons";
 // import LazyBackground from "./LazyBackground";
 import { useWindowWidth } from "./useWindowWidth";
-import "./SocialIcons";
 
 let placeholderColor = "#b4c7d4";
 export default function Hero({

@@ -1,25 +1,25 @@
-import React, { lazy } from "react";
-
-// import { HorizontalScroll } from "../HorizontalScroll";
-import { createJournalItems } from "../createJournalItems";
+import React, { lazy, useState, useEffect } from "react";
 import { useWindowWidth } from "../useWindowWidth";
-const HorizontalScroll = lazy(() => import("../HorizontalScroll"));
+import HorizontalScroll from "../HorizontalScroll";
 
-const Footer = ({ journals }) => {
-  let journalItems = [];
-  if (journals) {
-    journalItems = createJournalItems(journals);
-  }
+const instagramUrls = [
+  "https://instagram.com/p/B-7mDcDByu_/",
+  "https://instagram.com/p/BOeVb9Pgp24/",
+  "https://instagram.com/p/BM0tMcFh-tU/",
+  "https://instagram.com/p/_PALghL-Mi/",
+  "https://instagram.com/p/-qWL__L-A9/",
+];
+
+let getInstagramPosts =
+  "http://localhost:5001/momblog-15d1c/us-central1/instagram-instagram";
+
+const Footer = () => {
   let windowWidth = useWindowWidth();
   let itemHeight = Math.max(Math.floor(windowWidth / 10), 125);
   // padding 2 x 1rem
   // border 2 x 1px
   // scrollbar 17px
-  // console.log("windowWidth", windowWidth);
-  // console.log("itemHeight", itemHeight);
-  // console.log("itemHeight*1.5", itemHeight * 1.5);
   let smallHeight = itemHeight + 32 + 17;
-  // console.log("smallHeight", smallHeight);
   let height = windowWidth > 768 ? itemHeight * 1.5 + 32 + 2 : smallHeight;
   let style = {};
   let fontSize = windowWidth * 0.01;
@@ -30,24 +30,40 @@ const Footer = ({ journals }) => {
     fontSize = 8;
   }
   style.fontsize = fontSize;
-  // console.log("footer height", height);
+
+  // let result = await fetch(url);
+  // console.log("result", result);
+  // console.log("result", await result.json());
+  let [instaPosts, setInstaPosts] = useState([]);
+  useEffect(() => {
+    let urls = instagramUrls.map((url) => {
+      return new Promise((resolve, reject) => {
+        fetch(`https://api.instagram.com/oembed?url=${url}`)
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => resolve({ ...data, url }));
+      });
+    });
+    Promise.all(urls).then((res) => {
+      let posts = res.map((post) => {
+        return { ...post, imageUrl: post.thumbnail_url, journalUrl: post.url };
+      });
+      setInstaPosts(posts);
+    });
+  }, []);
   return (
     <footer className="d-flex flex-column">
-      {journalItems && journalItems.length > 0 ? (
-        <HorizontalScroll
-          hideArrows={true}
-          list={journalItems}
-          footer={true}
-          style={style}
-        />
-      ) : (
-        <div
-          style={{
-            ...style,
-            height,
-          }}
-        ></div>
+      {instaPosts.length > 0 && (
+        <div className="container pt-3">
+          <h4 className="text-center">
+            <a href={instaPosts[0].author_url}>
+              More photos on Instagram
+             </a>
+          </h4>
+        </div>
       )}
+      <HorizontalScroll list={instaPosts} footer={true} />
       <div className="d-flex justify-content-center">
         <button
           className="btn btn-primary btn-base"
