@@ -43,7 +43,11 @@ export default function ServicePricing({
                   ))
                 : null}
             </ul>
-            <p>All prices include VAT.</p>
+            <div className="d-flex justify-content-center align-items-center">
+              <a className="about-button btn btn-base m-3" href="/#contactForm">
+                Contact Me
+              </a>
+            </div>
           </div>
         </div>
       )}

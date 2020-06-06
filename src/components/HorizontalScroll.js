@@ -149,7 +149,7 @@ export const HorizontalScroll = ({ list = [], footer, style = {} }) => {
             config={{ stiffness: 60, damping: 10 }}
             // className="scrolling-horizontally"
             //  config = {{ stiffness: int, damping: int }}
-            // animValues={10}
+            animValues={1}
           >
             {content}
           </ScrollingHorizontally>
