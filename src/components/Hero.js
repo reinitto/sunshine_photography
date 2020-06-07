@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { HashLink } from "react-router-hash-link";
 import "./FontAwesomeIcons";
 import { useWindowWidth } from "./useWindowWidth";
 import { useWindowFromTop } from "./useWindowFromTop";
@@ -15,7 +16,6 @@ export default function Hero({
 }) {
   let windowWidth = useWindowWidth();
   let fromTop = useWindowFromTop();
-  console.log("fromTop", fromTop);
   let subtitleSize = windowWidth * 0.024 > 30 ? "30px" : "2.4vw";
   let keywordSize = windowWidth * 0.01 > 16 ? "1rem" : "10px";
   return (
@@ -72,9 +72,13 @@ export default function Hero({
           <Link to="#" className="hero-social" aria-label="instagram">
             <FontAwesomeIcon inverse icon={["fab", "instagram"]} size="lg" />
           </Link>
-          <Link to="/#contactForm" className="hero-social" aria-label="email">
+          <HashLink
+            to="/#contactForm"
+            className="hero-social"
+            aria-label="email"
+          >
             <FontAwesomeIcon inverse icon={["fa", "envelope"]} size="lg" />
-          </Link>
+          </HashLink>
         </div>
         <div
           style={{
