@@ -545,27 +545,47 @@ h3 {
   background-color: red;
   z-index: 100;
 }
+.horizontal-arrow {
+  position: absolute;
+  top: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  width: 10%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 55px;
+  transition: all 1s;
 
-.horizontal-scroll-menu {
-  background-color: $bgDark;
-  .menu-item {
-    padding: 0 40px;
-    margin: 5px 10px;
-    user-select: none;
-    cursor: pointer;
-    border: none;
+  &:hover {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.75) 100%
+    );
   }
-  // .menu-item-wrapper.active {
-  //   border: 1px blue solid;
-  // }
-  // .menu-item.active {
-  //   border: 1px green solid;
-  // }
+}
 
-  .scroll-menu-arrow {
-    padding: 20px;
-    cursor: pointer;
+.menu-item {
+  padding: 0 40px;
+  margin: 5px 10px;
+  user-select: none;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  &:hover {
+    transform: scale(0.9);
   }
+}
+
+.scroll-menu-arrow {
+  padding: 20px;
+  cursor: pointer;
 }
 
 @keyframes come-in {

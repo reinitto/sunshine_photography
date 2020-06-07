@@ -11427,11 +11427,34 @@ h3 {
   z-index: 100;
 }
 
-.horizontal-scroll-menu {
-  background-color: #dfe1e3;
+.horizontal-arrow {
+  position: absolute;
+  top: 0;
+  background: -webkit-gradient(linear, left top, right top, from(white), to(rgba(255, 255, 255, 0)));
+  background: linear-gradient(90deg, white 0%, rgba(255, 255, 255, 0) 100%);
+  width: 10%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+  font-size: 55px;
+  -webkit-transition: all 1s;
+  transition: all 1s;
 }
 
-.horizontal-scroll-menu .menu-item {
+.horizontal-arrow:hover {
+  background: -webkit-gradient(linear, left top, right top, from(white), to(rgba(255, 255, 255, 0.75)));
+  background: linear-gradient(90deg, white 0%, rgba(255, 255, 255, 0.75) 100%);
+}
+
+.menu-item {
   padding: 0 40px;
   margin: 5px 10px;
   -webkit-user-select: none;
@@ -11440,9 +11463,16 @@ h3 {
           user-select: none;
   cursor: pointer;
   border: none;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
 }
 
-.horizontal-scroll-menu .scroll-menu-arrow {
+.menu-item:hover {
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+}
+
+.scroll-menu-arrow {
   padding: 20px;
   cursor: pointer;
 }

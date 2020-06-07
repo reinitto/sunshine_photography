@@ -1,9 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Image, Transformation } from "cloudinary-react";
-export const ProgressiveCloudinaryImage = (
-  { publicId, altText = "", style = {} },
-  ...rest
-) => {
+export const ProgressiveCloudinaryImage = ({ publicId, altText }) => {
   let imageRef = useRef();
   let [imagePublicId, setImagePublicId] = useState();
   useEffect(() => {
@@ -25,8 +22,7 @@ export const ProgressiveCloudinaryImage = (
             });
           },
           {
-            threshold: 0.1,
-            rootMargin: "10%",
+            threshold: 0.25,
           }
         );
         theElement = imageRef.current.element;
@@ -53,11 +49,13 @@ export const ProgressiveCloudinaryImage = (
       width="auto"
       crop="scale"
       responsiveUseBreakpoints="true"
-      publicId={imagePublicId || ""}
+      publicId={publicId || ""}
       secure="true"
       style={{
         width: "100%",
-        ...style,
+        objectFit: "cover",
+        height: "100%",
+        // ...style,
       }}
     >
       <Transformation flags="progressive:steep" fetchFormat="jpg" />
