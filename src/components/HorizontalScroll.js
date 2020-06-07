@@ -178,7 +178,7 @@ export const HorizontalScroll = ({ list = [], footer, style = {} }) => {
           </div>
           <div
             onClick={goLeft}
-            className="horizontal-arrow"
+            className="horizontal-arrow arrow-left"
             style={{
               left: 0,
             }}
@@ -187,7 +187,7 @@ export const HorizontalScroll = ({ list = [], footer, style = {} }) => {
           </div>
           <div
             onClick={goRight}
-            className="horizontal-arrow"
+            className="horizontal-arrow arrow-right"
             style={{
               right: 0,
             }}

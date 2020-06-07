@@ -38,7 +38,7 @@ const Footer = ({ instagram }) => {
       {instaPosts.length > 0 && (
         <div className="container pt-3">
           <h4 className="text-center">
-            <a href={instaPosts[0].author_url}>More photos on Instagram</a>
+            <a href={instaPosts[0].author_url}>Follow Me on Instagram</a>
           </h4>
         </div>
       )}

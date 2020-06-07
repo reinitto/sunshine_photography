@@ -11427,11 +11427,19 @@ h3 {
   z-index: 100;
 }
 
+.arrow-right {
+  background: -webkit-gradient(linear, right top, left top, from(white), to(rgba(255, 255, 255, 0)));
+  background: linear-gradient(270deg, white 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.arrow-left {
+  background: -webkit-gradient(linear, left top, right top, from(white), to(rgba(255, 255, 255, 0)));
+  background: linear-gradient(90deg, white 0%, rgba(255, 255, 255, 0) 100%);
+}
+
 .horizontal-arrow {
   position: absolute;
   top: 0;
-  background: -webkit-gradient(linear, left top, right top, from(white), to(rgba(255, 255, 255, 0)));
-  background: linear-gradient(90deg, white 0%, rgba(255, 255, 255, 0) 100%);
   width: 10%;
   height: 100%;
   display: -webkit-box;
@@ -11450,8 +11458,8 @@ h3 {
 }
 
 .horizontal-arrow:hover {
-  background: -webkit-gradient(linear, left top, right top, from(white), to(rgba(255, 255, 255, 0.75)));
-  background: linear-gradient(90deg, white 0%, rgba(255, 255, 255, 0.75) 100%);
+  background: -webkit-gradient(linear, left top, right top, from(white), to(rgba(255, 255, 255, 0.9)));
+  background: linear-gradient(90deg, white 0%, rgba(255, 255, 255, 0.9) 100%);
 }
 
 .menu-item {
@@ -11502,8 +11510,8 @@ h3 {
 @media (min-width: 768px) {
   .links-to-gallery-layout a:hover,
   .scroll-horizontal a:hover {
-    -webkit-transform: scale(1.15);
-            transform: scale(1.15);
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
     z-index: 100;
     -webkit-transition: 0.25s;
     transition: 0.25s;
@@ -11882,6 +11890,48 @@ h3 {
   100% {
     -webkit-transform: rotateY(360deg);
             transform: rotateY(360deg);
+  }
+}
+
+@-webkit-keyframes move {
+  25% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 1;
+    -webkit-transform: translateY(30px);
+            transform: translateY(30px);
+  }
+  67% {
+    opacity: 1;
+    -webkit-transform: translateY(40px);
+            transform: translateY(40px);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(55px) scale3d(0.5, 0.5, 0.5);
+            transform: translateY(55px) scale3d(0.5, 0.5, 0.5);
+  }
+}
+
+@keyframes move {
+  25% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 1;
+    -webkit-transform: translateY(30px);
+            transform: translateY(30px);
+  }
+  67% {
+    opacity: 1;
+    -webkit-transform: translateY(40px);
+            transform: translateY(40px);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(55px) scale3d(0.5, 0.5, 0.5);
+            transform: translateY(55px) scale3d(0.5, 0.5, 0.5);
   }
 }
 
