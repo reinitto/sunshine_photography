@@ -232,7 +232,7 @@ nav.navbar.navbar-expand-md {
 }
 
 .link-overlay-text {
-  position: absolute;
+  position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -240,6 +240,7 @@ nav.navbar.navbar-expand-md {
   font-weight: 600;
   font-family: "EB Garamond", sans-serif;
   letter-spacing: 3px;
+  overflow-wrap: anywhere;
 }
 
 .links-to-gallery {
