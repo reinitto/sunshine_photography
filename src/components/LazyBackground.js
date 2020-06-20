@@ -19,6 +19,8 @@ class LazyBackground extends Component {
         {...rest}
         style={{
           backgroundImage: `url(${this.state.src})`,
+          backgroundPosition: "center center",
+          backgroundRepeat: "no-repeat",
           ...style,
         }}
       />

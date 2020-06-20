@@ -29,6 +29,7 @@ export default function Hero({
         position: "relative",
         backgroundAttachment: `fixed`,
         backgroundRepeat: `no-repeat`,
+        backgroundPosition: "center center",
       }}
     >
       <div

@@ -55,6 +55,8 @@ export const ProgressiveCloudinaryImage = ({ publicId, altText }) => {
         width: "100%",
         objectFit: "cover",
         height: "100%",
+        backgroundPosition: "center center",
+        backgroundRepeat: "no-repeat",
         // ...style,
       }}
     >

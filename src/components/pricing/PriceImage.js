@@ -46,6 +46,8 @@ export const PriceImage = ({ sessionKey }) => {
           width: "200px",
           height: "250px",
           color: "white",
+          backgroundPosition: "center center",
+          backgroundRepeat: "no-repeat",
         }}
       >
         <h4 className="text-capitalize">{name}</h4>
