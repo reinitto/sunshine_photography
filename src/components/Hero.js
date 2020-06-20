@@ -114,7 +114,7 @@ export default function Hero({
               fontSize: "55px",
               width: "55px",
               transition: "all 1s",
-              animation: "move 1.4s ease-out infinite",
+              animation: "move 3s ease-out infinite",
             }}
           >
             <svg
