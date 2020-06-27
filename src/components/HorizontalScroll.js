@@ -33,28 +33,7 @@ export const MenuItem = ({
         loading="lazy"
         style={{ objectFit: "cover", height: "100%", width }}
       />
-      {/* {footer ? (
-        <img
-          src={footer ? imageUrl : imageUrl.replace(
-            "upload",
-            "upload/f_jpg,fl_progressive:steep/c_scale,dpr_1.0,w_300"
-          )}
-          alt={text}
-          loading="lazy"
-          style={{ objectFit: "cover", height: "100%", width }}
-        />
-
-      ) : (
-        <img
-          src={imageUrl.replace(
-            "upload",
-            "upload/f_jpg,fl_progressive:steep/c_scale,dpr_1.0,w_300"
-          )}
-          alt={text}
-          loading="lazy"
-          style={{ objectFit: "cover", height: "100%" }}
-        />
-      )} */}
+   
       {text ? (
         <div
           style={{
@@ -107,17 +86,17 @@ export const MenuItem = ({
 
 // All items component
 // Important! add unique key
-export const Menu = ({ list, sideLength, footer, style = {} }) => {
+export const Menu = ({ list, sideLength, footer, language, style = {} }) => {
   let width = sideLength > 300 ? 300 : sideLength;
   let height = width * 1.25;
   return list.map((el, i) => {
     const { title, journalUrl, imageUrl } = el;
-
+    console.log('title',title)
     return (
       <MenuItem
-        text={footer ? "" : title}
+        text={footer ? "" :( title[language]?title[language]:title['us']||title['eng'])}
         link={journalUrl}
-        key={title + i}
+        key={footer ? i : title[language] + i}
         imageUrl={imageUrl}
         width={width}
         height={height}
@@ -128,12 +107,23 @@ export const Menu = ({ list, sideLength, footer, style = {} }) => {
   });
 };
 
-export const HorizontalScroll = ({ list = [], footer, style = {} }) => {
+export const HorizontalScroll = ({
+  list = [],
+  footer,
+  language,
+  style = {},
+}) => {
   let windowWidth = useWindowWidth();
   let horizontalScroll = useRef();
   let sideLength = footer ? Math.max(Math.floor(windowWidth / 10), 125) : 250;
 
-  let content = Menu({ list: [...list, ...list], sideLength, style, footer });
+  let content = Menu({
+    list: [...list, ...list],
+    sideLength,
+    style,
+    footer,
+    language,
+  });
 
   let goLeft = () => {
     let hs = horizontalScroll.current;

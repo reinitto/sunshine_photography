@@ -293,6 +293,18 @@ nav.navbar.navbar-expand-md {
   align-items: center;
 }
 
+.admin-section {
+  background-color: lightgrey;
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.text-block-text,
+.text-block-title {
+  width: 100%;
+}
+
 .journal-text-block {
   display: flex;
   flex-direction: column;
@@ -955,7 +967,7 @@ h3 {
 
 // INPUT FILE STYLES
 .journal-image-text {
-  border: none;
+  border: 1px solid black;
   background: transparent;
   width: 100%;
   // resize: none;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import * as firebase from "firebase/app";
+import ReactCountryFlag from "react-country-flag";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinusCircle, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { Image, Transformation, CloudinaryContext } from "cloudinary-react";
@@ -64,11 +65,15 @@ let loadFile = (file, stateId, id, stateUpdater) => {
   };
   reader.readAsDataURL(file);
 };
-export const ServicesView = ({ user }) => {
+export const ServicesView = ({ user, language }) => {
   let [key, setKey] = useState("");
-  let [serviceName, setServiceName] = useState("");
-  let [serviceParagraph, setServiceParagraph] = useState("");
-  let [details, setDetails] = useState([""]);
+  let [serviceName, setServiceName] = useState({ us: "", lv: "", no: "" });
+  let [serviceParagraph, setServiceParagraph] = useState({
+    us: "",
+    lv: "",
+    no: "",
+  });
+  let [details, setDetails] = useState([{ us: "", lv: "", no: "" }]);
   let [overlay, setOverlay] = useState(false);
   let [thumbnailImage, setThumbnailImage] = useState({
     id: shortid.generate(),
@@ -77,9 +82,9 @@ export const ServicesView = ({ user }) => {
   let [sessions, setSessions] = useState([
     {
       id: shortid.generate(),
-      name: "",
+      name: { us: "", lv: "", no: "" },
       price: 0,
-      detailText: "",
+      detailText: { us: "", lv: "", no: "" },
       image: "",
     },
   ]);
@@ -87,7 +92,7 @@ export const ServicesView = ({ user }) => {
     {
       id: shortid.generate(),
       image: "",
-      text: "",
+      text: { us: "", lv: "", no: "" },
     },
   ]);
   let [allServices, setAllServices] = useState([]);
@@ -100,26 +105,26 @@ export const ServicesView = ({ user }) => {
 
   let setNewService = async () => {
     setKey("");
-    setServiceName("");
+    setServiceName({ us: "", lv: "", no: "" });
     setThumbnailImage({
       id: shortid.generate(),
       image: "",
     });
-    setServiceParagraph("");
-    setDetails([""]);
+    setServiceParagraph({ us: "", lv: "", no: "" });
+    setDetails([{ us: "", lv: "", no: "" }]);
     setGalleryImages([
       {
         id: shortid.generate(),
         image: "",
-        text: "",
+        text: { us: "", lv: "", no: "" },
       },
     ]);
     setSessions([
       {
         id: shortid.generate(),
-        name: "",
+        name: { us: "", lv: "", no: "" },
         price: 0,
-        detailText: "",
+        detailText: { us: "", lv: "", no: "" },
         image: "",
       },
     ]);
@@ -200,19 +205,23 @@ export const ServicesView = ({ user }) => {
     return snap.val();
   };
 
-  let updateServiceName = (e) => {
-    setServiceName(e.target.value);
+  let updateServiceName = (e, language) => {
+    let newServiceName = { ...serviceName };
+    newServiceName[language] = e.target.value;
+    setServiceName(newServiceName);
   };
-  let updateServiceParagraph = (e) => {
-    setServiceParagraph(e.target.value);
+  let updateServiceParagraph = (e, language) => {
+    let newServiceParagraph = { ...serviceParagraph };
+    newServiceParagraph[language] = e.target.value;
+    setServiceParagraph(newServiceParagraph);
   };
   let addDetail = () => {
-    setDetails([...details, ""]);
+    setDetails([...details, { us: "", lv: "", no: "" }]);
   };
-  let updateServiceDetail = (e) => {
+  let updateServiceDetail = (e, i, language) => {
     let prevDetails = [...details];
-    let id = e.target.id.match(/(\d+)/g)[0];
-    prevDetails[id] = e.target.value;
+    // let id = e.target.id.match(/(\d+)/g)[0];
+    prevDetails[i][language] = e.target.value;
     setDetails(prevDetails);
   };
 
@@ -223,14 +232,14 @@ export const ServicesView = ({ user }) => {
   };
 
   let addSession = () => {
-    if (sessions.length > 0) {
+    if (sessions.lusth > 0) {
       setSessions([
         ...sessions,
         {
           id: shortid.generate(),
-          name: "",
+          name: { us: "", lv: "", no: "" },
           price: 0,
-          detailText: "",
+          detailText: { us: "", lv: "", no: "" },
           image: "",
         },
       ]);
@@ -238,9 +247,9 @@ export const ServicesView = ({ user }) => {
       setSessions([
         {
           id: shortid.generate(),
-          name: "",
+          name: { us: "", lv: "", no: "" },
           price: "",
-          detailText: "",
+          detailText: { us: "", lv: "", no: "" },
           image: "",
         },
       ]);
@@ -266,15 +275,15 @@ export const ServicesView = ({ user }) => {
     setSessions(newSessions);
   };
 
-  let editSession = (e) => {
-    let newSession = [
-      ...sessions.filter(
-        (s) => s.id === e.target.parentNode.parentNode.parentNode.id
-      ),
-    ][0];
-    newSession[e.target.name] = e.target.value;
+  let editSession = (e, sessionId, sessionName, language = "") => {
+    let newSession = [...sessions.filter((s) => s.id === sessionId)][0];
+    if (["name", "detailText"].includes(sessionName)) {
+      newSession[sessionName][language] = e.target.value;
+    } else {
+      newSession[sessionName] = e.target.value;
+    }
     let newSessions = sessions.map((session) => {
-      if (session.id === e.target.id) {
+      if (session.id === sessionId) {
         return newSession;
       } else {
         return session;
@@ -284,13 +293,13 @@ export const ServicesView = ({ user }) => {
   };
 
   let addGalleryImage = () => {
-    if (sessions.length > 0) {
+    if (sessions.lusth > 0) {
       setGalleryImages([
         ...galleryImages,
         {
           id: shortid.generate(),
           image: "",
-          text: "",
+          text: { us: "", lv: "", no: "" },
         },
       ]);
     } else {
@@ -298,21 +307,16 @@ export const ServicesView = ({ user }) => {
         {
           id: shortid.generate(),
           image: "",
-          text: "",
+          text: { us: "", lv: "", no: "" },
         },
       ]);
     }
   };
-
-  let updateGaleryImageText = (e) => {
-    let newGalleryImage = [
-      ...galleryImages.filter(
-        (s) => s.id === e.target.parentNode.parentNode.id
-      ),
-    ][0];
-    newGalleryImage[e.target.name] = e.target.value;
+  let updateGaleryImageText = (e, id, language) => {
+    let newGalleryImage = [...galleryImages.filter((s) => s.id === id)][0];
+    newGalleryImage[e.target.name][language] = e.target.value;
     let newGalleryImages = galleryImages.map((galleryImage) => {
-      if (galleryImage.id === e.target.parentNode.parentNode.id) {
+      if (galleryImage.id === id) {
         return newGalleryImage;
       } else {
         return galleryImage;
@@ -619,7 +623,7 @@ export const ServicesView = ({ user }) => {
                     setServiceToEdit(service);
                   }}
                 >
-                  <h4 className="text-center">{service.name}</h4>
+                  <h4 className="text-center">{service.name[language]}</h4>
                   <Image
                     publicId={image}
                     width="250"
@@ -645,20 +649,117 @@ export const ServicesView = ({ user }) => {
                   width: "100%",
                 }}
               />
-              <input
-                className="text-center"
-                type="text"
-                placeholder="service name"
-                value={serviceName}
-                onChange={updateServiceName}
+              <div className="d-flex align-items-center">
+                <ReactCountryFlag
+                  countryCode="US"
+                  svg
+                  style={{
+                    width: "2em",
+                    height: "100%",
+                  }}
+                />
+                <input
+                  className="text-center w-100"
+                  type="text"
+                  placeholder="service name us"
+                  value={serviceName["us"]}
+                  onChange={(e) => updateServiceName(e, "us")}
+                />
+              </div>
+              <div className="d-flex align-items-center">
+                <ReactCountryFlag
+                  countryCode="LV"
+                  svg
+                  style={{
+                    width: "2em",
+                    height: "100%",
+                  }}
+                />
+                <input
+                  className="text-center w-100"
+                  type="text"
+                  placeholder="service name lv"
+                  value={serviceName["lv"]}
+                  onChange={(e) => updateServiceName(e, "lv")}
+                />
+              </div>
+
+              <div className="d-flex align-items-center">
+                <ReactCountryFlag
+                  countryCode="NO"
+                  svg
+                  style={{
+                    width: "2em",
+                    height: "100%",
+                  }}
+                />
+                <input
+                  className="text-center w-100"
+                  type="text"
+                  placeholder="service name no"
+                  value={serviceName["no"]}
+                  onChange={(e) => updateServiceName(e, "no")}
+                />
+              </div>
+              <hr
+                style={{
+                  border: "1px solid black",
+                  width: "100%",
+                }}
               />
-              <textarea
-                className="text-center"
-                type="text"
-                placeholder="service text"
-                value={serviceParagraph}
-                onChange={updateServiceParagraph}
-              />
+              <div className="d-flex align-items-center">
+                <ReactCountryFlag
+                  countryCode="US"
+                  svg
+                  style={{
+                    width: "2em",
+                    height: "100%",
+                  }}
+                />
+                <textarea
+                  className="text-center w-100"
+                  type="text"
+                  placeholder="service text us"
+                  value={serviceParagraph["us"]}
+                  onChange={(e) => updateServiceParagraph(e, "us")}
+                />
+              </div>
+
+              <div className="d-flex align-items-center">
+                <ReactCountryFlag
+                  countryCode="LV"
+                  svg
+                  style={{
+                    width: "2em",
+                    height: "100%",
+                  }}
+                />
+                <textarea
+                  className="text-center w-100"
+                  type="text"
+                  placeholder="service text lv "
+                  value={serviceParagraph["lv"]}
+                  onChange={(e) => updateServiceParagraph(e, "lv")}
+                />
+              </div>
+
+              <div className="d-flex align-items-center">
+                <ReactCountryFlag
+                  countryCode="NO"
+                  svg
+                  style={{
+                    width: "2em",
+                    height: "100%",
+                  }}
+                />
+                <textarea
+                  className="text-center w-100"
+                  type="text"
+                  placeholder="service text no"
+                  value={serviceParagraph["no"]}
+                  onChange={(e) => updateServiceParagraph(e, "no")}
+                />
+              </div>
             </div>
             <hr
               style={{
@@ -671,27 +772,52 @@ export const ServicesView = ({ user }) => {
                 return (
                   <div
                     key={`service-detail-${i}`}
-                    className="text-center d-flex"
+                    className="text-center d-flex-column"
                   >
-                    <input
-                      type="text"
-                      placeholder="Service detail."
-                      id={`service-detail-${i}`}
-                      value={detail}
-                      onChange={updateServiceDetail}
-                      style={{
-                        width: "100%",
-                      }}
-                    />
+                    {Object.keys(detail).map((language) => {
+                      let countryCode = "US";
+                      if (language === "lv") {
+                        countryCode = "LV";
+                      } else if (language === "no") {
+                        countryCode = "NO";
+                      }
+                      return (
+                        <Fragment>
+                          <div className="d-flex align-items-center">
+                            <ReactCountryFlag
+                              countryCode={countryCode}
+                              svg
+                              style={{
+                                width: "2em",
+                                height: "100%",
+                              }}
+                            />
+                            <input
+                              type="text"
+                              placeholder={`Service detail. ${language}`}
+                              id={`service-detail-${i}`}
+                              value={detail[language]}
+                              onChange={(e) =>
+                                updateServiceDetail(e, i, language)
+                              }
+                              style={{
+                                width: "100%",
+                              }}
+                            />
+                          </div>
+                        </Fragment>
+                      );
+                    })}
                     <button
                       onClick={() => removeDetail(i)}
-                      className="d-flex align-items-center"
+                      className="d-flex align-items-center justify-content-center w-100"
                     >
                       <FontAwesomeIcon
                         color="red"
                         icon={faMinusCircle}
                         size="sm"
                       />
+                      Delete Detail
                     </button>
                   </div>
                 );
@@ -718,7 +844,7 @@ export const ServicesView = ({ user }) => {
                       className="d-flex"
                       style={{
                         flexGrow: 1,
-                        position: "relative",
+                        position: "relvive",
                       }}
                     >
                       <div
@@ -742,13 +868,69 @@ export const ServicesView = ({ user }) => {
                           flexGrow: 1,
                         }}
                       >
-                        <input
-                          type="text"
-                          placeholder="session name"
-                          name="name"
-                          value={session.name}
-                          onChange={editSession}
-                        />
+                        <div className="d-flex align-items-center">
+                          <ReactCountryFlag
+                            countryCode="US"
+                            svg
+                            style={{
+                              width: "2em",
+                              height: "100%",
+                            }}
+                          />
+                          <input
+                            className="w-100"
+                            type="text"
+                            placeholder="session name us"
+                            name="name"
+                            value={session.name["us"]}
+                            onChange={(e) =>
+                              editSession(e, session.id, "name", "us")
+                            }
+                          />
+                        </div>
+
+                        <div className="d-flex align-items-center">
+                          <ReactCountryFlag
+                            countryCode="LV"
+                            svg
+                            style={{
+                              width: "2em",
+                              height: "100%",
+                            }}
+                          />
+                          <input
+                            className="w-100"
+                            type="text"
+                            placeholder="session name lv"
+                            name="name"
+                            value={session.name["lv"]}
+                            onChange={(e) =>
+                              editSession(e, session.id, "name", "lv")
+                            }
+                          />
+                        </div>
+
+                        <div className="d-flex align-items-center">
+                          <ReactCountryFlag
+                            countryCode="NO"
+                            svg
+                            style={{
+                              width: "2em",
+                              height: "100%",
+                            }}
+                          />
+                          <input
+                            className="w-100"
+                            type="text"
+                            placeholder="session name no"
+                            name="name"
+                            value={session.name["no"]}
+                            onChange={(e) =>
+                              editSession(e, session.id, "name", "no")
+                            }
+                          />
+                        </div>
+
                         <input
                           type="text"
                           placeholder="session price"
@@ -756,14 +938,71 @@ export const ServicesView = ({ user }) => {
                           value={session.price}
                           onChange={editSession}
                         />
-                        <textarea
-                          rows={6}
-                          type="text"
-                          placeholder="session detailText"
-                          name="detailText"
-                          value={session.detailText}
-                          onChange={editSession}
-                        />
+                        <div className="d-flex align-items-center">
+                          <ReactCountryFlag
+                            countryCode="US"
+                            svg
+                            style={{
+                              width: "2em",
+                              height: "100%",
+                            }}
+                          />
+                          <textarea
+                            className="w-100"
+                            rows={6}
+                            type="text"
+                            placeholder="session detailText us"
+                            name="detailText"
+                            value={session.detailText["us"]}
+                            onChange={(e) =>
+                              editSession(e, session.id, "detailText", "us")
+                            }
+                          />
+                        </div>
+
+                        <div className="d-flex align-items-center">
+                          <ReactCountryFlag
+                            countryCode="LV"
+                            svg
+                            style={{
+                              width: "2em",
+                              height: "100%",
+                            }}
+                          />
+                          <textarea
+                            className="w-100"
+                            rows={6}
+                            type="text"
+                            placeholder="session detailText lv"
+                            name="detailText"
+                            value={session.detailText["lv"]}
+                            onChange={(e) =>
+                              editSession(e, session.id, "detailText", "lv")
+                            }
+                          />
+                        </div>
+
+                        <div className="d-flex align-items-center">
+                          <ReactCountryFlag
+                            countryCode="NO"
+                            svg
+                            style={{
+                              width: "2em",
+                              height: "100%",
+                            }}
+                          />
+                          <textarea
+                            className="w-100"
+                            rows={6}
+                            type="text"
+                            placeholder="session detailText no"
+                            name="detailText"
+                            value={session.detailText["no"]}
+                            onChange={(e) =>
+                              editSession(e, session.id, "detailText", "no")
+                            }
+                          />
+                        </div>
                       </div>
                       <div
                         style={{
@@ -825,7 +1064,7 @@ export const ServicesView = ({ user }) => {
                       style={{
                         flexGrow: "1",
                         border: "1px solid black",
-                        position: "relative",
+                        position: "relvive",
                       }}
                     >
                       <div
@@ -856,14 +1095,66 @@ export const ServicesView = ({ user }) => {
                           },
                         }}
                       />
-                      <input
-                        type="text"
-                        name="text"
-                        placeholder="a short comment if you want"
-                        value={image.text}
-                        onChange={updateGaleryImageText}
-                        style={{ width: "100%" }}
-                      />
+                      <div className="d-flex align-items-center">
+                        <ReactCountryFlag
+                          countryCode="US"
+                          svg
+                          style={{
+                            width: "2em",
+                            height: "100%",
+                          }}
+                        />
+                        <input
+                          type="text"
+                          name="text"
+                          placeholder="a short comment if you want us"
+                          value={image.text["us"]}
+                          onChange={(e) =>
+                            updateGaleryImageText(e, image.id, "us")
+                          }
+                          style={{ width: "100%" }}
+                        />
+                      </div>
+
+                      <div className="d-flex align-items-center">
+                        <ReactCountryFlag
+                          countryCode="LV"
+                          svg
+                          style={{
+                            width: "2em",
+                            height: "100%",
+                          }}
+                        />
+                        <input
+                          type="text"
+                          name="text"
+                          placeholder="a short comment if you want lv"
+                          value={image.text["lv"]}
+                          onChange={(e) =>
+                            updateGaleryImageText(e, image.id, "lv")
+                          }
+                          style={{ width: "100%" }}
+                        />
+                      </div>
+
+                      <div className="d-flex align-items-center">
+                        <ReactCountryFlag
+                          countryCode="NO"
+                          svg
+                          style={{
+                            width: "2em",
+                            height: "100%",
+                          }}
+                        />
+                        <input
+                          type="text"
+                          name="text"
+                          placeholder="a short comment if you want no"
+                          value={image.text["no"]}
+                          onChange={(e) => updateGaleryImageText(e, image.id)}
+                          style={{ width: "100%" }}
+                        />
+                      </div>
                     </div>
                     <button
                       className="d-flex flex-column align-items-center justify-content-center"

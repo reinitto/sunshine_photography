@@ -94,6 +94,7 @@ const TextBlock = ({ title, text }) => {
 export default function ImageGalleryWithoutLighbox({
   journalImages,
   images,
+  language,
   name = "",
 }) {
   if (journalImages) {
@@ -103,7 +104,11 @@ export default function ImageGalleryWithoutLighbox({
     for (let i = 0; i < ordered.length; ) {
       if (ordered[i].isTextBlock) {
         gallery.push(
-          <TextBlock key={i} title={ordered[i].title} text={ordered[i].text} />
+          <TextBlock
+            key={i}
+            title={ordered[i].title}
+            text={ordered[i].text[language]||ordered[i].text['eng']||ordered[i].text['us']}
+          />
         );
         i++;
         continue;
@@ -114,7 +119,7 @@ export default function ImageGalleryWithoutLighbox({
             key={i}
             img={{
               src: ordered[i].imageUrl,
-              text: ordered[i].text,
+              text: ordered[i].text[language]||ordered[i].text['eng']||ordered[i].text['us'],
             }}
             altText={name || ""}
           />
@@ -130,11 +135,11 @@ export default function ImageGalleryWithoutLighbox({
             images={[
               {
                 src: ordered[i].imageUrl,
-                text: ordered[i].text,
+                text: ordered[i].text[language]||ordered[i].text['eng']||ordered[i].text['us'],
               },
               {
                 src: ordered[i + 1].imageUrl,
-                text: ordered[i + 1].text,
+                text: ordered[i + 1].text[language]||ordered[i + 1].text['eng']||ordered[i + 1].text['us'],
               },
             ]}
           />
@@ -150,15 +155,15 @@ export default function ImageGalleryWithoutLighbox({
             images={[
               {
                 src: ordered[i].imageUrl,
-                text: ordered[i].text,
+                text: ordered[i].text[language]||ordered[i].text['eng']||ordered[i].text['us'],
               },
               {
                 src: ordered[i + 1].imageUrl,
-                text: ordered[i + 1].text,
+                text: ordered[i + 1].text[language]|| ordered[i + 1].text['eng']|| ordered[i + 1].text['us'],
               },
               {
                 src: ordered[i + 2].imageUrl,
-                text: ordered[i + 2].text,
+                text: ordered[i + 2].text[language]||ordered[i + 2].text['eng']||ordered[i + 2].text['us'],
               },
             ]}
           />
@@ -216,7 +221,7 @@ export default function ImageGalleryWithoutLighbox({
               <SingleImage
                 key={row}
                 img={images[currentImgIndex]}
-                altText={`${name} example photo` || ""}
+                altText={`${name[language]} example photo` || ""}
               />
             );
             currentImgIndex++;
@@ -227,7 +232,7 @@ export default function ImageGalleryWithoutLighbox({
               <Doubles
                 key={row}
                 images={[images[currentImgIndex], images[currentImgIndex + 1]]}
-                altText={`${name} example photo` || ""}
+                altText={`${name[language]} example photo` || ""}
               />
             );
             currentImgIndex += 2;
@@ -242,7 +247,7 @@ export default function ImageGalleryWithoutLighbox({
                   images[currentImgIndex + 1],
                   images[currentImgIndex + 2],
                 ]}
-                altText={`${name} example photo` || ""}
+                altText={`${name[language]} example photo` || ""}
               />
             );
             currentImgIndex += 3;

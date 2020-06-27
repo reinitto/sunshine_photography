@@ -11,36 +11,42 @@ import { updateImages } from "../components/admin/updateImages";
 const EditJournals = lazy(() => import("../components/admin/EditJournals"));
 const InstagramView = lazy(() => import("../components/admin/InstagramView"));
 const ServicesView = lazy(() => import("../components/admin/ServicesView"));
+const AboutView = lazy(() => import("../components/admin/AboutView"));
+const HomeView = lazy(() => import("../components/admin/HomeView"));
+const ContactView = lazy(() => import("../components/admin/ContactView"));
+const FooterView = lazy(() => import("../components/admin/FooterView"));
+const NavigationView = lazy(() => import("../components/admin/NavigationView"));
 let realUrl =
   "https://us-central1-momblog-15d1c.cloudfunctions.net/uploadToCloudinary-uploadToCloudinary";
 // "http://localhost:5001/momblog-15d1c/us-central1/uploadToCloudinary-uploadToCloudinary";
 // "https://us-central1-momblog-15d1c.cloudfunctions.net/uploadToCloudinary-uploadToCloudinary";
 export default class Admin extends Component {
   state = {
-    menu:'journals',
+    menu: "journals",
     journals: [],
     newJournal: {
-      shortTitle: "",
-      title: "",
+      shortTitle: { us: "", lv: "", no: "" },
+      title: { us: "", lv: "", no: "" },
       titleImage: "",
       journalImages: [],
     },
   };
 
-  setShortTitle = (text) => {
+  setShortTitle = (text, language) => {
     let newJournal = { ...this.state.newJournal };
-    newJournal.shortTitle = text;
+    newJournal.shortTitle[language] = text;
     this.setState({
       newJournal,
     });
   };
 
-  updateTextBlockText = (id, text, title = false) => {
+  updateTextBlockText = (id, text, language, title = false) => {
     let newJournalImages = setTextBlockText(
       this.state.newJournal.journalImages,
       id,
       text,
-      title
+      title,
+      language
     );
     let newJournal = {
       ...this.state.newJournal,
@@ -49,7 +55,7 @@ export default class Admin extends Component {
     this.setState({ newJournal });
   };
 
-  setImageText = (id, text) => {
+  setImageText = (id, text, language) => {
     // only variation==1 image can have text
     let newImageSet = {};
     let index = 0;
@@ -60,7 +66,7 @@ export default class Admin extends Component {
       }
     });
 
-    newImageSet.image0.text = text;
+    newImageSet.image0.text[language] = text;
     let newJournalImages = [...this.state.newJournal.journalImages];
     newJournalImages.splice(index, 1, newImageSet);
     this.setState({
@@ -70,11 +76,13 @@ export default class Admin extends Component {
       },
     });
   };
-  setTitle = (title) => {
+  setTitle = (title, language) => {
+    let newTitle = { ...title };
+    newTitle[language] = title;
     this.setState({
       newJournal: {
         ...this.state.newJournal,
-        title,
+        title: newTitle,
       },
     });
   };
@@ -167,7 +175,10 @@ export default class Admin extends Component {
   };
 
   addNewTextBlock = () => {
-    let newTextBloc = { title: "", text: "" };
+    let newTextBloc = {
+      title: { us: "", lv: "", nor: "" },
+      text: { us: "", lv: "", nor: "" },
+    };
     let order = this.state.newJournal.journalImages.length;
     newTextBloc.variation = "text";
     newTextBloc.order = order;
@@ -189,7 +200,11 @@ export default class Admin extends Component {
     newJournalImages.draggableId = uuid();
     for (let i = 0; i < variation; i++) {
       let id = uuid();
-      newJournalImages[`image${i}`] = { text: "", src: "", id };
+      newJournalImages[`image${i}`] = {
+        text: { us: "", lv: "", nor: "" },
+        src: "",
+        id,
+      };
     }
     let newJournal = {
       ...this.state.newJournal,
@@ -249,6 +264,21 @@ export default class Admin extends Component {
   };
   setInstagramView = () => {
     this.setState({ menu: "instagram" });
+  };
+  setAboutView = () => {
+    this.setState({ menu: "about" });
+  };
+  setHomePageView = () => {
+    this.setState({ menu: "home" });
+  };
+  setContactView = () => {
+    this.setState({ menu: "contact" });
+  };
+  setFooterView = () => {
+    this.setState({ menu: "footer" });
+  };
+  setNavigationView = () => {
+    this.setState({ menu: "navigation" });
   };
 
   setJournalToEdit = (journalId) => {
@@ -360,8 +390,8 @@ export default class Admin extends Component {
   resetCurrentJournal = (e) => {
     this.setState({
       newJournal: {
-        shortTitle: "",
-        title: "",
+        shortTitle: { us: "", lv: "", nor: "" },
+        title: { us: "", lv: "", nor: "" },
         titleImage: "",
         journalImages: [],
       },
@@ -459,7 +489,7 @@ export default class Admin extends Component {
       edit,
       editKey,
     } = this.state.newJournal;
-    let { journals } = this.props;
+    let { journals, language } = this.props;
     return (
       <Suspense
         fallback={<div style={{ height: "100vh", width: "100%" }}>Loading</div>}
@@ -499,16 +529,15 @@ export default class Admin extends Component {
                 >
                   Services
                 </a>
- 
               </li>
               <li
-              style={{
+                style={{
                   listStyleType: "none",
                   border: "1px solid black",
                   padding: "1rem",
                 }}
               >
-               <a
+                <a
                   href="#!"
                   onClick={() => {
                     this.setInstagramView();
@@ -516,8 +545,87 @@ export default class Admin extends Component {
                 >
                   Instagram
                 </a>
-
               </li>
+              <li
+                style={{
+                  listStyleType: "none",
+                  border: "1px solid black",
+                  padding: "1rem",
+                }}
+              >
+                <a
+                  href="#!"
+                  onClick={() => {
+                    this.setAboutView();
+                  }}
+                >
+                  About Me
+                </a>
+              </li>
+              <li
+                style={{
+                  listStyleType: "none",
+                  border: "1px solid black",
+                  padding: "1rem",
+                }}
+              >
+                <a
+                  href="#!"
+                  onClick={() => {
+                    this.setHomePageView();
+                  }}
+                >
+                  Home Page
+                </a>
+              </li>
+              <li
+                style={{
+                  listStyleType: "none",
+                  border: "1px solid black",
+                  padding: "1rem",
+                }}
+              >
+                <a
+                  href="#!"
+                  onClick={() => {
+                    this.setContactView();
+                  }}
+                >
+                  Contact Form
+                </a>
+              </li>
+              <li
+                style={{
+                  listStyleType: "none",
+                  border: "1px solid black",
+                  padding: "1rem",
+                }}
+              >
+                <a
+                  href="#!"
+                  onClick={() => {
+                    this.setFooterView();
+                  }}
+                >
+                  Footer
+                </a>
+              </li>
+              {/* <li
+                style={{
+                  listStyleType: "none",
+                  border: "1px solid black",
+                  padding: "1rem",
+                }}
+              >
+                <a
+                  href="#!"
+                  onClick={() => {
+                    this.setNavigationView();
+                  }}
+                >
+                  Navigation
+                </a>
+              </li> */}
             </ul>
           </div>
           {this.state.menu === "journals" ? (
@@ -533,6 +641,7 @@ export default class Admin extends Component {
             >
               <EditJournals
                 {...{
+                  language,
                   journals,
                   uploading,
                   updating,
@@ -578,7 +687,7 @@ export default class Admin extends Component {
                 ></div>
               }
             >
-              <ServicesView user={this.props.user} />
+              <ServicesView user={this.props.user} language={language} />
             </Suspense>
           ) : null}
           {this.state.menu === "instagram" ? (
@@ -592,7 +701,80 @@ export default class Admin extends Component {
                 ></div>
               }
             >
-              <InstagramView instagram={this.props.instagram} user={this.props.user} />
+              <InstagramView
+                instagram={this.props.instagram}
+                user={this.props.user}
+              />
+            </Suspense>
+          ) : null}
+          {this.state.menu === "about" ? (
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    height: "100vh",
+                    width: "100%",
+                  }}
+                ></div>
+              }
+            >
+              <AboutView user={this.props.user} />
+            </Suspense>
+          ) : null}
+          {this.state.menu === "home" ? (
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    height: "100vh",
+                    width: "100%",
+                  }}
+                ></div>
+              }
+            >
+              <HomeView user={this.props.user} />
+            </Suspense>
+          ) : null}
+          {this.state.menu === "contact" ? (
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    height: "100vh",
+                    width: "100%",
+                  }}
+                ></div>
+              }
+            >
+              <ContactView user={this.props.user} />
+            </Suspense>
+          ) : null}
+          {this.state.menu === "footer" ? (
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    height: "100vh",
+                    width: "100%",
+                  }}
+                ></div>
+              }
+            >
+              <FooterView user={this.props.user} />
+            </Suspense>
+          ) : null}
+          {this.state.menu === "navigation" ? (
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    height: "100vh",
+                    width: "100%",
+                  }}
+                ></div>
+              }
+            >
+              <NavigationView user={this.props.user} />
             </Suspense>
           ) : null}
         </Fragment>

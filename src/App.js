@@ -1,5 +1,10 @@
 import React, { Component, Fragment, lazy, Suspense } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 import firebase from "./Firebase";
 import Home from "./Pages/Home";
@@ -8,13 +13,13 @@ import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
 import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./components/ProtectedRoute";
+import Language from "./components/Language";
 import "./styles/style.css";
 const Journal = lazy(() => import("./Pages/Journal"));
 const Services = lazy(() => import("./Pages/Services"));
 const Admin = lazy(() => import("./Pages/Admin"));
 const About = lazy(() => import("./Pages/About"));
 const Dashboard = lazy(() => import("./Pages/Dashboard"));
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -24,7 +29,9 @@ class App extends Component {
       journals: [],
       services: [],
       instagram: [],
-      currentRoute: "/home",
+      translations: {},
+      currentRoute: "/eng/home",
+      language: "eng",
     };
   }
 
@@ -32,6 +39,7 @@ class App extends Component {
     await this.getServices();
     await this.getJournals();
     await this.getInstagram();
+    await this.getTranslations();
 
     firebase("auth").then(({ auth }) => {
       auth.onAuthStateChanged((user) => {
@@ -145,6 +153,21 @@ class App extends Component {
         });
     });
   }
+  getTranslations() {
+    firebase("database").then(({ database }) => {
+      database
+        .ref("/pages/")
+        .once("value")
+        .then((snapshot) => {
+          let pageTrans = snapshot.val();
+          if (pageTrans) {
+            this.setState({
+              translations: pageTrans,
+            });
+          }
+        });
+    });
+  }
 
   setAdmin(admin) {
     this.setState({ admin });
@@ -153,173 +176,179 @@ class App extends Component {
     this.setState({ user });
   }
 
+  setLanguage(language) {
+    this.setState({ language });
+  }
+
   render() {
-    return (
-      <Router>
-        <ScrollToTop setLocation={this.setLocation.bind(this)}>
-          <Fragment>
+    let innerRoutes = (
+      <Fragment>
+        <Route
+          path={`/:lang/home`}
+          render={(props) => {
+            return (
+              <Suspense
+                fallback={
+                  <div
+                    style={{
+                      width: "100vw",
+                      height: "100vh",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Spinner />
+                  </div>
+                }
+              >
+                <Home
+                  {...props}
+                  journals={this.state.journals}
+                  services={this.state.services}
+                  firebase={firebase}
+                  language={this.state.language}
+                  translations={{
+                    home: this.state.translations["home"],
+                    contact: this.state.translations["contact"],
+                  }}
+                />
+              </Suspense>
+            );
+          }}
+        />
+        <Route
+          path="/:lang/journal/:name"
+          render={(props) => (
             <Suspense
               fallback={
                 <div
                   style={{
-                    height: "57px",
-                    width: "100%",
-                    position: "fixed",
-                    top: 0,
-                    left: 0,
+                    width: "100vw",
+                    height: "100vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
-                ></div>
+                >
+                  <Spinner />
+                </div>
               }
             >
-              <Navbar
-                isAdmin={this.state.admin}
-                isSignedIn={this.state.user}
-                firebase={firebase}
-                setUser={this.setUser.bind(this)}
+              <Journal
+                {...props}
                 journals={this.state.journals}
-                services={this.state.services}
-                location={this.state.currentRoute}
+                language={this.state.language}
               />
             </Suspense>
-            <Switch>
-              <Route
-                exact
-                path="/"
-                render={(props) => {
-                  return (
-                    <Suspense
-                      fallback={
-                        <div
-                          style={{
-                            width: "100vw",
-                            height: "100vh",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Spinner />
-                        </div>
-                      }
-                    >
-                      <Home
-                        {...props}
-                        journals={this.state.journals}
-                        services={this.state.services}
-                        firebase={firebase}
-                      />
-                    </Suspense>
-                  );
+          )}
+        />
+        <Route
+          path="/:lang/services/:service"
+          render={(props) => (
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    width: "100vw",
+                    height: "100vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Spinner />
+                </div>
+              }
+            >
+              <Services
+                {...props}
+                services={this.state.services}
+                language={this.state.language}
+              />
+            </Suspense>
+          )}
+        />
+        <Route
+          path="/:lang/About"
+          render={(props) => (
+            <Suspense
+              fallback={
+                <div
+                  style={{
+                    width: "100vw",
+                    height: "100vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Spinner />
+                </div>
+              }
+            >
+              <About
+                language={this.state.language}
+                translations={{
+                  about: this.state.translations["about"],
+                  contact: this.state.translations["contact"],
                 }}
               />
-              <Route
-                path="/journal/:name"
-                render={(props) => (
-                  <Suspense
-                    fallback={
-                      <div
-                        style={{
-                          width: "100vw",
-                          height: "100vh",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Spinner />
-                      </div>
-                    }
-                  >
-                    <Journal {...props} journals={this.state.journals} />
-                  </Suspense>
-                )}
-              />
-              <Route
-                path="/services/:service"
-                render={(props) => (
-                  <Suspense
-                    fallback={
-                      <div
-                        style={{
-                          width: "100vw",
-                          height: "100vh",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Spinner />
-                      </div>
-                    }
-                  >
-                    <Services {...props} services={this.state.services} />
-                  </Suspense>
-                )}
-              />
-              <Route
-                path="/About"
-                render={(props) => (
-                  <Suspense
-                    fallback={
-                      <div
-                        style={{
-                          width: "100vw",
-                          height: "100vh",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Spinner />
-                      </div>
-                    }
-                  >
-                    <About />
-                  </Suspense>
-                )}
-              />
-              <AdminRoute
-                path="/admin"
-                component={Admin}
-                isAdmin={this.state.admin}
-                user={this.state.user}
-                journals={this.state.journals}
-                instagram={this.state.instagram}
-              />
-              <PrivateRoute
-                path="/dashboard"
-                component={Dashboard}
-                firebase={firebase}
-                isSignedIn={this.state.user}
-                user={this.state.user}
-              />
-              <Route
-                render={(props) => (
-                  <Suspense
-                    fallback={
-                      <div
-                        style={{
-                          width: "100vw",
-                          height: "100vh",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Spinner />
-                      </div>
-                    }
-                  >
-                    <Home
-                      {...props}
-                      journals={this.state.journals}
-                      services={this.state.services}
-                      firebase={firebase}
-                    />
-                  </Suspense>
-                )}
-              />
-            </Switch>
+            </Suspense>
+          )}
+        />
+
+        <PrivateRoute
+          exact
+          path="/:lang/dashboard"
+          component={Dashboard}
+          firebase={firebase}
+          isSignedIn={this.state.user}
+          user={this.state.user}
+        />
+        <AdminRoute
+          component={Admin}
+          isAdmin={this.state.admin}
+          user={this.state.user}
+          journals={this.state.journals}
+          instagram={this.state.instagram}
+          language={this.state.language}
+        />
+        <Redirect to="/eng/home" />
+      </Fragment>
+    );
+    return (
+      <Router>
+        <ScrollToTop setLocation={this.setLocation.bind(this)}>
+          <Fragment>
+            <Language.Provider value={this.state.language}>
+              <Suspense
+                fallback={
+                  <div
+                    style={{
+                      height: "57px",
+                      width: "100%",
+                      position: "fixed",
+                      top: 0,
+                      left: 0,
+                    }}
+                  ></div>
+                }
+              >
+                <Navbar
+                  isAdmin={this.state.admin}
+                  isSignedIn={this.state.user}
+                  firebase={firebase}
+                  setUser={this.setUser.bind(this)}
+                  journals={this.state.journals}
+                  services={this.state.services}
+                  location={this.state.currentRoute}
+                  setLanguage={this.setLanguage.bind(this)}
+                  language={this.state.language}
+                />
+              </Suspense>
+              <Switch>{innerRoutes}</Switch>
+            </Language.Provider>
           </Fragment>
         </ScrollToTop>
         <Suspense
@@ -337,7 +366,11 @@ class App extends Component {
             </div>
           }
         >
-          <Footer instagram={this.state.instagram} />
+          <Footer
+            instagram={this.state.instagram}
+            translations={this.state.translations["footer"]}
+            language={this.state.language}
+          />
         </Suspense>
       </Router>
     );

@@ -1,9 +1,11 @@
 import React from "react";
 import Overlay from "./Overlay";
+import ReactCountryFlag from "react-country-flag";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { JournalImageView } from "./journalAdminImageView/JournalImageView";
 import { TitleAndTitleImage } from "./journalAdminImageView/TitleAndTitleImage";
 const EditJournals = ({
+  language,
   journals,
   setJournalToEdit,
   addNewJournalImage,
@@ -73,7 +75,7 @@ const EditJournals = ({
                       margin: "1rem",
                     }}
                   >
-                    <h4 className="text-center">{title}</h4>
+                    <h4 className="text-center">{title[language]}</h4>
                   </div>
                 </div>
               );
@@ -100,7 +102,7 @@ const EditJournals = ({
             setsToDelete,
           }}
         />
-        <button className="btn w-100" onClick={resetCurrentJournal}>
+        <button className="btn btn-success w-100" onClick={resetCurrentJournal}>
           New Journal
         </button>
         <DragDropContext onDragEnd={onDragEnd}>
@@ -109,16 +111,66 @@ const EditJournals = ({
               <div {...provided.droppableProps} ref={provided.innerRef}>
                 {provided.placeholder}
                 <div>
-                  <input
-                    type="text"
-                    name="shortTitle"
-                    placeholder="Enter short title for navigation"
-                    value={shortTitle}
-                    onChange={(e) => setShortTitle(e.target.value)}
-                    style={{
-                      width: "100%",
-                    }}
-                  />
+                  <div className="d-flex align-items-center">
+                    <ReactCountryFlag
+                      countryCode="US"
+                      svg
+                      style={{
+                        width: "2em",
+                        height: "100%",
+                      }}
+                    />
+                    <input
+                      type="text"
+                      name="shortTitle"
+                      placeholder="Enter short title for navigation eng"
+                      value={shortTitle["us"]}
+                      onChange={(e) => setShortTitle(e.target.value, "us")}
+                      style={{
+                        width: "100%",
+                      }}
+                    />
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <ReactCountryFlag
+                      countryCode="LV"
+                      svg
+                      style={{
+                        width: "2em",
+                        height: "100%",
+                      }}
+                    />
+                    <input
+                      type="text"
+                      name="shortTitle"
+                      placeholder="Enter short title for navigation lat"
+                      value={shortTitle["lv"]}
+                      onChange={(e) => setShortTitle(e.target.value, "lv")}
+                      style={{
+                        width: "100%",
+                      }}
+                    />
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <ReactCountryFlag
+                      countryCode="NO"
+                      svg
+                      style={{
+                        width: "2em",
+                        height: "100%",
+                      }}
+                    />
+                    <input
+                      type="text"
+                      name="shortTitle"
+                      placeholder="Enter short title for navigation nor"
+                      value={shortTitle["no"]}
+                      onChange={(e) => setShortTitle(e.target.value, "no")}
+                      style={{
+                        width: "100%",
+                      }}
+                    />
+                  </div>
                 </div>
                 <TitleAndTitleImage
                   titleText={title}
@@ -170,11 +222,11 @@ const EditJournals = ({
         <div className="d-flex flex-column mx-auto w-25">
           {editKey ? (
             <button className="btn btn-success" onClick={(e) => submitEdit(e)}>
-              Confirm Edit
+              Update
             </button>
           ) : (
             <button className="btn btn-success" onClick={(e) => submit(e)}>
-              Submit New
+              Submit
             </button>
           )}
 

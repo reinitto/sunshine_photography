@@ -3,6 +3,8 @@ import { Route, Redirect } from "react-router-dom";
 const AdminRoute = ({ component: Component, isAdmin, ...rest }) => {
   return (
     <Route
+      exact
+      path="/:lang/admin"
       render={(props) =>
         isAdmin ? (
           <Suspense

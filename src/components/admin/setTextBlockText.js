@@ -1,4 +1,10 @@
-export const setTextBlockText = (journalImages, id, text, title = false) => {
+export const setTextBlockText = (
+  journalImages,
+  id,
+  text,
+  title = false,
+  language
+) => {
   let index = 0;
   let newjournalImages = [...journalImages];
   let block = newjournalImages.filter((imageSet, i) => {
@@ -9,12 +15,12 @@ export const setTextBlockText = (journalImages, id, text, title = false) => {
   });
   if (title) {
     // SET TITLE TEXT
-    block[0].title = text;
+    block[0].title[language] = text;
     newjournalImages.splice(index, 1, block[0]);
 
     return newjournalImages;
   } else {
-    block[0].text = text;
+    block[0].text[language] = text;
     newjournalImages.splice(index, 1, block[0]);
 
     return newjournalImages;

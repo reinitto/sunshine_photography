@@ -1,44 +1,74 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useWindowWidth } from "../useWindowWidth";
 import { contactFormBg } from "../../content/backgroundImages";
 import aboutMeImg from "../../content/aboutImages";
 import LazyBackground from "../LazyBackground";
 let placeholderColor = "#b4c7d4";
-const ContactFormFront = ({ submitMessage }) => {
+const ContactFormFront = ({ submitMessage, translations, language }) => {
   return (
     <div className="facefront d-flex flex-column justify-content-center">
       <form onSubmit={submitMessage} id="contactFormForm" name="contactForm">
         <h2 className="text-center text-capitalize container">
-          I'd Like To Hear From You!
+          {translations
+            ? translations.contactTitle[language] ||
+              `I'd Like To Hear From You!`
+            : `I'd Like To Hear From You!`}
         </h2>
         <div className="d-flex form-group w-75 mx-auto">
-          <label htmlFor="name">Your Name:</label>
+          <label htmlFor="name">
+            {translations
+              ? translations.fieldLabels.name[language] || "Your Name"
+              : "Your Name"}
+            :
+          </label>
           <input
             type="text"
             className="form-control"
             id="name"
             aria-describedby="name"
-            placeholder="Your name"
+            placeholder={
+              translations
+                ? translations.fieldLabels.name[language] || "Your Name"
+                : "Your Name"
+            }
             required
           />
         </div>
         <div className="d-flex form-group w-75 mx-auto">
-          <label htmlFor="email">Your Email:</label>
+          <label htmlFor="email">
+            {translations
+              ? translations.fieldLabels.email[language] || "Your Email"
+              : "Your Email"}
+            :
+          </label>
           <input
             type="email"
             className="form-control"
             id="email"
             aria-describedby="email"
-            placeholder="Your Email"
+            placeholder={
+              translations
+                ? translations.fieldLabels.email[language] || "Your Email"
+                : "Your Email"
+            }
             required
           />
         </div>
         <div className="d-flex form-group w-75 mx-auto">
-          <label htmlFor="message">Your Event:</label>
+          <label htmlFor="message">
+            {translations
+              ? translations.fieldLabels.message[language] || "Your Event"
+              : "Your Event"}
+            :
+          </label>
           <input
             className="form-control"
             id="message"
-            placeholder="Your Event"
+            placeholder={
+              translations
+                ? translations.fieldLabels.message[language] || "Your Event"
+                : "Your Event"
+            }
             required
           />
         </div>
@@ -47,14 +77,16 @@ const ContactFormFront = ({ submitMessage }) => {
           className="btn btn-primary btn-base"
           style={{ display: "block", margin: "auto" }}
         >
-          Send message
+          {translations
+            ? translations.sendButtonText[language] || "Send message"
+            : "Send message"}
         </button>
       </form>
     </div>
   );
 };
 
-const ContactFormBack = () => {
+const ContactFormBack = ({ translations, language }) => {
   return (
     <div className="faceback d-flex flex-column justify-content-center">
       <div
@@ -100,15 +132,25 @@ const ContactFormBack = () => {
             color: "white",
           }}
         >
-          Thank You for your trust!
+          {translations
+            ? translations.confirmMessage[language] ||
+              `Thank You for your trust! I will get in touch with you within 48h`
+            : `Thank You for your trust! I will get in touch with you within 48h`}
         </h3>
-        <p>I will get in touch with you within 48h</p>
+        {/* <p>I will get in touch with you within 48h</p> */}
       </div>
     </div>
   );
 };
 
-export default function ContactForm({ firebase }) {
+export default function ContactForm({ firebase, language, translations }) {
+  let [allTranslations, setAllTranslations] = useState();
+  useEffect(() => {
+    if (translations) {
+      setAllTranslations(translations);
+    }
+  }, [translations]);
+
   let contactFormRef = useRef(null);
   let height = "80vh";
   let windowWidth = useWindowWidth();
@@ -182,8 +224,15 @@ export default function ContactForm({ firebase }) {
       >
         <div className="viewContainer">
           <div className="slice">
-            <ContactFormFront submitMessage={submitMessage} />
-            <ContactFormBack />
+            <ContactFormFront
+              language={language}
+              submitMessage={submitMessage}
+              translations={allTranslations}
+            />
+            <ContactFormBack
+              language={language}
+              translations={allTranslations}
+            />
           </div>
         </div>
       </div>

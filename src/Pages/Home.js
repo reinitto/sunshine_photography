@@ -12,10 +12,10 @@ const CloudinaryContext = lazy(() =>
 );
 const LinksToGallery = lazy(() => import("../components/LinksToGallery"));
 const HorizontalScroll = lazy(() => import("../components/HorizontalScroll"));
-// const ContactForm = lazy(() => import("../components/contact/ContactForm"));
-const Home = ({ journals, services, firebase }) => {
+const Home = ({ journals, services, firebase, language, translations }) => {
   let [travelJournals, setTravelJournals] = useState();
   let [allServices, setServices] = useState();
+  let [pageTranslations, setPageTranslations] = useState();
   useEffect(() => {
     if (journals) {
       setTravelJournals(createJournalItems(journals));
@@ -26,6 +26,11 @@ const Home = ({ journals, services, firebase }) => {
       setServices(services);
     }
   }, [services]);
+  useEffect(() => {
+    if (translations["home"]) {
+      setPageTranslations(translations["home"]);
+    }
+  }, [translations]);
   return (
     <div id="home">
       <MetaTags id="homeMeta">
@@ -33,18 +38,64 @@ const Home = ({ journals, services, firebase }) => {
         <meta name="description" content="Welcome to Sunshine Pictures" />
       </MetaTags>
       <Hero
-        title={"More than just capturing moments"}
-        subtitle={"photography"}
+        title={
+          pageTranslations
+            ? pageTranslations["heroTitle"][language] ||
+              pageTranslations["heroTitle"]["us"]
+            : "More than just capturing moments"
+        }
+        subtitle={
+          pageTranslations
+            ? pageTranslations["heroSubtitle"][language] ||
+              pageTranslations["heroSubtitle"]["us"]
+            : "photography"
+        }
         background={mainBg}
-        keywords={["lifestyle", "nature", "travel"]}
+        keywords={
+          pageTranslations
+            ? Object.keys(pageTranslations["heroKeywords"]).map((key) => {
+                return (
+                  pageTranslations["heroKeywords"][key][language] ||
+                  pageTranslations["heroKeywords"][key]["us"]
+                );
+              })
+            : ["lifestyle", "nature", "travel"]
+        }
       />
       <Suspense fallback={<Spinner />}>
         <CloudinaryContext cloudName="sunshinephoto">
-          <LinksToGallery services={allServices} />
-          <h2 className="text-center">Latest Travel Adventures</h2>
-          <HorizontalScroll list={travelJournals} />
+          <LinksToGallery
+            services={allServices}
+            language={language}
+            title={
+              pageTranslations
+                ? pageTranslations["menuSectionTitle"][language] ||
+                  pageTranslations["menuSectionTitle"]["us"] ||
+                  "Every Picture Has A Story To Tell"
+                : "Every Picture Has A Story To Tell"
+            }
+            subtitle={
+              pageTranslations
+                ? pageTranslations["menuSectionSubtitle"][language] ||
+                  pageTranslations["menuSectionSubtitle"]["us"] ||
+                  "Let's Start Yours"
+                : "Let's Start Yours"
+            }
+          />
+          <h2 className="text-center">
+            {pageTranslations
+              ? pageTranslations["travelJournalTitle"][language] ||
+                pageTranslations["travelJournalTitle"]["us"] ||
+                "Latest Travel Adventures"
+              : "Latest Travel Adventures"}
+          </h2>
+          <HorizontalScroll list={travelJournals} language={language} />
         </CloudinaryContext>
-        <ContactForm firebase={firebase} />
+        <ContactForm
+          firebase={firebase}
+          language={language}
+          translations={translations["contact"]}
+        />
       </Suspense>
     </div>
   );

@@ -4,10 +4,11 @@ import MetaTags from "react-meta-tags";
 import Spinner from "../components/Spinner";
 import ServicePricing from "../components/pricing/ServicePricing";
 
-export default function Service({ services }) {
+export default function Service({ services, language }) {
   let [service, setService] = useState(null);
   let [images, setImages] = useState(null);
-  let serviceId = window.location.pathname.replace(`/services/`, "");
+  let serviceId = window.location.pathname.split("/services/")[1];
+
   useEffect(() => {
     if (services) {
       setService(services[serviceId]);
@@ -26,17 +27,17 @@ export default function Service({ services }) {
   return service && images ? (
     <Fragment>
       <MetaTags id={serviceId}>
-        <title>{service.name}</title>
-        <meta name="description" content={service.paragraphText} />
+        <title>{service.name[language]}</title>
+        <meta name="description" content={service.paragraphText[language]} />
       </MetaTags>
       <Suspense fallback={<div style={{ height: "35vh" }}> </div>}>
         <IntroImage
-          subtitle={(service && service.name) || null}
+          subtitle={(service && service.name[language]||service.name['eng']||service.name['us']) || null}
           height="35vh"
         />
       </Suspense>
       <div className="container">
-        <ServicePricing {...service} images={images} />
+        <ServicePricing {...service} images={images} language={language} />
       </div>
     </Fragment>
   ) : (

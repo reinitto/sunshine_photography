@@ -22,7 +22,7 @@ let getSession = async (id) => {
   });
 };
 
-export const PriceImage = ({ sessionKey }) => {
+export const PriceImage = ({ sessionKey, language }) => {
   let [session, setSession] = useState(null);
   useEffect(() => {
     if (sessionKey) {
@@ -50,9 +50,9 @@ export const PriceImage = ({ sessionKey }) => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <h4 className="text-capitalize">{name}</h4>
+        <h4 className="text-capitalize">{name[language]}</h4>
         <h4>{price} NOK</h4>
-        <p className="text-capitalize">{detailText}</p>
+        <p className="text-capitalize">{detailText[language]}</p>
       </div>
     );
   } else {

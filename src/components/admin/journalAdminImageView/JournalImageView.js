@@ -11,7 +11,7 @@ export let JournalImageView = ({
   setImageText,
   loadFile,
   deleteImageSet,
-  setTextBlockText
+  setTextBlockText,
 }) => {
   let journalImageArray = [];
   if (journalImages) {
@@ -26,7 +26,7 @@ export let JournalImageView = ({
             draggableId={journalImage.draggableId}
             index={i}
           >
-            {provided => (
+            {(provided) => (
               <div
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
@@ -64,7 +64,7 @@ export let JournalImageView = ({
             draggableId={journalImage.draggableId}
             index={i}
           >
-            {provided => (
+            {(provided) => (
               <div
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
@@ -102,7 +102,7 @@ export let JournalImageView = ({
             draggableId={journalImage.draggableId}
             index={i}
           >
-            {provided => (
+            {(provided) => (
               <div
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
@@ -134,7 +134,7 @@ export let JournalImageView = ({
             draggableId={journalImage.id}
             index={i}
           >
-            {provided => (
+            {(provided) => (
               <div
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}

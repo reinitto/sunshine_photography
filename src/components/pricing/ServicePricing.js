@@ -9,19 +9,24 @@ export default function ServicePricing({
   images,
   sessions,
   details,
+  language,
 }) {
   return images && images.length > 0 ? (
     <div>
       <div className="mx-auto">
-        <p className="text-left">{paragraphText}</p>
+        <p className="text-left">{paragraphText[language]||paragraphText['eng']||paragraphText['us']}</p>
       </div>
-      <ImageGalleryWithoutLighbox images={images} name={name} />
+      <ImageGalleryWithoutLighbox images={images} name={name[language]||name['eng']||name['us']} />
       <hr />
       <h3 className="text-center">Available Sessions</h3>
       <div className="d-flex justify-content-center flex-wrap">
         {sessions
           ? Object.keys(sessions).map((key) => (
-              <PriceImage key={key} sessionKey={sessions[key]} />
+              <PriceImage
+                key={key}
+                sessionKey={sessions[key]}
+                language={language}
+              />
             ))
           : null}
       </div>
@@ -39,7 +44,7 @@ export default function ServicePricing({
             <ul>
               {details
                 ? Object.keys(details).map((key) => (
-                    <li key={key}>{details[key].text}</li>
+                    <li key={key}>{details[key].text[language]||details[key].text['eng']||details[key].text['us']}</li>
                   ))
                 : null}
             </ul>

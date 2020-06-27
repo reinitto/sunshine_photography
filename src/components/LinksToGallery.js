@@ -10,10 +10,19 @@ let swapArrayElements = function (arr, indexA, indexB) {
   arr[indexB] = temp;
 };
 
-let SingleLink = ({ link, dimensions, style = {}, textStyle = {} }) => {
+let SingleLink = ({
+  link,
+  dimensions,
+  language,
+  style = {},
+  textStyle = {},
+}) => {
   let { w, h } = dimensions;
   if (link) {
     let { key, name, thumbnailImage: publicId } = link;
+    let serviceName = name[language]
+      ? name[language]
+      : name["eng"] || name["us"];
     return (
       <Link to={`/services/${key}`} key={key}>
         <div
@@ -24,7 +33,7 @@ let SingleLink = ({ link, dimensions, style = {}, textStyle = {} }) => {
             background: `linear-gradient(
               rgba(147, 173, 207, 0.15), 
               rgba(147, 173, 207, 0.45)
-            )`,
+              )`,
             padding: "1rem",
           }}
         >
@@ -50,7 +59,7 @@ let SingleLink = ({ link, dimensions, style = {}, textStyle = {} }) => {
             }}
           >
             <p className="link-overlay-text text-uppercase" style={textStyle}>
-              {name[0].toUpperCase() + name.slice(1)}
+              {serviceName[0].toUpperCase() + serviceName.slice(1)}
             </p>
           </div>
         </div>
@@ -100,7 +109,7 @@ let LinkLayout = ({ links, largeWH, smallImageWH, reverse = false }) => {
   }
 };
 
-export default function LinksToGallery({ services }) {
+export default function LinksToGallery({ services, title, subtitle }) {
   const width = useWindowWidth();
   let arr =
     typeof services === "object"
@@ -131,8 +140,12 @@ export default function LinksToGallery({ services }) {
   let smallImageHeight = Math.ceil(1.25 * smallImageWidth);
   return (
     <div className={width <= 768 ? "pb-3 mx-auto w-90 " : "container pb-3"}>
-      <h2 className="text-center">Every Picture Has A Story To Tell</h2>
-      <h2 className="text-center">Let's Start Yours</h2>
+      <h2 className="text-center">
+        {title ? title : "Every Picture Has A Story To Tell"}
+      </h2>
+      <h2 className="text-center">
+        {subtitle ? subtitle : "Let's Start Yours"}
+      </h2>
       <CloudinaryContext cloudName="sunshinephoto">
         {width <= 768 ? (
           <div

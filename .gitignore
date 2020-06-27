@@ -6,6 +6,7 @@ addAdmin.js
 firebaseServiceAccount.json
 firebase-debug.log
 analyzeBundles.js
+update_db.js
 # dependencies
 /node_modules
 /.pnp
