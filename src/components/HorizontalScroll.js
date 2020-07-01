@@ -162,6 +162,7 @@ export const HorizontalScroll = ({
             borderBottom: "1px solid black",
             margin: "1rem auto",
             height: footer ? "175px" : "350px",
+            overflowX: "hidden",
           }}
         >
           <div
