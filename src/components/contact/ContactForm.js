@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useWindowInnerWidth } from "../useWindowInnerWidth";
 import { contactFormBg } from "../../content/backgroundImages";
-import aboutMeImg from "../../content/aboutImages";
 import LazyBackground from "../LazyBackground";
 let placeholderColor = "#b4c7d4";
 const ContactFormFront = ({ submitMessage, translations, language }) => {
@@ -112,9 +111,8 @@ const ContactFormBack = ({ translations, language }) => {
           zIndex: "-1",
           backgroundRepeat: " no-repeat",
           backgroundColor: "#b4c7d4",
-          backgroundImage: `url(${aboutMeImg[0]})`,
+          // backgroundImage: `url(${aboutMeImg[0]})`,
         }}
-        src={aboutMeImg[0]}
       />
       <div
         style={{
@@ -145,15 +143,36 @@ const ContactFormBack = ({ translations, language }) => {
 
 export default function ContactForm({ firebase, language, translations }) {
   let [allTranslations, setAllTranslations] = useState();
+  let [bgSrc, setbgSrc] = useState();
+  let contactFormRef = useRef(null);
+  let height = "80vh";
+  let windowWidth = useWindowInnerWidth();
+  let bgRef = useRef();
   useEffect(() => {
     if (translations) {
       setAllTranslations(translations);
     }
   }, [translations]);
 
-  let contactFormRef = useRef(null);
-  let height = "80vh";
-  let windowWidth = useWindowInnerWidth();
+  useEffect(() => {
+    let options = {
+      treshhold: 0,
+    };
+    let currRef = bgRef.current;
+    let observer = new IntersectionObserver((entries) => {
+      for (let entry of entries) {
+        if (entry.isIntersecting) {
+          setbgSrc(contactFormBg.default);
+        }
+      }
+    }, options);
+    observer.observe(currRef);
+
+    return () => {
+      observer.unobserve(currRef);
+    };
+  }, []);
+
   const saveMessage = (props) => {
     firebase("database").then(({ database }) => {
       var messagesRef = database.ref("messages");
@@ -194,48 +213,50 @@ export default function ContactForm({ firebase, language, translations }) {
     height = contactFormRef.current.clientHeight;
   }
   return (
-    <LazyBackground
-      src={contactFormBg.default}
-      className="d-flex flex-column contact-form-container cover-image justify-content-center align-items-center"
-      id="contactForm"
-      style={
-        windowWidth > 768
-          ? {
-              backgroundAttachment: `fixed`,
-              backgroundRepeat: `no-repeat`,
-              height: height,
-              width: "100%",
-              backgroundColor: placeholderColor,
-            }
-          : {
-              height: height,
-              width: "100%",
-              backgroundColor: placeholderColor,
-            }
-      }
-    >
-      <div
-        className="d-flex flex-column justify-content-center align-items-center"
-        id="contact-form"
-        ref={contactFormRef}
-        style={{
-          position: "absolute",
-        }}
+    <div ref={bgRef}>
+      <LazyBackground
+        src={bgSrc}
+        className="d-flex flex-column contact-form-container cover-image justify-content-center align-items-center"
+        id="contactForm"
+        style={
+          windowWidth > 768
+            ? {
+                backgroundAttachment: `fixed`,
+                backgroundRepeat: `no-repeat`,
+                height: height,
+                width: "100%",
+                backgroundColor: placeholderColor,
+              }
+            : {
+                height: height,
+                width: "100%",
+                backgroundColor: placeholderColor,
+              }
+        }
       >
-        <div className="viewContainer">
-          <div className="slice">
-            <ContactFormFront
-              language={language}
-              submitMessage={submitMessage}
-              translations={allTranslations}
-            />
-            <ContactFormBack
-              language={language}
-              translations={allTranslations}
-            />
+        <div
+          className="d-flex flex-column justify-content-center align-items-center"
+          id="contact-form"
+          ref={contactFormRef}
+          style={{
+            position: "absolute",
+          }}
+        >
+          <div className="viewContainer">
+            <div className="slice">
+              <ContactFormFront
+                language={language}
+                submitMessage={submitMessage}
+                translations={allTranslations}
+              />
+              <ContactFormBack
+                language={language}
+                translations={allTranslations}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </LazyBackground>
+      </LazyBackground>
+    </div>
   );
 }
