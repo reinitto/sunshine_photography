@@ -1,40 +1,55 @@
-import React, { useState, useEffect } from "react";
-import { useWindowInnerWidth } from "../useWindowInnerWidth";
+import React, { useState, useEffect, useRef } from "react";
 import { arrayFromObject } from "../arrayFromObject";
 import HorizontalScroll from "../HorizontalScroll";
 
 const Footer = ({ instagram, translations, language }) => {
-  let windowWidth = useWindowInnerWidth();
-
-  let style = {};
-  let fontSize = windowWidth * 0.01;
-  if (fontSize > 16) {
-    fontSize = 16;
-  }
-  if (fontSize < 8) {
-    fontSize = 8;
-  }
-  style.fontsize = fontSize;
   let [instaPosts, setInstaPosts] = useState([]);
+  let footerRef = useRef();
+
   useEffect(() => {
-    let urls = arrayFromObject(instagram).map((url) => {
-      return new Promise((resolve, reject) => {
-        fetch(`https://api.instagram.com/oembed?url=${url}`)
-          .then((res) => {
-            return res.json();
-          })
-          .then((data) => resolve({ ...data, url }));
-      });
-    });
-    Promise.all(urls).then((res) => {
-      let posts = res.map((post) => {
-        return { ...post, imageUrl: post.thumbnail_url, journalUrl: post.url };
-      });
-      setInstaPosts(posts);
-    });
-  }, [instagram]);
+    let getInstaPosts = () => {
+      if (instaPosts.length === 0) {
+        let urls = arrayFromObject(instagram).map((url) => {
+          return new Promise((resolve, reject) => {
+            fetch(`https://api.instagram.com/oembed?url=${url}`)
+              .then((res) => {
+                return res.json();
+              })
+              .then((data) => resolve({ ...data, url }));
+          });
+        });
+        Promise.all(urls).then((res) => {
+          let posts = res.map((post) => {
+            return {
+              ...post,
+              imageUrl: post.thumbnail_url,
+              journalUrl: post.url,
+            };
+          });
+          setInstaPosts(posts);
+        });
+      }
+    };
+    let options = {
+      threshold: 0.25,
+    };
+    let currRef = footerRef.current;
+    let observer = new IntersectionObserver((entries) => {
+      for (let entry of entries) {
+        if (entry.isIntersecting) {
+          getInstaPosts();
+        }
+      }
+    }, options);
+    observer.observe(currRef);
+
+    return () => {
+      observer.unobserve(currRef);
+    };
+  }, [instagram, instaPosts]);
+
   return (
-    <footer className="d-flex flex-column">
+    <footer className="d-flex flex-column" ref={footerRef}>
       {instaPosts.length > 0 && (
         <div className="container pt-3">
           <h4 className="text-center">
