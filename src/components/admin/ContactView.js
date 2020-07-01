@@ -5,9 +5,9 @@ import { InputWithFlag } from "./InputWithFlag";
 
 let langs = ["us", "lv", "no"];
 let url =
-  "http://localhost:5001/momblog-15d1c/us-central1/updatePageText-updatePageText";
+  "https://us-central1-momblog-15d1c.cloudfunctions.net/updatePageText-updatePageText";
 
-export default function ContactView({user}) {
+export default function ContactView({ user }) {
   let [overlay, setOverlay] = useState(false);
   let [uploadFinished, setUploadFinished] = useState(true);
   let [contactTitle, setcontactTitle] = useState({});

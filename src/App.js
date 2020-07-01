@@ -30,8 +30,8 @@ class App extends Component {
       services: [],
       instagram: [],
       translations: {},
-      currentRoute: "/eng/home",
-      language: "eng",
+      currentRoute: "/us/home",
+      language: "us",
     };
   }
 
@@ -55,8 +55,8 @@ class App extends Component {
             });
         }
       });
-
       // Confirm the link is a sign-in with email link.
+
       if (auth.isSignInWithEmailLink(window.location.href)) {
         var email = window.localStorage.getItem("emailForSignIn");
         if (!email) {
@@ -178,6 +178,14 @@ class App extends Component {
 
   setLanguage(language) {
     this.setState({ language });
+    this.setHtmlLang(language);
+  }
+  setHtmlLang(language) {
+    let setLang = language;
+    if (language === "us") {
+      setLang = "en";
+    }
+    document.querySelector("html").lang = setLang;
   }
 
   render() {
@@ -299,8 +307,6 @@ class App extends Component {
         />
 
         <PrivateRoute
-          exact
-          path="/:lang/dashboard"
           component={Dashboard}
           firebase={firebase}
           isSignedIn={this.state.user}
@@ -314,7 +320,9 @@ class App extends Component {
           instagram={this.state.instagram}
           language={this.state.language}
         />
-        <Redirect to="/eng/home" />
+        <Route exact path="/">
+          <Redirect to="/us/home" />
+        </Route>
       </Fragment>
     );
     return (
@@ -345,6 +353,7 @@ class App extends Component {
                   location={this.state.currentRoute}
                   setLanguage={this.setLanguage.bind(this)}
                   language={this.state.language}
+                  translations={this.state.translations}
                 />
               </Suspense>
               <Switch>{innerRoutes}</Switch>

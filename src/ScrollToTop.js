@@ -7,17 +7,25 @@ class ScrollToTop extends Component {
       location: { pathname, hash },
     } = this.props;
 
+    // dont scroll to top on language change
+    let prev_path = "" + prevProps.location.pathname;
+    let curr_path = "" + this.props.location.pathname;
     if (
-      pathname !== prevProps.location.pathname ||
-      hash !== prevProps.location.hash
+      prev_path.split("/").slice(2).join("") !==
+      curr_path.split("/").slice(2).join("")
     ) {
-      const element = document.getElementById(hash.replace("#", ""));
-      window.scrollTo({
-        behavior: element ? "smooth" : "auto",
-        top: element ? element.offsetTop : 0,
-      });
-      // window.scrollTo(0, 0);
-      this.props.setLocation(this.props.location);
+      if (
+        pathname !== prevProps.location.pathname ||
+        hash !== prevProps.location.hash
+      ) {
+        const element = document.getElementById(hash.replace("#", ""));
+        window.scrollTo({
+          behavior: element ? "smooth" : "auto",
+          top: element ? element.offsetTop : 0,
+        });
+        // window.scrollTo(0, 0);
+        this.props.setLocation(this.props.location);
+      }
     }
   }
 

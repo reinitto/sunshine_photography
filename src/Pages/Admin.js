@@ -76,14 +76,11 @@ export default class Admin extends Component {
       },
     });
   };
-  setTitle = (title, language) => {
-    let newTitle = { ...title };
-    newTitle[language] = title;
+  setTitle = (value, language) => {
+    let newJournal = { ...this.state.newJournal };
+    newJournal.title[language] = value;
     this.setState({
-      newJournal: {
-        ...this.state.newJournal,
-        title: newTitle,
-      },
+      newJournal,
     });
   };
 
@@ -610,7 +607,7 @@ export default class Admin extends Component {
                   Footer
                 </a>
               </li>
-              {/* <li
+              <li
                 style={{
                   listStyleType: "none",
                   border: "1px solid black",
@@ -625,7 +622,7 @@ export default class Admin extends Component {
                 >
                   Navigation
                 </a>
-              </li> */}
+              </li>
             </ul>
           </div>
           {this.state.menu === "journals" ? (

@@ -9,12 +9,18 @@ shortid.characters(
 
 let langs = ["us", "lv", "no"];
 let url =
-  "http://localhost:5001/momblog-15d1c/us-central1/updatePageText-updatePageText";
+  "https://us-central1-momblog-15d1c.cloudfunctions.net/updatePageText-updatePageText";
 
 export default function NavigationView({ user }) {
   let [overlay, setOverlay] = useState(false);
   let [uploadFinished, setUploadFinished] = useState(true);
-  let [buttonTexts, setButtonTexts] = useState([{}]);
+  let [buttonTexts, setButtonTexts] = useState({
+    home: { us: "home", lv: "", no: "" },
+    services: { us: "services", lv: "", no: "" },
+    about: { us: "about me", lv: "", no: "" },
+    contact: { us: "contact", lv: "", no: "" },
+    blog: { us: "blog", lv: "", no: "" },
+  });
 
   useEffect(() => {
     // get data
@@ -25,15 +31,7 @@ export default function NavigationView({ user }) {
       .then((snapshot) => {
         let pageSnap = snapshot.val();
         if (pageSnap) {
-          Object.keys(pageSnap).forEach((key) => {
-            switch (key) {
-              case "buttonTexts":
-                setButtonTexts(pageSnap[key]);
-                break;
-              default:
-                break;
-            }
-          });
+          setButtonTexts(pageSnap["buttonTexts"]);
         }
       });
   }, []);
@@ -41,16 +39,16 @@ export default function NavigationView({ user }) {
   let submit = async () => {
     // submit data to api
     setOverlay(true);
-    // let idToken = await user.getIdToken();
+    let idToken = await user.getIdToken();
     const data = {
-      page: "footer",
+      page: "navigation",
       fields: [{ fieldName: "buttonTexts", fieldValue: buttonTexts }],
     };
     const RequestOptions = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${idToken}`,
+        Authorization: `Bearer ${idToken}`,
       },
       body: JSON.stringify(data),
     };
@@ -58,43 +56,33 @@ export default function NavigationView({ user }) {
     setUploadFinished(true);
   };
 
-  let updateButtonTexts = (language, value, id) => {
-    let newState = [...buttonTexts];
-    let button = newState.filter((button) => button.id === id)[0];
+  let updateButtonTexts = (language, value, name) => {
+    let newState = { ...buttonTexts };
+    let button = newState[name];
     button[language] = value;
-    let index = newState.findIndex((button) => button.id === id);
-    newState[index] = button;
-    setButtonTexts(newState);
-  };
-  let addButtonText = () => {
-    let newState = [...buttonTexts, { id: shortid.generate() }];
-    setButtonTexts(newState);
-  };
-  let removeButtonText = (id) => {
-    let newState = [...buttonTexts].filter((item) => item.id !== id);
     setButtonTexts(newState);
   };
 
   let closeOverlay = () => {
     setOverlay(false);
   };
-  let buttonTextsContent = buttonTexts.map((button, i) => {
+  let buttonTextsContent = Object.keys(buttonTexts).map((name, i) => {
     let inputs = langs.map((lang) => {
       return (
         <InputWithFlag
-          key={button.id + "Navigation Button" + lang}
-          id={button.id}
+          key={name + "Navigation Button" + lang}
+          id={name}
           flagCode={lang}
           placeholder={"Nav Button"}
-          textValue={buttonTexts[i]}
+          textValue={buttonTexts[name]}
           updateTextValue={updateButtonTexts}
         />
       );
     });
     return (
       <Fragment>
+        <h6>{name}</h6>
         {inputs}
-        <button onClick={() => removeButtonText(button.id)}>delete</button>
       </Fragment>
     );
   });
@@ -106,21 +94,20 @@ export default function NavigationView({ user }) {
       ) : null}
       <div>
         <h2 className="text-center">Navigation Buttons</h2>
+        <div className="admin-section">{buttonTextsContent}</div>
 
-        {buttonTextsContent}
-        <button onClick={addButtonText} className="btn btn-success">
-          Add Button
-        </button>
         <hr
           style={{
             border: "1px solid black",
             width: "100%",
           }}
         />
+        <div className="d-flex justify-content-center">
+          <button onClick={submit} className="btn btn-success w-75">
+            Update
+          </button>
+        </div>
       </div>
-      <button onClick={submit} className="btn btn-success">
-        Update
-      </button>
     </Fragment>
   );
 }

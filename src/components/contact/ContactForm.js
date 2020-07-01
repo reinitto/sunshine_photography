@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useWindowWidth } from "../useWindowWidth";
+import { useWindowInnerWidth } from "../useWindowInnerWidth";
 import { contactFormBg } from "../../content/backgroundImages";
 import aboutMeImg from "../../content/aboutImages";
 import LazyBackground from "../LazyBackground";
@@ -153,7 +153,7 @@ export default function ContactForm({ firebase, language, translations }) {
 
   let contactFormRef = useRef(null);
   let height = "80vh";
-  let windowWidth = useWindowWidth();
+  let windowWidth = useWindowInnerWidth();
   const saveMessage = (props) => {
     firebase("database").then(({ database }) => {
       var messagesRef = database.ref("messages");

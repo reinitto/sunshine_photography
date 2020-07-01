@@ -9,9 +9,9 @@ shortid.characters(
 
 let langs = ["us", "lv", "no"];
 let url =
-  "http://localhost:5001/momblog-15d1c/us-central1/updatePageText-updatePageText";
+  "https://us-central1-momblog-15d1c.cloudfunctions.net/updatePageText-updatePageText";
 
-export default function HomeView({user}) {
+export default function HomeView({ user }) {
   let [overlay, setOverlay] = useState(false);
   let [uploadFinished, setUploadFinished] = useState(true);
   let [heroTitle, setHeroTitle] = useState({});
@@ -114,14 +114,7 @@ export default function HomeView({user}) {
     newState[language] = value;
     setTravelJournalTitle(newState);
   };
-  let addHeroKeyword = () => {
-    let newState = [...heroKeywords, { id: shortid.generate() }];
-    setHeroKeywords(newState);
-  };
-  let removeHeroKeyword = (id) => {
-    let newState = [...heroKeywords].filter((item) => item.id !== id);
-    setHeroKeywords(newState);
-  };
+
   let updateHeroKeywords = (language, value, id) => {
     let newState = [...heroKeywords];
     let keyword = newState.filter((keyword) => keyword.id === id)[0];

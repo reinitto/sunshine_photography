@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useWindowWidth } from "../useWindowWidth";
+import { useWindowInnerWidth } from "../useWindowInnerWidth";
 import { arrayFromObject } from "../arrayFromObject";
 import HorizontalScroll from "../HorizontalScroll";
-// translations={this.state.translations["footer"]}
-            // language={this.state.language}
-const Footer = ({ instagram,translations,language }) => {
-  let windowWidth = useWindowWidth();
+
+const Footer = ({ instagram, translations, language }) => {
+  let windowWidth = useWindowInnerWidth();
 
   let style = {};
   let fontSize = windowWidth * 0.01;
@@ -34,17 +33,19 @@ const Footer = ({ instagram,translations,language }) => {
       setInstaPosts(posts);
     });
   }, [instagram]);
-  console.log('footer trans',translations)
   return (
     <footer className="d-flex flex-column">
       {instaPosts.length > 0 && (
         <div className="container pt-3">
           <h4 className="text-center">
             <a href={instaPosts[0].author_url}>
-              {
-                translations?(translations.toInstagramText[language]||translations.toInstagramText['us']):('Follow Me on Instagram')
-              }
-              </a>
+              <h4>
+                {translations
+                  ? translations.toInstagramText[language] ||
+                    translations.toInstagramText["us"]
+                  : "Follow Me on Instagram"}
+              </h4>
+            </a>
           </h4>
         </div>
       )}
@@ -56,10 +57,10 @@ const Footer = ({ instagram,translations,language }) => {
             window.scrollTo(0, 0);
           }}
         >
-          {
-                translations?(translations.toTopButton[language]||translations.toTopButton['us']):('To The Top')
-              }
-          
+          {translations
+            ? translations.toTopButton[language] ||
+              translations.toTopButton["us"]
+            : "To The Top"}
         </button>
       </div>
       <div>

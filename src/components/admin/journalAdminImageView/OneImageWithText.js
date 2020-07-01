@@ -31,9 +31,9 @@ export let OneImageWithText = ({
           rows="3"
           name="journalImageText"
           placeholder="Enter text about the image above. This will show up centered and in italics"
-          value={imageText["eng"]}
+          value={imageText["us"]}
           onChange={(e) => {
-            setImageText(id, e.target.value, "eng");
+            setImageText(id, e.target.value, "us");
           }}
         />
       </div>
@@ -52,9 +52,9 @@ export let OneImageWithText = ({
           rows="3"
           name="journalImageText"
           placeholder="Enter text about the image above. This will show up centered and in italics"
-          value={imageText["lat"]}
+          value={imageText["lv"]}
           onChange={(e) => {
-            setImageText(id, e.target.value, "lat");
+            setImageText(id, e.target.value, "lv");
           }}
         />
       </div>
@@ -73,9 +73,9 @@ export let OneImageWithText = ({
           rows="3"
           name="journalImageText"
           placeholder="Enter text about the image above. This will show up centered and in italics"
-          value={imageText["nor"]}
+          value={imageText["no"]}
           onChange={(e) => {
-            setImageText(id, e.target.value, "nor");
+            setImageText(id, e.target.value, "no");
           }}
         />
       </div>

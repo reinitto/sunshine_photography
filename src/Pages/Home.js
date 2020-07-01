@@ -34,8 +34,17 @@ const Home = ({ journals, services, firebase, language, translations }) => {
   return (
     <div id="home">
       <MetaTags id="homeMeta">
-        <title>Home Page</title>
-        <meta name="description" content="Welcome to Sunshine Pictures" />
+        <title>Capture Pure Moments</title>
+        <meta property="og:title" content="Capture Pure Moments" />
+        <meta name="description" content="Photography Website" />
+        <meta property="og:description" content="Photography Website" />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content={language} />
+        <meta
+          property="og:url"
+          content="https://capturepuremoments.no/us/home"
+        />
+        <meta property="og:image" content={mainBg.default} />
       </MetaTags>
       <Hero
         title={

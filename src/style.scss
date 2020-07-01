@@ -1,5 +1,6 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
-
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;1,100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
 $base-color: #3d4856;
 $base-light-color: rgb(147, 173, 207);
 $secondary-color: #9f818a;
@@ -21,12 +22,14 @@ body {
 
 a {
   color: $base-color;
-  font-family: "EB Garamond", sans-serif;
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
   letter-spacing: 2px;
 }
 
 p {
-  font-family: "EB Garamond", sans-serif;
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
   font-size: 20px;
 }
 
@@ -41,7 +44,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Open Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-family: "Playfair Display", sans-serif;
   letter-spacing: 5px;
 }
 
@@ -195,8 +198,10 @@ a:hover {
 }
 
 .dropdown-menu .dropdown-item {
+  font-weight: 100;
   color: $secondary-color;
   text-align: left;
+  font-size: 15px;
   &:hover {
     background: linear-gradient(
       to top,
@@ -238,7 +243,7 @@ nav.navbar.navbar-expand-md {
   transform: translate(-50%, -50%);
   color: $bgBase;
   font-weight: 600;
-  font-family: "EB Garamond", sans-serif;
+  font-family: "Roboto", sans-serif;
   letter-spacing: 3px;
   overflow-wrap: anywhere;
 }
@@ -430,7 +435,7 @@ nav.navbar.navbar-expand-md {
 
   .carousel-text-subtitle {
     color: $base-color;
-    font-family: "Open Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-family: "Playfair Display";
     letter-spacing: 10px;
     font-size: 1.6rem;
   }
@@ -438,7 +443,7 @@ nav.navbar.navbar-expand-md {
 
 .carousel-text3 {
   font-size: 1rem;
-  font-family: "Open Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-family: "Playfair Display";
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -450,9 +455,14 @@ nav.navbar.navbar-expand-md {
 }
 
 .navbar .nav-link {
-  font-size: 1rem;
+  font-size: 15px;
   padding: 1rem;
 }
+
+.nav-link-lang {
+  cursor: pointer;
+}
+
 .navbar-light .navbar-nav .nav-link.active,
 .navbar-light .nav-link.selected {
   background: linear-gradient(
@@ -533,7 +543,9 @@ h3 {
   background-color: rgba(0, 0, 0, 0.5);
   // display: none;
 }
-
+.service-detail-item {
+  font-family: "Roboto";
+}
 .popup_inner {
   position: absolute;
   left: 25%;

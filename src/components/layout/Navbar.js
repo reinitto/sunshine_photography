@@ -3,7 +3,42 @@ import { NavHashLink } from "react-router-hash-link";
 import { NavLink, Link } from "react-router-dom";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { withRouter } from "react-router-dom";
 const Login = lazy(() => import("../auth/Login"));
+
+let capitalize = (text) => {
+  let res = [];
+  text.split(" ").forEach((word) => {
+    res.push(word.slice(0, 1).toUpperCase() + word.slice(1));
+  });
+  return res.join(" ");
+};
+
+const LanguageButton = withRouter(({ history, language, setLanguage }) => {
+  let onClick = () => {
+    // get curr loc
+    let newLang = window.location.pathname.split("/");
+    newLang[1] = language;
+    let newUrl = newLang.join("/");
+    setLanguage(language);
+    history.push(newUrl);
+  };
+  let displayLang = language;
+  if (language === "us") {
+    displayLang = "eng";
+  }
+  return (
+    <div
+      as={NavLink}
+      className={`nav-link nav-link-lang ${
+        window.location.pathname.split("/")[1] === language ? "selected" : ""
+      }`}
+      onClick={onClick}
+    >
+      {displayLang.toUpperCase()}
+    </div>
+  );
+});
 
 export default class MyNavbar extends Component {
   state = {
@@ -51,15 +86,6 @@ export default class MyNavbar extends Component {
     });
   };
 
-  changeLanguage = (lang) => {
-    let newLang =
-      this.props &&
-      this.props.location &&
-      this.props.location.pathname &&
-      this.props.location.pathname.replace(this.props.language, lang);
-    return newLang || `/${lang}/home`;
-  };
-
   render() {
     let {
       isSignedIn,
@@ -70,6 +96,7 @@ export default class MyNavbar extends Component {
       journals,
       language,
       setLanguage,
+      translations,
     } = this.props;
     let nav_journals =
       typeof journals === "object"
@@ -77,7 +104,7 @@ export default class MyNavbar extends Component {
             let { shortTitle } = journals[journalId].title;
             let inLang = shortTitle[language]
               ? shortTitle[language]
-              : shortTitle["eng"];
+              : shortTitle["us"];
             return (
               <LinkContainer
                 key={journalId}
@@ -94,7 +121,9 @@ export default class MyNavbar extends Component {
       typeof services === "object"
         ? Object.keys(services).map((key) => {
             let { name } = services[key];
-            let inLang = name[language] ? name[language] : name["eng"];
+            let inLang = name[language]
+              ? name[language]
+              : name["eng"] || name["us"];
             return (
               <LinkContainer
                 to={`/${language}/services/${key}`}
@@ -115,56 +144,24 @@ export default class MyNavbar extends Component {
         expand="md"
         className="navbar navbar-expand-md fixed-top"
       >
-        {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
         <Navbar.Toggle aria-controls="collapsibleNavbar" />
         <Navbar.Collapse id="collapsibleNavbar">
+          <Nav className="mr-auto" onClick={this.collapseNavOnMobile}>
+            <LanguageButton language="us" setLanguage={setLanguage} />
+            <LanguageButton language="lv" setLanguage={setLanguage} />
+            <LanguageButton language="no" setLanguage={setLanguage} />
+          </Nav>
           <Nav className="ml-auto">
-            <NavLink
-              className="nav-link"
-              to={() => this.changeLanguage("eng")}
-              isActive={(match, location) =>
-                location.pathname.split("/")[1] === "eng"
-              }
-              activeClassName="selected"
-              onClick={() => setLanguage("eng")}
-            >
-              <i className="ae flag"></i>
-              <i className="france flag"></i>
-              <i className="myanmar flag"></i>
-              ENG
-            </NavLink>
-            <NavLink
-              className="nav-link"
-              to={() => this.changeLanguage("lv")}
-              isActive={(match, location) =>
-                location.pathname.split("/")[1] === "lv"
-              }
-              activeClassName="selected"
-              onClick={() => setLanguage("lv")}
-            >
-              LAT
-            </NavLink>
-            <NavLink
-              className="nav-link"
-              to={() => this.changeLanguage("no")}
-              isActive={(match, location) =>
-                location.pathname.split("/")[1] === "no"
-              }
-              activeClassName="selected"
-              onClick={() => setLanguage("no")}
-            >
-              NOR
-            </NavLink>
             {isAdmin && (
               <NavLink
                 className="nav-link"
-                to="/eng/admin"
+                to="/us/admin"
                 activeClassName="selected"
               >
                 Admin
               </NavLink>
             )}
-            {isSignedIn && (
+            {/* {isSignedIn && (
               <NavLink
                 className="nav-link"
                 to={`/${language}/dashboard`}
@@ -172,7 +169,7 @@ export default class MyNavbar extends Component {
               >
                 Dashboard
               </NavLink>
-            )}
+            )} */}
             <NavLink
               className="nav-link"
               to={`/${language}/home`}
@@ -185,11 +182,23 @@ export default class MyNavbar extends Component {
               activeClassName="selected"
               onClick={this.collapseNavOnMobile}
             >
-              Home
+              {Object.keys(translations).length > 0
+                ? capitalize(
+                    translations["navigation"]["buttonTexts"]["home"][language]
+                  ) || "Home"
+                : "Home"}
             </NavLink>
 
             <NavDropdown
-              title="Services"
+              title={
+                Object.keys(translations).length > 0
+                  ? capitalize(
+                      translations["navigation"]["buttonTexts"]["services"][
+                        language
+                      ]
+                    ) || "Services"
+                  : "Services"
+              }
               id="collapsible-nav-dropdown-services"
               active={
                 window.location.pathname.includes("services") ? true : false
@@ -197,20 +206,24 @@ export default class MyNavbar extends Component {
             >
               {nav_services}
             </NavDropdown>
-            <NavDropdown
-              title="Info"
-              id="collasible-nav-dropdown-info"
-              active={window.location.pathname.includes("About") ? true : false}
+            <NavLink
+              className="nav-link"
+              to={`/${language}/About`}
+              isActive={(match, location) =>
+                window.location.pathname.includes("About") &&
+                location.hash === ""
+                  ? true
+                  : false
+              }
+              activeClassName="selected"
+              onClick={this.collapseNavOnMobile}
             >
-              <LinkContainer to={`/${language}/About`}>
-                <NavDropdown.Item>About Me</NavDropdown.Item>
-              </LinkContainer>
-              <LinkContainer to={`#`}>
-                <NavDropdown.Item disabled>
-                  What they are saying
-                </NavDropdown.Item>
-              </LinkContainer>
-            </NavDropdown>
+              {Object.keys(translations).length > 0
+                ? capitalize(
+                    translations["navigation"]["buttonTexts"]["about"][language]
+                  ) || "About Me"
+                : "About Me"}
+            </NavLink>
             <NavHashLink
               className="nav-link"
               isActive={(match, location) => location.hash === "#contactForm"}
@@ -218,10 +231,24 @@ export default class MyNavbar extends Component {
               to={`/${language}/home#contactForm`}
               onClick={this.collapseNavOnMobile}
             >
-              Contact
+              {Object.keys(translations).length > 0
+                ? capitalize(
+                    translations["navigation"]["buttonTexts"]["contact"][
+                      language
+                    ]
+                  ) || "Contact"
+                : "Contact"}
             </NavHashLink>
             <NavDropdown
-              title="Blog"
+              title={
+                Object.keys(translations).length > 0
+                  ? capitalize(
+                      translations["navigation"]["buttonTexts"]["blog"][
+                        language
+                      ]
+                    ) || "Blog"
+                  : "Blog"
+              }
               id="collasible-nav-dropdown-journal"
               active={
                 window.location.pathname.includes("journal") ? true : false
@@ -243,13 +270,14 @@ export default class MyNavbar extends Component {
                 Logout
               </Link>
             ) : (
-              <Link
-                to="/#"
+              <div
+                as={Link}
+                // to="/#"
                 className="nav-link"
                 onClick={() => this.toggleLogin()}
               >
                 Login
-              </Link>
+              </div>
             )}
             <Login
               toggleLogin={this.toggleLogin.bind(this)}

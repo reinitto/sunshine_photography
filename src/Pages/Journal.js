@@ -11,31 +11,62 @@ export default function Journal({ journals, language }) {
   useEffect(() => {
     if (journals && Object.keys(journals).length > 0) {
       setJournal(journals[journalId]);
-      let desLength = 0;
-      let des = "";
-      Object.keys(journals[journalId].images).forEach((key) => {
-        let translationText = journals[journalId].images[key].text[language] ||journals[journalId].images[key].text['us'] ||journals[journalId].images[key].text['eng']
-        if (translationText.length > desLength) {
-          des = translationText
-          desLength = des.length
-        }
-      });
-      setDescription(des);
     }
     return () => {
       setJournal(null);
+    };
+  }, [journals, language, journalId]);
+  useEffect(() => {
+    let desLength = 0;
+    let des = "";
+    if (journal && journal.images) {
+      Object.keys(journal.images).forEach((key) => {
+        let translationText =
+          journal.images[key].text[language] ||
+          journal.images[key].text["us"] ||
+          journal.images[key].text["eng"];
+        if (
+          typeof translationText == "string" &&
+          translationText.length > desLength
+        ) {
+          des = translationText;
+          desLength = des.length;
+        }
+      });
+    }
+    setDescription(des);
+    return () => {
       setDescription(null);
     };
-  }, [journalId, journals, language]);
+  }, [journal, language]);
   return journal ? (
     <Fragment>
       <MetaTags id={journalId}>
-        <title>{journal.title.title[language]||journal.title.title['eng']||journal.title.title['us']}</title>
-        <meta name="description" content={description} />
+        <title>
+          {journal.title.title[language] ||
+            journal.title.title["eng"] ||
+            journal.title.title["us"]}
+        </title>
+        <meta
+          property="og:title"
+          content={journal.title.title[language] || ""}
+        />
+        <meta name="description" content={description || ""} />
+        <meta property="og:description" content={description || ""} />
+        <meta property="og:type" content="article" />
+        <meta property="og:locale" content={language} />
       </MetaTags>
       <Suspense fallback={<div style={{ height: "400px" }}></div>}>
         <IntroImage
-          subtitle={journal ? [journal.title.title[language]||journal.title.title['us']||journal.title.title['eng']] : null}
+          subtitle={
+            journal
+              ? [
+                  journal.title.title[language] ||
+                    journal.title.title["us"] ||
+                    journal.title.title["eng"],
+                ]
+              : null
+          }
           height="35vh"
         />
       </Suspense>

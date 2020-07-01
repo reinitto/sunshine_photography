@@ -29,10 +29,22 @@ export default function Service({ services, language }) {
       <MetaTags id={serviceId}>
         <title>{service.name[language]}</title>
         <meta name="description" content={service.paragraphText[language]} />
+        <meta property="og:title" content={service.name[language] || ""} />
+        <meta
+          property="og:description"
+          content={service.paragraphText[language] || ""}
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content={language} />
       </MetaTags>
       <Suspense fallback={<div style={{ height: "35vh" }}> </div>}>
         <IntroImage
-          subtitle={(service && service.name[language]||service.name['eng']||service.name['us']) || null}
+          subtitle={
+            service.name[language] ||
+            service.name["eng"] ||
+            service.name["us"] ||
+            null
+          }
           height="35vh"
         />
       </Suspense>

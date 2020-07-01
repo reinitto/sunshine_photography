@@ -26,9 +26,9 @@ export let TextBlock = ({ id, setTextBlockText, text, title }) => {
             name="text-block-title"
             className="text-block-title"
             placeholder="Enter a title eng"
-            value={title["eng"]}
+            value={title["us"]}
             onChange={(e) => {
-              setTextBlockText(id, e.target.value, "eng", true);
+              setTextBlockText(id, e.target.value, "us", true);
             }}
           />
         </div>
@@ -47,9 +47,9 @@ export let TextBlock = ({ id, setTextBlockText, text, title }) => {
             name="text-block-title"
             className="text-block-title"
             placeholder="Enter a title lat"
-            value={title["lat"]}
+            value={title["lv"]}
             onChange={(e) => {
-              setTextBlockText(id, e.target.value, "lat", true);
+              setTextBlockText(id, e.target.value, "lv", true);
             }}
           />
         </div>
@@ -68,9 +68,9 @@ export let TextBlock = ({ id, setTextBlockText, text, title }) => {
             name="text-block-title"
             className="text-block-title"
             placeholder="Enter a title nor"
-            value={title["nor"]}
+            value={title["no"]}
             onChange={(e) => {
-              setTextBlockText(id, e.target.value, "nor", true);
+              setTextBlockText(id, e.target.value, "no", true);
             }}
           />
         </div>
@@ -92,10 +92,10 @@ export let TextBlock = ({ id, setTextBlockText, text, title }) => {
           <textarea
             className="text-block-text"
             name="text-block-text"
-            value={text["eng"]}
-            placeholder="Enter some text. Grab bottom-right corner to make text box bigger eng"
+            value={text["us"]}
+            placeholder="Enter some text. Grab bottom-right corner to make text box bigger us"
             onChange={(e) => {
-              setTextBlockText(id, e.target.value, "eng");
+              setTextBlockText(id, e.target.value, "us");
             }}
           />
         </div>
@@ -112,10 +112,10 @@ export let TextBlock = ({ id, setTextBlockText, text, title }) => {
           <textarea
             className="text-block-text"
             name="text-block-text"
-            value={text["lat"]}
-            placeholder="Enter some text. Grab bottom-right corner to make text box bigger lat"
+            value={text["lv"]}
+            placeholder="Enter some text. Grab bottom-right corner to make text box bigger lv"
             onChange={(e) => {
-              setTextBlockText(id, e.target.value, "lat");
+              setTextBlockText(id, e.target.value, "lv");
             }}
           />
         </div>
@@ -132,10 +132,10 @@ export let TextBlock = ({ id, setTextBlockText, text, title }) => {
           <textarea
             className="text-block-text"
             name="text-block-text"
-            value={text["nor"]}
-            placeholder="Enter some text. Grab bottom-right corner to make text box bigger nor"
+            value={text["no"]}
+            placeholder="Enter some text. Grab bottom-right corner to make text box bigger no"
             onChange={(e) => {
-              setTextBlockText(id, e.target.value, "nor");
+              setTextBlockText(id, e.target.value, "no");
             }}
           />
         </div>

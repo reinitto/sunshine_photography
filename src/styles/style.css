@@ -4,6 +4,8 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;1,100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -10777,12 +10779,14 @@ body {
 
 a {
   color: #3d4856;
-  font-family: "EB Garamond", sans-serif;
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
   letter-spacing: 2px;
 }
 
 p {
-  font-family: "EB Garamond", sans-serif;
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
   font-size: 20px;
 }
 
@@ -10797,7 +10801,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Open Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-family: "Playfair Display", sans-serif;
   letter-spacing: 5px;
 }
 
@@ -10998,8 +11002,10 @@ a:hover {
 }
 
 .dropdown-menu .dropdown-item {
+  font-weight: 100;
   color: #9f818a;
   text-align: left;
+  font-size: 15px;
 }
 
 .dropdown-menu .dropdown-item:hover {
@@ -11043,7 +11049,7 @@ nav.navbar.navbar-expand-md {
           transform: translate(-50%, -50%);
   color: white;
   font-weight: 600;
-  font-family: "EB Garamond", sans-serif;
+  font-family: "Roboto", sans-serif;
   letter-spacing: 3px;
   overflow-wrap: anywhere;
 }
@@ -11284,14 +11290,14 @@ nav.navbar.navbar-expand-md {
 
 .carousel-text .carousel-text-subtitle {
   color: #3d4856;
-  font-family: "Open Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-family: "Playfair Display";
   letter-spacing: 10px;
   font-size: 1.6rem;
 }
 
 .carousel-text3 {
   font-size: 1rem;
-  font-family: "Open Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-family: "Playfair Display";
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -11310,8 +11316,12 @@ nav.navbar.navbar-expand-md {
 }
 
 .navbar .nav-link {
-  font-size: 1rem;
+  font-size: 15px;
   padding: 1rem;
+}
+
+.nav-link-lang {
+  cursor: pointer;
 }
 
 .navbar-light .navbar-nav .nav-link.active,
@@ -11412,6 +11422,10 @@ h3 {
   left: 0;
   margin: auto;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.service-detail-item {
+  font-family: "Roboto";
 }
 
 .popup_inner {

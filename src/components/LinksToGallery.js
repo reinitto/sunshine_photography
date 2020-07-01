@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { CloudinaryContext } from "cloudinary-react";
 import { ProgressiveCloudinaryImage } from "./ProgressiveCloudinaryImage";
-import { useWindowWidth } from "./useWindowWidth";
+import { useWindowOuterWidth } from "./useWindowOuterWidth";
+import { useWindowInnerWidth } from "./useWindowInnerWidth";
 
 let swapArrayElements = function (arr, indexA, indexB) {
   let temp = arr[indexA];
@@ -20,11 +21,9 @@ let SingleLink = ({
   let { w, h } = dimensions;
   if (link) {
     let { key, name, thumbnailImage: publicId } = link;
-    let serviceName = name[language]
-      ? name[language]
-      : name["eng"] || name["us"];
+    let serviceName = name[language] ? name[language] : name["us"];
     return (
-      <Link to={`/services/${key}`} key={key}>
+      <Link to={`services/${key}`} key={key}>
         <div
           style={{
             position: "relative",
@@ -77,18 +76,33 @@ let SingleLink = ({
   }
 };
 
-let LinkLayout = ({ links, largeWH, smallImageWH, reverse = false }) => {
+let LinkLayout = ({
+  links,
+  largeWH,
+  smallImageWH,
+  language,
+  reverse = false,
+}) => {
   if (reverse) {
     return (
       <div className="links-to-gallery-layout">
         <SingleLink
+          language={language}
           link={links[0]}
           dimensions={largeWH}
           textStyle={{ fontSize: "24px" }}
         />
         <div className="two-links">
-          <SingleLink link={links[1]} dimensions={smallImageWH} />
-          <SingleLink link={links[2]} dimensions={smallImageWH} />
+          <SingleLink
+            link={links[1]}
+            dimensions={smallImageWH}
+            language={language}
+          />
+          <SingleLink
+            link={links[2]}
+            dimensions={smallImageWH}
+            language={language}
+          />
         </div>
       </div>
     );
@@ -96,21 +110,36 @@ let LinkLayout = ({ links, largeWH, smallImageWH, reverse = false }) => {
     return (
       <div className="links-to-gallery-layout">
         <div className="two-links">
-          <SingleLink link={links[0]} dimensions={smallImageWH} />
-          <SingleLink link={links[1]} dimensions={smallImageWH} />
+          <SingleLink
+            link={links[0]}
+            dimensions={smallImageWH}
+            language={language}
+          />
+          <SingleLink
+            link={links[1]}
+            dimensions={smallImageWH}
+            language={language}
+          />
         </div>
         <SingleLink
           link={links[2]}
           dimensions={largeWH}
           textStyle={{ fontSize: "24px" }}
+          language={language}
         />
       </div>
     );
   }
 };
 
-export default function LinksToGallery({ services, title, subtitle }) {
-  const width = useWindowWidth();
+export default function LinksToGallery({
+  services,
+  title,
+  subtitle,
+  language,
+}) {
+  let width = Math.min(useWindowOuterWidth(), useWindowInnerWidth());
+
   let arr =
     typeof services === "object"
       ? Object.keys(services).map((key) => {
@@ -138,8 +167,9 @@ export default function LinksToGallery({ services, title, subtitle }) {
   let bigDimensions = { w: bigImageWH, h: Math.floor(bigImageWH * 0.8) };
   let smallImageWidth = Math.ceil(bigImageWH / 2);
   let smallImageHeight = Math.ceil(1.25 * smallImageWidth);
+
   return (
-    <div className={width <= 768 ? "pb-3 mx-auto w-90 " : "container pb-3"}>
+    <div className={width <= 768 ? "pb-3 mx-auto" : "container pb-3"}>
       <h2 className="text-center">
         {title ? title : "Every Picture Has A Story To Tell"}
       </h2>
@@ -151,25 +181,30 @@ export default function LinksToGallery({ services, title, subtitle }) {
           <div
             className="d-flex flex-wrap"
             style={{
-              height:
-                width <= 768
-                  ? Math.floor(bigImageWH * 1.25) * 3
-                  : bigImageWH + smallImageHeight,
+              // height: Math.floor(bigImageWH * 1.25) * 3,
+              justifyContent: "center",
             }}
           >
             {arr.map((link) => (
-              <div className="w-50" key={link.key}>
-                <SingleLink
-                  link={link}
-                  style={{
-                    width: "100%",
-                  }}
-                  dimensions={{
-                    w: bigImageWH,
-                    h: bigImageWH * 1.25,
-                  }}
-                />
-              </div>
+              // <div
+              //   key={link.key}
+              //   style={{
+              //     width: "45%",
+              //   }}
+              // >
+              <SingleLink
+                key={link.key}
+                link={link}
+                style={{
+                  width: "100%",
+                }}
+                dimensions={{
+                  w: bigImageWH,
+                  h: bigImageWH * 1.25,
+                }}
+                language={language}
+              />
+              // </div>
             ))}
           </div>
         ) : (
@@ -178,12 +213,14 @@ export default function LinksToGallery({ services, title, subtitle }) {
               links={arr.slice(0, 3)}
               largeWH={bigDimensions}
               smallImageWH={{ w: smallImageWidth, h: smallImageHeight }}
+              language={language}
             />
             <LinkLayout
               links={arr.slice(3)}
               reverse={true}
               largeWH={bigDimensions}
               smallImageWH={{ w: smallImageWidth, h: smallImageHeight }}
+              language={language}
             />
           </div>
         )}

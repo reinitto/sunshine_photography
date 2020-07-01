@@ -43,9 +43,9 @@ export let TitleAndTitleImage = ({
           // className="title-input"
           name="journalTitle"
           placeholder="Enter title eng"
-          value={titleText["eng"]}
+          value={titleText["us"]}
           onChange={(e) => {
-            setTitle(e.target.value, "eng");
+            setTitle(e.target.value, "us");
           }}
         />
       </div>
@@ -65,9 +65,9 @@ export let TitleAndTitleImage = ({
           // className="title-input"
           name="journalTitle"
           placeholder="Enter title lat"
-          value={titleText["lat"]}
+          value={titleText["lv"]}
           onChange={(e) => {
-            setTitle(e.target.value, "lat");
+            setTitle(e.target.value, "lv");
           }}
         />
       </div>
@@ -86,10 +86,10 @@ export let TitleAndTitleImage = ({
           }}
           // className="title-input"
           name="journalTitle"
-          placeholder="Enter title nor"
-          value={titleText["nor"]}
+          placeholder="Enter title no"
+          value={titleText["no"]}
           onChange={(e) => {
-            setTitle(e.target.value, "nor");
+            setTitle(e.target.value, "no");
           }}
         />
       </div>

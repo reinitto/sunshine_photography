@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { CloudinaryContext } from "cloudinary-react";
-import { useWindowWidth } from "./useWindowWidth";
+import { useWindowOuterWidth } from "./useWindowOuterWidth";
+import { useWindowInnerWidth } from "./useWindowInnerWidth";
 
 export const MenuItem = ({
   text,
@@ -9,6 +10,7 @@ export const MenuItem = ({
   imageUrl,
   width,
   height,
+  language,
   footer = false,
 }) => {
   let Item = () => (
@@ -33,7 +35,7 @@ export const MenuItem = ({
         loading="lazy"
         style={{ objectFit: "cover", height: "100%", width }}
       />
-   
+
       {text ? (
         <div
           style={{
@@ -50,38 +52,41 @@ export const MenuItem = ({
       ) : null}
     </div>
   );
-
-  return !footer ? (
-    <Link
-      to={footer ? "" : `/journal/${link}`}
-      className={`menu-item d-flex flex-column align-items-center justify-content-center p-3`}
-      style={{
-        background: `linear-gradient(
-        rgba(147, 173, 207, 0.15), 
-        rgba(147, 173, 207, 0.45)
-      )`,
-      }}
-      aria-label={`journal ${text}`}
-    >
-      <Item />
-    </Link>
-  ) : (
-    <a
-      target="_blank"
-      rel="noopener noreferrer"
-      href={link}
-      className={`menu-item d-flex flex-column align-items-center justify-content-center p-3`}
-      style={{
-        background: `linear-gradient(
-        rgba(147, 173, 207, 0.15), 
-        rgba(147, 173, 207, 0.45)
-      )`,
-      }}
-      aria-label={text}
-    >
-      <Item />
-    </a>
-  );
+  if (footer) {
+    return (
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href={link}
+        className={`menu-item d-flex flex-column align-items-center justify-content-center p-3`}
+        style={{
+          background: `linear-gradient(
+      rgba(147, 173, 207, 0.15), 
+      rgba(147, 173, 207, 0.45)
+    )`,
+        }}
+        aria-label={text}
+      >
+        <Item />
+      </a>
+    );
+  } else {
+    return (
+      <Link
+        to={footer ? "" : `/${language}/journal/${link}`}
+        className={`menu-item d-flex flex-column align-items-center justify-content-center p-3`}
+        style={{
+          background: `linear-gradient(
+      rgba(147, 173, 207, 0.15), 
+      rgba(147, 173, 207, 0.45)
+    )`,
+        }}
+        aria-label={`journal ${text}`}
+      >
+        <Item />
+      </Link>
+    );
+  }
 };
 
 // All items component
@@ -91,10 +96,11 @@ export const Menu = ({ list, sideLength, footer, language, style = {} }) => {
   let height = width * 1.25;
   return list.map((el, i) => {
     const { title, journalUrl, imageUrl } = el;
-    console.log('title',title)
     return (
       <MenuItem
-        text={footer ? "" :( title[language]?title[language]:title['us']||title['eng'])}
+        text={
+          footer ? "" : title && title[language] ? title[language] || "" : ""
+        }
         link={journalUrl}
         key={footer ? i : title[language] + i}
         imageUrl={imageUrl}
@@ -102,6 +108,7 @@ export const Menu = ({ list, sideLength, footer, language, style = {} }) => {
         height={height}
         style={style}
         footer={footer}
+        language={language}
       />
     );
   });
@@ -113,9 +120,10 @@ export const HorizontalScroll = ({
   language,
   style = {},
 }) => {
-  let windowWidth = useWindowWidth();
+  let width = Math.min(useWindowOuterWidth(), useWindowInnerWidth());
+
   let horizontalScroll = useRef();
-  let sideLength = footer ? Math.max(Math.floor(windowWidth / 10), 125) : 250;
+  let sideLength = footer ? Math.max(Math.floor(width / 10), 125) : 250;
 
   let content = Menu({
     list: [...list, ...list],
@@ -137,13 +145,13 @@ export const HorizontalScroll = ({
     let hs = horizontalScroll.current;
     let currentX = hs.style.transform.match(/translateX\((-?\d+)px/)[1];
     let contentLength = sideLength * list.length * 2;
-    let minX = windowWidth - contentLength;
+    let minX = width - contentLength;
     hs.style.transform = `translateX(${Math.max(
       minX,
       parseInt(currentX) - 250
     )}px)`;
   };
-  if (windowWidth > 768) {
+  if (width > 768) {
     return (
       <CloudinaryContext cloudName="sunshinephoto">
         <div

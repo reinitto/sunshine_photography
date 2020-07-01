@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { HashLink } from "react-router-hash-link";
+import LazyBackground from "./LazyBackground";
 import "./FontAwesomeIcons";
-import { useWindowWidth } from "./useWindowWidth";
+import { useWindowInnerWidth } from "./useWindowInnerWidth";
+import { useWindowOuterWidth } from "./useWindowOuterWidth";
 import { useWindowFromTop } from "./useWindowFromTop";
 
 let placeholderColor = "#b4c7d4";
@@ -14,23 +16,47 @@ export default function Hero({
   background,
   height = "100vh",
 }) {
-  let windowWidth = useWindowWidth();
+  let windowWidth = Math.min(useWindowInnerWidth(), useWindowOuterWidth());
   let fromTop = useWindowFromTop();
-  let subtitleSize = windowWidth * 0.024 > 30 ? "30px" : "2.4vw";
-  let keywordSize = windowWidth * 0.01 > 16 ? "1rem" : "10px";
+  let [keywordSize, setkeywordSize] = useState();
+  let [minRes, setminRes] = useState();
+  let [resSize, setresSize] = useState(0);
+  useEffect(() => {
+    setminRes(windowWidth <= 768 ? windowWidth * 2 : windowWidth);
+  }, [windowWidth]);
+
+  useEffect(() => {
+    let resSize = 1920;
+    Object.keys(background.sizes).forEach((size) => {
+      size = parseInt(size);
+      if (size >= minRes && size < resSize) {
+        resSize = size;
+      }
+    });
+    setresSize(resSize);
+
+    setkeywordSize(windowWidth * 0.01 > 16 ? "1rem" : "10px");
+  }, [windowWidth, minRes, background]);
+
   return (
-    <div
-      className="cover-image"
-      style={{
-        width: "100%",
-        height,
-        backgroundColor: placeholderColor,
-        backgroundImage: `url(${background.default})`,
-        position: "relative",
-        backgroundAttachment: `fixed`,
-        backgroundRepeat: `no-repeat`,
-        backgroundPosition: "center center",
-      }}
+    <LazyBackground
+      src={`${background.sizes[resSize]}`}
+      className="d-flex flex-column contact-form-container cover-image justify-content-center align-items-center"
+      style={
+        windowWidth > 768
+          ? {
+              backgroundAttachment: `fixed`,
+              backgroundRepeat: `no-repeat`,
+              height: height,
+              width: "100%",
+              backgroundColor: placeholderColor,
+            }
+          : {
+              height: height,
+              width: "100%",
+              backgroundColor: placeholderColor,
+            }
+      }
     >
       <div
         style={{
@@ -43,7 +69,7 @@ export default function Hero({
           <h2
             className="text-center text-uppercase hero-subtitle"
             style={{
-              fontSize: subtitleSize,
+              fontSize: "2.4vw",
             }}
           >
             {subtitle}
@@ -93,18 +119,6 @@ export default function Hero({
             transition: "all 1s",
           }}
         >
-          {/* <p
-            style={{
-              padding: 0,
-              margin: 0,
-              marginBottom: "-1rem",
-              color: fromTop === 0 ? "#3d4856" : "transparent",
-              transition: "all 1s",
-              fontSize: "15px",
-            }}
-          >
-            Scroll Down
-          </p> */}
           <div
             style={{
               left: 0,
@@ -140,6 +154,6 @@ export default function Hero({
           </div>
         </div>
       </div>
-    </div>
+    </LazyBackground>
   );
 }

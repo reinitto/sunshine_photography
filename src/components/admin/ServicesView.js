@@ -154,6 +154,7 @@ export const ServicesView = ({ user, language }) => {
         sessionObjects.push({ ...session, key });
       }
     }
+    setNewService();
     setKey(key);
     setServiceName(name);
     editThumbnail(thumbnailImage);
@@ -775,17 +776,11 @@ export const ServicesView = ({ user, language }) => {
                     className="text-center d-flex-column"
                   >
                     {Object.keys(detail).map((language) => {
-                      let countryCode = "US";
-                      if (language === "lv") {
-                        countryCode = "LV";
-                      } else if (language === "no") {
-                        countryCode = "NO";
-                      }
                       return (
                         <Fragment>
                           <div className="d-flex align-items-center">
                             <ReactCountryFlag
-                              countryCode={countryCode}
+                              countryCode={language}
                               svg
                               style={{
                                 width: "2em",
@@ -795,7 +790,7 @@ export const ServicesView = ({ user, language }) => {
                             <input
                               type="text"
                               placeholder={`Service detail. ${language}`}
-                              id={`service-detail-${i}`}
+                              id={`service-detail-${i} ${language}`}
                               value={detail[language]}
                               onChange={(e) =>
                                 updateServiceDetail(e, i, language)

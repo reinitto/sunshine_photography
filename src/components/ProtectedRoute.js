@@ -3,6 +3,8 @@ import { Route, Redirect } from "react-router-dom";
 const PrivateRoute = ({ component: Component, isSignedIn, ...rest }) => {
   return (
     <Route
+      exact
+      path="/:lang/dashboard"
       render={(props) =>
         isSignedIn ? (
           <Suspense fallback={<div></div>}>
