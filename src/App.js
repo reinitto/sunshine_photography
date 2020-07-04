@@ -41,7 +41,10 @@ class App extends Component {
     await this.getJournals();
     await this.getInstagram();
     await this.getTranslations();
-
+    // set correct language
+    let currLanguage = window.location.pathname.split("/")[1];
+    this.setLanguage(currLanguage);
+    this.setCurrentRoute(window.location.pathname);
     firebase("auth").then(({ auth }) => {
       auth.onAuthStateChanged((user) => {
         this.setState({ user: user });
@@ -187,6 +190,11 @@ class App extends Component {
       setLang = "en";
     }
     document.querySelector("html").lang = setLang;
+  }
+  setCurrentRoute(route) {
+    this.setState({
+      currentRoute: route,
+    });
   }
 
   render() {
