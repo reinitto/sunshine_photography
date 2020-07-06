@@ -5,20 +5,24 @@ import { ProgressiveCloudinaryImage } from "../ProgressiveCloudinaryImage";
 
 const SingleImage = ({ img, altText = "" }) => {
   return (
-    <div
-      style={{
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        marginBottom: "5px",
-        height: "auto",
-      }}
-    >
-      {img && (
-        <ProgressiveCloudinaryImage
-          publicId={img && img.src}
-          altText={altText || img.text || ""}
-        />
-      )}
+    <div>
+      <div
+        style={{
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          marginBottom: "5px",
+          height: "auto",
+          // maxHeight: "85vh",
+          // overflow: "hidden",
+        }}
+      >
+        {img && (
+          <ProgressiveCloudinaryImage
+            publicId={img && img.src}
+            altText={altText || img.text || ""}
+          />
+        )}
+      </div>
       {img && img.text && (
         <p
           style={{
@@ -35,7 +39,6 @@ const SingleImage = ({ img, altText = "" }) => {
 };
 
 const Doubles = ({ images, altText = "" }) => {
-  console.log("images", images);
   return (
     <div
       style={{
@@ -46,7 +49,6 @@ const Doubles = ({ images, altText = "" }) => {
       className="side-by-side"
     >
       {images.map((img, i) => {
-        console.log("img.text", img.text);
         return img ? (
           <div key={img.src} style={{ width: "49%" }}>
             {img.text ? <p>{img.text}</p> : null}
@@ -141,22 +143,6 @@ export default function ImageGalleryWithoutLighbox({
         continue;
       }
       if (ordered[i].variation === 2) {
-        console.log("pushing double", [
-          {
-            src: ordered[i].imageUrl,
-            text:
-              ordered[i].text[language] ||
-              ordered[i].text["eng"] ||
-              ordered[i].text["us"],
-          },
-          {
-            src: ordered[i + 1].imageUrl,
-            text:
-              ordered[i + 1].text[language] ||
-              ordered[i + 1].text["eng"] ||
-              ordered[i + 1].text["us"],
-          },
-        ]);
         gallery.push(
           <Doubles
             key={i}
@@ -221,6 +207,10 @@ export default function ImageGalleryWithoutLighbox({
         //disable right click
         onContextMenu={(e) => {
           e.preventDefault();
+        }}
+        style={{
+          width: "85%",
+          margin: "auto",
         }}
       >
         <CloudinaryContext cloudName="sunshinephoto">
@@ -356,6 +346,10 @@ export default function ImageGalleryWithoutLighbox({
           //disable right click
           onContextMenu={(e) => {
             e.preventDefault();
+          }}
+          style={{
+            width: "85%",
+            margin: "auto",
           }}
         >
           <CloudinaryContext cloudName="sunshinephoto">
